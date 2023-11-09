@@ -1,5 +1,5 @@
 {
-  "name": "@inductiv/openai-api-next",
+  "name": "@inductiv/node-red-openai-api",
   "version": "2.0.0",
   "description": "Node-RED node for openai",
   "main": "node.js",
@@ -21,9 +21,7 @@
   "dependencies": {
     "axios": "^1.6.0",
     "file-type": "16.5.3",
-    "form-data": "^4.0.0",
-    "q": "^1.5.1",
-    "request": "^2.88.2"
+    "form-data": "^4.0.0"
   },
   "devDependencies": {
     "mocha": "9.2.1",
