@@ -1,0 +1,3473 @@
+<script type="text/javascript">
+    RED.nodes.registerType('openai-api', {
+        category: 'AI',
+        color: '#B8B1FB',
+        defaults: {
+            service: { value: "", type: "openai-api-service", required: true },
+            method: { value: "", required: true },
+            createChatCompletion_body: { value: "" },
+            createChatCompletion_bodyType: { value: "str" },
+            createImage_body: { value: "" },
+            createImage_bodyType: { value: "str" },
+            createImageEdit_image: { value: "" },
+            createImageEdit_imageType: { value: "str" },
+            createImageEdit_prompt: { value: "" },
+            createImageEdit_promptType: { value: "str" },
+            createImageEdit_mask: { value: "" },
+            createImageEdit_maskType: { value: "str" },
+            createImageEdit_model: { value: "" },
+            createImageEdit_modelType: { value: "str" },
+            createImageEdit_n: { value: "" },
+            createImageEdit_nType: { value: "str" },
+            createImageEdit_size: { value: "" },
+            createImageEdit_sizeType: { value: "str" },
+            createImageEdit_responseFormat: { value: "" },
+            createImageEdit_responseFormatType: { value: "str" },
+            createImageEdit_user: { value: "" },
+            createImageEdit_userType: { value: "str" },
+            createImageVariation_image: { value: "" },
+            createImageVariation_imageType: { value: "str" },
+            createImageVariation_model: { value: "" },
+            createImageVariation_modelType: { value: "str" },
+            createImageVariation_n: { value: "" },
+            createImageVariation_nType: { value: "str" },
+            createImageVariation_responseFormat: { value: "" },
+            createImageVariation_responseFormatType: { value: "str" },
+            createImageVariation_size: { value: "" },
+            createImageVariation_sizeType: { value: "str" },
+            createImageVariation_user: { value: "" },
+            createImageVariation_userType: { value: "str" },
+            createEmbedding_body: { value: "" },
+            createEmbedding_bodyType: { value: "str" },
+            createSpeech_body: { value: "" },
+            createSpeech_bodyType: { value: "str" },
+            createTranscription_file: { value: "" },
+            createTranscription_fileType: { value: "str" },
+            createTranscription_model: { value: "" },
+            createTranscription_modelType: { value: "str" },
+            createTranscription_language: { value: "" },
+            createTranscription_languageType: { value: "str" },
+            createTranscription_prompt: { value: "" },
+            createTranscription_promptType: { value: "str" },
+            createTranscription_responseFormat: { value: "" },
+            createTranscription_responseFormatType: { value: "str" },
+            createTranscription_temperature: { value: "" },
+            createTranscription_temperatureType: { value: "str" },
+            createTranslation_file: { value: "" },
+            createTranslation_fileType: { value: "str" },
+            createTranslation_model: { value: "" },
+            createTranslation_modelType: { value: "str" },
+            createTranslation_prompt: { value: "" },
+            createTranslation_promptType: { value: "str" },
+            createTranslation_responseFormat: { value: "" },
+            createTranslation_responseFormatType: { value: "str" },
+            createTranslation_temperature: { value: "" },
+            createTranslation_temperatureType: { value: "str" },
+            listFiles_purpose: { value: "" },
+            listFiles_purposeType: { value: "str" },
+            createFile_file: { value: "" },
+            createFile_fileType: { value: "str" },
+            createFile_purpose: { value: "" },
+            createFile_purposeType: { value: "str" },
+            deleteFile_fileId: { value: "" },
+            deleteFile_fileIdType: { value: "str" },
+            retrieveFile_fileId: { value: "" },
+            retrieveFile_fileIdType: { value: "str" },
+            downloadFile_fileId: { value: "" },
+            downloadFile_fileIdType: { value: "str" },
+            createFineTuningJob_body: { value: "" },
+            createFineTuningJob_bodyType: { value: "str" },
+            listPaginatedFineTuningJobs_after: { value: "" },
+            listPaginatedFineTuningJobs_afterType: { value: "str" },
+            listPaginatedFineTuningJobs_limit: { value: "" },
+            listPaginatedFineTuningJobs_limitType: { value: "str" },
+            retrieveFineTuningJob_fineTuningJobId: { value: "" },
+            retrieveFineTuningJob_fineTuningJobIdType: { value: "str" },
+            listFineTuningEvents_fineTuningJobId: { value: "" },
+            listFineTuningEvents_fineTuningJobIdType: { value: "str" },
+            listFineTuningEvents_after: { value: "" },
+            listFineTuningEvents_afterType: { value: "str" },
+            listFineTuningEvents_limit: { value: "" },
+            listFineTuningEvents_limitType: { value: "str" },
+            cancelFineTuningJob_fineTuningJobId: { value: "" },
+            cancelFineTuningJob_fineTuningJobIdType: { value: "str" },
+            retrieveModel_model: { value: "" },
+            retrieveModel_modelType: { value: "str" },
+            deleteModel_model: { value: "" },
+            deleteModel_modelType: { value: "str" },
+            createModeration_body: { value: "" },
+            createModeration_bodyType: { value: "str" },
+            listAssistants_limit: { value: "" },
+            listAssistants_limitType: { value: "str" },
+            listAssistants_order: { value: "" },
+            listAssistants_orderType: { value: "str" },
+            listAssistants_after: { value: "" },
+            listAssistants_afterType: { value: "str" },
+            listAssistants_before: { value: "" },
+            listAssistants_beforeType: { value: "str" },
+            createAssistant_body: { value: "" },
+            createAssistant_bodyType: { value: "str" },
+            getAssistant_assistantId: { value: "" },
+            getAssistant_assistantIdType: { value: "str" },
+            modifyAssistant_assistantId: { value: "" },
+            modifyAssistant_assistantIdType: { value: "str" },
+            modifyAssistant_body: { value: "" },
+            modifyAssistant_bodyType: { value: "str" },
+            deleteAssistant_assistantId: { value: "" },
+            deleteAssistant_assistantIdType: { value: "str" },
+            createThread_body: { value: "" },
+            createThread_bodyType: { value: "str" },
+            getThread_threadId: { value: "" },
+            getThread_threadIdType: { value: "str" },
+            modifyThread_threadId: { value: "" },
+            modifyThread_threadIdType: { value: "str" },
+            modifyThread_body: { value: "" },
+            modifyThread_bodyType: { value: "str" },
+            deleteThread_threadId: { value: "" },
+            deleteThread_threadIdType: { value: "str" },
+            listMessages_threadId: { value: "" },
+            listMessages_threadIdType: { value: "str" },
+            listMessages_limit: { value: "" },
+            listMessages_limitType: { value: "str" },
+            listMessages_order: { value: "" },
+            listMessages_orderType: { value: "str" },
+            listMessages_after: { value: "" },
+            listMessages_afterType: { value: "str" },
+            listMessages_before: { value: "" },
+            listMessages_beforeType: { value: "str" },
+            createMessage_threadId: { value: "" },
+            createMessage_threadIdType: { value: "str" },
+            createMessage_body: { value: "" },
+            createMessage_bodyType: { value: "str" },
+            getMessage_threadId: { value: "" },
+            getMessage_threadIdType: { value: "str" },
+            getMessage_messageId: { value: "" },
+            getMessage_messageIdType: { value: "str" },
+            modifyMessage_threadId: { value: "" },
+            modifyMessage_threadIdType: { value: "str" },
+            modifyMessage_messageId: { value: "" },
+            modifyMessage_messageIdType: { value: "str" },
+            modifyMessage_body: { value: "" },
+            modifyMessage_bodyType: { value: "str" },
+            createThreadAndRun_body: { value: "" },
+            createThreadAndRun_bodyType: { value: "str" },
+            listRuns_threadId: { value: "" },
+            listRuns_threadIdType: { value: "str" },
+            listRuns_limit: { value: "" },
+            listRuns_limitType: { value: "str" },
+            listRuns_order: { value: "" },
+            listRuns_orderType: { value: "str" },
+            listRuns_after: { value: "" },
+            listRuns_afterType: { value: "str" },
+            listRuns_before: { value: "" },
+            listRuns_beforeType: { value: "str" },
+            createRun_threadId: { value: "" },
+            createRun_threadIdType: { value: "str" },
+            createRun_body: { value: "" },
+            createRun_bodyType: { value: "str" },
+            getRun_threadId: { value: "" },
+            getRun_threadIdType: { value: "str" },
+            getRun_runId: { value: "" },
+            getRun_runIdType: { value: "str" },
+            modifyRun_threadId: { value: "" },
+            modifyRun_threadIdType: { value: "str" },
+            modifyRun_runId: { value: "" },
+            modifyRun_runIdType: { value: "str" },
+            modifyRun_body: { value: "" },
+            modifyRun_bodyType: { value: "str" },
+            submitToolOuputsToRun_threadId: { value: "" },
+            submitToolOuputsToRun_threadIdType: { value: "str" },
+            submitToolOuputsToRun_runId: { value: "" },
+            submitToolOuputsToRun_runIdType: { value: "str" },
+            submitToolOuputsToRun_body: { value: "" },
+            submitToolOuputsToRun_bodyType: { value: "str" },
+            cancelRun_threadId: { value: "" },
+            cancelRun_threadIdType: { value: "str" },
+            cancelRun_runId: { value: "" },
+            cancelRun_runIdType: { value: "str" },
+            listRunSteps_threadId: { value: "" },
+            listRunSteps_threadIdType: { value: "str" },
+            listRunSteps_runId: { value: "" },
+            listRunSteps_runIdType: { value: "str" },
+            listRunSteps_limit: { value: "" },
+            listRunSteps_limitType: { value: "str" },
+            listRunSteps_order: { value: "" },
+            listRunSteps_orderType: { value: "str" },
+            listRunSteps_after: { value: "" },
+            listRunSteps_afterType: { value: "str" },
+            listRunSteps_before: { value: "" },
+            listRunSteps_beforeType: { value: "str" },
+            getRunStep_threadId: { value: "" },
+            getRunStep_threadIdType: { value: "str" },
+            getRunStep_runId: { value: "" },
+            getRunStep_runIdType: { value: "str" },
+            getRunStep_stepId: { value: "" },
+            getRunStep_stepIdType: { value: "str" },
+            listAssistantFiles_assistantId: { value: "" },
+            listAssistantFiles_assistantIdType: { value: "str" },
+            listAssistantFiles_limit: { value: "" },
+            listAssistantFiles_limitType: { value: "str" },
+            listAssistantFiles_order: { value: "" },
+            listAssistantFiles_orderType: { value: "str" },
+            listAssistantFiles_after: { value: "" },
+            listAssistantFiles_afterType: { value: "str" },
+            listAssistantFiles_before: { value: "" },
+            listAssistantFiles_beforeType: { value: "str" },
+            createAssistantFile_assistantId: { value: "" },
+            createAssistantFile_assistantIdType: { value: "str" },
+            createAssistantFile_body: { value: "" },
+            createAssistantFile_bodyType: { value: "str" },
+            getAssistantFile_assistantId: { value: "" },
+            getAssistantFile_assistantIdType: { value: "str" },
+            getAssistantFile_fileId: { value: "" },
+            getAssistantFile_fileIdType: { value: "str" },
+            deleteAssistantFile_assistantId: { value: "" },
+            deleteAssistantFile_assistantIdType: { value: "str" },
+            deleteAssistantFile_fileId: { value: "" },
+            deleteAssistantFile_fileIdType: { value: "str" },
+            listMessageFiles_threadId: { value: "" },
+            listMessageFiles_threadIdType: { value: "str" },
+            listMessageFiles_messageId: { value: "" },
+            listMessageFiles_messageIdType: { value: "str" },
+            listMessageFiles_limit: { value: "" },
+            listMessageFiles_limitType: { value: "str" },
+            listMessageFiles_order: { value: "" },
+            listMessageFiles_orderType: { value: "str" },
+            listMessageFiles_after: { value: "" },
+            listMessageFiles_afterType: { value: "str" },
+            listMessageFiles_before: { value: "" },
+            listMessageFiles_beforeType: { value: "str" },
+            getMessageFile_threadId: { value: "" },
+            getMessageFile_threadIdType: { value: "str" },
+            getMessageFile_messageId: { value: "" },
+            getMessageFile_messageIdType: { value: "str" },
+            getMessageFile_fileId: { value: "" },
+            getMessageFile_fileIdType: { value: "str" },
+            name: { value: "" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'icon.png',
+        label: function () {
+            return this.name || this.method || "openai-api";
+        },
+        labelStyle: function () {
+            return this.name ? "node_label_italic" : "";
+        },
+        oneditprepare: function () {
+            var selectedMethod = $('#node-input-method option:selected');
+            if (!selectedMethod.val()) {
+                var methods = $('#node-input-method').children();
+                var firstMethod = methods.first();
+                $('#node-input-method').val(firstMethod.val());
+            }
+
+            var showParameters = function () {
+
+                $("#node-input-createChatCompletion_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createChatCompletion_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createChatCompletion_body").hide();
+
+                $("#node-input-createImage_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createImage_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createImage_body").hide();
+
+                $("#node-input-createImageEdit_image").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createImageEdit_imageType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createImageEdit_image").hide();
+
+                $("#node-input-createImageEdit_prompt").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createImageEdit_promptType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createImageEdit_prompt").hide();
+
+                $("#node-input-createImageEdit_mask").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createImageEdit_maskType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createImageEdit_mask").hide();
+
+                $("#node-input-createImageEdit_model").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createImageEdit_modelType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createImageEdit_model").hide();
+
+                $("#node-input-createImageEdit_n").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createImageEdit_nType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createImageEdit_n").hide();
+
+
+                $("#createImageEdit_size").hide();
+
+
+                $("#createImageEdit_responseFormat").hide();
+
+                $("#node-input-createImageEdit_user").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createImageEdit_userType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createImageEdit_user").hide();
+
+                $("#node-input-createImageVariation_image").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createImageVariation_imageType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createImageVariation_image").hide();
+
+                $("#node-input-createImageVariation_model").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createImageVariation_modelType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createImageVariation_model").hide();
+
+                $("#node-input-createImageVariation_n").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createImageVariation_nType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createImageVariation_n").hide();
+
+
+                $("#createImageVariation_responseFormat").hide();
+
+
+                $("#createImageVariation_size").hide();
+
+                $("#node-input-createImageVariation_user").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createImageVariation_userType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createImageVariation_user").hide();
+
+                $("#node-input-createEmbedding_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createEmbedding_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createEmbedding_body").hide();
+
+                $("#node-input-createSpeech_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createSpeech_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createSpeech_body").hide();
+
+                $("#node-input-createTranscription_file").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createTranscription_fileType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createTranscription_file").hide();
+
+                $("#node-input-createTranscription_model").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createTranscription_modelType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createTranscription_model").hide();
+
+                $("#node-input-createTranscription_language").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createTranscription_languageType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createTranscription_language").hide();
+
+                $("#node-input-createTranscription_prompt").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createTranscription_promptType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createTranscription_prompt").hide();
+
+
+                $("#createTranscription_responseFormat").hide();
+
+                $("#node-input-createTranscription_temperature").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createTranscription_temperatureType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createTranscription_temperature").hide();
+
+                $("#node-input-createTranslation_file").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createTranslation_fileType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createTranslation_file").hide();
+
+                $("#node-input-createTranslation_model").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createTranslation_modelType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createTranslation_model").hide();
+
+                $("#node-input-createTranslation_prompt").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createTranslation_promptType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createTranslation_prompt").hide();
+
+                $("#node-input-createTranslation_responseFormat").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createTranslation_responseFormatType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createTranslation_responseFormat").hide();
+
+                $("#node-input-createTranslation_temperature").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createTranslation_temperatureType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createTranslation_temperature").hide();
+
+                $("#node-input-listFiles_purpose").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listFiles_purposeType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listFiles_purpose").hide();
+
+                $("#node-input-createFile_file").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createFile_fileType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createFile_file").hide();
+
+
+                $("#createFile_purpose").hide();
+
+                $("#node-input-deleteFile_fileId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-deleteFile_fileIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#deleteFile_fileId").hide();
+
+                $("#node-input-retrieveFile_fileId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-retrieveFile_fileIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#retrieveFile_fileId").hide();
+
+                $("#node-input-downloadFile_fileId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-downloadFile_fileIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#downloadFile_fileId").hide();
+
+                $("#node-input-createFineTuningJob_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createFineTuningJob_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createFineTuningJob_body").hide();
+
+                $("#node-input-listPaginatedFineTuningJobs_after").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listPaginatedFineTuningJobs_afterType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listPaginatedFineTuningJobs_after").hide();
+
+                $("#node-input-listPaginatedFineTuningJobs_limit").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listPaginatedFineTuningJobs_limitType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listPaginatedFineTuningJobs_limit").hide();
+
+                $("#node-input-retrieveFineTuningJob_fineTuningJobId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-retrieveFineTuningJob_fineTuningJobIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#retrieveFineTuningJob_fineTuningJobId").hide();
+
+                $("#node-input-listFineTuningEvents_fineTuningJobId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listFineTuningEvents_fineTuningJobIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listFineTuningEvents_fineTuningJobId").hide();
+
+                $("#node-input-listFineTuningEvents_after").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listFineTuningEvents_afterType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listFineTuningEvents_after").hide();
+
+                $("#node-input-listFineTuningEvents_limit").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listFineTuningEvents_limitType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listFineTuningEvents_limit").hide();
+
+                $("#node-input-cancelFineTuningJob_fineTuningJobId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-cancelFineTuningJob_fineTuningJobIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#cancelFineTuningJob_fineTuningJobId").hide();
+
+                $("#node-input-retrieveModel_model").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-retrieveModel_modelType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#retrieveModel_model").hide();
+
+                $("#node-input-deleteModel_model").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-deleteModel_modelType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#deleteModel_model").hide();
+
+                $("#node-input-createModeration_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createModeration_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createModeration_body").hide();
+
+                $("#node-input-listAssistants_limit").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listAssistants_limitType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listAssistants_limit").hide();
+
+
+                $("#listAssistants_order").hide();
+
+                $("#node-input-listAssistants_after").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listAssistants_afterType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listAssistants_after").hide();
+
+                $("#node-input-listAssistants_before").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listAssistants_beforeType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listAssistants_before").hide();
+
+                $("#node-input-createAssistant_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createAssistant_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createAssistant_body").hide();
+
+                $("#node-input-getAssistant_assistantId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getAssistant_assistantIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getAssistant_assistantId").hide();
+
+                $("#node-input-modifyAssistant_assistantId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-modifyAssistant_assistantIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#modifyAssistant_assistantId").hide();
+
+                $("#node-input-modifyAssistant_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-modifyAssistant_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#modifyAssistant_body").hide();
+
+                $("#node-input-deleteAssistant_assistantId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-deleteAssistant_assistantIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#deleteAssistant_assistantId").hide();
+
+                $("#node-input-createThread_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createThread_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createThread_body").hide();
+
+                $("#node-input-getThread_threadId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getThread_threadIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getThread_threadId").hide();
+
+                $("#node-input-modifyThread_threadId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-modifyThread_threadIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#modifyThread_threadId").hide();
+
+                $("#node-input-modifyThread_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-modifyThread_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#modifyThread_body").hide();
+
+                $("#node-input-deleteThread_threadId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-deleteThread_threadIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#deleteThread_threadId").hide();
+
+                $("#node-input-listMessages_threadId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listMessages_threadIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listMessages_threadId").hide();
+
+                $("#node-input-listMessages_limit").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listMessages_limitType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listMessages_limit").hide();
+
+
+                $("#listMessages_order").hide();
+
+                $("#node-input-listMessages_after").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listMessages_afterType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listMessages_after").hide();
+
+                $("#node-input-listMessages_before").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listMessages_beforeType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listMessages_before").hide();
+
+                $("#node-input-createMessage_threadId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createMessage_threadIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createMessage_threadId").hide();
+
+                $("#node-input-createMessage_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createMessage_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createMessage_body").hide();
+
+                $("#node-input-getMessage_threadId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getMessage_threadIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getMessage_threadId").hide();
+
+                $("#node-input-getMessage_messageId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getMessage_messageIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getMessage_messageId").hide();
+
+                $("#node-input-modifyMessage_threadId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-modifyMessage_threadIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#modifyMessage_threadId").hide();
+
+                $("#node-input-modifyMessage_messageId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-modifyMessage_messageIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#modifyMessage_messageId").hide();
+
+                $("#node-input-modifyMessage_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-modifyMessage_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#modifyMessage_body").hide();
+
+                $("#node-input-createThreadAndRun_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createThreadAndRun_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createThreadAndRun_body").hide();
+
+                $("#node-input-listRuns_threadId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listRuns_threadIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listRuns_threadId").hide();
+
+                $("#node-input-listRuns_limit").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listRuns_limitType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listRuns_limit").hide();
+
+
+                $("#listRuns_order").hide();
+
+                $("#node-input-listRuns_after").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listRuns_afterType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listRuns_after").hide();
+
+                $("#node-input-listRuns_before").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listRuns_beforeType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listRuns_before").hide();
+
+                $("#node-input-createRun_threadId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createRun_threadIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createRun_threadId").hide();
+
+                $("#node-input-createRun_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createRun_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createRun_body").hide();
+
+                $("#node-input-getRun_threadId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getRun_threadIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getRun_threadId").hide();
+
+                $("#node-input-getRun_runId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getRun_runIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getRun_runId").hide();
+
+                $("#node-input-modifyRun_threadId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-modifyRun_threadIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#modifyRun_threadId").hide();
+
+                $("#node-input-modifyRun_runId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-modifyRun_runIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#modifyRun_runId").hide();
+
+                $("#node-input-modifyRun_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-modifyRun_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#modifyRun_body").hide();
+
+                $("#node-input-submitToolOuputsToRun_threadId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-submitToolOuputsToRun_threadIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#submitToolOuputsToRun_threadId").hide();
+
+                $("#node-input-submitToolOuputsToRun_runId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-submitToolOuputsToRun_runIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#submitToolOuputsToRun_runId").hide();
+
+                $("#node-input-submitToolOuputsToRun_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-submitToolOuputsToRun_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#submitToolOuputsToRun_body").hide();
+
+                $("#node-input-cancelRun_threadId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-cancelRun_threadIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#cancelRun_threadId").hide();
+
+                $("#node-input-cancelRun_runId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-cancelRun_runIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#cancelRun_runId").hide();
+
+                $("#node-input-listRunSteps_threadId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listRunSteps_threadIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listRunSteps_threadId").hide();
+
+                $("#node-input-listRunSteps_runId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listRunSteps_runIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listRunSteps_runId").hide();
+
+                $("#node-input-listRunSteps_limit").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listRunSteps_limitType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listRunSteps_limit").hide();
+
+
+                $("#listRunSteps_order").hide();
+
+                $("#node-input-listRunSteps_after").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listRunSteps_afterType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listRunSteps_after").hide();
+
+                $("#node-input-listRunSteps_before").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listRunSteps_beforeType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listRunSteps_before").hide();
+
+                $("#node-input-getRunStep_threadId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getRunStep_threadIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getRunStep_threadId").hide();
+
+                $("#node-input-getRunStep_runId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getRunStep_runIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getRunStep_runId").hide();
+
+                $("#node-input-getRunStep_stepId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getRunStep_stepIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getRunStep_stepId").hide();
+
+                $("#node-input-listAssistantFiles_assistantId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listAssistantFiles_assistantIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listAssistantFiles_assistantId").hide();
+
+                $("#node-input-listAssistantFiles_limit").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listAssistantFiles_limitType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listAssistantFiles_limit").hide();
+
+
+                $("#listAssistantFiles_order").hide();
+
+                $("#node-input-listAssistantFiles_after").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listAssistantFiles_afterType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listAssistantFiles_after").hide();
+
+                $("#node-input-listAssistantFiles_before").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listAssistantFiles_beforeType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listAssistantFiles_before").hide();
+
+                $("#node-input-createAssistantFile_assistantId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createAssistantFile_assistantIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createAssistantFile_assistantId").hide();
+
+                $("#node-input-createAssistantFile_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-createAssistantFile_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#createAssistantFile_body").hide();
+
+                $("#node-input-getAssistantFile_assistantId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getAssistantFile_assistantIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getAssistantFile_assistantId").hide();
+
+                $("#node-input-getAssistantFile_fileId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getAssistantFile_fileIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getAssistantFile_fileId").hide();
+
+                $("#node-input-deleteAssistantFile_assistantId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-deleteAssistantFile_assistantIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#deleteAssistantFile_assistantId").hide();
+
+                $("#node-input-deleteAssistantFile_fileId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-deleteAssistantFile_fileIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#deleteAssistantFile_fileId").hide();
+
+                $("#node-input-listMessageFiles_threadId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listMessageFiles_threadIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listMessageFiles_threadId").hide();
+
+                $("#node-input-listMessageFiles_messageId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listMessageFiles_messageIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listMessageFiles_messageId").hide();
+
+                $("#node-input-listMessageFiles_limit").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listMessageFiles_limitType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listMessageFiles_limit").hide();
+
+
+                $("#listMessageFiles_order").hide();
+
+                $("#node-input-listMessageFiles_after").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listMessageFiles_afterType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listMessageFiles_after").hide();
+
+                $("#node-input-listMessageFiles_before").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-listMessageFiles_beforeType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#listMessageFiles_before").hide();
+
+                $("#node-input-getMessageFile_threadId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getMessageFile_threadIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getMessageFile_threadId").hide();
+
+                $("#node-input-getMessageFile_messageId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getMessageFile_messageIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getMessageFile_messageId").hide();
+
+                $("#node-input-getMessageFile_fileId").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-getMessageFile_fileIdType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#getMessageFile_fileId").hide();
+
+                $("#optional-parameters").hide();
+                $("#optional-parameters-label").hide();
+                if ($("#node-input-method").val() === 'createChatCompletion') {
+
+                }
+
+                if ($("#node-input-method").val() === 'createImage') {
+
+                }
+                if ($("#node-input-method").val() === 'createImageEdit') {
+
+                    $("#optional-parameters").show();
+                    $("#optional-parameters-label").show();
+
+                }
+                if ($("#node-input-method").val() === 'createImageVariation') {
+
+                    $("#optional-parameters").show();
+                    $("#optional-parameters-label").show();
+
+                }
+                if ($("#node-input-method").val() === 'createEmbedding') {
+
+                }
+                if ($("#node-input-method").val() === 'createSpeech') {
+
+                }
+                if ($("#node-input-method").val() === 'createTranscription') {
+
+                    $("#optional-parameters").show();
+                    $("#optional-parameters-label").show();
+
+                }
+                if ($("#node-input-method").val() === 'createTranslation') {
+
+                    $("#optional-parameters").show();
+                    $("#optional-parameters-label").show();
+
+                }
+                if ($("#node-input-method").val() === 'listFiles') {
+
+                    $("#optional-parameters").show();
+                    $("#optional-parameters-label").show();
+
+                }
+                if ($("#node-input-method").val() === 'createFile') {
+
+                }
+                if ($("#node-input-method").val() === 'deleteFile') {
+
+                }
+                if ($("#node-input-method").val() === 'retrieveFile') {
+
+                }
+                if ($("#node-input-method").val() === 'downloadFile') {
+
+                }
+                if ($("#node-input-method").val() === 'createFineTuningJob') {
+
+                }
+                if ($("#node-input-method").val() === 'listPaginatedFineTuningJobs') {
+
+                    $("#optional-parameters").show();
+                    $("#optional-parameters-label").show();
+
+                }
+                if ($("#node-input-method").val() === 'retrieveFineTuningJob') {
+
+                }
+                if ($("#node-input-method").val() === 'listFineTuningEvents') {
+
+                    $("#optional-parameters").show();
+                    $("#optional-parameters-label").show();
+
+                }
+                if ($("#node-input-method").val() === 'cancelFineTuningJob') {
+
+                }
+
+                if ($("#node-input-method").val() === 'listModels') {
+
+                }
+                if ($("#node-input-method").val() === 'retrieveModel') {
+
+                }
+                if ($("#node-input-method").val() === 'deleteModel') {
+
+                }
+                if ($("#node-input-method").val() === 'createModeration') {
+
+                }
+                if ($("#node-input-method").val() === 'listAssistants') {
+
+                    $("#optional-parameters").show();
+                    $("#optional-parameters-label").show();
+
+                }
+                if ($("#node-input-method").val() === 'createAssistant') {
+
+                }
+                if ($("#node-input-method").val() === 'getAssistant') {
+
+                }
+                if ($("#node-input-method").val() === 'modifyAssistant') {
+
+                }
+                if ($("#node-input-method").val() === 'deleteAssistant') {
+
+                }
+                if ($("#node-input-method").val() === 'createThread') {
+
+                }
+                if ($("#node-input-method").val() === 'getThread') {
+
+                }
+                if ($("#node-input-method").val() === 'modifyThread') {
+
+                }
+                if ($("#node-input-method").val() === 'deleteThread') {
+
+                }
+                if ($("#node-input-method").val() === 'listMessages') {
+
+                    $("#optional-parameters").show();
+                    $("#optional-parameters-label").show();
+
+                }
+                if ($("#node-input-method").val() === 'createMessage') {
+
+                }
+                if ($("#node-input-method").val() === 'getMessage') {
+
+                }
+                if ($("#node-input-method").val() === 'modifyMessage') {
+
+                }
+                if ($("#node-input-method").val() === 'createThreadAndRun') {
+
+                }
+                if ($("#node-input-method").val() === 'listRuns') {
+
+                    $("#optional-parameters").show();
+                    $("#optional-parameters-label").show();
+
+                }
+                if ($("#node-input-method").val() === 'createRun') {
+
+                }
+                if ($("#node-input-method").val() === 'getRun') {
+
+                }
+                if ($("#node-input-method").val() === 'modifyRun') {
+
+                }
+                if ($("#node-input-method").val() === 'submitToolOuputsToRun') {
+
+                }
+                if ($("#node-input-method").val() === 'cancelRun') {
+
+                }
+                if ($("#node-input-method").val() === 'listRunSteps') {
+
+                    $("#optional-parameters").show();
+                    $("#optional-parameters-label").show();
+
+                }
+                if ($("#node-input-method").val() === 'getRunStep') {
+
+                }
+                if ($("#node-input-method").val() === 'listAssistantFiles') {
+
+                    $("#optional-parameters").show();
+                    $("#optional-parameters-label").show();
+
+                }
+                if ($("#node-input-method").val() === 'createAssistantFile') {
+
+                }
+                if ($("#node-input-method").val() === 'getAssistantFile') {
+
+                }
+                if ($("#node-input-method").val() === 'deleteAssistantFile') {
+
+                }
+                if ($("#node-input-method").val() === 'listMessageFiles') {
+
+                    $("#optional-parameters").show();
+                    $("#optional-parameters-label").show();
+
+                }
+                if ($("#node-input-method").val() === 'getMessageFile') {
+
+                }
+
+                if ($("#optional-parameters").prop('checked')) {
+                    if ($("#node-input-method").val() === 'createChatCompletion') {
+
+                    }
+                    if ($("#node-input-method").val() === 'createImage') {
+
+                    }
+                    if ($("#node-input-method").val() === 'createImageEdit') {
+
+                        $("#createImageEdit_image").show();
+
+                        $("#createImageEdit_prompt").show();
+
+                        $("#createImageEdit_mask").show();
+
+                        $("#createImageEdit_model").show();
+
+                        $("#createImageEdit_n").show();
+
+                        $("#createImageEdit_size").show();
+
+                        $("#createImageEdit_responseFormat").show();
+
+                        $("#createImageEdit_user").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createImageVariation') {
+
+                        $("#createImageVariation_image").show();
+
+                        $("#createImageVariation_model").show();
+
+                        $("#createImageVariation_n").show();
+
+                        $("#createImageVariation_responseFormat").show();
+
+                        $("#createImageVariation_size").show();
+
+                        $("#createImageVariation_user").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createEmbedding') {
+
+                    }
+                    if ($("#node-input-method").val() === 'createSpeech') {
+
+                    }
+                    if ($("#node-input-method").val() === 'createTranscription') {
+
+                        $("#createTranscription_file").show();
+
+                        $("#createTranscription_model").show();
+
+                        $("#createTranscription_language").show();
+
+                        $("#createTranscription_prompt").show();
+
+                        $("#createTranscription_responseFormat").show();
+
+                        $("#createTranscription_temperature").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createTranslation') {
+
+                        $("#createTranslation_file").show();
+
+                        $("#createTranslation_model").show();
+
+                        $("#createTranslation_prompt").show();
+
+                        $("#createTranslation_responseFormat").show();
+
+                        $("#createTranslation_temperature").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'listFiles') {
+
+                        $("#listFiles_purpose").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createFile') {
+
+                        $("#createFile_file").show();
+
+                        $("#createFile_purpose").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'deleteFile') {
+
+                        $("#deleteFile_fileId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'retrieveFile') {
+
+                        $("#retrieveFile_fileId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'downloadFile') {
+
+                        $("#downloadFile_fileId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createFineTuningJob') {
+
+                    }
+                    if ($("#node-input-method").val() === 'listPaginatedFineTuningJobs') {
+
+                        $("#listPaginatedFineTuningJobs_after").show();
+
+                        $("#listPaginatedFineTuningJobs_limit").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'retrieveFineTuningJob') {
+
+                        $("#retrieveFineTuningJob_fineTuningJobId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'listFineTuningEvents') {
+
+                        $("#listFineTuningEvents_fineTuningJobId").show();
+
+                        $("#listFineTuningEvents_after").show();
+
+                        $("#listFineTuningEvents_limit").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'cancelFineTuningJob') {
+
+                        $("#cancelFineTuningJob_fineTuningJobId").show();
+
+                    }
+
+                    if ($("#node-input-method").val() === 'listModels') {
+
+                    }
+                    if ($("#node-input-method").val() === 'retrieveModel') {
+
+                        $("#retrieveModel_model").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'deleteModel') {
+
+                        $("#deleteModel_model").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createModeration') {
+
+                    }
+                    if ($("#node-input-method").val() === 'listAssistants') {
+
+                        $("#listAssistants_limit").show();
+
+                        $("#listAssistants_order").show();
+
+                        $("#listAssistants_after").show();
+
+                        $("#listAssistants_before").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createAssistant') {
+
+                    }
+                    if ($("#node-input-method").val() === 'getAssistant') {
+
+                        $("#getAssistant_assistantId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'modifyAssistant') {
+
+                        $("#modifyAssistant_assistantId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'deleteAssistant') {
+
+                        $("#deleteAssistant_assistantId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createThread') {
+
+                    }
+                    if ($("#node-input-method").val() === 'getThread') {
+
+                        $("#getThread_threadId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'modifyThread') {
+
+                        $("#modifyThread_threadId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'deleteThread') {
+
+                        $("#deleteThread_threadId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'listMessages') {
+
+                        $("#listMessages_threadId").show();
+
+                        $("#listMessages_limit").show();
+
+                        $("#listMessages_order").show();
+
+                        $("#listMessages_after").show();
+
+                        $("#listMessages_before").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createMessage') {
+
+                        $("#createMessage_threadId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'getMessage') {
+
+                        $("#getMessage_threadId").show();
+
+                        $("#getMessage_messageId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'modifyMessage') {
+
+                        $("#modifyMessage_threadId").show();
+
+                        $("#modifyMessage_messageId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createThreadAndRun') {
+
+                    }
+                    if ($("#node-input-method").val() === 'listRuns') {
+
+                        $("#listRuns_threadId").show();
+
+                        $("#listRuns_limit").show();
+
+                        $("#listRuns_order").show();
+
+                        $("#listRuns_after").show();
+
+                        $("#listRuns_before").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createRun') {
+
+                        $("#createRun_threadId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'getRun') {
+
+                        $("#getRun_threadId").show();
+
+                        $("#getRun_runId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'modifyRun') {
+
+                        $("#modifyRun_threadId").show();
+
+                        $("#modifyRun_runId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'submitToolOuputsToRun') {
+
+                        $("#submitToolOuputsToRun_threadId").show();
+
+                        $("#submitToolOuputsToRun_runId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'cancelRun') {
+
+                        $("#cancelRun_threadId").show();
+
+                        $("#cancelRun_runId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'listRunSteps') {
+
+                        $("#listRunSteps_threadId").show();
+
+                        $("#listRunSteps_runId").show();
+
+                        $("#listRunSteps_limit").show();
+
+                        $("#listRunSteps_order").show();
+
+                        $("#listRunSteps_after").show();
+
+                        $("#listRunSteps_before").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'getRunStep') {
+
+                        $("#getRunStep_threadId").show();
+
+                        $("#getRunStep_runId").show();
+
+                        $("#getRunStep_stepId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'listAssistantFiles') {
+
+                        $("#listAssistantFiles_assistantId").show();
+
+                        $("#listAssistantFiles_limit").show();
+
+                        $("#listAssistantFiles_order").show();
+
+                        $("#listAssistantFiles_after").show();
+
+                        $("#listAssistantFiles_before").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createAssistantFile') {
+
+                        $("#createAssistantFile_assistantId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'getAssistantFile') {
+
+                        $("#getAssistantFile_assistantId").show();
+
+                        $("#getAssistantFile_fileId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'deleteAssistantFile') {
+
+                        $("#deleteAssistantFile_assistantId").show();
+
+                        $("#deleteAssistantFile_fileId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'listMessageFiles') {
+
+                        $("#listMessageFiles_threadId").show();
+
+                        $("#listMessageFiles_messageId").show();
+
+                        $("#listMessageFiles_limit").show();
+
+                        $("#listMessageFiles_order").show();
+
+                        $("#listMessageFiles_after").show();
+
+                        $("#listMessageFiles_before").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'getMessageFile') {
+
+                        $("#getMessageFile_threadId").show();
+
+                        $("#getMessageFile_messageId").show();
+
+                        $("#getMessageFile_fileId").show();
+
+                    }
+                } else {
+                    if ($("#node-input-method").val() === 'createChatCompletion') {
+
+                    }
+                    if ($("#node-input-method").val() === 'createImage') {
+
+                    }
+                    if ($("#node-input-method").val() === 'createImageEdit') {
+
+                        $("#createImageEdit_image").show();
+
+                        $("#createImageEdit_prompt").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createImageVariation') {
+
+                        $("#createImageVariation_image").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createEmbedding') {
+
+                    }
+                    if ($("#node-input-method").val() === 'createSpeech') {
+
+                    }
+                    if ($("#node-input-method").val() === 'createTranscription') {
+
+                        $("#createTranscription_file").show();
+
+                        $("#createTranscription_model").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createTranslation') {
+
+                        $("#createTranslation_file").show();
+
+                        $("#createTranslation_model").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'listFiles') {
+
+                    }
+                    if ($("#node-input-method").val() === 'createFile') {
+
+                        $("#createFile_file").show();
+
+                        $("#createFile_purpose").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'deleteFile') {
+
+                        $("#deleteFile_fileId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'retrieveFile') {
+
+                        $("#retrieveFile_fileId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'downloadFile') {
+
+                        $("#downloadFile_fileId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createFineTuningJob') {
+
+                    }
+                    if ($("#node-input-method").val() === 'listPaginatedFineTuningJobs') {
+
+                    }
+                    if ($("#node-input-method").val() === 'retrieveFineTuningJob') {
+
+                        $("#retrieveFineTuningJob_fineTuningJobId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'listFineTuningEvents') {
+
+                        $("#listFineTuningEvents_fineTuningJobId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'cancelFineTuningJob') {
+
+                        $("#cancelFineTuningJob_fineTuningJobId").show();
+
+                    }
+
+                    if ($("#node-input-method").val() === 'listModels') {
+
+                    }
+                    if ($("#node-input-method").val() === 'retrieveModel') {
+
+                        $("#retrieveModel_model").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'deleteModel') {
+
+                        $("#deleteModel_model").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createModeration') {
+
+                    }
+                    if ($("#node-input-method").val() === 'listAssistants') {
+
+                    }
+                    if ($("#node-input-method").val() === 'createAssistant') {
+
+                    }
+                    if ($("#node-input-method").val() === 'getAssistant') {
+
+                        $("#getAssistant_assistantId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'modifyAssistant') {
+
+                        $("#modifyAssistant_assistantId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'deleteAssistant') {
+
+                        $("#deleteAssistant_assistantId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createThread') {
+
+                    }
+                    if ($("#node-input-method").val() === 'getThread') {
+
+                        $("#getThread_threadId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'modifyThread') {
+
+                        $("#modifyThread_threadId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'deleteThread') {
+
+                        $("#deleteThread_threadId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'listMessages') {
+
+                        $("#listMessages_threadId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createMessage') {
+
+                        $("#createMessage_threadId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'getMessage') {
+
+                        $("#getMessage_threadId").show();
+
+                        $("#getMessage_messageId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'modifyMessage') {
+
+                        $("#modifyMessage_threadId").show();
+
+                        $("#modifyMessage_messageId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createThreadAndRun') {
+
+                    }
+                    if ($("#node-input-method").val() === 'listRuns') {
+
+                        $("#listRuns_threadId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createRun') {
+
+                        $("#createRun_threadId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'getRun') {
+
+                        $("#getRun_threadId").show();
+
+                        $("#getRun_runId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'modifyRun') {
+
+                        $("#modifyRun_threadId").show();
+
+                        $("#modifyRun_runId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'submitToolOuputsToRun') {
+
+                        $("#submitToolOuputsToRun_threadId").show();
+
+                        $("#submitToolOuputsToRun_runId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'cancelRun') {
+
+                        $("#cancelRun_threadId").show();
+
+                        $("#cancelRun_runId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'listRunSteps') {
+
+                        $("#listRunSteps_threadId").show();
+
+                        $("#listRunSteps_runId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'getRunStep') {
+
+                        $("#getRunStep_threadId").show();
+
+                        $("#getRunStep_runId").show();
+
+                        $("#getRunStep_stepId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'listAssistantFiles') {
+
+                        $("#listAssistantFiles_assistantId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'createAssistantFile') {
+
+                        $("#createAssistantFile_assistantId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'getAssistantFile') {
+
+                        $("#getAssistantFile_assistantId").show();
+
+                        $("#getAssistantFile_fileId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'deleteAssistantFile') {
+
+                        $("#deleteAssistantFile_assistantId").show();
+
+                        $("#deleteAssistantFile_fileId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'listMessageFiles') {
+
+                        $("#listMessageFiles_threadId").show();
+
+                        $("#listMessageFiles_messageId").show();
+
+                    }
+                    if ($("#node-input-method").val() === 'getMessageFile') {
+
+                        $("#getMessageFile_threadId").show();
+
+                        $("#getMessageFile_messageId").show();
+
+                        $("#getMessageFile_fileId").show();
+
+                    }
+                }
+            };
+
+            $("#node-input-method").change(function () {
+                showParameters();
+            });
+
+            $("#optional-parameters").change(function () {
+                showParameters();
+            });
+
+            var selected_createImageEdit_size = $('#node-input-createImageEdit_size option:selected');
+            if (!selected_createImageEdit_size.val()) {
+                var children_createImageEdit_size = $('#node-input-createImageEdit_size').children();
+                var first_createImageEdit_size = children_createImageEdit_size.first();
+                $('#node-input-createImageEdit_size').val(first_createImageEdit_size.val());
+            }
+            var selected_createImageEdit_responseFormat = $('#node-input-createImageEdit_responseFormat option:selected');
+            if (!selected_createImageEdit_responseFormat.val()) {
+                var children_createImageEdit_responseFormat = $('#node-input-createImageEdit_responseFormat').children();
+                var first_createImageEdit_responseFormat = children_createImageEdit_responseFormat.first();
+                $('#node-input-createImageEdit_responseFormat').val(first_createImageEdit_responseFormat.val());
+            }
+            var selected_createImageVariation_responseFormat = $('#node-input-createImageVariation_responseFormat option:selected');
+            if (!selected_createImageVariation_responseFormat.val()) {
+                var children_createImageVariation_responseFormat = $('#node-input-createImageVariation_responseFormat').children();
+                var first_createImageVariation_responseFormat = children_createImageVariation_responseFormat.first();
+                $('#node-input-createImageVariation_responseFormat').val(first_createImageVariation_responseFormat.val());
+            }
+            var selected_createImageVariation_size = $('#node-input-createImageVariation_size option:selected');
+            if (!selected_createImageVariation_size.val()) {
+                var children_createImageVariation_size = $('#node-input-createImageVariation_size').children();
+                var first_createImageVariation_size = children_createImageVariation_size.first();
+                $('#node-input-createImageVariation_size').val(first_createImageVariation_size.val());
+            }
+            var selected_createTranscription_responseFormat = $('#node-input-createTranscription_responseFormat option:selected');
+            if (!selected_createTranscription_responseFormat.val()) {
+                var children_createTranscription_responseFormat = $('#node-input-createTranscription_responseFormat').children();
+                var first_createTranscription_responseFormat = children_createTranscription_responseFormat.first();
+                $('#node-input-createTranscription_responseFormat').val(first_createTranscription_responseFormat.val());
+            }
+            var selected_createFile_purpose = $('#node-input-createFile_purpose option:selected');
+            if (!selected_createFile_purpose.val()) {
+                var children_createFile_purpose = $('#node-input-createFile_purpose').children();
+                var first_createFile_purpose = children_createFile_purpose.first();
+                $('#node-input-createFile_purpose').val(first_createFile_purpose.val());
+            }
+            var selected_listAssistants_order = $('#node-input-listAssistants_order option:selected');
+            if (!selected_listAssistants_order.val()) {
+                var children_listAssistants_order = $('#node-input-listAssistants_order').children();
+                var first_listAssistants_order = children_listAssistants_order.first();
+                $('#node-input-listAssistants_order').val(first_listAssistants_order.val());
+            }
+            var selected_listMessages_order = $('#node-input-listMessages_order option:selected');
+            if (!selected_listMessages_order.val()) {
+                var children_listMessages_order = $('#node-input-listMessages_order').children();
+                var first_listMessages_order = children_listMessages_order.first();
+                $('#node-input-listMessages_order').val(first_listMessages_order.val());
+            }
+            var selected_listRuns_order = $('#node-input-listRuns_order option:selected');
+            if (!selected_listRuns_order.val()) {
+                var children_listRuns_order = $('#node-input-listRuns_order').children();
+                var first_listRuns_order = children_listRuns_order.first();
+                $('#node-input-listRuns_order').val(first_listRuns_order.val());
+            }
+            var selected_listRunSteps_order = $('#node-input-listRunSteps_order option:selected');
+            if (!selected_listRunSteps_order.val()) {
+                var children_listRunSteps_order = $('#node-input-listRunSteps_order').children();
+                var first_listRunSteps_order = children_listRunSteps_order.first();
+                $('#node-input-listRunSteps_order').val(first_listRunSteps_order.val());
+            }
+            var selected_listAssistantFiles_order = $('#node-input-listAssistantFiles_order option:selected');
+            if (!selected_listAssistantFiles_order.val()) {
+                var children_listAssistantFiles_order = $('#node-input-listAssistantFiles_order').children();
+                var first_listAssistantFiles_order = children_listAssistantFiles_order.first();
+                $('#node-input-listAssistantFiles_order').val(first_listAssistantFiles_order.val());
+            }
+            var selected_listMessageFiles_order = $('#node-input-listMessageFiles_order option:selected');
+            if (!selected_listMessageFiles_order.val()) {
+                var children_listMessageFiles_order = $('#node-input-listMessageFiles_order').children();
+                var first_listMessageFiles_order = children_listMessageFiles_order.first();
+                $('#node-input-listMessageFiles_order').val(first_listMessageFiles_order.val());
+            }
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="openai-api">
+    <div class="form-row">
+        <label for="node-input-service"><i class="fa fa-cloud"></i> <span data-i18n="OpenaiApi.label.service"></span></label>
+        <input type="text" id="node-input-service">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-method"><i class="fa fa-tasks"></i> <span data-i18n="OpenaiApi.label.method"></span></label>
+        <select id="node-input-method">
+            <option value="createChatCompletion" data-i18n="OpenaiApi.parameters.createChatCompletion"></option>
+            <option value="createImage" data-i18n="OpenaiApi.parameters.createImage"></option>
+            <option value="createImageEdit" data-i18n="OpenaiApi.parameters.createImageEdit"></option>
+            <option value="createImageVariation" data-i18n="OpenaiApi.parameters.createImageVariation"></option>
+            <option value="createEmbedding" data-i18n="OpenaiApi.parameters.createEmbedding"></option>
+            <option value="createSpeech" data-i18n="OpenaiApi.parameters.createSpeech"></option>
+            <option value="createTranscription" data-i18n="OpenaiApi.parameters.createTranscription"></option>
+            <option value="createTranslation" data-i18n="OpenaiApi.parameters.createTranslation"></option>
+            <option value="listFiles" data-i18n="OpenaiApi.parameters.listFiles"></option>
+            <option value="createFile" data-i18n="OpenaiApi.parameters.createFile"></option>
+            <option value="deleteFile" data-i18n="OpenaiApi.parameters.deleteFile"></option>
+            <option value="retrieveFile" data-i18n="OpenaiApi.parameters.retrieveFile"></option>
+            <option value="downloadFile" data-i18n="OpenaiApi.parameters.downloadFile"></option>
+            <option value="createFineTuningJob" data-i18n="OpenaiApi.parameters.createFineTuningJob"></option>
+            <option value="listPaginatedFineTuningJobs" data-i18n="OpenaiApi.parameters.listPaginatedFineTuningJobs"></option>
+            <option value="retrieveFineTuningJob" data-i18n="OpenaiApi.parameters.retrieveFineTuningJob"></option>
+            <option value="listFineTuningEvents" data-i18n="OpenaiApi.parameters.listFineTuningEvents"></option>
+            <option value="cancelFineTuningJob" data-i18n="OpenaiApi.parameters.cancelFineTuningJob"></option>
+            <option value="listModels" data-i18n="OpenaiApi.parameters.listModels"></option>
+            <option value="retrieveModel" data-i18n="OpenaiApi.parameters.retrieveModel"></option>
+            <option value="deleteModel" data-i18n="OpenaiApi.parameters.deleteModel"></option>
+            <option value="createModeration" data-i18n="OpenaiApi.parameters.createModeration"></option>
+            <option value="listAssistants" data-i18n="OpenaiApi.parameters.listAssistants"></option>
+            <option value="createAssistant" data-i18n="OpenaiApi.parameters.createAssistant"></option>
+            <option value="getAssistant" data-i18n="OpenaiApi.parameters.getAssistant"></option>
+            <option value="modifyAssistant" data-i18n="OpenaiApi.parameters.modifyAssistant"></option>
+            <option value="deleteAssistant" data-i18n="OpenaiApi.parameters.deleteAssistant"></option>
+            <option value="createThread" data-i18n="OpenaiApi.parameters.createThread"></option>
+            <option value="getThread" data-i18n="OpenaiApi.parameters.getThread"></option>
+            <option value="modifyThread" data-i18n="OpenaiApi.parameters.modifyThread"></option>
+            <option value="deleteThread" data-i18n="OpenaiApi.parameters.deleteThread"></option>
+            <option value="listMessages" data-i18n="OpenaiApi.parameters.listMessages"></option>
+            <option value="createMessage" data-i18n="OpenaiApi.parameters.createMessage"></option>
+            <option value="getMessage" data-i18n="OpenaiApi.parameters.getMessage"></option>
+            <option value="modifyMessage" data-i18n="OpenaiApi.parameters.modifyMessage"></option>
+            <option value="createThreadAndRun" data-i18n="OpenaiApi.parameters.createThreadAndRun"></option>
+            <option value="listRuns" data-i18n="OpenaiApi.parameters.listRuns"></option>
+            <option value="createRun" data-i18n="OpenaiApi.parameters.createRun"></option>
+            <option value="getRun" data-i18n="OpenaiApi.parameters.getRun"></option>
+            <option value="modifyRun" data-i18n="OpenaiApi.parameters.modifyRun"></option>
+            <option value="submitToolOuputsToRun" data-i18n="OpenaiApi.parameters.submitToolOuputsToRun"></option>
+            <option value="cancelRun" data-i18n="OpenaiApi.parameters.cancelRun"></option>
+            <option value="listRunSteps" data-i18n="OpenaiApi.parameters.listRunSteps"></option>
+            <option value="getRunStep" data-i18n="OpenaiApi.parameters.getRunStep"></option>
+            <option value="listAssistantFiles" data-i18n="OpenaiApi.parameters.listAssistantFiles"></option>
+            <option value="createAssistantFile" data-i18n="OpenaiApi.parameters.createAssistantFile"></option>
+            <option value="getAssistantFile" data-i18n="OpenaiApi.parameters.getAssistantFile"></option>
+            <option value="deleteAssistantFile" data-i18n="OpenaiApi.parameters.deleteAssistantFile"></option>
+            <option value="listMessageFiles" data-i18n="OpenaiApi.parameters.listMessageFiles"></option>
+            <option value="getMessageFile" data-i18n="OpenaiApi.parameters.getMessageFile"></option>
+        </select>
+        &nbsp;
+        <input type="checkbox" id="optional-parameters" style="margin-left: 10px; vertical-align: text-bottom; width: auto;">
+        <label for="optional-parameters" id="optional-parameters-label" style="width: auto;"> <span data-i18n="OpenaiApi.parameters.optionalParameters"></span></label>
+    </div>
+
+    <div class="form-row" id="createChatCompletion_body">
+        <label for="node-input-createChatCompletion_body"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.body"></span></label>
+
+        <input type="text" id="node-input-createChatCompletion_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-createChatCompletion_bodyType">
+    </div>
+
+    <div class="form-row" id="createImage_body">
+        <label for="node-input-createImage_body"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.body"></span></label>
+
+        <input type="text" id="node-input-createImage_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-createImage_bodyType">
+    </div>
+
+    <div class="form-row" id="createImageEdit_image">
+        <label for="node-input-createImageEdit_image"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.image"></span></label>
+
+        <input type="text" id="node-input-createImageEdit_image" placeholder="The image to edit. Must be a valid PNG file, less than 4MB, and square. If mask is not provided, image must have transparency, which will be used as the mask." style="width:70%">
+        <input type="hidden" id="node-input-createImageEdit_imageType">
+    </div>
+
+    <div class="form-row" id="createImageEdit_prompt">
+        <label for="node-input-createImageEdit_prompt"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.prompt"></span></label>
+
+        <input type="text" id="node-input-createImageEdit_prompt" placeholder="A text description of the desired image(s). The maximum length is 1000 characters." style="width:70%">
+        <input type="hidden" id="node-input-createImageEdit_promptType">
+    </div>
+
+    <div class="form-row" id="createImageEdit_mask">
+        <label for="node-input-createImageEdit_mask"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.mask"></span></label>
+
+        <input type="text" id="node-input-createImageEdit_mask" placeholder="An additional image whose fully transparent areas (e.g. where alpha is zero) indicate where `image` should be edited. Must be a valid PNG file, less than 4MB, and have the same dimensions as `image`." style="width:70%">
+        <input type="hidden" id="node-input-createImageEdit_maskType">
+    </div>
+
+    <div class="form-row" id="createImageEdit_model">
+        <label for="node-input-createImageEdit_model"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.model"></span></label>
+
+        <input type="text" id="node-input-createImageEdit_model" placeholder="The model to use for image generation. Only `dall-e-2` is supported at this time." style="width:70%">
+        <input type="hidden" id="node-input-createImageEdit_modelType">
+    </div>
+
+    <div class="form-row" id="createImageEdit_n">
+        <label for="node-input-createImageEdit_n"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.n"></span></label>
+
+        <input type="text" id="node-input-createImageEdit_n" placeholder="The number of images to generate. Must be between 1 and 10." style="width:70%">
+        <input type="hidden" id="node-input-createImageEdit_nType">
+    </div>
+
+    <div class="form-row" id="createImageEdit_size">
+        <label for="node-input-createImageEdit_size"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.size"></span></label>
+        <select id="node-input-createImageEdit_size">
+            <option value="256x256">256x256</option>
+            <option value="512x512">512x512</option>
+            <option value="1024x1024">1024x1024</option>
+        </select>
+
+    </div>
+
+    <div class="form-row" id="createImageEdit_responseFormat">
+        <label for="node-input-createImageEdit_responseFormat"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.responseFormat"></span></label>
+        <select id="node-input-createImageEdit_responseFormat">
+            <option value="url">url</option>
+            <option value="b64_json">b64_json</option>
+        </select>
+
+    </div>
+
+    <div class="form-row" id="createImageEdit_user">
+        <label for="node-input-createImageEdit_user"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.user"></span></label>
+
+        <input type="text" id="node-input-createImageEdit_user" placeholder="A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more](/docs/guides/safety-best-practices/end-user-ids).
+" style="width:70%">
+        <input type="hidden" id="node-input-createImageEdit_userType">
+    </div>
+
+    <div class="form-row" id="createImageVariation_image">
+        <label for="node-input-createImageVariation_image"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.image"></span></label>
+
+        <input type="text" id="node-input-createImageVariation_image" placeholder="The image to use as the basis for the variation(s). Must be a valid PNG file, less than 4MB, and square." style="width:70%">
+        <input type="hidden" id="node-input-createImageVariation_imageType">
+    </div>
+
+    <div class="form-row" id="createImageVariation_model">
+        <label for="node-input-createImageVariation_model"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.model"></span></label>
+
+        <input type="text" id="node-input-createImageVariation_model" placeholder="The model to use for image generation. Only `dall-e-2` is supported at this time." style="width:70%">
+        <input type="hidden" id="node-input-createImageVariation_modelType">
+    </div>
+
+    <div class="form-row" id="createImageVariation_n">
+        <label for="node-input-createImageVariation_n"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.n"></span></label>
+
+        <input type="text" id="node-input-createImageVariation_n" placeholder="The number of images to generate. Must be between 1 and 10. For `dall-e-3`, only `n=1` is supported." style="width:70%">
+        <input type="hidden" id="node-input-createImageVariation_nType">
+    </div>
+
+    <div class="form-row" id="createImageVariation_responseFormat">
+        <label for="node-input-createImageVariation_responseFormat"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.responseFormat"></span></label>
+        <select id="node-input-createImageVariation_responseFormat">
+            <option value="url">url</option>
+            <option value="b64_json">b64_json</option>
+        </select>
+
+    </div>
+
+    <div class="form-row" id="createImageVariation_size">
+        <label for="node-input-createImageVariation_size"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.size"></span></label>
+        <select id="node-input-createImageVariation_size">
+            <option value="256x256">256x256</option>
+            <option value="512x512">512x512</option>
+            <option value="1024x1024">1024x1024</option>
+        </select>
+
+    </div>
+
+    <div class="form-row" id="createImageVariation_user">
+        <label for="node-input-createImageVariation_user"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.user"></span></label>
+
+        <input type="text" id="node-input-createImageVariation_user" placeholder="A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more](/docs/guides/safety-best-practices/end-user-ids).
+" style="width:70%">
+        <input type="hidden" id="node-input-createImageVariation_userType">
+    </div>
+
+    <div class="form-row" id="createEmbedding_body">
+        <label for="node-input-createEmbedding_body"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.body"></span></label>
+
+        <input type="text" id="node-input-createEmbedding_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-createEmbedding_bodyType">
+    </div>
+
+    <div class="form-row" id="createSpeech_body">
+        <label for="node-input-createSpeech_body"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.body"></span></label>
+
+        <input type="text" id="node-input-createSpeech_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-createSpeech_bodyType">
+    </div>
+
+    <div class="form-row" id="createTranscription_file">
+        <label for="node-input-createTranscription_file"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.file"></span></label>
+
+        <input type="text" id="node-input-createTranscription_file" placeholder="The audio file object (not file name) to transcribe, in one of these formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm.
+" style="width:70%">
+        <input type="hidden" id="node-input-createTranscription_fileType">
+    </div>
+
+    <div class="form-row" id="createTranscription_model">
+        <label for="node-input-createTranscription_model"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.model"></span></label>
+
+        <input type="text" id="node-input-createTranscription_model" placeholder="ID of the model to use. Only `whisper-1` is currently available.
+" style="width:70%">
+        <input type="hidden" id="node-input-createTranscription_modelType">
+    </div>
+
+    <div class="form-row" id="createTranscription_language">
+        <label for="node-input-createTranscription_language"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.language"></span></label>
+
+        <input type="text" id="node-input-createTranscription_language" placeholder="The language of the input audio. Supplying the input language in [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format will improve accuracy and latency.
+" style="width:70%">
+        <input type="hidden" id="node-input-createTranscription_languageType">
+    </div>
+
+    <div class="form-row" id="createTranscription_prompt">
+        <label for="node-input-createTranscription_prompt"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.prompt"></span></label>
+
+        <input type="text" id="node-input-createTranscription_prompt" placeholder="An optional text to guide the model's style or continue a previous audio segment. The [prompt](/docs/guides/speech-to-text/prompting) should match the audio language.
+" style="width:70%">
+        <input type="hidden" id="node-input-createTranscription_promptType">
+    </div>
+
+    <div class="form-row" id="createTranscription_responseFormat">
+        <label for="node-input-createTranscription_responseFormat"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.responseFormat"></span></label>
+        <select id="node-input-createTranscription_responseFormat">
+            <option value="json">json</option>
+            <option value="text">text</option>
+            <option value="srt">srt</option>
+            <option value="verbose_json">verbose_json</option>
+            <option value="vtt">vtt</option>
+        </select>
+
+    </div>
+
+    <div class="form-row" id="createTranscription_temperature">
+        <label for="node-input-createTranscription_temperature"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.temperature"></span></label>
+
+        <input type="text" id="node-input-createTranscription_temperature" placeholder="The sampling temperature, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. If set to 0, the model will use [log probability](https://en.wikipedia.org/wiki/Log_probability) to automatically increase the temperature until certain thresholds are hit.
+" style="width:70%">
+        <input type="hidden" id="node-input-createTranscription_temperatureType">
+    </div>
+
+    <div class="form-row" id="createTranslation_file">
+        <label for="node-input-createTranslation_file"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.file"></span></label>
+
+        <input type="text" id="node-input-createTranslation_file" placeholder="The audio file object (not file name) translate, in one of these formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm.
+" style="width:70%">
+        <input type="hidden" id="node-input-createTranslation_fileType">
+    </div>
+
+    <div class="form-row" id="createTranslation_model">
+        <label for="node-input-createTranslation_model"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.model"></span></label>
+
+        <input type="text" id="node-input-createTranslation_model" placeholder="ID of the model to use. Only `whisper-1` is currently available.
+" style="width:70%">
+        <input type="hidden" id="node-input-createTranslation_modelType">
+    </div>
+
+    <div class="form-row" id="createTranslation_prompt">
+        <label for="node-input-createTranslation_prompt"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.prompt"></span></label>
+
+        <input type="text" id="node-input-createTranslation_prompt" placeholder="An optional text to guide the model's style or continue a previous audio segment. The [prompt](/docs/guides/speech-to-text/prompting) should be in English.
+" style="width:70%">
+        <input type="hidden" id="node-input-createTranslation_promptType">
+    </div>
+
+    <div class="form-row" id="createTranslation_responseFormat">
+        <label for="node-input-createTranslation_responseFormat"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.responseFormat"></span></label>
+
+        <input type="text" id="node-input-createTranslation_responseFormat" placeholder="The format of the transcript output, in one of these options: `json`, `text`, `srt`, `verbose_json`, or `vtt`.
+" style="width:70%">
+        <input type="hidden" id="node-input-createTranslation_responseFormatType">
+    </div>
+
+    <div class="form-row" id="createTranslation_temperature">
+        <label for="node-input-createTranslation_temperature"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.temperature"></span></label>
+
+        <input type="text" id="node-input-createTranslation_temperature" placeholder="The sampling temperature, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. If set to 0, the model will use [log probability](https://en.wikipedia.org/wiki/Log_probability) to automatically increase the temperature until certain thresholds are hit.
+" style="width:70%">
+        <input type="hidden" id="node-input-createTranslation_temperatureType">
+    </div>
+
+    <div class="form-row" id="listFiles_purpose">
+        <label for="node-input-listFiles_purpose"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.purpose"></span></label>
+
+        <input type="text" id="node-input-listFiles_purpose" placeholder="Only return files with the given purpose." style="width:70%">
+        <input type="hidden" id="node-input-listFiles_purposeType">
+    </div>
+
+    <div class="form-row" id="createFile_file">
+        <label for="node-input-createFile_file"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.file"></span></label>
+
+        <input type="text" id="node-input-createFile_file" placeholder="The File object (not file name) to be uploaded.
+" style="width:70%">
+        <input type="hidden" id="node-input-createFile_fileType">
+    </div>
+
+    <div class="form-row" id="createFile_purpose">
+        <label for="node-input-createFile_purpose"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.purpose"></span></label>
+        <select id="node-input-createFile_purpose">
+            <option value="fine-tune">fine-tune</option>
+            <option value="assistants">assistants</option>
+        </select>
+
+    </div>
+
+    <div class="form-row" id="deleteFile_fileId">
+        <label for="node-input-deleteFile_fileId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.fileId"></span></label>
+
+        <input type="text" id="node-input-deleteFile_fileId" placeholder="The ID of the file to use for this request." style="width:70%">
+        <input type="hidden" id="node-input-deleteFile_fileIdType">
+    </div>
+
+    <div class="form-row" id="retrieveFile_fileId">
+        <label for="node-input-retrieveFile_fileId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.fileId"></span></label>
+
+        <input type="text" id="node-input-retrieveFile_fileId" placeholder="The ID of the file to use for this request." style="width:70%">
+        <input type="hidden" id="node-input-retrieveFile_fileIdType">
+    </div>
+
+    <div class="form-row" id="downloadFile_fileId">
+        <label for="node-input-downloadFile_fileId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.fileId"></span></label>
+
+        <input type="text" id="node-input-downloadFile_fileId" placeholder="The ID of the file to use for this request." style="width:70%">
+        <input type="hidden" id="node-input-downloadFile_fileIdType">
+    </div>
+
+    <div class="form-row" id="createFineTuningJob_body">
+        <label for="node-input-createFineTuningJob_body"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.body"></span></label>
+
+        <input type="text" id="node-input-createFineTuningJob_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-createFineTuningJob_bodyType">
+    </div>
+
+    <div class="form-row" id="listPaginatedFineTuningJobs_after">
+        <label for="node-input-listPaginatedFineTuningJobs_after"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.after"></span></label>
+
+        <input type="text" id="node-input-listPaginatedFineTuningJobs_after" placeholder="Identifier for the last job from the previous pagination request." style="width:70%">
+        <input type="hidden" id="node-input-listPaginatedFineTuningJobs_afterType">
+    </div>
+
+    <div class="form-row" id="listPaginatedFineTuningJobs_limit">
+        <label for="node-input-listPaginatedFineTuningJobs_limit"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.limit"></span></label>
+
+        <input type="text" id="node-input-listPaginatedFineTuningJobs_limit" placeholder="Number of fine-tuning jobs to retrieve." style="width:70%">
+        <input type="hidden" id="node-input-listPaginatedFineTuningJobs_limitType">
+    </div>
+
+    <div class="form-row" id="retrieveFineTuningJob_fineTuningJobId">
+        <label for="node-input-retrieveFineTuningJob_fineTuningJobId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.fineTuningJobId"></span></label>
+
+        <input type="text" id="node-input-retrieveFineTuningJob_fineTuningJobId" placeholder="The ID of the fine-tuning job.
+" style="width:70%">
+        <input type="hidden" id="node-input-retrieveFineTuningJob_fineTuningJobIdType">
+    </div>
+
+    <div class="form-row" id="listFineTuningEvents_fineTuningJobId">
+        <label for="node-input-listFineTuningEvents_fineTuningJobId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.fineTuningJobId"></span></label>
+
+        <input type="text" id="node-input-listFineTuningEvents_fineTuningJobId" placeholder="The ID of the fine-tuning job to get events for.
+" style="width:70%">
+        <input type="hidden" id="node-input-listFineTuningEvents_fineTuningJobIdType">
+    </div>
+
+    <div class="form-row" id="listFineTuningEvents_after">
+        <label for="node-input-listFineTuningEvents_after"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.after"></span></label>
+
+        <input type="text" id="node-input-listFineTuningEvents_after" placeholder="Identifier for the last event from the previous pagination request." style="width:70%">
+        <input type="hidden" id="node-input-listFineTuningEvents_afterType">
+    </div>
+
+    <div class="form-row" id="listFineTuningEvents_limit">
+        <label for="node-input-listFineTuningEvents_limit"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.limit"></span></label>
+
+        <input type="text" id="node-input-listFineTuningEvents_limit" placeholder="Number of events to retrieve." style="width:70%">
+        <input type="hidden" id="node-input-listFineTuningEvents_limitType">
+    </div>
+
+    <div class="form-row" id="cancelFineTuningJob_fineTuningJobId">
+        <label for="node-input-cancelFineTuningJob_fineTuningJobId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.fineTuningJobId"></span></label>
+
+        <input type="text" id="node-input-cancelFineTuningJob_fineTuningJobId" placeholder="The ID of the fine-tuning job to cancel.
+" style="width:70%">
+        <input type="hidden" id="node-input-cancelFineTuningJob_fineTuningJobIdType">
+    </div>
+
+    <div class="form-row" id="retrieveModel_model">
+        <label for="node-input-retrieveModel_model"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.model"></span></label>
+
+        <input type="text" id="node-input-retrieveModel_model" placeholder="The ID of the model to use for this request" style="width:70%">
+        <input type="hidden" id="node-input-retrieveModel_modelType">
+    </div>
+
+    <div class="form-row" id="deleteModel_model">
+        <label for="node-input-deleteModel_model"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.model"></span></label>
+
+        <input type="text" id="node-input-deleteModel_model" placeholder="The model to delete" style="width:70%">
+        <input type="hidden" id="node-input-deleteModel_modelType">
+    </div>
+
+    <div class="form-row" id="createModeration_body">
+        <label for="node-input-createModeration_body"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.body"></span></label>
+
+        <input type="text" id="node-input-createModeration_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-createModeration_bodyType">
+    </div>
+
+    <div class="form-row" id="listAssistants_limit">
+        <label for="node-input-listAssistants_limit"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.limit"></span></label>
+
+        <input type="text" id="node-input-listAssistants_limit" placeholder="A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20.
+" style="width:70%">
+        <input type="hidden" id="node-input-listAssistants_limitType">
+    </div>
+
+    <div class="form-row" id="listAssistants_order">
+        <label for="node-input-listAssistants_order"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.order"></span></label>
+        <select id="node-input-listAssistants_order">
+            <option value="asc">asc</option>
+            <option value="desc">desc</option>
+        </select>
+
+    </div>
+
+    <div class="form-row" id="listAssistants_after">
+        <label for="node-input-listAssistants_after"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.after"></span></label>
+
+        <input type="text" id="node-input-listAssistants_after" placeholder="A cursor for use in pagination. `after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list.
+" style="width:70%">
+        <input type="hidden" id="node-input-listAssistants_afterType">
+    </div>
+
+    <div class="form-row" id="listAssistants_before">
+        <label for="node-input-listAssistants_before"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.before"></span></label>
+
+        <input type="text" id="node-input-listAssistants_before" placeholder="A cursor for use in pagination. `before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+" style="width:70%">
+        <input type="hidden" id="node-input-listAssistants_beforeType">
+    </div>
+
+    <div class="form-row" id="createAssistant_body">
+        <label for="node-input-createAssistant_body"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.body"></span></label>
+
+        <input type="text" id="node-input-createAssistant_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-createAssistant_bodyType">
+    </div>
+
+    <div class="form-row" id="getAssistant_assistantId">
+        <label for="node-input-getAssistant_assistantId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.assistantId"></span></label>
+
+        <input type="text" id="node-input-getAssistant_assistantId" placeholder="The ID of the assistant to retrieve." style="width:70%">
+        <input type="hidden" id="node-input-getAssistant_assistantIdType">
+    </div>
+
+    <div class="form-row" id="modifyAssistant_assistantId">
+        <label for="node-input-modifyAssistant_assistantId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.assistantId"></span></label>
+
+        <input type="text" id="node-input-modifyAssistant_assistantId" placeholder="The ID of the assistant to modify." style="width:70%">
+        <input type="hidden" id="node-input-modifyAssistant_assistantIdType">
+    </div>
+
+    <div class="form-row" id="modifyAssistant_body">
+        <label for="node-input-modifyAssistant_body"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.body"></span></label>
+
+        <input type="text" id="node-input-modifyAssistant_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-modifyAssistant_bodyType">
+    </div>
+
+    <div class="form-row" id="deleteAssistant_assistantId">
+        <label for="node-input-deleteAssistant_assistantId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.assistantId"></span></label>
+
+        <input type="text" id="node-input-deleteAssistant_assistantId" placeholder="The ID of the assistant to delete." style="width:70%">
+        <input type="hidden" id="node-input-deleteAssistant_assistantIdType">
+    </div>
+
+    <div class="form-row" id="createThread_body">
+        <label for="node-input-createThread_body"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.body"></span></label>
+
+        <input type="text" id="node-input-createThread_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-createThread_bodyType">
+    </div>
+
+    <div class="form-row" id="getThread_threadId">
+        <label for="node-input-getThread_threadId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.threadId"></span></label>
+
+        <input type="text" id="node-input-getThread_threadId" placeholder="The ID of the thread to retrieve." style="width:70%">
+        <input type="hidden" id="node-input-getThread_threadIdType">
+    </div>
+
+    <div class="form-row" id="modifyThread_threadId">
+        <label for="node-input-modifyThread_threadId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.threadId"></span></label>
+
+        <input type="text" id="node-input-modifyThread_threadId" placeholder="The ID of the thread to modify. Only the `metadata` can be modified." style="width:70%">
+        <input type="hidden" id="node-input-modifyThread_threadIdType">
+    </div>
+
+    <div class="form-row" id="modifyThread_body">
+        <label for="node-input-modifyThread_body"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.body"></span></label>
+
+        <input type="text" id="node-input-modifyThread_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-modifyThread_bodyType">
+    </div>
+
+    <div class="form-row" id="deleteThread_threadId">
+        <label for="node-input-deleteThread_threadId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.threadId"></span></label>
+
+        <input type="text" id="node-input-deleteThread_threadId" placeholder="The ID of the thread to delete." style="width:70%">
+        <input type="hidden" id="node-input-deleteThread_threadIdType">
+    </div>
+
+    <div class="form-row" id="listMessages_threadId">
+        <label for="node-input-listMessages_threadId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.threadId"></span></label>
+
+        <input type="text" id="node-input-listMessages_threadId" placeholder="The ID of the [thread](/docs/api-reference/threads) the messages belong to." style="width:70%">
+        <input type="hidden" id="node-input-listMessages_threadIdType">
+    </div>
+
+    <div class="form-row" id="listMessages_limit">
+        <label for="node-input-listMessages_limit"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.limit"></span></label>
+
+        <input type="text" id="node-input-listMessages_limit" placeholder="A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20.
+" style="width:70%">
+        <input type="hidden" id="node-input-listMessages_limitType">
+    </div>
+
+    <div class="form-row" id="listMessages_order">
+        <label for="node-input-listMessages_order"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.order"></span></label>
+        <select id="node-input-listMessages_order">
+            <option value="asc">asc</option>
+            <option value="desc">desc</option>
+        </select>
+
+    </div>
+
+    <div class="form-row" id="listMessages_after">
+        <label for="node-input-listMessages_after"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.after"></span></label>
+
+        <input type="text" id="node-input-listMessages_after" placeholder="A cursor for use in pagination. `after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list.
+" style="width:70%">
+        <input type="hidden" id="node-input-listMessages_afterType">
+    </div>
+
+    <div class="form-row" id="listMessages_before">
+        <label for="node-input-listMessages_before"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.before"></span></label>
+
+        <input type="text" id="node-input-listMessages_before" placeholder="A cursor for use in pagination. `before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+" style="width:70%">
+        <input type="hidden" id="node-input-listMessages_beforeType">
+    </div>
+
+    <div class="form-row" id="createMessage_threadId">
+        <label for="node-input-createMessage_threadId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.threadId"></span></label>
+
+        <input type="text" id="node-input-createMessage_threadId" placeholder="The ID of the [thread](/docs/api-reference/threads) to create a message for." style="width:70%">
+        <input type="hidden" id="node-input-createMessage_threadIdType">
+    </div>
+
+    <div class="form-row" id="createMessage_body">
+        <label for="node-input-createMessage_body"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.body"></span></label>
+
+        <input type="text" id="node-input-createMessage_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-createMessage_bodyType">
+    </div>
+
+    <div class="form-row" id="getMessage_threadId">
+        <label for="node-input-getMessage_threadId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.threadId"></span></label>
+
+        <input type="text" id="node-input-getMessage_threadId" placeholder="The ID of the [thread](/docs/api-reference/threads) to which this message belongs." style="width:70%">
+        <input type="hidden" id="node-input-getMessage_threadIdType">
+    </div>
+
+    <div class="form-row" id="getMessage_messageId">
+        <label for="node-input-getMessage_messageId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.messageId"></span></label>
+
+        <input type="text" id="node-input-getMessage_messageId" placeholder="The ID of the message to retrieve." style="width:70%">
+        <input type="hidden" id="node-input-getMessage_messageIdType">
+    </div>
+
+    <div class="form-row" id="modifyMessage_threadId">
+        <label for="node-input-modifyMessage_threadId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.threadId"></span></label>
+
+        <input type="text" id="node-input-modifyMessage_threadId" placeholder="The ID of the thread to which this message belongs." style="width:70%">
+        <input type="hidden" id="node-input-modifyMessage_threadIdType">
+    </div>
+
+    <div class="form-row" id="modifyMessage_messageId">
+        <label for="node-input-modifyMessage_messageId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.messageId"></span></label>
+
+        <input type="text" id="node-input-modifyMessage_messageId" placeholder="The ID of the message to modify." style="width:70%">
+        <input type="hidden" id="node-input-modifyMessage_messageIdType">
+    </div>
+
+    <div class="form-row" id="modifyMessage_body">
+        <label for="node-input-modifyMessage_body"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.body"></span></label>
+
+        <input type="text" id="node-input-modifyMessage_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-modifyMessage_bodyType">
+    </div>
+
+    <div class="form-row" id="createThreadAndRun_body">
+        <label for="node-input-createThreadAndRun_body"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.body"></span></label>
+
+        <input type="text" id="node-input-createThreadAndRun_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-createThreadAndRun_bodyType">
+    </div>
+
+    <div class="form-row" id="listRuns_threadId">
+        <label for="node-input-listRuns_threadId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.threadId"></span></label>
+
+        <input type="text" id="node-input-listRuns_threadId" placeholder="The ID of the thread the run belongs to." style="width:70%">
+        <input type="hidden" id="node-input-listRuns_threadIdType">
+    </div>
+
+    <div class="form-row" id="listRuns_limit">
+        <label for="node-input-listRuns_limit"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.limit"></span></label>
+
+        <input type="text" id="node-input-listRuns_limit" placeholder="A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20.
+" style="width:70%">
+        <input type="hidden" id="node-input-listRuns_limitType">
+    </div>
+
+    <div class="form-row" id="listRuns_order">
+        <label for="node-input-listRuns_order"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.order"></span></label>
+        <select id="node-input-listRuns_order">
+            <option value="asc">asc</option>
+            <option value="desc">desc</option>
+        </select>
+
+    </div>
+
+    <div class="form-row" id="listRuns_after">
+        <label for="node-input-listRuns_after"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.after"></span></label>
+
+        <input type="text" id="node-input-listRuns_after" placeholder="A cursor for use in pagination. `after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list.
+" style="width:70%">
+        <input type="hidden" id="node-input-listRuns_afterType">
+    </div>
+
+    <div class="form-row" id="listRuns_before">
+        <label for="node-input-listRuns_before"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.before"></span></label>
+
+        <input type="text" id="node-input-listRuns_before" placeholder="A cursor for use in pagination. `before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+" style="width:70%">
+        <input type="hidden" id="node-input-listRuns_beforeType">
+    </div>
+
+    <div class="form-row" id="createRun_threadId">
+        <label for="node-input-createRun_threadId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.threadId"></span></label>
+
+        <input type="text" id="node-input-createRun_threadId" placeholder="The ID of the thread to run." style="width:70%">
+        <input type="hidden" id="node-input-createRun_threadIdType">
+    </div>
+
+    <div class="form-row" id="createRun_body">
+        <label for="node-input-createRun_body"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.body"></span></label>
+
+        <input type="text" id="node-input-createRun_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-createRun_bodyType">
+    </div>
+
+    <div class="form-row" id="getRun_threadId">
+        <label for="node-input-getRun_threadId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.threadId"></span></label>
+
+        <input type="text" id="node-input-getRun_threadId" placeholder="The ID of the [thread](/docs/api-reference/threads) that was run." style="width:70%">
+        <input type="hidden" id="node-input-getRun_threadIdType">
+    </div>
+
+    <div class="form-row" id="getRun_runId">
+        <label for="node-input-getRun_runId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.runId"></span></label>
+
+        <input type="text" id="node-input-getRun_runId" placeholder="The ID of the run to retrieve." style="width:70%">
+        <input type="hidden" id="node-input-getRun_runIdType">
+    </div>
+
+    <div class="form-row" id="modifyRun_threadId">
+        <label for="node-input-modifyRun_threadId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.threadId"></span></label>
+
+        <input type="text" id="node-input-modifyRun_threadId" placeholder="The ID of the [thread](/docs/api-reference/threads) that was run." style="width:70%">
+        <input type="hidden" id="node-input-modifyRun_threadIdType">
+    </div>
+
+    <div class="form-row" id="modifyRun_runId">
+        <label for="node-input-modifyRun_runId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.runId"></span></label>
+
+        <input type="text" id="node-input-modifyRun_runId" placeholder="The ID of the run to modify." style="width:70%">
+        <input type="hidden" id="node-input-modifyRun_runIdType">
+    </div>
+
+    <div class="form-row" id="modifyRun_body">
+        <label for="node-input-modifyRun_body"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.body"></span></label>
+
+        <input type="text" id="node-input-modifyRun_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-modifyRun_bodyType">
+    </div>
+
+    <div class="form-row" id="submitToolOuputsToRun_threadId">
+        <label for="node-input-submitToolOuputsToRun_threadId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.threadId"></span></label>
+
+        <input type="text" id="node-input-submitToolOuputsToRun_threadId" placeholder="The ID of the [thread](/docs/api-reference/threads) to which this run belongs." style="width:70%">
+        <input type="hidden" id="node-input-submitToolOuputsToRun_threadIdType">
+    </div>
+
+    <div class="form-row" id="submitToolOuputsToRun_runId">
+        <label for="node-input-submitToolOuputsToRun_runId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.runId"></span></label>
+
+        <input type="text" id="node-input-submitToolOuputsToRun_runId" placeholder="The ID of the run that requires the tool output submission." style="width:70%">
+        <input type="hidden" id="node-input-submitToolOuputsToRun_runIdType">
+    </div>
+
+    <div class="form-row" id="submitToolOuputsToRun_body">
+        <label for="node-input-submitToolOuputsToRun_body"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.body"></span></label>
+
+        <input type="text" id="node-input-submitToolOuputsToRun_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-submitToolOuputsToRun_bodyType">
+    </div>
+
+    <div class="form-row" id="cancelRun_threadId">
+        <label for="node-input-cancelRun_threadId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.threadId"></span></label>
+
+        <input type="text" id="node-input-cancelRun_threadId" placeholder="The ID of the thread to which this run belongs." style="width:70%">
+        <input type="hidden" id="node-input-cancelRun_threadIdType">
+    </div>
+
+    <div class="form-row" id="cancelRun_runId">
+        <label for="node-input-cancelRun_runId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.runId"></span></label>
+
+        <input type="text" id="node-input-cancelRun_runId" placeholder="The ID of the run to cancel." style="width:70%">
+        <input type="hidden" id="node-input-cancelRun_runIdType">
+    </div>
+
+    <div class="form-row" id="listRunSteps_threadId">
+        <label for="node-input-listRunSteps_threadId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.threadId"></span></label>
+
+        <input type="text" id="node-input-listRunSteps_threadId" placeholder="The ID of the thread the run and run steps belong to." style="width:70%">
+        <input type="hidden" id="node-input-listRunSteps_threadIdType">
+    </div>
+
+    <div class="form-row" id="listRunSteps_runId">
+        <label for="node-input-listRunSteps_runId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.runId"></span></label>
+
+        <input type="text" id="node-input-listRunSteps_runId" placeholder="The ID of the run the run steps belong to." style="width:70%">
+        <input type="hidden" id="node-input-listRunSteps_runIdType">
+    </div>
+
+    <div class="form-row" id="listRunSteps_limit">
+        <label for="node-input-listRunSteps_limit"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.limit"></span></label>
+
+        <input type="text" id="node-input-listRunSteps_limit" placeholder="A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20.
+" style="width:70%">
+        <input type="hidden" id="node-input-listRunSteps_limitType">
+    </div>
+
+    <div class="form-row" id="listRunSteps_order">
+        <label for="node-input-listRunSteps_order"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.order"></span></label>
+        <select id="node-input-listRunSteps_order">
+            <option value="asc">asc</option>
+            <option value="desc">desc</option>
+        </select>
+
+    </div>
+
+    <div class="form-row" id="listRunSteps_after">
+        <label for="node-input-listRunSteps_after"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.after"></span></label>
+
+        <input type="text" id="node-input-listRunSteps_after" placeholder="A cursor for use in pagination. `after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list.
+" style="width:70%">
+        <input type="hidden" id="node-input-listRunSteps_afterType">
+    </div>
+
+    <div class="form-row" id="listRunSteps_before">
+        <label for="node-input-listRunSteps_before"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.before"></span></label>
+
+        <input type="text" id="node-input-listRunSteps_before" placeholder="A cursor for use in pagination. `before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+" style="width:70%">
+        <input type="hidden" id="node-input-listRunSteps_beforeType">
+    </div>
+
+    <div class="form-row" id="getRunStep_threadId">
+        <label for="node-input-getRunStep_threadId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.threadId"></span></label>
+
+        <input type="text" id="node-input-getRunStep_threadId" placeholder="The ID of the thread to which the run and run step belongs." style="width:70%">
+        <input type="hidden" id="node-input-getRunStep_threadIdType">
+    </div>
+
+    <div class="form-row" id="getRunStep_runId">
+        <label for="node-input-getRunStep_runId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.runId"></span></label>
+
+        <input type="text" id="node-input-getRunStep_runId" placeholder="The ID of the run to which the run step belongs." style="width:70%">
+        <input type="hidden" id="node-input-getRunStep_runIdType">
+    </div>
+
+    <div class="form-row" id="getRunStep_stepId">
+        <label for="node-input-getRunStep_stepId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.stepId"></span></label>
+
+        <input type="text" id="node-input-getRunStep_stepId" placeholder="The ID of the run step to retrieve." style="width:70%">
+        <input type="hidden" id="node-input-getRunStep_stepIdType">
+    </div>
+
+    <div class="form-row" id="listAssistantFiles_assistantId">
+        <label for="node-input-listAssistantFiles_assistantId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.assistantId"></span></label>
+
+        <input type="text" id="node-input-listAssistantFiles_assistantId" placeholder="The ID of the assistant the file belongs to." style="width:70%">
+        <input type="hidden" id="node-input-listAssistantFiles_assistantIdType">
+    </div>
+
+    <div class="form-row" id="listAssistantFiles_limit">
+        <label for="node-input-listAssistantFiles_limit"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.limit"></span></label>
+
+        <input type="text" id="node-input-listAssistantFiles_limit" placeholder="A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20.
+" style="width:70%">
+        <input type="hidden" id="node-input-listAssistantFiles_limitType">
+    </div>
+
+    <div class="form-row" id="listAssistantFiles_order">
+        <label for="node-input-listAssistantFiles_order"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.order"></span></label>
+        <select id="node-input-listAssistantFiles_order">
+            <option value="asc">asc</option>
+            <option value="desc">desc</option>
+        </select>
+
+    </div>
+
+    <div class="form-row" id="listAssistantFiles_after">
+        <label for="node-input-listAssistantFiles_after"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.after"></span></label>
+
+        <input type="text" id="node-input-listAssistantFiles_after" placeholder="A cursor for use in pagination. `after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list.
+" style="width:70%">
+        <input type="hidden" id="node-input-listAssistantFiles_afterType">
+    </div>
+
+    <div class="form-row" id="listAssistantFiles_before">
+        <label for="node-input-listAssistantFiles_before"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.before"></span></label>
+
+        <input type="text" id="node-input-listAssistantFiles_before" placeholder="A cursor for use in pagination. `before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+" style="width:70%">
+        <input type="hidden" id="node-input-listAssistantFiles_beforeType">
+    </div>
+
+    <div class="form-row" id="createAssistantFile_assistantId">
+        <label for="node-input-createAssistantFile_assistantId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.assistantId"></span></label>
+
+        <input type="text" id="node-input-createAssistantFile_assistantId" placeholder="The ID of the assistant for which to create a File.
+" style="width:70%">
+        <input type="hidden" id="node-input-createAssistantFile_assistantIdType">
+    </div>
+
+    <div class="form-row" id="createAssistantFile_body">
+        <label for="node-input-createAssistantFile_body"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.body"></span></label>
+
+        <input type="text" id="node-input-createAssistantFile_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-createAssistantFile_bodyType">
+    </div>
+
+    <div class="form-row" id="getAssistantFile_assistantId">
+        <label for="node-input-getAssistantFile_assistantId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.assistantId"></span></label>
+
+        <input type="text" id="node-input-getAssistantFile_assistantId" placeholder="The ID of the assistant who the file belongs to." style="width:70%">
+        <input type="hidden" id="node-input-getAssistantFile_assistantIdType">
+    </div>
+
+    <div class="form-row" id="getAssistantFile_fileId">
+        <label for="node-input-getAssistantFile_fileId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.fileId"></span></label>
+
+        <input type="text" id="node-input-getAssistantFile_fileId" placeholder="The ID of the file we're getting." style="width:70%">
+        <input type="hidden" id="node-input-getAssistantFile_fileIdType">
+    </div>
+
+    <div class="form-row" id="deleteAssistantFile_assistantId">
+        <label for="node-input-deleteAssistantFile_assistantId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.assistantId"></span></label>
+
+        <input type="text" id="node-input-deleteAssistantFile_assistantId" placeholder="The ID of the assistant that the file belongs to." style="width:70%">
+        <input type="hidden" id="node-input-deleteAssistantFile_assistantIdType">
+    </div>
+
+    <div class="form-row" id="deleteAssistantFile_fileId">
+        <label for="node-input-deleteAssistantFile_fileId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.fileId"></span></label>
+
+        <input type="text" id="node-input-deleteAssistantFile_fileId" placeholder="The ID of the file to delete." style="width:70%">
+        <input type="hidden" id="node-input-deleteAssistantFile_fileIdType">
+    </div>
+
+    <div class="form-row" id="listMessageFiles_threadId">
+        <label for="node-input-listMessageFiles_threadId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.threadId"></span></label>
+
+        <input type="text" id="node-input-listMessageFiles_threadId" placeholder="The ID of the thread that the message and files belong to." style="width:70%">
+        <input type="hidden" id="node-input-listMessageFiles_threadIdType">
+    </div>
+
+    <div class="form-row" id="listMessageFiles_messageId">
+        <label for="node-input-listMessageFiles_messageId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.messageId"></span></label>
+
+        <input type="text" id="node-input-listMessageFiles_messageId" placeholder="The ID of the message that the files belongs to." style="width:70%">
+        <input type="hidden" id="node-input-listMessageFiles_messageIdType">
+    </div>
+
+    <div class="form-row" id="listMessageFiles_limit">
+        <label for="node-input-listMessageFiles_limit"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.limit"></span></label>
+
+        <input type="text" id="node-input-listMessageFiles_limit" placeholder="A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20.
+" style="width:70%">
+        <input type="hidden" id="node-input-listMessageFiles_limitType">
+    </div>
+
+    <div class="form-row" id="listMessageFiles_order">
+        <label for="node-input-listMessageFiles_order"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.order"></span></label>
+        <select id="node-input-listMessageFiles_order">
+            <option value="asc">asc</option>
+            <option value="desc">desc</option>
+        </select>
+
+    </div>
+
+    <div class="form-row" id="listMessageFiles_after">
+        <label for="node-input-listMessageFiles_after"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.after"></span></label>
+
+        <input type="text" id="node-input-listMessageFiles_after" placeholder="A cursor for use in pagination. `after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list.
+" style="width:70%">
+        <input type="hidden" id="node-input-listMessageFiles_afterType">
+    </div>
+
+    <div class="form-row" id="listMessageFiles_before">
+        <label for="node-input-listMessageFiles_before"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.before"></span></label>
+
+        <input type="text" id="node-input-listMessageFiles_before" placeholder="A cursor for use in pagination. `before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+" style="width:70%">
+        <input type="hidden" id="node-input-listMessageFiles_beforeType">
+    </div>
+
+    <div class="form-row" id="getMessageFile_threadId">
+        <label for="node-input-getMessageFile_threadId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.threadId"></span></label>
+
+        <input type="text" id="node-input-getMessageFile_threadId" placeholder="The ID of the thread to which the message and File belong." style="width:70%">
+        <input type="hidden" id="node-input-getMessageFile_threadIdType">
+    </div>
+
+    <div class="form-row" id="getMessageFile_messageId">
+        <label for="node-input-getMessageFile_messageId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.messageId"></span></label>
+
+        <input type="text" id="node-input-getMessageFile_messageId" placeholder="The ID of the message the file belongs to." style="width:70%">
+        <input type="hidden" id="node-input-getMessageFile_messageIdType">
+    </div>
+
+    <div class="form-row" id="getMessageFile_fileId">
+        <label for="node-input-getMessageFile_fileId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.fileId"></span></label>
+
+        <input type="text" id="node-input-getMessageFile_fileId" placeholder="The ID of the file being retrieved." style="width:70%">
+        <input type="hidden" id="node-input-getMessageFile_fileIdType">
+    </div>
+
+    <hr/>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="openai-api">
+
+    <p>The OpenAI REST API. Please see https://platform.openai.com/docs/api-reference for more details.</p>
+    <p><b>Methods</b></p>
+        <h3>POST /chat/completions</h3>
+        <p>Creates a model response for the given chat conversation.</p>
+        <dl class="message-properties">
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>POST /completions</h3>
+        <p>Creates a completion for the provided prompt and parameters.</p>
+        <dl class="message-properties">
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>POST /edits</h3>
+        <p>Creates a new edit for the provided input, instruction, and parameters.</p>
+        <dl class="message-properties">
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>POST /images/generations</h3>
+        <p>Creates an image given a prompt.</p>
+        <dl class="message-properties">
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>POST /images/edits</h3>
+        <p>Creates an edited or extended image given an original image and a prompt.</p>
+        <dl class="message-properties">
+        <dt>image <span class="property-type">string</span></dt>
+        <dt>prompt <span class="property-type">string</span></dt>
+        <dt>mask <span class="property-type">string</span></dt>
+        <dt>model <span class="property-type"></span></dt>
+        <dt>n <span class="property-type">integer</span></dt>
+        <dt>size <span class="property-type">string</span></dt>
+        <dt>response_format <span class="property-type">string</span></dt>
+        <dt>user <span class="property-type">string</span></dt>
+        </dl>
+        <h3>POST /images/variations</h3>
+        <p>Creates a variation of a given image.</p>
+        <dl class="message-properties">
+        <dt>image <span class="property-type">string</span></dt>
+        <dt>model <span class="property-type"></span></dt>
+        <dt>n <span class="property-type">integer</span></dt>
+        <dt>response_format <span class="property-type">string</span></dt>
+        <dt>size <span class="property-type">string</span></dt>
+        <dt>user <span class="property-type">string</span></dt>
+        </dl>
+        <h3>POST /embeddings</h3>
+        <p>Creates an embedding vector representing the input text.</p>
+        <dl class="message-properties">
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>POST /audio/speech</h3>
+        <p>Generates audio from the input text.</p>
+        <dl class="message-properties">
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>POST /audio/transcriptions</h3>
+        <p>Transcribes audio into the input language.</p>
+        <dl class="message-properties">
+        <dt>file <span class="property-type">string</span></dt>
+        <dt>model <span class="property-type"></span></dt>
+        <dt>language <span class="property-type">string</span></dt>
+        <dt>prompt <span class="property-type">string</span></dt>
+        <dt>response_format <span class="property-type">string</span></dt>
+        <dt>temperature <span class="property-type">number</span></dt>
+        </dl>
+        <h3>POST /audio/translations</h3>
+        <p>Translates audio into English.</p>
+        <dl class="message-properties">
+        <dt>file <span class="property-type">string</span></dt>
+        <dt>model <span class="property-type"></span></dt>
+        <dt>prompt <span class="property-type">string</span></dt>
+        <dt>response_format <span class="property-type">string</span></dt>
+        <dt>temperature <span class="property-type">number</span></dt>
+        </dl>
+        <h3>GET /files</h3>
+        <p>Returns a list of files that belong to the user's organization.</p>
+        <dl class="message-properties">
+        <dt>purpose <span class="property-type">string</span></dt>
+        </dl>
+        <h3>POST /files</h3>
+        <p>Upload a file that can be used across various endpoints/features. The size of all the files uploaded by one organization can be up to 100 GB.
+
+The size of individual files for can be a maximum of 512MB. See the [Assistants Tools guide](/docs/assistants/tools) to learn more about the types of files supported. The Fine-tuning API only supports `.jsonl` files.
+
+Please [contact us](https://help.openai.com/) if you need to increase these storage limits.
+</p>
+        <dl class="message-properties">
+        <dt>file <span class="property-type">string</span></dt>
+        <dt>purpose <span class="property-type">string</span></dt>
+        </dl>
+        <h3>DELETE /files/{file_id}</h3>
+        <p>Delete a file.</p>
+        <dl class="message-properties">
+        <dt>file_id <span class="property-type">string</span></dt>
+        </dl>
+        <h3>GET /files/{file_id}</h3>
+        <p>Returns information about a specific file.</p>
+        <dl class="message-properties">
+        <dt>file_id <span class="property-type">string</span></dt>
+        </dl>
+        <h3>GET /files/{file_id}/content</h3>
+        <p>Returns the contents of the specified file.</p>
+        <dl class="message-properties">
+        <dt>file_id <span class="property-type">string</span></dt>
+        </dl>
+        <h3>POST /fine_tuning/jobs</h3>
+        <p>Creates a job that fine-tunes a specified model from a given dataset.
+
+Response includes details of the enqueued job including job status and the name of the fine-tuned models once complete.
+
+[Learn more about fine-tuning](/docs/guides/fine-tuning)
+</p>
+        <dl class="message-properties">
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>GET /fine_tuning/jobs</h3>
+        <p>List your organization's fine-tuning jobs
+</p>
+        <dl class="message-properties">
+        <dt>after <span class="property-type">string</span></dt>
+        <dt>limit <span class="property-type">integer</span></dt>
+        </dl>
+        <h3>GET /fine_tuning/jobs/{fine_tuning_job_id}</h3>
+        <p>Get info about a fine-tuning job.
+
+[Learn more about fine-tuning](/docs/guides/fine-tuning)
+</p>
+        <dl class="message-properties">
+        <dt>fine_tuning_job_id <span class="property-type">string</span></dt>
+        </dl>
+        <h3>GET /fine_tuning/jobs/{fine_tuning_job_id}/events</h3>
+        <p>Get status updates for a fine-tuning job.
+</p>
+        <dl class="message-properties">
+        <dt>fine_tuning_job_id <span class="property-type">string</span></dt>
+        <dt>after <span class="property-type">string</span></dt>
+        <dt>limit <span class="property-type">integer</span></dt>
+        </dl>
+        <h3>POST /fine_tuning/jobs/{fine_tuning_job_id}/cancel</h3>
+        <p>Immediately cancel a fine-tune job.
+</p>
+        <dl class="message-properties">
+        <dt>fine_tuning_job_id <span class="property-type">string</span></dt>
+        </dl>
+        <h3>POST /fine-tunes</h3>
+        <p>Creates a job that fine-tunes a specified model from a given dataset.
+
+Response includes details of the enqueued job including job status and the name of the fine-tuned models once complete.
+
+[Learn more about fine-tuning](/docs/guides/legacy-fine-tuning)
+</p>
+        <dl class="message-properties">
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>GET /fine-tunes</h3>
+        <p>List your organization's fine-tuning jobs
+</p>
+        <dl class="message-properties">
+        </dl>
+        <h3>GET /fine-tunes/{fine_tune_id}</h3>
+        <p>Gets info about the fine-tune job.
+
+[Learn more about fine-tuning](/docs/guides/legacy-fine-tuning)
+</p>
+        <dl class="message-properties">
+        <dt>fine_tune_id <span class="property-type">string</span></dt>
+        </dl>
+        <h3>POST /fine-tunes/{fine_tune_id}/cancel</h3>
+        <p>Immediately cancel a fine-tune job.
+</p>
+        <dl class="message-properties">
+        <dt>fine_tune_id <span class="property-type">string</span></dt>
+        </dl>
+        <h3>GET /fine-tunes/{fine_tune_id}/events</h3>
+        <p>Get fine-grained status updates for a fine-tune job.
+</p>
+        <dl class="message-properties">
+        <dt>fine_tune_id <span class="property-type">string</span></dt>
+        <dt>stream <span class="property-type">boolean</span></dt>
+        </dl>
+        <h3>GET /models</h3>
+        <p>Lists the currently available models, and provides basic information about each one such as the owner and availability.</p>
+        <dl class="message-properties">
+        </dl>
+        <h3>GET /models/{model}</h3>
+        <p>Retrieves a model instance, providing basic information about the model such as the owner and permissioning.</p>
+        <dl class="message-properties">
+        <dt>model <span class="property-type">string</span></dt>
+        </dl>
+        <h3>DELETE /models/{model}</h3>
+        <p>Delete a fine-tuned model. You must have the Owner role in your organization to delete a model.</p>
+        <dl class="message-properties">
+        <dt>model <span class="property-type">string</span></dt>
+        </dl>
+        <h3>POST /moderations</h3>
+        <p>Classifies if text violates OpenAI's Content Policy</p>
+        <dl class="message-properties">
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>GET /assistants</h3>
+        <p>Returns a list of assistants.</p>
+        <dl class="message-properties">
+        <dt>limit <span class="property-type">integer</span></dt>
+        <dt>order <span class="property-type">string</span></dt>
+        <dt>after <span class="property-type">string</span></dt>
+        <dt>before <span class="property-type">string</span></dt>
+        </dl>
+        <h3>POST /assistants</h3>
+        <p>Create an assistant with a model and instructions.</p>
+        <dl class="message-properties">
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>GET /assistants/{assistant_id}</h3>
+        <p>Retrieves an assistant.</p>
+        <dl class="message-properties">
+        <dt>assistant_id <span class="property-type">string</span></dt>
+        </dl>
+        <h3>POST /assistants/{assistant_id}</h3>
+        <p>Modifies an assistant.</p>
+        <dl class="message-properties">
+        <dt>assistant_id <span class="property-type">string</span></dt>
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>DELETE /assistants/{assistant_id}</h3>
+        <p>Delete an assistant.</p>
+        <dl class="message-properties">
+        <dt>assistant_id <span class="property-type">string</span></dt>
+        </dl>
+        <h3>POST /threads</h3>
+        <p>Create a thread.</p>
+        <dl class="message-properties">
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>GET /threads/{thread_id}</h3>
+        <p>Retrieves a thread.</p>
+        <dl class="message-properties">
+        <dt>thread_id <span class="property-type">string</span></dt>
+        </dl>
+        <h3>POST /threads/{thread_id}</h3>
+        <p>Modifies a thread.</p>
+        <dl class="message-properties">
+        <dt>thread_id <span class="property-type">string</span></dt>
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>DELETE /threads/{thread_id}</h3>
+        <p>Delete a thread.</p>
+        <dl class="message-properties">
+        <dt>thread_id <span class="property-type">string</span></dt>
+        </dl>
+        <h3>GET /threads/{thread_id}/messages</h3>
+        <p>Returns a list of messages for a given thread.</p>
+        <dl class="message-properties">
+        <dt>thread_id <span class="property-type">string</span></dt>
+        <dt>limit <span class="property-type">integer</span></dt>
+        <dt>order <span class="property-type">string</span></dt>
+        <dt>after <span class="property-type">string</span></dt>
+        <dt>before <span class="property-type">string</span></dt>
+        </dl>
+        <h3>POST /threads/{thread_id}/messages</h3>
+        <p>Create a message.</p>
+        <dl class="message-properties">
+        <dt>thread_id <span class="property-type">string</span></dt>
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>GET /threads/{thread_id}/messages/{message_id}</h3>
+        <p>Retrieve a message.</p>
+        <dl class="message-properties">
+        <dt>thread_id <span class="property-type">string</span></dt>
+        <dt>message_id <span class="property-type">string</span></dt>
+        </dl>
+        <h3>POST /threads/{thread_id}/messages/{message_id}</h3>
+        <p>Modifies a message.</p>
+        <dl class="message-properties">
+        <dt>thread_id <span class="property-type">string</span></dt>
+        <dt>message_id <span class="property-type">string</span></dt>
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>POST /threads/runs</h3>
+        <p>Create a thread and run it in one request.</p>
+        <dl class="message-properties">
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>GET /threads/{thread_id}/runs</h3>
+        <p>Returns a list of runs belonging to a thread.</p>
+        <dl class="message-properties">
+        <dt>thread_id <span class="property-type">string</span></dt>
+        <dt>limit <span class="property-type">integer</span></dt>
+        <dt>order <span class="property-type">string</span></dt>
+        <dt>after <span class="property-type">string</span></dt>
+        <dt>before <span class="property-type">string</span></dt>
+        </dl>
+        <h3>POST /threads/{thread_id}/runs</h3>
+        <p>Create a run.</p>
+        <dl class="message-properties">
+        <dt>thread_id <span class="property-type">string</span></dt>
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>GET /threads/{thread_id}/runs/{run_id}</h3>
+        <p>Retrieves a run.</p>
+        <dl class="message-properties">
+        <dt>thread_id <span class="property-type">string</span></dt>
+        <dt>run_id <span class="property-type">string</span></dt>
+        </dl>
+        <h3>POST /threads/{thread_id}/runs/{run_id}</h3>
+        <p>Modifies a run.</p>
+        <dl class="message-properties">
+        <dt>thread_id <span class="property-type">string</span></dt>
+        <dt>run_id <span class="property-type">string</span></dt>
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>POST /threads/{thread_id}/runs/{run_id}/submit_tool_outputs</h3>
+        <p>When a run has the `status: "requires_action"` and `required_action.type` is `submit_tool_outputs`, this endpoint can be used to submit the outputs from the tool calls once they're all completed. All outputs must be submitted in a single request.
+</p>
+        <dl class="message-properties">
+        <dt>thread_id <span class="property-type">string</span></dt>
+        <dt>run_id <span class="property-type">string</span></dt>
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>POST /threads/{thread_id}/runs/{run_id}/cancel</h3>
+        <p>Cancels a run that is `in_progress`.</p>
+        <dl class="message-properties">
+        <dt>thread_id <span class="property-type">string</span></dt>
+        <dt>run_id <span class="property-type">string</span></dt>
+        </dl>
+        <h3>GET /threads/{thread_id}/runs/{run_id}/steps</h3>
+        <p>Returns a list of run steps belonging to a run.</p>
+        <dl class="message-properties">
+        <dt>thread_id <span class="property-type">string</span></dt>
+        <dt>run_id <span class="property-type">string</span></dt>
+        <dt>limit <span class="property-type">integer</span></dt>
+        <dt>order <span class="property-type">string</span></dt>
+        <dt>after <span class="property-type">string</span></dt>
+        <dt>before <span class="property-type">string</span></dt>
+        </dl>
+        <h3>GET /threads/{thread_id}/runs/{run_id}/steps/{step_id}</h3>
+        <p>Retrieves a run step.</p>
+        <dl class="message-properties">
+        <dt>thread_id <span class="property-type">string</span></dt>
+        <dt>run_id <span class="property-type">string</span></dt>
+        <dt>step_id <span class="property-type">string</span></dt>
+        </dl>
+        <h3>GET /assistants/{assistant_id}/files</h3>
+        <p>Returns a list of assistant files.</p>
+        <dl class="message-properties">
+        <dt>assistant_id <span class="property-type">string</span></dt>
+        <dt>limit <span class="property-type">integer</span></dt>
+        <dt>order <span class="property-type">string</span></dt>
+        <dt>after <span class="property-type">string</span></dt>
+        <dt>before <span class="property-type">string</span></dt>
+        </dl>
+        <h3>POST /assistants/{assistant_id}/files</h3>
+        <p>Create an assistant file by attaching a [File](/docs/api-reference/files) to an [assistant](/docs/api-reference/assistants).</p>
+        <dl class="message-properties">
+        <dt>assistant_id <span class="property-type">string</span></dt>
+        <dt>body <span class="property-type"></span></dt>
+        </dl>
+        <h3>GET /assistants/{assistant_id}/files/{file_id}</h3>
+        <p>Retrieves an AssistantFile.</p>
+        <dl class="message-properties">
+        <dt>assistant_id <span class="property-type">string</span></dt>
+        <dt>file_id <span class="property-type">string</span></dt>
+        </dl>
+        <h3>DELETE /assistants/{assistant_id}/files/{file_id}</h3>
+        <p>Delete an assistant file.</p>
+        <dl class="message-properties">
+        <dt>assistant_id <span class="property-type">string</span></dt>
+        <dt>file_id <span class="property-type">string</span></dt>
+        </dl>
+        <h3>GET /threads/{thread_id}/messages/{message_id}/files</h3>
+        <p>Returns a list of message files.</p>
+        <dl class="message-properties">
+        <dt>thread_id <span class="property-type">string</span></dt>
+        <dt>message_id <span class="property-type">string</span></dt>
+        <dt>limit <span class="property-type">integer</span></dt>
+        <dt>order <span class="property-type">string</span></dt>
+        <dt>after <span class="property-type">string</span></dt>
+        <dt>before <span class="property-type">string</span></dt>
+        </dl>
+        <h3>GET /threads/{thread_id}/messages/{message_id}/files/{file_id}</h3>
+        <p>Retrieves a message file.</p>
+        <dl class="message-properties">
+        <dt>thread_id <span class="property-type">string</span></dt>
+        <dt>message_id <span class="property-type">string</span></dt>
+        <dt>file_id <span class="property-type">string</span></dt>
+        </dl>
+</script>
+<script type="text/javascript">
+    RED.nodes.registerType('openai-api-service', {
+        category: 'config',
+        defaults: {
+
+            secureApiKeyHeaderOrQueryName: { value: "" },
+            secureApiKeyIsQuery: { value: false },
+
+            name: { value: "" },
+        },
+        credentials: {
+            secureApiKeyValue: { type: "password" },
+            temp: { type: "text" }
+        },
+        label: function () {
+            return this.name || this.host;
+        },
+        labelStyle: function () {
+            return this.name ? "node_label_italic" : "";
+        },
+        oneditprepare: function () {
+            $('#node-config-input-secureApiKeyIsQuery-label').hide();
+            $('#node-config-input-secureApiKeyIsQuery').hide();
+            var selected = $('#node-config-input-secureApiKeyIsQuery option:selected');
+            if (!selected.val()) {
+                $('#node-config-input-secureApiKeyIsQuery').val(false);
+            }
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="openai-api-service">
+
+    <div class="form-row">
+        <label id="node-config-input-secureApiKeyHeaderOrQueryName-label" for="node-config-input-secureApiKeyHeaderOrQueryName"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.label.header"></span></label>
+        <input type="text" id="node-config-input-secureApiKeyHeaderOrQueryName" placeholder="">
+    </div>
+    <div class="form-row">
+        <label id="node-config-input-secureApiKeyValue-label" for="node-config-input-secureApiKeyValue"><i class="fa fa-lock"></i> <span data-i18n="OpenaiApi.label.value"></span></label>
+        <input type="password" id="node-config-input-secureApiKeyValue" placeholder="">
+    </div>
+    <div class="form-row">
+        <label id="node-config-input-secureApiKeyIsQuery-label" for="node-config-input-secureApiKeyIsQuery"><i class="fa fa-dot-circle-o"></i> <span data-i18n="OpenaiApi.label.isQuery"></span></label>
+        <select id="node-config-input-secureApiKeyIsQuery">
+            <option value="true">true</option>
+            <option value="false">false</option>
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-config-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="openai-api-service">
+
+    <p><b>Header</b>: Variable name to set API key</p>
+    <p><b>Value</b>: Value of API key</p>
+</script>
