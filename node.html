@@ -2064,56 +2064,80 @@
     <div class="form-row">
         <label for="node-input-method"><i class="fa fa-tasks"></i> <span data-i18n="OpenaiApi.label.method"></span></label>
         <select id="node-input-method">
-            <option value="createChatCompletion" data-i18n="OpenaiApi.parameters.createChatCompletion"></option>
-            <option value="createImage" data-i18n="OpenaiApi.parameters.createImage"></option>
-            <option value="createImageEdit" data-i18n="OpenaiApi.parameters.createImageEdit"></option>
-            <option value="createImageVariation" data-i18n="OpenaiApi.parameters.createImageVariation"></option>
-            <option value="createEmbedding" data-i18n="OpenaiApi.parameters.createEmbedding"></option>
-            <option value="createSpeech" data-i18n="OpenaiApi.parameters.createSpeech"></option>
-            <option value="createTranscription" data-i18n="OpenaiApi.parameters.createTranscription"></option>
-            <option value="createTranslation" data-i18n="OpenaiApi.parameters.createTranslation"></option>
-            <option value="listFiles" data-i18n="OpenaiApi.parameters.listFiles"></option>
-            <option value="createFile" data-i18n="OpenaiApi.parameters.createFile"></option>
-            <option value="deleteFile" data-i18n="OpenaiApi.parameters.deleteFile"></option>
-            <option value="retrieveFile" data-i18n="OpenaiApi.parameters.retrieveFile"></option>
-            <option value="downloadFile" data-i18n="OpenaiApi.parameters.downloadFile"></option>
-            <option value="createFineTuningJob" data-i18n="OpenaiApi.parameters.createFineTuningJob"></option>
-            <option value="listPaginatedFineTuningJobs" data-i18n="OpenaiApi.parameters.listPaginatedFineTuningJobs"></option>
-            <option value="retrieveFineTuningJob" data-i18n="OpenaiApi.parameters.retrieveFineTuningJob"></option>
-            <option value="listFineTuningEvents" data-i18n="OpenaiApi.parameters.listFineTuningEvents"></option>
-            <option value="cancelFineTuningJob" data-i18n="OpenaiApi.parameters.cancelFineTuningJob"></option>
-            <option value="listModels" data-i18n="OpenaiApi.parameters.listModels"></option>
-            <option value="retrieveModel" data-i18n="OpenaiApi.parameters.retrieveModel"></option>
-            <option value="deleteModel" data-i18n="OpenaiApi.parameters.deleteModel"></option>
-            <option value="createModeration" data-i18n="OpenaiApi.parameters.createModeration"></option>
-            <option value="listAssistants" data-i18n="OpenaiApi.parameters.listAssistants"></option>
-            <option value="createAssistant" data-i18n="OpenaiApi.parameters.createAssistant"></option>
-            <option value="getAssistant" data-i18n="OpenaiApi.parameters.getAssistant"></option>
-            <option value="modifyAssistant" data-i18n="OpenaiApi.parameters.modifyAssistant"></option>
-            <option value="deleteAssistant" data-i18n="OpenaiApi.parameters.deleteAssistant"></option>
-            <option value="createThread" data-i18n="OpenaiApi.parameters.createThread"></option>
-            <option value="getThread" data-i18n="OpenaiApi.parameters.getThread"></option>
-            <option value="modifyThread" data-i18n="OpenaiApi.parameters.modifyThread"></option>
-            <option value="deleteThread" data-i18n="OpenaiApi.parameters.deleteThread"></option>
-            <option value="listMessages" data-i18n="OpenaiApi.parameters.listMessages"></option>
-            <option value="createMessage" data-i18n="OpenaiApi.parameters.createMessage"></option>
-            <option value="getMessage" data-i18n="OpenaiApi.parameters.getMessage"></option>
-            <option value="modifyMessage" data-i18n="OpenaiApi.parameters.modifyMessage"></option>
-            <option value="createThreadAndRun" data-i18n="OpenaiApi.parameters.createThreadAndRun"></option>
-            <option value="listRuns" data-i18n="OpenaiApi.parameters.listRuns"></option>
-            <option value="createRun" data-i18n="OpenaiApi.parameters.createRun"></option>
-            <option value="getRun" data-i18n="OpenaiApi.parameters.getRun"></option>
-            <option value="modifyRun" data-i18n="OpenaiApi.parameters.modifyRun"></option>
-            <option value="submitToolOuputsToRun" data-i18n="OpenaiApi.parameters.submitToolOuputsToRun"></option>
-            <option value="cancelRun" data-i18n="OpenaiApi.parameters.cancelRun"></option>
-            <option value="listRunSteps" data-i18n="OpenaiApi.parameters.listRunSteps"></option>
-            <option value="getRunStep" data-i18n="OpenaiApi.parameters.getRunStep"></option>
-            <option value="listAssistantFiles" data-i18n="OpenaiApi.parameters.listAssistantFiles"></option>
-            <option value="createAssistantFile" data-i18n="OpenaiApi.parameters.createAssistantFile"></option>
-            <option value="getAssistantFile" data-i18n="OpenaiApi.parameters.getAssistantFile"></option>
-            <option value="deleteAssistantFile" data-i18n="OpenaiApi.parameters.deleteAssistantFile"></option>
-            <option value="listMessageFiles" data-i18n="OpenaiApi.parameters.listMessageFiles"></option>
-            <option value="getMessageFile" data-i18n="OpenaiApi.parameters.getMessageFile"></option>
+            <optgroup label="Assistants (Beta)">
+                <option value="listAssistants" data-i18n="OpenaiApi.parameters.listAssistants"></option>
+                <option value="createAssistant" data-i18n="OpenaiApi.parameters.createAssistant"></option>
+                <option value="getAssistant" data-i18n="OpenaiApi.parameters.getAssistant"></option>
+                <option value="modifyAssistant" data-i18n="OpenaiApi.parameters.modifyAssistant"></option>
+                <option value="deleteAssistant" data-i18n="OpenaiApi.parameters.deleteAssistant"></option>
+                <option value="listAssistantFiles" data-i18n="OpenaiApi.parameters.listAssistantFiles"></option>
+                <option value="createAssistantFile" data-i18n="OpenaiApi.parameters.createAssistantFile"></option>
+                <option value="getAssistantFile" data-i18n="OpenaiApi.parameters.getAssistantFile"></option>
+                <option value="deleteAssistantFile" data-i18n="OpenaiApi.parameters.deleteAssistantFile"></option>
+            </optgroup>
+            <optgroup label="Audio">
+                <option value="createSpeech" data-i18n="OpenaiApi.parameters.createSpeech"></option>
+                <option value="createTranscription" data-i18n="OpenaiApi.parameters.createTranscription"></option>
+                <option value="createTranslation" data-i18n="OpenaiApi.parameters.createTranslation"></option>
+            </optgroup>
+            <optgroup label="Chat">
+                <option value="createChatCompletion" data-i18n="OpenaiApi.parameters.createChatCompletion"></option>
+            </optgroup>
+            <optgroup label="Embeddings">
+                <option value="createEmbedding" data-i18n="OpenaiApi.parameters.createEmbedding"></option>
+            </optgroup>
+            <optgroup label="Fine-tuning">
+                <option value="createFineTuningJob" data-i18n="OpenaiApi.parameters.createFineTuningJob"></option>
+                <option value="listPaginatedFineTuningJobs" data-i18n="OpenaiApi.parameters.listPaginatedFineTuningJobs"></option>
+                <option value="retrieveFineTuningJob" data-i18n="OpenaiApi.parameters.retrieveFineTuningJob"></option>
+                <option value="listFineTuningEvents" data-i18n="OpenaiApi.parameters.listFineTuningEvents"></option>
+                <option value="cancelFineTuningJob" data-i18n="OpenaiApi.parameters.cancelFineTuningJob"></option>
+            </optgroup>
+            <optgroup label="Files">
+                <option value="listFiles" data-i18n="OpenaiApi.parameters.listFiles"></option>
+                <option value="createFile" data-i18n="OpenaiApi.parameters.createFile"></option>
+                <option value="deleteFile" data-i18n="OpenaiApi.parameters.deleteFile"></option>
+                <option value="retrieveFile" data-i18n="OpenaiApi.parameters.retrieveFile"></option>
+                <option value="downloadFile" data-i18n="OpenaiApi.parameters.downloadFile"></option>
+            </optgroup>
+            <optgroup label="Images">
+                <option value="createImage" data-i18n="OpenaiApi.parameters.createImage"></option>
+                <option value="createImageEdit" data-i18n="OpenaiApi.parameters.createImageEdit"></option>
+                <option value="createImageVariation" data-i18n="OpenaiApi.parameters.createImageVariation"></option>
+            </optgroup>
+            <optgroup label="Messages (Beta)">
+                <option value="listMessages" data-i18n="OpenaiApi.parameters.listMessages"></option>
+                <option value="createMessage" data-i18n="OpenaiApi.parameters.createMessage"></option>
+                <option value="getMessage" data-i18n="OpenaiApi.parameters.getMessage"></option>
+                <option value="modifyMessage" data-i18n="OpenaiApi.parameters.modifyMessage"></option>
+                <option value="listMessageFiles" data-i18n="OpenaiApi.parameters.listMessageFiles"></option>
+                <option value="getMessageFile" data-i18n="OpenaiApi.parameters.getMessageFile"></option>
+            </optgroup>
+            <optgroup label="Models">
+                <option value="listModels" data-i18n="OpenaiApi.parameters.listModels"></option>
+                <option value="retrieveModel" data-i18n="OpenaiApi.parameters.retrieveModel"></option>
+                <option value="deleteModel" data-i18n="OpenaiApi.parameters.deleteModel"></option>
+            </optgroup>
+            <optgroup label="Moderations">
+                <option value="createModeration" data-i18n="OpenaiApi.parameters.createModeration"></option>
+            </optgroup>
+            <optgroup label="Runs (Beta)">
+                <option value="createThreadAndRun" data-i18n="OpenaiApi.parameters.createThreadAndRun"></option>
+                <option value="listRuns" data-i18n="OpenaiApi.parameters.listRuns"></option>
+                <option value="createRun" data-i18n="OpenaiApi.parameters.createRun"></option>
+                <option value="getRun" data-i18n="OpenaiApi.parameters.getRun"></option>
+                <option value="modifyRun" data-i18n="OpenaiApi.parameters.modifyRun"></option>
+                <option value="submitToolOuputsToRun" data-i18n="OpenaiApi.parameters.submitToolOuputsToRun"></option>
+                <option value="cancelRun" data-i18n="OpenaiApi.parameters.cancelRun"></option>
+                <option value="listRunSteps" data-i18n="OpenaiApi.parameters.listRunSteps"></option>
+                <option value="getRunStep" data-i18n="OpenaiApi.parameters.getRunStep"></option>
+            </optgroup>
+            <optgroup label="Threads (Beta)">
+                <option value="createThread" data-i18n="OpenaiApi.parameters.createThread"></option>
+                <option value="getThread" data-i18n="OpenaiApi.parameters.getThread"></option>
+                <option value="modifyThread" data-i18n="OpenaiApi.parameters.modifyThread"></option>
+                <option value="deleteThread" data-i18n="OpenaiApi.parameters.deleteThread"></option>
+            </optgroup>
         </select>
         &nbsp;
         <input type="checkbox" id="optional-parameters" style="margin-left: 10px; vertical-align: text-bottom; width: auto;">
@@ -3026,17 +3050,17 @@
 
 <script type="text/html" data-help-name="openai-api">
 
-    <p>The OpenAI REST API. Please see https://platform.openai.com/docs/api-reference for more details.</p>
-    <p><b>Methods</b></p>
-        <h3>POST /chat/completions</h3>
-        <p>Creates a model response for the given chat conversation.</p>
+    <p>The OpenAI REST API. Please see the <a href="https://platform.openai.com/docs/api-reference" target="_blank">OpenAI API Reference</a> for more details.</p>
+    <p><b>Reference</b></p>
+        <h3>Create Chat Completion</h3>
+        <p>Creates a model response for the given chat conversation. <a href="https://platform.openai.com/docs/api-reference/chat/create" target="_blank">Full documentation.</a></p>
         <dl class="message-properties">
-        <dt>body <span class="property-type"></span></dt>
-        </dl>
-        <h3>POST /completions</h3>
-        <p>Creates a completion for the provided prompt and parameters.</p>
-        <dl class="message-properties">
-        <dt>body <span class="property-type"></span></dt>
+            <h2>Inputs</h2>
+            <h3><code>msg.payload</code></h3>
+            <dt>messages <span class="property-type">array</span></dt>
+            <dt>model <span class="property-type">string</span></dt>
+            <dt class="optional">frequency_penalty <span class="property-type">number</span></dt>
+            <dt class="optional">logit_bias <span class="property-type">object</span></dt>
         </dl>
         <h3>POST /edits</h3>
         <p>Creates a new edit for the provided input, instruction, and parameters.</p>
