@@ -3049,390 +3049,541 @@
 </script>
 
 <script type="text/html" data-help-name="openai-api">
-
     <p>The OpenAI REST API. Please see the <a href="https://platform.openai.com/docs/api-reference" target="_blank">OpenAI API Reference</a> for more details.</p>
     <p><b>Reference</b></p>
         <h3>Create Chat Completion</h3>
         <p>Creates a model response for the given chat conversation. <a href="https://platform.openai.com/docs/api-reference/chat/create" target="_blank">Full documentation.</a></p>
         <dl class="message-properties">
             <h2>Inputs</h2>
-            <h3><code>msg.payload</code></h3>
+            <h3>msg.payload <em>object</em></h3>
             <dt>messages <span class="property-type">array</span></dt>
             <dt>model <span class="property-type">string</span></dt>
             <dt class="optional">frequency_penalty <span class="property-type">number</span></dt>
             <dt class="optional">logit_bias <span class="property-type">object</span></dt>
+            <dt class="optional">max_tokens <span class="property-type">integer</span></dt>
+            <dt class="optional">n <span class="property-type">integer</span></dt>
+            <dt class="optional">presence_penalty <span class="property-type">number</span></dt>
+            <dt class="optional">response_format <span class="property-type">object</span></dt>
+            <dt class="optional">seed <span class="property-type">integer</span></dt>
+            <dt class="optional">stop <span class="property-type">string | array</span></dt>
+            <dt class="optional">stream <span class="property-type">boolean</span></dt>
+            <dt class="optional">temperature <span class="property-type">number</span></dt>
+            <dt class="optional">top_p <span class="property-type">number</span></dt>
+            <dt class="optional">tools <span class="property-type">array</span></dt>
+            <dt class="optional">tool_choice <span class="property-type">string | object</span></dt>
+            <dt class="optional">user <span class="property-type">string</span></dt>
         </dl>
-        <h3>POST /edits</h3>
-        <p>Creates a new edit for the provided input, instruction, and parameters.</p>
-        <dl class="message-properties">
-        <dt>body <span class="property-type"></span></dt>
-        </dl>
-        <h3>POST /images/generations</h3>
+
+        <h3>Create Image</h3>
         <p>Creates an image given a prompt.</p>
         <dl class="message-properties">
-        <dt>body <span class="property-type"></span></dt>
+            <h2>Inputs</h2>
+            <h3>msg.payload <em>object</em></h3>
+            <dt>prompt <span class="property-type">string</span></dt>
+            <dt class="optional">model <span class="property-type">string</span></dt>
+            <dt class="optional">n <span class="property-type">integer</span></dt>
+            <dt class="optional">quality <span class="property-type">string</span></dt>
+            <dt class="optional">response_format <span class="property-type">string</span></dt>
+            <dt class="optional">size <span class="property-type">string</span></dt>
+            <dt class="optional">style <span class="property-type">string</span></dt>
+            <dt class="optional">user <span class="property-type">string</span></dt>
         </dl>
-        <h3>POST /images/edits</h3>
+
+        <h3>Create Image Edit</h3>
         <p>Creates an edited or extended image given an original image and a prompt.</p>
         <dl class="message-properties">
-        <dt>image <span class="property-type">string</span></dt>
-        <dt>prompt <span class="property-type">string</span></dt>
-        <dt>mask <span class="property-type">string</span></dt>
-        <dt>model <span class="property-type"></span></dt>
-        <dt>n <span class="property-type">integer</span></dt>
-        <dt>size <span class="property-type">string</span></dt>
-        <dt>response_format <span class="property-type">string</span></dt>
-        <dt>user <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg.payload <em>object</em></h3>
+            <dt>image <span class="property-type">string</span></dt>
+            <h3>msg <em>object</em></h3>
+            <dt>prompt <span class="property-type">string</span></dt>
+            <dt class="optional">mask <span class="property-type">string</span></dt>
+            <dt class="optional">model <span class="property-type"></span></dt>
+            <dt class="optional">n <span class="property-type">integer</span></dt>
+            <dt class="optional">size <span class="property-type">string</span></dt>
+            <dt class="optional">response_format <span class="property-type">string</span></dt>
+            <dt class="optional">user <span class="property-type">string</span></dt>
         </dl>
-        <h3>POST /images/variations</h3>
+        
+        <h3>Create Image Variation</h3>
         <p>Creates a variation of a given image.</p>
         <dl class="message-properties">
-        <dt>image <span class="property-type">string</span></dt>
-        <dt>model <span class="property-type"></span></dt>
-        <dt>n <span class="property-type">integer</span></dt>
-        <dt>response_format <span class="property-type">string</span></dt>
-        <dt>size <span class="property-type">string</span></dt>
-        <dt>user <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg.payload <em>object</em></h3>
+            <dt>image <span class="property-type">string</span></dt>
+            <h3>msg <em>object</em></h3>
+            <dt>model <span class="property-type"></span></dt>
+            <dt>n <span class="property-type">integer</span></dt>
+            <dt>response_format <span class="property-type">string</span></dt>
+            <dt>size <span class="property-type">string</span></dt>
+            <dt>user <span class="property-type">string</span></dt>
         </dl>
-        <h3>POST /embeddings</h3>
+
+        <h3>Create Embeddings</h3>
         <p>Creates an embedding vector representing the input text.</p>
         <dl class="message-properties">
-        <dt>body <span class="property-type"></span></dt>
+            <h2>Inputs</h2>
+            <h3>msg.payload <em>object</em></h3>
+            <dt class="optional">input <span class="property-type">string | array</span></dt>
+            <dt class="optional">model <span class="property-type">string</span></dt>
+            <dt class="optional">encoding_format <span class="property-type">string</span></dt>
+            <dt class="optional">user <span class="property-type">string</span></dt>
         </dl>
-        <h3>POST /audio/speech</h3>
+
+        <h3>Create Speech</h3>
         <p>Generates audio from the input text.</p>
         <dl class="message-properties">
-        <dt>body <span class="property-type"></span></dt>
+            <h2>Inputs</h2>
+            <h3>msg.payload <em>object</em></h3>
+            <dt>model <span class="property-type">string</span></dt>
+            <dt>input <span class="property-type">string</span></dt>
+            <dt>voice <span class="property-type">string</span></dt>
+            <dt class="optional">response_format <span class="property-type">string</span></dt>
+            <dt class="optional">speed <span class="property-type">number</span></dt>
         </dl>
-        <h3>POST /audio/transcriptions</h3>
+
+        <h3>Create Transcription</h3>
         <p>Transcribes audio into the input language.</p>
         <dl class="message-properties">
-        <dt>file <span class="property-type">string</span></dt>
-        <dt>model <span class="property-type"></span></dt>
-        <dt>language <span class="property-type">string</span></dt>
-        <dt>prompt <span class="property-type">string</span></dt>
-        <dt>response_format <span class="property-type">string</span></dt>
-        <dt>temperature <span class="property-type">number</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg.payload <em>object</em></h3>
+            <dt>file <span class="property-type">file</span></dt>
+            <h3>msg <em>object</em></h3>
+            <dt>model <span class="property-type">string</span></dt>
+            <dt class="optional">language <span class="property-type">string</span></dt>
+            <dt class="optional">prompt <span class="property-type">string</span></dt>
+            <dt class="optional">response_format <span class="property-type">string</span></dt>
+            <dt class="optional">temperature <span class="property-type">number</span></dt>
         </dl>
-        <h3>POST /audio/translations</h3>
+
+        <h3>Create Translation</h3>
         <p>Translates audio into English.</p>
         <dl class="message-properties">
-        <dt>file <span class="property-type">string</span></dt>
-        <dt>model <span class="property-type"></span></dt>
-        <dt>prompt <span class="property-type">string</span></dt>
-        <dt>response_format <span class="property-type">string</span></dt>
-        <dt>temperature <span class="property-type">number</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg.payload <em>object</em></h3>
+            <dt>file <span class="property-type">file</span></dt>
+            <h3>msg <em>object</em></h3>
+            <dt>model <span class="property-type"></span></dt>
+            <dt class="optional">prompt <span class="property-type">string</span></dt>
+            <dt class="optional">response_format <span class="property-type">string</span></dt>
+            <dt class="optional">temperature <span class="property-type">number</span></dt>
         </dl>
-        <h3>GET /files</h3>
+
+        <h3>List Files</h3>
         <p>Returns a list of files that belong to the user's organization.</p>
         <dl class="message-properties">
-        <dt>purpose <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt class="optional">purpose <span class="property-type">string</span></dt>
         </dl>
-        <h3>POST /files</h3>
-        <p>Upload a file that can be used across various endpoints/features. The size of all the files uploaded by one organization can be up to 100 GB.
 
-The size of individual files for can be a maximum of 512MB. See the [Assistants Tools guide](/docs/assistants/tools) to learn more about the types of files supported. The Fine-tuning API only supports `.jsonl` files.
-
-Please [contact us](https://help.openai.com/) if you need to increase these storage limits.
-</p>
+        <h3>Upload File</h3>
         <dl class="message-properties">
-        <dt>file <span class="property-type">string</span></dt>
-        <dt>purpose <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg.payload <em>object</em></h3>
+            <dt>file <span class="property-type">file</span></dt>
+            <h3>msg <em>object</em></h3>
+            <dt>purpose <span class="property-type">string</span></dt>
         </dl>
-        <h3>DELETE /files/{file_id}</h3>
+
+        <h3>Delete File</h3>
         <p>Delete a file.</p>
         <dl class="message-properties">
-        <dt>file_id <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>file_id <span class="property-type">string</span></dt>
         </dl>
-        <h3>GET /files/{file_id}</h3>
+
+        <h3>Retrieve File</h3>
         <p>Returns information about a specific file.</p>
         <dl class="message-properties">
-        <dt>file_id <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>file_id <span class="property-type">string</span></dt>
         </dl>
-        <h3>GET /files/{file_id}/content</h3>
+
+        <h3>Retrieve File Content</h3>
         <p>Returns the contents of the specified file.</p>
         <dl class="message-properties">
-        <dt>file_id <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>file_id <span class="property-type">string</span></dt>
         </dl>
-        <h3>POST /fine_tuning/jobs</h3>
-        <p>Creates a job that fine-tunes a specified model from a given dataset.
+        
+        <h3>Create Fine-tuning Job</h3>
+        <p>Creates a job that fine-tunes a specified model from a given dataset. Response includes details of the enqueued job including job status and the name of the fine-tuned models once complete.</p>
+        <dl class="message-properties">
+            <h2>Inputs</h2>
+            <h3>msg.payload <em>object</em></h3>
+            <dt>model <span class="property-type">string</span></dt>
+            <dt>training_file <span class="property-type">string</span></dt>
+            <dt class="optional">hyperparameters <span class="property-type">object</span></dt>
+            <dt class="optional">suffix <span class="property-type">string</span></dt>
+            <dt class="optional">validation_file <span class="property-type">string</span></dt>
+        </dl>
 
-Response includes details of the enqueued job including job status and the name of the fine-tuned models once complete.
+        <h3>List Fine-tuning Jobs</h3>
+        <p>List your organization's fine-tuning jobs</p>
+        <dl class="message-properties">
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt class="optional">after <span class="property-type">string</span></dt>
+            <dt class="optional">limit <span class="property-type">integer</span></dt>
+        </dl>
 
-[Learn more about fine-tuning](/docs/guides/fine-tuning)
-</p>
+        <h3>Retrieve Fine-tuning Job</h3>
+        <p>Get info about a fine-tuning job.</p>
         <dl class="message-properties">
-        <dt>body <span class="property-type"></span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>fine_tuning_job_id <span class="property-type">string</span></dt>
         </dl>
-        <h3>GET /fine_tuning/jobs</h3>
-        <p>List your organization's fine-tuning jobs
-</p>
-        <dl class="message-properties">
-        <dt>after <span class="property-type">string</span></dt>
-        <dt>limit <span class="property-type">integer</span></dt>
-        </dl>
-        <h3>GET /fine_tuning/jobs/{fine_tuning_job_id}</h3>
-        <p>Get info about a fine-tuning job.
 
-[Learn more about fine-tuning](/docs/guides/fine-tuning)
-</p>
+        <h3>List Fine-tuning Events</h3>
+        <p>Get status updates for a fine-tuning job.</p>
         <dl class="message-properties">
-        <dt>fine_tuning_job_id <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>fine_tuning_job_id <span class="property-type">string</span></dt>
+            <dt class="optional">after <span class="property-type">string</span></dt>
+            <dt class="optional">limit <span class="property-type">integer</span></dt>
         </dl>
-        <h3>GET /fine_tuning/jobs/{fine_tuning_job_id}/events</h3>
-        <p>Get status updates for a fine-tuning job.
-</p>
-        <dl class="message-properties">
-        <dt>fine_tuning_job_id <span class="property-type">string</span></dt>
-        <dt>after <span class="property-type">string</span></dt>
-        <dt>limit <span class="property-type">integer</span></dt>
-        </dl>
-        <h3>POST /fine_tuning/jobs/{fine_tuning_job_id}/cancel</h3>
-        <p>Immediately cancel a fine-tune job.
-</p>
-        <dl class="message-properties">
-        <dt>fine_tuning_job_id <span class="property-type">string</span></dt>
-        </dl>
-        <h3>POST /fine-tunes</h3>
-        <p>Creates a job that fine-tunes a specified model from a given dataset.
 
-Response includes details of the enqueued job including job status and the name of the fine-tuned models once complete.
-
-[Learn more about fine-tuning](/docs/guides/legacy-fine-tuning)
-</p>
+        <h3>Cancel Fine-tuning Job</h3>
+        <p>Immediately cancel a fine-tune job.</p>
         <dl class="message-properties">
-        <dt>body <span class="property-type"></span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>fine_tuning_job_id <span class="property-type">string</span></dt>
         </dl>
-        <h3>GET /fine-tunes</h3>
-        <p>List your organization's fine-tuning jobs
-</p>
-        <dl class="message-properties">
-        </dl>
-        <h3>GET /fine-tunes/{fine_tune_id}</h3>
-        <p>Gets info about the fine-tune job.
-
-[Learn more about fine-tuning](/docs/guides/legacy-fine-tuning)
-</p>
-        <dl class="message-properties">
-        <dt>fine_tune_id <span class="property-type">string</span></dt>
-        </dl>
-        <h3>POST /fine-tunes/{fine_tune_id}/cancel</h3>
-        <p>Immediately cancel a fine-tune job.
-</p>
-        <dl class="message-properties">
-        <dt>fine_tune_id <span class="property-type">string</span></dt>
-        </dl>
-        <h3>GET /fine-tunes/{fine_tune_id}/events</h3>
-        <p>Get fine-grained status updates for a fine-tune job.
-</p>
-        <dl class="message-properties">
-        <dt>fine_tune_id <span class="property-type">string</span></dt>
-        <dt>stream <span class="property-type">boolean</span></dt>
-        </dl>
-        <h3>GET /models</h3>
+     
+        <h3>List Models</h3>
         <p>Lists the currently available models, and provides basic information about each one such as the owner and availability.</p>
-        <dl class="message-properties">
-        </dl>
-        <h3>GET /models/{model}</h3>
+        <dl class="message-properties"></dl>
+
+        <h3>Retrieve Model</h3>
         <p>Retrieves a model instance, providing basic information about the model such as the owner and permissioning.</p>
         <dl class="message-properties">
-        <dt>model <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>model <span class="property-type">string</span></dt>
         </dl>
-        <h3>DELETE /models/{model}</h3>
+
+        <h3>Delete Fine-tun Model</h3>
         <p>Delete a fine-tuned model. You must have the Owner role in your organization to delete a model.</p>
         <dl class="message-properties">
-        <dt>model <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>model <span class="property-type">string</span></dt>
         </dl>
-        <h3>POST /moderations</h3>
+
+        <h3>Create Moderation</h3>
         <p>Classifies if text violates OpenAI's Content Policy</p>
         <dl class="message-properties">
-        <dt>body <span class="property-type"></span></dt>
+            <h2>Inputs</h2>
+            <h3>msg.payload <em>object</em></h3>
+            <dt>input <span class="property-type"></span></dt>
+            <dt class="optional">model <span class="property-type"></span></dt>
         </dl>
-        <h3>GET /assistants</h3>
+
+        <h3>Retrieve Assistant</h3>
         <p>Returns a list of assistants.</p>
         <dl class="message-properties">
-        <dt>limit <span class="property-type">integer</span></dt>
-        <dt>order <span class="property-type">string</span></dt>
-        <dt>after <span class="property-type">string</span></dt>
-        <dt>before <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>assistant_id <span class="property-type">integer</span></dt>
         </dl>
-        <h3>POST /assistants</h3>
+
+        <h3>Create Assistant</h3>
         <p>Create an assistant with a model and instructions.</p>
         <dl class="message-properties">
-        <dt>body <span class="property-type"></span></dt>
+            <h2>Inputs</h2>
+            <h3>msg.payload <em>object</em></h3>
+            <dt>model <span class="property-type">string</span></dt>
+            <dt class="optional">name <span class="property-type">string</span></dt>
+            <dt class="optional">description <span class="property-type">string</span></dt>
+            <dt class="optional">instructions <span class="property-type">string</span></dt>
+            <dt class="optional">tools <span class="property-type">array</span></dt>
+            <dt class="optional">file_ids <span class="property-type">array</span></dt>
+            <dt class="optional">metadata <span class="property-type">object</span></dt>
         </dl>
-        <h3>GET /assistants/{assistant_id}</h3>
+
+        <h3>Retrieve Assistant</h3>
         <p>Retrieves an assistant.</p>
         <dl class="message-properties">
-        <dt>assistant_id <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>assistant_id <span class="property-type">string</span></dt>
         </dl>
-        <h3>POST /assistants/{assistant_id}</h3>
+
+        <h3>Modify Assistant</h3>
         <p>Modifies an assistant.</p>
         <dl class="message-properties">
-        <dt>assistant_id <span class="property-type">string</span></dt>
-        <dt>body <span class="property-type"></span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>assistant_id <span class="property-type">string</span></dt>
+            <h3>msg.payload <em>object</em></h3>
+            <dt class="optional">model <span class="property-type">string</span></dt>
+            <dt class="optional">name <span class="property-type">string</span></dt>
+            <dt class="optional">description <span class="property-type">string</span></dt>
+            <dt class="optional">instructions <span class="property-type">string</span></dt>
+            <dt class="optional">tools <span class="property-type">array</span></dt>
+            <dt class="optional">file_ids <span class="property-type">array</span></dt>
+            <dt class="optional">metadata <span class="property-type">object</span></dt>
         </dl>
-        <h3>DELETE /assistants/{assistant_id}</h3>
+
+        <h3>Delete Assistant</h3>
         <p>Delete an assistant.</p>
         <dl class="message-properties">
-        <dt>assistant_id <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>assistant_id <span class="property-type">string</span></dt>
         </dl>
-        <h3>POST /threads</h3>
+
+        <h3>Create Thread</h3>
         <p>Create a thread.</p>
         <dl class="message-properties">
-        <dt>body <span class="property-type"></span></dt>
+            <h2>Inputs</h2>
+            <h3>msg.payload <em>object</em></h3>
+            <dt class="optional">messages <span class="property-type">array</span></dt>
+            <dt class="optional">metadata <span class="property-type">object</span></dt>
         </dl>
-        <h3>GET /threads/{thread_id}</h3>
+
+        <h3>Retrieve Thread</h3>
         <p>Retrieves a thread.</p>
         <dl class="message-properties">
-        <dt>thread_id <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>thread_id <span class="property-type">string</span></dt>
         </dl>
-        <h3>POST /threads/{thread_id}</h3>
+
+        <h3>Modify Thread</h3>
         <p>Modifies a thread.</p>
         <dl class="message-properties">
-        <dt>thread_id <span class="property-type">string</span></dt>
-        <dt>body <span class="property-type"></span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>thread_id <span class="property-type">string</span></dt>
+            <h3>msg.payload <em>object</em></h3>
+            <dt class="optional">body <span class="property-type"></span></dt>
         </dl>
-        <h3>DELETE /threads/{thread_id}</h3>
+
+        <h3>Delete Thread</h3>
         <p>Delete a thread.</p>
         <dl class="message-properties">
-        <dt>thread_id <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>thread_id <span class="property-type">string</span></dt>
         </dl>
-        <h3>GET /threads/{thread_id}/messages</h3>
+
+        <h3>List Messages</h3>
         <p>Returns a list of messages for a given thread.</p>
         <dl class="message-properties">
-        <dt>thread_id <span class="property-type">string</span></dt>
-        <dt>limit <span class="property-type">integer</span></dt>
-        <dt>order <span class="property-type">string</span></dt>
-        <dt>after <span class="property-type">string</span></dt>
-        <dt>before <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>thread_id <span class="property-type">string</span></dt>
+            <dt class="optional">limit <span class="property-type">integer</span></dt>
+            <dt class="optional">order <span class="property-type">string</span></dt>
+            <dt class="optional">after <span class="property-type">string</span></dt>
+            <dt class="optional">before <span class="property-type">string</span></dt>
         </dl>
-        <h3>POST /threads/{thread_id}/messages</h3>
+
+        <h3>Create Message</h3>
         <p>Create a message.</p>
         <dl class="message-properties">
-        <dt>thread_id <span class="property-type">string</span></dt>
-        <dt>body <span class="property-type"></span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>thread_id <span class="property-type">string</span></dt>
+            <h3>msg.payload <em>object</em></h3>
+            <dt>role <span class="property-type">string</span></dt>
+            <dt>content <span class="property-type">string</span></dt>
+            <dt class="optional">file_ids <span class="property-type">array</span></dt>
+            <dt class="optional">metadata <span class="property-type">object</span></dt>
         </dl>
-        <h3>GET /threads/{thread_id}/messages/{message_id}</h3>
+
+        <h3>Retrieve Message</h3>
         <p>Retrieve a message.</p>
         <dl class="message-properties">
-        <dt>thread_id <span class="property-type">string</span></dt>
-        <dt>message_id <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>thread_id <span class="property-type">string</span></dt>
+            <dt>message_id <span class="property-type">string</span></dt>
         </dl>
-        <h3>POST /threads/{thread_id}/messages/{message_id}</h3>
+
+        <h3>Modify Message</h3>
         <p>Modifies a message.</p>
         <dl class="message-properties">
-        <dt>thread_id <span class="property-type">string</span></dt>
-        <dt>message_id <span class="property-type">string</span></dt>
-        <dt>body <span class="property-type"></span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>thread_id <span class="property-type">string</span></dt>
+            <dt>message_id <span class="property-type">string</span></dt>
+            <h3>msg.payload <em>object</em></h3>
+            <dt class="optional">metadata <span class="property-type">object</span></dt>
         </dl>
-        <h3>POST /threads/runs</h3>
+
+        <h3>Create Thread and Run</h3>
         <p>Create a thread and run it in one request.</p>
         <dl class="message-properties">
-        <dt>body <span class="property-type"></span></dt>
+            <h2>Inputs</h2>
+            <h3>msg.payload <em>object</em></h3>
+            <dt>assistant_id <span class="property-type"></span></dt>
+            <dt class="optional">thread <span class="property-type">object</span></dt>
+            <dt class="optional">model <span class="property-type">string</span></dt>
+            <dt class="optional">instructions <span class="property-type">string</span></dt>
+            <dt class="optional">tools <span class="property-type">array</span></dt>
+            <dt class="optional">metadata <span class="property-type">object</span></dt>
         </dl>
-        <h3>GET /threads/{thread_id}/runs</h3>
+
+        <h3>List Runs</h3>
         <p>Returns a list of runs belonging to a thread.</p>
         <dl class="message-properties">
-        <dt>thread_id <span class="property-type">string</span></dt>
-        <dt>limit <span class="property-type">integer</span></dt>
-        <dt>order <span class="property-type">string</span></dt>
-        <dt>after <span class="property-type">string</span></dt>
-        <dt>before <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg.payload <em>object</em></h3>
+            <dt>thread_id <span class="property-type">string</span></dt>
+            <h3>msg.payload <em>object</em></h3>
+            <dt class="optional">limit <span class="property-type">integer</span></dt>
+            <dt class="optional">order <span class="property-type">string</span></dt>
+            <dt class="optional">after <span class="property-type">string</span></dt>
+            <dt class="optional">before <span class="property-type">string</span></dt>
         </dl>
-        <h3>POST /threads/{thread_id}/runs</h3>
+
+        <h3>Create Run</h3>
         <p>Create a run.</p>
         <dl class="message-properties">
-        <dt>thread_id <span class="property-type">string</span></dt>
-        <dt>body <span class="property-type"></span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>thread_id <span class="property-type">string</span></dt>
+            <h3>msg.payload <em>object</em></h3>
+            <dt>assistant_id <span class="property-type">string</span></dt>
+            <dt class="optional">model <span class="property-type">string</span></dt>
+            <dt class="optional">instructions <span class="property-type">string</span></dt>
+            <dt class="optional">tools <span class="property-type"></span>array</dt>
+            <dt class="optional">metadata <span class="property-type">object</span></dt>
         </dl>
-        <h3>GET /threads/{thread_id}/runs/{run_id}</h3>
+
+        <h3>Retrieve Run</h3>
         <p>Retrieves a run.</p>
         <dl class="message-properties">
-        <dt>thread_id <span class="property-type">string</span></dt>
-        <dt>run_id <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>thread_id <span class="property-type">string</span></dt>
+            <dt>run_id <span class="property-type">string</span></dt>
         </dl>
-        <h3>POST /threads/{thread_id}/runs/{run_id}</h3>
+
+        <h3>Modify Run</h3>
         <p>Modifies a run.</p>
         <dl class="message-properties">
-        <dt>thread_id <span class="property-type">string</span></dt>
-        <dt>run_id <span class="property-type">string</span></dt>
-        <dt>body <span class="property-type"></span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>thread_id <span class="property-type">string</span></dt>
+            <dt>run_id <span class="property-type">string</span></dt>
+            <h3>msg.payload <em>object</em></h3>
+            <dt class="optional">metadata <span class="property-type">object</span></dt>
         </dl>
-        <h3>POST /threads/{thread_id}/runs/{run_id}/submit_tool_outputs</h3>
-        <p>When a run has the `status: "requires_action"` and `required_action.type` is `submit_tool_outputs`, this endpoint can be used to submit the outputs from the tool calls once they're all completed. All outputs must be submitted in a single request.
-</p>
+
+        <h3>Submit Tool Outputs to Run</h3>
+        <p>When a run has the `status: "requires_action"` and `required_action.type` is `submit_tool_outputs`, this endpoint can be used to submit the outputs from the tool calls once they're all completed. All outputs must be submitted in a single request.</p>
         <dl class="message-properties">
-        <dt>thread_id <span class="property-type">string</span></dt>
-        <dt>run_id <span class="property-type">string</span></dt>
-        <dt>body <span class="property-type"></span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>thread_id <span class="property-type">string</span></dt>
+            <dt>run_id <span class="property-type">string</span></dt>
+            <h3>msg.payload <em>object</em></h3>
+            <dt>tool_outputs <span class="property-type">array</span></dt>
         </dl>
-        <h3>POST /threads/{thread_id}/runs/{run_id}/cancel</h3>
+
+        <h3>Cancel Run</h3>
         <p>Cancels a run that is `in_progress`.</p>
         <dl class="message-properties">
-        <dt>thread_id <span class="property-type">string</span></dt>
-        <dt>run_id <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>thread_id <span class="property-type">string</span></dt>
+            <dt>run_id <span class="property-type">string</span></dt>
         </dl>
-        <h3>GET /threads/{thread_id}/runs/{run_id}/steps</h3>
+
+        <h3>List Run Steps</h3>
         <p>Returns a list of run steps belonging to a run.</p>
         <dl class="message-properties">
-        <dt>thread_id <span class="property-type">string</span></dt>
-        <dt>run_id <span class="property-type">string</span></dt>
-        <dt>limit <span class="property-type">integer</span></dt>
-        <dt>order <span class="property-type">string</span></dt>
-        <dt>after <span class="property-type">string</span></dt>
-        <dt>before <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>thread_id <span class="property-type">string</span></dt>
+            <dt>run_id <span class="property-type">string</span></dt>
+            <dt class="optional">limit <span class="property-type">integer</span></dt>
+            <dt class="optional">order <span class="property-type">string</span></dt>
+            <dt class="optional">after <span class="property-type">string</span></dt>
+            <dt class="optional">before <span class="property-type">string</span></dt>
         </dl>
-        <h3>GET /threads/{thread_id}/runs/{run_id}/steps/{step_id}</h3>
+
+        <h3>Retrieve Run Step</h3>
         <p>Retrieves a run step.</p>
         <dl class="message-properties">
-        <dt>thread_id <span class="property-type">string</span></dt>
-        <dt>run_id <span class="property-type">string</span></dt>
-        <dt>step_id <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>thread_id <span class="property-type">string</span></dt>
+            <dt>run_id <span class="property-type">string</span></dt>
+            <dt>step_id <span class="property-type">string</span></dt>
         </dl>
-        <h3>GET /assistants/{assistant_id}/files</h3>
+
+        <h3>List Assistant Files</h3>
         <p>Returns a list of assistant files.</p>
         <dl class="message-properties">
-        <dt>assistant_id <span class="property-type">string</span></dt>
-        <dt>limit <span class="property-type">integer</span></dt>
-        <dt>order <span class="property-type">string</span></dt>
-        <dt>after <span class="property-type">string</span></dt>
-        <dt>before <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>assistant_id <span class="property-type">string</span></dt>
+            <dt class="optional">limit <span class="property-type">integer</span></dt>
+            <dt class="optional">order <span class="property-type">string</span></dt>
+            <dt class="optional">after <span class="property-type">string</span></dt>
+            <dt class="optional">before <span class="property-type">string</span></dt>
         </dl>
-        <h3>POST /assistants/{assistant_id}/files</h3>
-        <p>Create an assistant file by attaching a [File](/docs/api-reference/files) to an [assistant](/docs/api-reference/assistants).</p>
+
+        <h3>Create Assistant File</h3>
+        <p>Create an assistant file by attaching a file to an assistant.</p>
         <dl class="message-properties">
-        <dt>assistant_id <span class="property-type">string</span></dt>
-        <dt>body <span class="property-type"></span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>assistant_id <span class="property-type">string</span></dt>
+            <h3>msg.payload <em>object</em></h3>
+            <dt>file_id <span class="property-type">string</span></dt>
         </dl>
-        <h3>GET /assistants/{assistant_id}/files/{file_id}</h3>
+
+        <h3>Retrieve Assistant File</h3>
         <p>Retrieves an AssistantFile.</p>
         <dl class="message-properties">
-        <dt>assistant_id <span class="property-type">string</span></dt>
-        <dt>file_id <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>assistant_id <span class="property-type">string</span></dt>
+            <dt>file_id <span class="property-type">string</span></dt>
         </dl>
-        <h3>DELETE /assistants/{assistant_id}/files/{file_id}</h3>
+
+        <h3>Delete Assistant File</h3>
         <p>Delete an assistant file.</p>
         <dl class="message-properties">
-        <dt>assistant_id <span class="property-type">string</span></dt>
-        <dt>file_id <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>assistant_id <span class="property-type">string</span></dt>
+            <dt>file_id <span class="property-type">string</span></dt>
         </dl>
-        <h3>GET /threads/{thread_id}/messages/{message_id}/files</h3>
+
+        <h3>List Message Files</h3>
         <p>Returns a list of message files.</p>
         <dl class="message-properties">
-        <dt>thread_id <span class="property-type">string</span></dt>
-        <dt>message_id <span class="property-type">string</span></dt>
-        <dt>limit <span class="property-type">integer</span></dt>
-        <dt>order <span class="property-type">string</span></dt>
-        <dt>after <span class="property-type">string</span></dt>
-        <dt>before <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg <em>object</em></h3>
+            <dt>thread_id <span class="property-type">string</span></dt>
+            <dt>message_id <span class="property-type">string</span></dt>
+            <dt class="optional">limit <span class="property-type">integer</span></dt>
+            <dt class="optional">order <span class="property-type">string</span></dt>
+            <dt class="optional">after <span class="property-type">string</span></dt>
+            <dt class="optional">before <span class="property-type">string</span></dt>
         </dl>
-        <h3>GET /threads/{thread_id}/messages/{message_id}/files/{file_id}</h3>
+
+        <h3>Retrieve Message File</h3>
         <p>Retrieves a message file.</p>
         <dl class="message-properties">
-        <dt>thread_id <span class="property-type">string</span></dt>
-        <dt>message_id <span class="property-type">string</span></dt>
-        <dt>file_id <span class="property-type">string</span></dt>
+            <h2>Inputs</h2>
+            <h3>msg.payload <em>object</em></h3>
+            <dt>thread_id <span class="property-type">string</span></dt>
+            <dt>message_id <span class="property-type">string</span></dt>
+            <dt>file_id <span class="property-type">string</span></dt>
         </dl>
 </script>
 <script type="text/javascript">

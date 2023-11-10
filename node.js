@@ -891,7 +891,7 @@ module.exports = function (RED) {
                 } else {
                     modifyAssistant_parameters.assistantId = RED.util.getMessageProperty(msg, modifyAssistant_nodeParam);
                 }
-                modifyAssistant_parameters.assistantId = !!modifyAssistant_parameters.assistantId ? modifyAssistant_parameters.assistantId : msg.payload;
+                modifyAssistant_parameters.assistantId = !!modifyAssistant_parameters.assistantId ? modifyAssistant_parameters.assistantId : msg.assistant_id;
 
                 if (typeof msg.payload === 'object') {
                     modifyAssistant_parameters.body = msg.payload;
