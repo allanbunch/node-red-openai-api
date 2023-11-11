@@ -21,6 +21,7 @@
             "image": "image",
             "prompt": "prompt",
             "mask": "mask",
+            "messages": "messages",
             "model": "model",
             "n": "n",
             "size": "size",

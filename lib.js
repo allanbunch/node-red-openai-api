@@ -217,7 +217,20 @@ var OpenaiApi = (function () {
             } else {
                 // Handle JSON payloads
                 headers['Content-Type'] = 'application/json';
-                data = parameters.body || {}; // Assuming the JSON payload is in the `body` property
+                if (parameters.body) {
+                    // Iterate over each property in the object
+                    for (let key in parameters) {
+                        // Skip the 'body' property itself
+                        if (key !== 'body') {
+                            // Move the property into 'body'
+                            parameters.body[key] = parameters[key];
+
+                            // Delete the original property
+                            delete parameters[key];
+                        }
+                    }
+                    data = parameters.body || {}; // Assuming the JSON payload is in the `body` property
+                };
             }
 
             // Add expected query parameters to the queryParameters object

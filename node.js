@@ -6,244 +6,278 @@ module.exports = function (RED) {
         RED.nodes.createNode(this, config);
         this.service = RED.nodes.getNode(config.service);
         this.method = config.method;
-        this.createChatCompletion_body = config.createChatCompletion_body;
-        this.createChatCompletion_bodyType = config.createChatCompletion_bodyType || 'str';
-        this.createImage_body = config.createImage_body;
-        this.createImage_bodyType = config.createImage_bodyType || 'str';
-        this.createImageEdit_image = config.createImageEdit_image;
-        this.createImageEdit_imageType = config.createImageEdit_imageType || 'str';
-        this.createImageEdit_prompt = config.createImageEdit_prompt;
-        this.createImageEdit_promptType = config.createImageEdit_promptType || 'str';
-        this.createImageEdit_mask = config.createImageEdit_mask;
-        this.createImageEdit_maskType = config.createImageEdit_maskType || 'str';
-        this.createImageEdit_model = config.createImageEdit_model;
-        this.createImageEdit_modelType = config.createImageEdit_modelType || 'str';
-        this.createImageEdit_n = config.createImageEdit_n;
-        this.createImageEdit_nType = config.createImageEdit_nType || 'str';
-        this.createImageEdit_size = config.createImageEdit_size;
-        this.createImageEdit_sizeType = config.createImageEdit_sizeType || 'str';
-        this.createImageEdit_responseFormat = config.createImageEdit_responseFormat;
-        this.createImageEdit_responseFormatType = config.createImageEdit_responseFormatType || 'str';
-        this.createImageEdit_user = config.createImageEdit_user;
-        this.createImageEdit_userType = config.createImageEdit_userType || 'str';
-        this.createImageVariation_image = config.createImageVariation_image;
-        this.createImageVariation_imageType = config.createImageVariation_imageType || 'str';
-        this.createImageVariation_model = config.createImageVariation_model;
-        this.createImageVariation_modelType = config.createImageVariation_modelType || 'str';
-        this.createImageVariation_n = config.createImageVariation_n;
-        this.createImageVariation_nType = config.createImageVariation_nType || 'str';
-        this.createImageVariation_responseFormat = config.createImageVariation_responseFormat;
-        this.createImageVariation_responseFormatType = config.createImageVariation_responseFormatType || 'str';
-        this.createImageVariation_size = config.createImageVariation_size;
-        this.createImageVariation_sizeType = config.createImageVariation_sizeType || 'str';
-        this.createImageVariation_user = config.createImageVariation_user;
-        this.createImageVariation_userType = config.createImageVariation_userType || 'str';
-        this.createEmbedding_body = config.createEmbedding_body;
-        this.createEmbedding_bodyType = config.createEmbedding_bodyType || 'str';
-        this.createSpeech_body = config.createSpeech_body;
-        this.createSpeech_bodyType = config.createSpeech_bodyType || 'str';
-        this.createTranscription_file = config.createTranscription_file;
-        this.createTranscription_fileType = config.createTranscription_fileType || 'str';
-        this.createTranscription_model = config.createTranscription_model;
-        this.createTranscription_modelType = config.createTranscription_modelType || 'str';
-        this.createTranscription_language = config.createTranscription_language;
-        this.createTranscription_languageType = config.createTranscription_languageType || 'str';
-        this.createTranscription_prompt = config.createTranscription_prompt;
-        this.createTranscription_promptType = config.createTranscription_promptType || 'str';
-        this.createTranscription_responseFormat = config.createTranscription_responseFormat;
-        this.createTranscription_responseFormatType = config.createTranscription_responseFormatType || 'str';
-        this.createTranscription_temperature = config.createTranscription_temperature;
-        this.createTranscription_temperatureType = config.createTranscription_temperatureType || 'str';
-        this.createTranslation_file = config.createTranslation_file;
-        this.createTranslation_fileType = config.createTranslation_fileType || 'str';
-        this.createTranslation_model = config.createTranslation_model;
-        this.createTranslation_modelType = config.createTranslation_modelType || 'str';
-        this.createTranslation_prompt = config.createTranslation_prompt;
-        this.createTranslation_promptType = config.createTranslation_promptType || 'str';
-        this.createTranslation_responseFormat = config.createTranslation_responseFormat;
-        this.createTranslation_responseFormatType = config.createTranslation_responseFormatType || 'str';
-        this.createTranslation_temperature = config.createTranslation_temperature;
-        this.createTranslation_temperatureType = config.createTranslation_temperatureType || 'str';
-        this.listFiles_purpose = config.listFiles_purpose;
-        this.listFiles_purposeType = config.listFiles_purposeType || 'str';
-        this.createFile_file = config.createFile_file;
-        this.createFile_fileType = config.createFile_fileType || 'str';
-        this.createFile_purpose = config.createFile_purpose;
-        this.createFile_purposeType = config.createFile_purposeType || 'str';
-        this.deleteFile_fileId = config.deleteFile_fileId;
-        this.deleteFile_fileIdType = config.deleteFile_fileIdType || 'str';
-        this.retrieveFile_fileId = config.retrieveFile_fileId;
-        this.retrieveFile_fileIdType = config.retrieveFile_fileIdType || 'str';
-        this.downloadFile_fileId = config.downloadFile_fileId;
-        this.downloadFile_fileIdType = config.downloadFile_fileIdType || 'str';
-        this.createFineTuningJob_body = config.createFineTuningJob_body;
-        this.createFineTuningJob_bodyType = config.createFineTuningJob_bodyType || 'str';
-        this.listPaginatedFineTuningJobs_after = config.listPaginatedFineTuningJobs_after;
-        this.listPaginatedFineTuningJobs_afterType = config.listPaginatedFineTuningJobs_afterType || 'str';
-        this.listPaginatedFineTuningJobs_limit = config.listPaginatedFineTuningJobs_limit;
-        this.listPaginatedFineTuningJobs_limitType = config.listPaginatedFineTuningJobs_limitType || 'str';
-        this.retrieveFineTuningJob_fineTuningJobId = config.retrieveFineTuningJob_fineTuningJobId;
-        this.retrieveFineTuningJob_fineTuningJobIdType = config.retrieveFineTuningJob_fineTuningJobIdType || 'str';
-        this.listFineTuningEvents_fineTuningJobId = config.listFineTuningEvents_fineTuningJobId;
-        this.listFineTuningEvents_fineTuningJobIdType = config.listFineTuningEvents_fineTuningJobIdType || 'str';
-        this.listFineTuningEvents_after = config.listFineTuningEvents_after;
-        this.listFineTuningEvents_afterType = config.listFineTuningEvents_afterType || 'str';
-        this.listFineTuningEvents_limit = config.listFineTuningEvents_limit;
-        this.listFineTuningEvents_limitType = config.listFineTuningEvents_limitType || 'str';
-        this.cancelFineTuningJob_fineTuningJobId = config.cancelFineTuningJob_fineTuningJobId;
-        this.cancelFineTuningJob_fineTuningJobIdType = config.cancelFineTuningJob_fineTuningJobIdType || 'str';
-        this.retrieveModel_model = config.retrieveModel_model;
-        this.retrieveModel_modelType = config.retrieveModel_modelType || 'str';
-        this.deleteModel_model = config.deleteModel_model;
-        this.deleteModel_modelType = config.deleteModel_modelType || 'str';
-        this.createModeration_body = config.createModeration_body;
-        this.createModeration_bodyType = config.createModeration_bodyType || 'str';
-        this.listAssistants_limit = config.listAssistants_limit;
-        this.listAssistants_limitType = config.listAssistants_limitType || 'str';
-        this.listAssistants_order = config.listAssistants_order;
-        this.listAssistants_orderType = config.listAssistants_orderType || 'str';
-        this.listAssistants_after = config.listAssistants_after;
-        this.listAssistants_afterType = config.listAssistants_afterType || 'str';
-        this.listAssistants_before = config.listAssistants_before;
-        this.listAssistants_beforeType = config.listAssistants_beforeType || 'str';
-        this.createAssistant_body = config.createAssistant_body;
-        this.createAssistant_bodyType = config.createAssistant_bodyType || 'str';
-        this.getAssistant_assistantId = config.getAssistant_assistantId;
-        this.getAssistant_assistantIdType = config.getAssistant_assistantIdType || 'str';
-        this.modifyAssistant_assistantId = config.modifyAssistant_assistantId;
-        this.modifyAssistant_assistantIdType = config.modifyAssistant_assistantIdType || 'str';
-        this.modifyAssistant_body = config.modifyAssistant_body;
-        this.modifyAssistant_bodyType = config.modifyAssistant_bodyType || 'str';
-        this.deleteAssistant_assistantId = config.deleteAssistant_assistantId;
-        this.deleteAssistant_assistantIdType = config.deleteAssistant_assistantIdType || 'str';
-        this.createThread_body = config.createThread_body;
-        this.createThread_bodyType = config.createThread_bodyType || 'str';
-        this.getThread_threadId = config.getThread_threadId;
-        this.getThread_threadIdType = config.getThread_threadIdType || 'str';
-        this.modifyThread_threadId = config.modifyThread_threadId;
-        this.modifyThread_threadIdType = config.modifyThread_threadIdType || 'str';
-        this.modifyThread_body = config.modifyThread_body;
-        this.modifyThread_bodyType = config.modifyThread_bodyType || 'str';
-        this.deleteThread_threadId = config.deleteThread_threadId;
-        this.deleteThread_threadIdType = config.deleteThread_threadIdType || 'str';
-        this.listMessages_threadId = config.listMessages_threadId;
-        this.listMessages_threadIdType = config.listMessages_threadIdType || 'str';
-        this.listMessages_limit = config.listMessages_limit;
-        this.listMessages_limitType = config.listMessages_limitType || 'str';
-        this.listMessages_order = config.listMessages_order;
-        this.listMessages_orderType = config.listMessages_orderType || 'str';
-        this.listMessages_after = config.listMessages_after;
-        this.listMessages_afterType = config.listMessages_afterType || 'str';
-        this.listMessages_before = config.listMessages_before;
-        this.listMessages_beforeType = config.listMessages_beforeType || 'str';
-        this.createMessage_threadId = config.createMessage_threadId;
-        this.createMessage_threadIdType = config.createMessage_threadIdType || 'str';
-        this.createMessage_body = config.createMessage_body;
-        this.createMessage_bodyType = config.createMessage_bodyType || 'str';
-        this.getMessage_threadId = config.getMessage_threadId;
-        this.getMessage_threadIdType = config.getMessage_threadIdType || 'str';
-        this.getMessage_messageId = config.getMessage_messageId;
-        this.getMessage_messageIdType = config.getMessage_messageIdType || 'str';
-        this.modifyMessage_threadId = config.modifyMessage_threadId;
-        this.modifyMessage_threadIdType = config.modifyMessage_threadIdType || 'str';
-        this.modifyMessage_messageId = config.modifyMessage_messageId;
-        this.modifyMessage_messageIdType = config.modifyMessage_messageIdType || 'str';
-        this.modifyMessage_body = config.modifyMessage_body;
-        this.modifyMessage_bodyType = config.modifyMessage_bodyType || 'str';
-        this.createThreadAndRun_body = config.createThreadAndRun_body;
-        this.createThreadAndRun_bodyType = config.createThreadAndRun_bodyType || 'str';
-        this.listRuns_threadId = config.listRuns_threadId;
-        this.listRuns_threadIdType = config.listRuns_threadIdType || 'str';
-        this.listRuns_limit = config.listRuns_limit;
-        this.listRuns_limitType = config.listRuns_limitType || 'str';
-        this.listRuns_order = config.listRuns_order;
-        this.listRuns_orderType = config.listRuns_orderType || 'str';
-        this.listRuns_after = config.listRuns_after;
-        this.listRuns_afterType = config.listRuns_afterType || 'str';
-        this.listRuns_before = config.listRuns_before;
-        this.listRuns_beforeType = config.listRuns_beforeType || 'str';
-        this.createRun_threadId = config.createRun_threadId;
-        this.createRun_threadIdType = config.createRun_threadIdType || 'str';
-        this.createRun_body = config.createRun_body;
-        this.createRun_bodyType = config.createRun_bodyType || 'str';
-        this.getRun_threadId = config.getRun_threadId;
-        this.getRun_threadIdType = config.getRun_threadIdType || 'str';
-        this.getRun_runId = config.getRun_runId;
-        this.getRun_runIdType = config.getRun_runIdType || 'str';
-        this.modifyRun_threadId = config.modifyRun_threadId;
-        this.modifyRun_threadIdType = config.modifyRun_threadIdType || 'str';
-        this.modifyRun_runId = config.modifyRun_runId;
-        this.modifyRun_runIdType = config.modifyRun_runIdType || 'str';
-        this.modifyRun_body = config.modifyRun_body;
-        this.modifyRun_bodyType = config.modifyRun_bodyType || 'str';
-        this.submitToolOuputsToRun_threadId = config.submitToolOuputsToRun_threadId;
-        this.submitToolOuputsToRun_threadIdType = config.submitToolOuputsToRun_threadIdType || 'str';
-        this.submitToolOuputsToRun_runId = config.submitToolOuputsToRun_runId;
-        this.submitToolOuputsToRun_runIdType = config.submitToolOuputsToRun_runIdType || 'str';
-        this.submitToolOuputsToRun_body = config.submitToolOuputsToRun_body;
-        this.submitToolOuputsToRun_bodyType = config.submitToolOuputsToRun_bodyType || 'str';
-        this.cancelRun_threadId = config.cancelRun_threadId;
-        this.cancelRun_threadIdType = config.cancelRun_threadIdType || 'str';
-        this.cancelRun_runId = config.cancelRun_runId;
-        this.cancelRun_runIdType = config.cancelRun_runIdType || 'str';
-        this.listRunSteps_threadId = config.listRunSteps_threadId;
-        this.listRunSteps_threadIdType = config.listRunSteps_threadIdType || 'str';
-        this.listRunSteps_runId = config.listRunSteps_runId;
-        this.listRunSteps_runIdType = config.listRunSteps_runIdType || 'str';
-        this.listRunSteps_limit = config.listRunSteps_limit;
-        this.listRunSteps_limitType = config.listRunSteps_limitType || 'str';
-        this.listRunSteps_order = config.listRunSteps_order;
-        this.listRunSteps_orderType = config.listRunSteps_orderType || 'str';
-        this.listRunSteps_after = config.listRunSteps_after;
-        this.listRunSteps_afterType = config.listRunSteps_afterType || 'str';
-        this.listRunSteps_before = config.listRunSteps_before;
-        this.listRunSteps_beforeType = config.listRunSteps_beforeType || 'str';
-        this.getRunStep_threadId = config.getRunStep_threadId;
-        this.getRunStep_threadIdType = config.getRunStep_threadIdType || 'str';
-        this.getRunStep_runId = config.getRunStep_runId;
-        this.getRunStep_runIdType = config.getRunStep_runIdType || 'str';
-        this.getRunStep_stepId = config.getRunStep_stepId;
-        this.getRunStep_stepIdType = config.getRunStep_stepIdType || 'str';
-        this.listAssistantFiles_assistantId = config.listAssistantFiles_assistantId;
-        this.listAssistantFiles_assistantIdType = config.listAssistantFiles_assistantIdType || 'str';
-        this.listAssistantFiles_limit = config.listAssistantFiles_limit;
-        this.listAssistantFiles_limitType = config.listAssistantFiles_limitType || 'str';
-        this.listAssistantFiles_order = config.listAssistantFiles_order;
-        this.listAssistantFiles_orderType = config.listAssistantFiles_orderType || 'str';
-        this.listAssistantFiles_after = config.listAssistantFiles_after;
-        this.listAssistantFiles_afterType = config.listAssistantFiles_afterType || 'str';
-        this.listAssistantFiles_before = config.listAssistantFiles_before;
-        this.listAssistantFiles_beforeType = config.listAssistantFiles_beforeType || 'str';
-        this.createAssistantFile_assistantId = config.createAssistantFile_assistantId;
-        this.createAssistantFile_assistantIdType = config.createAssistantFile_assistantIdType || 'str';
-        this.createAssistantFile_body = config.createAssistantFile_body;
-        this.createAssistantFile_bodyType = config.createAssistantFile_bodyType || 'str';
-        this.getAssistantFile_assistantId = config.getAssistantFile_assistantId;
-        this.getAssistantFile_assistantIdType = config.getAssistantFile_assistantIdType || 'str';
-        this.getAssistantFile_fileId = config.getAssistantFile_fileId;
-        this.getAssistantFile_fileIdType = config.getAssistantFile_fileIdType || 'str';
-        this.deleteAssistantFile_assistantId = config.deleteAssistantFile_assistantId;
-        this.deleteAssistantFile_assistantIdType = config.deleteAssistantFile_assistantIdType || 'str';
-        this.deleteAssistantFile_fileId = config.deleteAssistantFile_fileId;
-        this.deleteAssistantFile_fileIdType = config.deleteAssistantFile_fileIdType || 'str';
-        this.listMessageFiles_threadId = config.listMessageFiles_threadId;
-        this.listMessageFiles_threadIdType = config.listMessageFiles_threadIdType || 'str';
-        this.listMessageFiles_messageId = config.listMessageFiles_messageId;
-        this.listMessageFiles_messageIdType = config.listMessageFiles_messageIdType || 'str';
-        this.listMessageFiles_limit = config.listMessageFiles_limit;
-        this.listMessageFiles_limitType = config.listMessageFiles_limitType || 'str';
-        this.listMessageFiles_order = config.listMessageFiles_order;
-        this.listMessageFiles_orderType = config.listMessageFiles_orderType || 'str';
-        this.listMessageFiles_after = config.listMessageFiles_after;
-        this.listMessageFiles_afterType = config.listMessageFiles_afterType || 'str';
-        this.listMessageFiles_before = config.listMessageFiles_before;
-        this.listMessageFiles_beforeType = config.listMessageFiles_beforeType || 'str';
-        this.getMessageFile_threadId = config.getMessageFile_threadId;
-        this.getMessageFile_threadIdType = config.getMessageFile_threadIdType || 'str';
-        this.getMessageFile_messageId = config.getMessageFile_messageId;
-        this.getMessageFile_messageIdType = config.getMessageFile_messageIdType || 'str';
-        this.getMessageFile_fileId = config.getMessageFile_fileId;
-        this.getMessageFile_fileIdType = config.getMessageFile_fileIdType || 'str';
+
+        const entities = {
+            createChatCompletion: {
+                messages: 'str',
+                model: 'str',
+                frequency_penalty: 'str',
+                logit_bias: 'str',
+                max_tokens: 'str',
+                n: 'str',
+                presence_penalty: 'str',
+                response_format: 'str',
+                seed: 'str',
+                stop: 'str',
+                stream: 'str',
+                temperature: 'str',
+                top_p: 'str',
+                tools: 'str',
+                tool_choice: 'str',
+                user: 'str'
+            },
+            createImageEdit: {
+                image: 'str',
+                prompt: 'str',
+                mask: 'str',
+                model: 'str',
+                n: 'str',
+                size: 'str',
+                response_format: 'str',
+                user: 'str'
+            },
+            createImageVariation: {
+                image: 'str',
+                model: 'str',
+                n: 'str',
+                response_format: 'str',
+                size: 'str',
+                user: 'str'
+            },
+            createEmbedding: {
+                input: 'str',
+                model: 'str',
+                encoding_format: 'str',
+                user: 'str'
+            },
+            createSpeech: {
+                model: 'str',
+                input: 'str',
+                voice: 'str',
+                response_format: 'str',
+                speed: 'str'
+            },
+            createTranscription: {
+                file: 'str',
+                model: 'str',
+                language: 'str',
+                prompt: 'str',
+                response_format: 'str',
+                temperature: 'str'
+            },
+            createTranslation: {
+                file: 'str',
+                model: 'str',
+                prompt: 'str',
+                response_format: 'str',
+                temperature: 'str'
+            },
+            listFiles: {
+                purpose: 'str'
+            },
+            createFile: {
+                file: 'str',
+                purpose: 'str'
+            },
+            deleteFile: {
+                file_id: 'str'
+            },
+            retrieveFile: {
+                file_id: 'str'
+            },
+            downloadFile: {
+                file_id: 'str'
+            },
+            createFineTuningJob: {
+                model: 'str',
+                training_file: 'str',
+                hyperparameters: 'str',
+                suffix: 'str',
+                validation_file: 'str'
+            },
+            listPaginatedFineTuningJobs: {
+                after: 'str',
+                limit: 'str'
+            },
+            retrieveFineTuningJob: {
+                fine_tuning_job_id: 'str'
+            },
+            listFineTuningEvents: {
+                fine_tuning_job_id: 'str',
+                after: 'str',
+                limit: 'str'
+            },
+            cancelFineTuningJob: {
+                fine_tuning_job_id: 'str'
+            },
+            retrieveModel: {},
+            deleteModel: {
+                model: 'str'
+            },
+            createModeration: {
+                input: 'str',
+                model: 'str'
+            },
+            listAssistants: {
+                assistant_id: 'str'
+            },
+            createAssistant: {
+                model: 'str',
+                name: 'str',
+                description: 'str',
+                instructions: 'str',
+                tools: 'str',
+                file_ids: 'str',
+                metadata: 'str'
+            },
+            getAssistant: {
+                assistant_id: 'str'
+            },
+            modifyAssistant: {
+                assistant_id: 'str',
+                model: 'str',
+                name: 'str',
+                description: 'str',
+                instructions: 'str',
+                tools: 'str',
+                file_ids: 'str',
+                metadata: 'str'
+            },
+            deleteAssistant: {
+                assistant_id: 'str'
+            },
+            createThread: {
+                messages: 'str',
+                metadata: 'str'
+            },
+            getThread: {
+                thread_id: 'str'
+            },
+            modifyThread: {
+                thread_id: 'str',
+                metadata: 'str'
+            },
+            deleteThread: {
+                thread_id: 'str'
+            },
+            listMessages: {
+                thread_id: 'str',
+                limit: 'str',
+                order: 'str',
+                after: 'str',
+                before: 'str'
+            },
+            createMessage: {
+                thread_id: 'str',
+                role: 'str',
+                content: 'str',
+                file_ids: 'str',
+                metadata: 'str'
+            },
+            getMessage: {
+                thread_id: 'str',
+                message_id: 'str'
+            },
+            modifyMessage: {
+                thread_id: 'str',
+                message_id: 'str',
+                metadata: 'str'
+            },
+            createThreadAndRun: {
+                assistant_id: 'str',
+                thread: 'str',
+                model: 'str',
+                instructions: 'str',
+                tools: 'str',
+                metadata: 'str'
+            },
+            listRuns: {
+                thread_id: 'str',
+                limit: 'str',
+                order: 'str',
+                after: 'str',
+                before: 'str'
+            },
+            createRun: {
+                thread_id: 'str',
+                assistant_id: 'str',
+                model: 'str',
+                instructions: 'str',
+                instructions: 'str',
+                metadata: 'str'
+            },
+            getRun: {
+                thread_id: 'str',
+                run_id: 'str'
+            },
+            modifyRun: {
+                thread_id: 'str',
+                run_id: 'str',
+                metadata: 'str'
+            },
+            submitToolOuputsToRun: {
+                thread_id: 'str',
+                run_id: 'str',
+                tool_outputs: 'str'
+            },
+            cancelRun: {
+                thread_id: 'str',
+                run_id: 'str'
+            },
+            listRunSteps: {
+                thread_id: 'str',
+                run_id: 'str',
+                limit: 'str',
+                order: 'str',
+                after: 'str',
+                before: 'str'
+            },
+            getRunStep: {
+                thread_id: 'str',
+                run_id: 'str',
+                step_id: 'str'
+            },
+            listAssistantFiles: {
+                assistant_id: 'str',
+                limit: 'str',
+                order: 'str',
+                after: 'str',
+                before: 'str'
+            },
+            createAssistantFile: {
+                assistant_id: 'str',
+                file_id: 'str'
+            },
+            getAssistantFile: {
+                assistant_id: 'str',
+                file_id: 'str'
+            },
+            deleteAssistantFile: {
+                assistant_id: 'str',
+                file_id: 'str'
+            },
+            listMessageFiles: {
+                thread_id: 'str',
+                message_id: 'str',
+                limit: 'str',
+                order: 'str',
+                after: 'str',
+                before: 'str'
+            },
+            getMessageFile: {
+                thread_id: 'str',
+                message_id: 'str',
+                file_id: 'str'
+            }
+        };
+
+        Object.keys(entities).forEach(entity => {
+            Object.keys(entities[entity]).forEach(prop => {
+                this[`${entity}_${prop}`] = config[`${entity}_${prop}`];
+                this[`${entity}_${prop}Type`] = config[`${entity}_${prop}Type`] || entities[entity][prop];
+            });
+        });
+
         var node = this;
 
         node.on('input', function (msg) {
@@ -286,6 +320,8 @@ module.exports = function (RED) {
                     node.error('Unsupported type: \'' + (typeof msg.payload) + '\', ' + 'msg.payload must be JSON object or buffer.', msg);
                     errorFlag = true;
                 }
+
+
                 result = client.createImage(createImage_parameters);
             }
 
