@@ -33,7 +33,7 @@ module.exports = function (RED) {
                 model: 'str',
                 n: 'str',
                 size: 'str',
-                response_format: 'str',
+                responseFormat: 'str',
                 user: 'str'
             },
             createImageVariation: {
@@ -62,7 +62,7 @@ module.exports = function (RED) {
                 model: 'str',
                 language: 'str',
                 prompt: 'str',
-                response_format: 'str',
+                responseFormat: 'str',
                 temperature: 'str'
             },
             createTranslation: {
@@ -391,7 +391,7 @@ module.exports = function (RED) {
                 } else {
                     createImageEdit_parameters.response_format = RED.util.getMessageProperty(msg, createImageEdit_nodeParam);
                 }
-                createImageEdit_parameters.response_format = !!createImageEdit_parameters.response_format ? createImageEdit_parameters.response_format : msg.response_format;
+                createImageEdit_parameters.response_format = !!createImageEdit_parameters.response_format ? createImageEdit_parameters.response_format : msg.responseFormat;
 
                 createImageEdit_nodeParam = node.createImageEdit_user;
                 createImageEdit_nodeParamType = node.createImageEdit_userType;
