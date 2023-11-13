@@ -188,13 +188,12 @@ module.exports = function (RED) {
 
             if (!errorFlag) {
                 const serviceName = node.method; // Specify the service you want to process
-                const serviceProperties = services[serviceName];
                 let serviceParametersObject = {};
 
                 // Dynamically call the function based on the service name
                 const functionName = `${serviceName}`;
                 if (typeof client[functionName] === 'function') {
-                    serviceParametersObject.body = msg.payload;
+                    serviceParametersObject.body = msg.payload || {};
                     result = client[functionName](serviceParametersObject);
                 } else {
                     console.error(`Function ${functionName} does not exist on client.`);

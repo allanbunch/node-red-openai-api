@@ -1,6 +1,8 @@
 /*jshint -W069 */
 
 const { threadId } = require('worker_threads');
+const { v4: uuidv4 } = require('uuid');
+const FileType = require('file-type');
 
 /**
  * The OpenAI REST API. Please see https://platform.openai.com/docs/api-reference for more details.
@@ -25,10 +27,10 @@ var OpenaiApi = (function () {
     }
 
     function mergeQueryParams(parameters, queryParameters) {
-        if (parameters.$queryParameters) {
-            Object.keys(parameters.$queryParameters)
+        if (parameters.body.$queryParameters) {
+            Object.keys(parameters.body.$queryParameters)
                 .forEach(function (parameterName) {
-                    var parameter = parameters.$queryParameters[parameterName];
+                    var parameter = parameters.body.$queryParameters[parameterName];
                     queryParameters[parameterName] = parameter;
                 });
         }
@@ -61,7 +63,7 @@ var OpenaiApi = (function () {
         if (Object.keys(form).length > 0 && headers['Content-Type'] === 'multipart/form-data') {
             const formData = new FormData();
             for (const key of Object.keys(parameters)) {
-                formData.append(key, parameters[key]);
+                formData.append(key, parameters.body[key]);
             };
             data = formData;
         } else if (typeof body === 'object' && !(body instanceof Buffer)) {
@@ -134,7 +136,7 @@ var OpenaiApi = (function () {
 
     OpenaiApi.prototype.getFromEndpoint = function (path, parameters, expectedQueryParams, customHeaders) {
         return new Promise((resolve, reject) => {
-            parameters = parameters || {};
+            // parameters = parameters || {};
             var domain = this.domain;
             var queryParameters = {}, baseHeaders = {};
 
@@ -150,8 +152,8 @@ var OpenaiApi = (function () {
             // Only add query parameters if they are expected and exist
             if (expectedQueryParams) {
                 expectedQueryParams.forEach(param => {
-                    if (parameters[param] !== undefined) {
-                        queryParameters[param] = parameters[param];
+                    if (parameters.body[param] !== undefined) {
+                        queryParameters[param] = parameters.body[param];
                     }
                 });
             }
@@ -199,12 +201,12 @@ var OpenaiApi = (function () {
             if (contentType === 'form-data') {
                 var formData = new FormData();
 
-                Object.entries(parameters).forEach(([key, value]) => {
+                Object.entries(parameters.body).forEach(([key, value]) => {
                     if (value instanceof Buffer) {
                         const filename = _path.basename(filePath);
                         formData.append(key, value, filename);
                     } else {
-                        if (parameters[key] !== undefined) {
+                        if (parameters.body[key] !== undefined) {
                             formData.append(key, value);
                         }
                     }
@@ -223,14 +225,14 @@ var OpenaiApi = (function () {
             // Add expected query parameters to the queryParameters object
             if (expectedQueryParams) {
                 expectedQueryParams.forEach(param => {
-                    if (parameters[param] !== undefined) {
-                        queryParameters[param] = parameters[param];
+                    if (parameters.body[param] !== undefined) {
+                        queryParameters[param] = parameters.body[param];
                     }
                 });
             }
 
             // Merge any additional query parameters from the parameters object
-            queryParameters = mergeQueryParams(parameters, queryParameters);
+            queryParameters = mergeQueryParams(parameters.body, queryParameters);
 
             // Axios request configuration
             const config = {
@@ -270,7 +272,7 @@ var OpenaiApi = (function () {
             if (expectedQueryParams) {
                 expectedQueryParams.forEach(param => {
                     if (parameters[param] !== undefined) {
-                        queryParameters[param] = parameters[param];
+                        queryParameters[param] = parameters.body[param];
                     }
                 });
             }
@@ -335,7 +337,10 @@ var OpenaiApi = (function () {
          * @param {string} parameters.responseFormat - The format in which the generated images are returned. Must be one of `url` or `b64_json`.
          * @param {string} parameters.user - A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more](/docs/guides/safety-best-practices/end-user-ids).
      */
-    OpenaiApi.prototype.createImageEdit = function (parameters, filename) {
+    OpenaiApi.prototype.createImageEdit = function (parameters) {
+        const filename = parameters.body.filename;
+        delete parameters.body.filename;
+
         return this.postToEndpoint('/images/edits', parameters, null, 'form-data', filename);
     };
 
@@ -352,7 +357,10 @@ var OpenaiApi = (function () {
          * @param {string} parameters.user - A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more](/docs/guides/safety-best-practices/end-user-ids).
     
      */
-    OpenaiApi.prototype.createImageVariation = function (parameters, filename) {
+    OpenaiApi.prototype.createImageVariation = function (parameters) {
+        const filename = parameters.body.filename;
+        delete parameters.body.filename;
+
         return this.postToEndpoint('/images/variations', parameters, null, 'form-data', filename);
     };
     /**
@@ -387,7 +395,10 @@ var OpenaiApi = (function () {
          * @param {string} parameters.responseFormat - The format of the transcript output, in one of these options: `json`, `text`, `srt`, `verbose_json`, or `vtt`.
          * @param {number} parameters.temperature - The sampling temperature, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. If set to 0, the model will use [log probability](https://en.wikipedia.org/wiki/Log_probability) to automatically increase the temperature until certain thresholds are hit.
      */
-    OpenaiApi.prototype.createTranscription = function (parameters, filename) {
+    OpenaiApi.prototype.createTranscription = function (parameters) {
+        const filename = parameters.body.filename;
+        delete parameters.body.filename;
+
         return this.postToEndpoint('/audio/transcriptions', parameters, null, 'form-data', filename);
     };
     /**
@@ -402,7 +413,10 @@ var OpenaiApi = (function () {
          * @param {number} parameters.temperature - The sampling temperature, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. If set to 0, the model will use [log probability](https://en.wikipedia.org/wiki/Log_probability) to automatically increase the temperature until certain thresholds are hit.
     
      */
-    OpenaiApi.prototype.createTranslation = function (parameters, filename) {
+    OpenaiApi.prototype.createTranslation = function (parameters) {
+        const filename = parameters.body.filename;
+        delete parameters.body.filename;
+
         return this.postToEndpoint('/audio/translations', parameters, null, 'form-data', filename);
     };
 
@@ -434,9 +448,17 @@ var OpenaiApi = (function () {
     Use "fine-tune" for [Fine-tuning](/docs/api-reference/fine-tuning) and "assistants" for [Assistants](/docs/api-reference/assistants) and [Messages](/docs/api-reference/messages). This allows us to validate the format of the uploaded file is correct for fine-tuning.
     
      */
-    OpenaiApi.prototype.createFile = function (parameters, filename) {
+
+    OpenaiApi.prototype.createFile = function (parameters) {
+        let filename;
+
+        // reference the incoming filename
+        filename = parameters.body.filename;
+        delete parameters.body.filename;
+
         return this.postToEndpoint('/files', parameters, null, 'form-data', filename);
     };
+
     /**
      * Delete a file.
      * @method
@@ -445,7 +467,7 @@ var OpenaiApi = (function () {
          * @param {string} parameters.fileId - The ID of the file to use for this request.
      */
     OpenaiApi.prototype.deleteFile = function (parameters) {
-        const file_id = parameters['file_id'];
+        const file_id = parameters.body.file_id;
         return this.deleteFromEndpoint(`/files/${file_id}`);
     };
     /**
@@ -456,7 +478,7 @@ var OpenaiApi = (function () {
          * @param {string} parameters.fileId - The ID of the file to use for this request.
      */
     OpenaiApi.prototype.retrieveFile = function (parameters) {
-        const file_id = parameters['file_id'];
+        const file_id = parameters.body.file_id;
         return this.getFromEndpoint(`/files/${file_id}`);
     };
     /**
@@ -467,7 +489,7 @@ var OpenaiApi = (function () {
          * @param {string} parameters.fileId - The ID of the file to use for this request.
      */
     OpenaiApi.prototype.downloadFile = function (parameters) {
-        const file_id = parameters['file_id'];
+        const file_id = parameters.body.file_id;
         return this.getFromEndpoint(`/files/${file_id}/content`);
     };
     /**
@@ -510,7 +532,7 @@ var OpenaiApi = (function () {
     
      */
     OpenaiApi.prototype.retrieveFineTuningJob = function (parameters) {
-        const fine_tuning_job_id = parameters['fine_tuning_job_id'];
+        const fine_tuning_job_id = parameters.body.fine_tuning_job_id;
         return this.getFromEndpoint(`/fine_tuning/jobs/${fine_tuning_job_id}`);
     };
     /**
@@ -526,7 +548,7 @@ var OpenaiApi = (function () {
      */
     OpenaiApi.prototype.listFineTuningEvents = function (parameters) {
         const expectedQueryParameters = ['after', 'limit'];
-        const fine_tuning_job_id = parameters['fine_tuning_job_id'];
+        const fine_tuning_job_id = parameters.body.fine_tuning_job_id;
 
         return this.getFromEndpoint(`/fine_tuning/jobs/${fine_tuning_job_id}/events`, parameters, expectedQueryParameters);
     };
@@ -540,7 +562,7 @@ var OpenaiApi = (function () {
     
      */
     OpenaiApi.prototype.cancelFineTuningJob = function (parameters) {
-        const fine_tuning_job_id = parameters['fine_tuning_job_id'];
+        const fine_tuning_job_id = parameters.body.fine_tuning_job_id;
         return this.postToEndpoint(`/fine_tuning/jobs/${fine_tuning_job_id}/cancel`);
     };
 
@@ -561,7 +583,7 @@ var OpenaiApi = (function () {
          * @param {string} parameters.model - The ID of the model to use for this request
      */
     OpenaiApi.prototype.retrieveModel = function (parameters) {
-        const model = parameters['model'];
+        const model = parameters.body.model;
 
         return this.getFromEndpoint(`/models/${model}`);
     };
@@ -573,7 +595,7 @@ var OpenaiApi = (function () {
          * @param {string} parameters.model - The model to delete
      */
     OpenaiApi.prototype.deleteModel = function (parameters) {
-        const model = parameters['model'];
+        const model = parameters.body.model;
 
         return this.deleteFromEndpoint(`/models/${model}`);
     };
@@ -629,7 +651,7 @@ var OpenaiApi = (function () {
          * @param {string} parameters.assistantId - The ID of the assistant to retrieve.
      */
     OpenaiApi.prototype.getAssistant = function (parameters) {
-        const assistantId = parameters['assistantId'];
+        const assistantId = parameters.body.assistant_id;
 
         var customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
 
@@ -645,7 +667,7 @@ var OpenaiApi = (function () {
      */
     OpenaiApi.prototype.modifyAssistant = function (parameters) {
 
-        const assistant_id = parameters['assistantId'];
+        const assistant_id = parameters.body.assistant_id;
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
 
         return this.postToEndpoint(`/assistants/${assistant_id}`, parameters, null, null, null, customHeaders);
@@ -658,7 +680,7 @@ var OpenaiApi = (function () {
          * @param {string} parameters.assistantId - The ID of the assistant to delete.
      */
     OpenaiApi.prototype.deleteAssistant = function (parameters) {
-        const assistant_id = parameters['assistantId'];
+        const assistant_id = parameters.body.assistant_id;
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
 
         return this.deleteFromEndpoint(`/assistants/${assistant_id}`, null, null, customHeaders);
@@ -681,10 +703,10 @@ var OpenaiApi = (function () {
      * @method
      * @name OpenaiApi#getThread
      * @param {object} parameters - method options and parameters
-         * @param {string} parameters.threadId - The ID of the thread to retrieve.
+         * @param {string} parameters.body.thread_id - The ID of the thread to retrieve.
      */
     OpenaiApi.prototype.getThread = function (parameters) {
-        const threadId = parameters.threadId;
+        const threadId = parameters.body.thread_id;
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
 
         return this.getFromEndpoint(`/threads/${threadId}`, null, null, customHeaders);
@@ -694,11 +716,11 @@ var OpenaiApi = (function () {
      * @method
      * @name OpenaiApi#modifyThread
      * @param {object} parameters - method options and parameters
-         * @param {string} parameters.threadId - The ID of the thread to modify. Only the `metadata` can be modified.
+         * @param {string} parameters.body.thread_id - The ID of the thread to modify. Only the `metadata` can be modified.
          * @param {} parameters.body - The OpenAI REST API. Please see https://platform.openai.com/docs/api-reference for more details.
      */
     OpenaiApi.prototype.modifyThread = function (parameters) {
-        const threadId = parameters.threadId;
+        const threadId = parameters.body.thread_id;
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
 
         return this.postToEndpoint(`/threads/${threadId}`, parameters, null, null, null, customHeaders);
@@ -708,10 +730,10 @@ var OpenaiApi = (function () {
      * @method
      * @name OpenaiApi#deleteThread
      * @param {object} parameters - method options and parameters
-         * @param {string} parameters.threadId - The ID of the thread to delete.
+         * @param {string} parameters.body.thread_id - The ID of the thread to delete.
      */
     OpenaiApi.prototype.deleteThread = function (parameters) {
-        const threadId = parameters.threadId;
+        const threadId = parameters.body.thread_id;
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
 
         return this.deleteFromEndpoint(`/threads/${threadId}`, null, null, customHeaders);
@@ -721,7 +743,7 @@ var OpenaiApi = (function () {
      * @method
      * @name OpenaiApi#listMessages
      * @param {object} parameters - method options and parameters
-         * @param {string} parameters.threadId - The ID of the [thread](/docs/api-reference/threads) the messages belong to.
+         * @param {string} parameters.body.thread_id - The ID of the [thread](/docs/api-reference/threads) the messages belong to.
          * @param {integer} parameters.limit - A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20.
     
          * @param {string} parameters.order - Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and `desc` for descending order.
@@ -732,21 +754,23 @@ var OpenaiApi = (function () {
     
      */
     OpenaiApi.prototype.listMessages = function (parameters) {
-        const threadId = parameters.threadId;
+        const threadId = parameters.body.thread_id;
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
 
-        return this.getFromEndpoint(`/threads/${threadId}`, null, null, customHeaders);
+        const expectedQueryParameters = ['limit', 'order', 'after', 'before'];
+
+        return this.getFromEndpoint(`/threads/${threadId}`, parameters, expectedQueryParameters, customHeaders);
     };
     /**
      * Create a message.
      * @method
      * @name OpenaiApi#createMessage
      * @param {object} parameters - method options and parameters
-         * @param {string} parameters.threadId - The ID of the [thread](/docs/api-reference/threads) to create a message for.
+         * @param {string} parameters.body.thread_id - The ID of the [thread](/docs/api-reference/threads) to create a message for.
          * @param {} parameters.body - The OpenAI REST API. Please see https://platform.openai.com/docs/api-reference for more details.
      */
     OpenaiApi.prototype.createMessage = function (parameters) {
-        const threadId = parameters.threadId;
+        const threadId = parameters.body.thread_id;
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
 
         return this.postToEndpoint(`/threads/${threadId}/messages`, parameters, null, null, null, customHeaders)
@@ -756,12 +780,12 @@ var OpenaiApi = (function () {
      * @method
      * @name OpenaiApi#getMessage
      * @param {object} parameters - method options and parameters
-         * @param {string} parameters.threadId - The ID of the [thread](/docs/api-reference/threads) to which this message belongs.
+         * @param {string} parameters.body.thread_id - The ID of the [thread](/docs/api-reference/threads) to which this message belongs.
          * @param {string} parameters.messageId - The ID of the message to retrieve.
      */
     OpenaiApi.prototype.getMessage = function (parameters) {
 
-        const threadId = parameters.threadId;
+        const threadId = parameters.body.thread_id;
         const messageId = parameters.messageId;
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
 
@@ -772,13 +796,13 @@ var OpenaiApi = (function () {
      * @method
      * @name OpenaiApi#modifyMessage
      * @param {object} parameters - method options and parameters
-         * @param {string} parameters.threadId - The ID of the thread to which this message belongs.
+         * @param {string} parameters.body.thread_id - The ID of the thread to which this message belongs.
          * @param {string} parameters.messageId - The ID of the message to modify.
          * @param {} parameters.body - The OpenAI REST API. Please see https://platform.openai.com/docs/api-reference for more details.
      */
     OpenaiApi.prototype.modifyMessage = function (parameters) {
 
-        const threadId = parameters.threadId;
+        const threadId = parameters.body.thread_id;
         const messageId = parameters.messageId;
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
 
@@ -802,7 +826,7 @@ var OpenaiApi = (function () {
      * @method
      * @name OpenaiApi#listRuns
      * @param {object} parameters - method options and parameters
-         * @param {string} parameters.threadId - The ID of the thread the run belongs to.
+         * @param {string} parameters.body.thread_id - The ID of the thread the run belongs to.
          * @param {integer} parameters.limit - A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20.
     
          * @param {string} parameters.order - Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and `desc` for descending order.
@@ -814,7 +838,7 @@ var OpenaiApi = (function () {
      */
     OpenaiApi.prototype.listRuns = function (parameters) {
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
-        const threadId = parameters.threadId;
+        const threadId = parameters.body.thread_id;
 
         return this.getFromEndpoint(`/threads/${threadId}/runs`, null, null, customHeaders);
     };
@@ -823,12 +847,12 @@ var OpenaiApi = (function () {
      * @method
      * @name OpenaiApi#createRun
      * @param {object} parameters - method options and parameters
-         * @param {string} parameters.threadId - The ID of the thread to run.
+         * @param {string} parameters.body.thread_id - The ID of the thread to run.
          * @param {} parameters.body - The OpenAI REST API. Please see https://platform.openai.com/docs/api-reference for more details.
      */
     OpenaiApi.prototype.createRun = function (parameters) {
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
-        const threadId = parameters.threadId;
+        const threadId = parameters.body.thread_id;
 
         return this.postToEndpoint(`/threads/${threadId}/runs`, parameters, null, null, null, customHeaders);
     };
@@ -837,12 +861,12 @@ var OpenaiApi = (function () {
      * @method
      * @name OpenaiApi#getRun
      * @param {object} parameters - method options and parameters
-         * @param {string} parameters.threadId - The ID of the [thread](/docs/api-reference/threads) that was run.
+         * @param {string} parameters.body.thread_id - The ID of the [thread](/docs/api-reference/threads) that was run.
          * @param {string} parameters.runId - The ID of the run to retrieve.
      */
     OpenaiApi.prototype.getRun = function (parameters) {
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
-        const threadId = parameters.threadId;
+        const threadId = parameters.body.thread_id;
         const runId = parameters.runId;
 
         return this.getFromEndpoint(`/threads/${threadId}/runs/${runId}`, null, null, customHeaders);
@@ -852,13 +876,13 @@ var OpenaiApi = (function () {
      * @method
      * @name OpenaiApi#modifyRun
      * @param {object} parameters - method options and parameters
-         * @param {string} parameters.threadId - The ID of the [thread](/docs/api-reference/threads) that was run.
+         * @param {string} parameters.body.thread_id - The ID of the [thread](/docs/api-reference/threads) that was run.
          * @param {string} parameters.runId - The ID of the run to modify.
          * @param {} parameters.body - The OpenAI REST API. Please see https://platform.openai.com/docs/api-reference for more details.
      */
     OpenaiApi.prototype.modifyRun = function (parameters) {
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
-        const threadId = parameters.threadId;
+        const threadId = parameters.body.thread_id;
         const runId = parameters.runId;
 
         return this.postToEndpoint(`/threads/${threadId}/runs/${runId}`, parameters, null, null, null, customHeaders);
@@ -869,13 +893,13 @@ var OpenaiApi = (function () {
      * @method
      * @name OpenaiApi#submitToolOuputsToRun
      * @param {object} parameters - method options and parameters
-         * @param {string} parameters.threadId - The ID of the [thread](/docs/api-reference/threads) to which this run belongs.
+         * @param {string} parameters.body.thread_id - The ID of the [thread](/docs/api-reference/threads) to which this run belongs.
          * @param {string} parameters.runId - The ID of the run that requires the tool output submission.
          * @param {} parameters.body - The OpenAI REST API. Please see https://platform.openai.com/docs/api-reference for more details.
      */
     OpenaiApi.prototype.submitToolOuputsToRun = function (parameters) {
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
-        const threadId = parameters.threadId;
+        const threadId = parameters.body.thread_id;
         const runId = parameters.runId;
 
         return this.postToEndpoint(`/threads/${threadId}/runs/${runId}/submit_tool_outputs`, parameters, null, null, null, customHeaders);
@@ -885,12 +909,12 @@ var OpenaiApi = (function () {
      * @method
      * @name OpenaiApi#cancelRun
      * @param {object} parameters - method options and parameters
-         * @param {string} parameters.threadId - The ID of the thread to which this run belongs.
+         * @param {string} parameters.body.thread_id - The ID of the thread to which this run belongs.
          * @param {string} parameters.runId - The ID of the run to cancel.
      */
     OpenaiApi.prototype.cancelRun = function (parameters) {
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
-        const threadId = parameters.threadId;
+        const threadId = parameters.body.thread_id;
         const runId = parameters.runId;
 
         return this.postToEndpoint(`/threads/${threadId}/runs/${runId}/cancel`, null, null, null, null, customHeaders);
@@ -900,7 +924,7 @@ var OpenaiApi = (function () {
      * @method
      * @name OpenaiApi#listRunSteps
      * @param {object} parameters - method options and parameters
-         * @param {string} parameters.threadId - The ID of the thread the run and run steps belong to.
+         * @param {string} parameters.body.thread_id - The ID of the thread the run and run steps belong to.
          * @param {string} parameters.runId - The ID of the run the run steps belong to.
          * @param {integer} parameters.limit - A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20.
     
@@ -913,7 +937,7 @@ var OpenaiApi = (function () {
      */
     OpenaiApi.prototype.listRunSteps = function (parameters) {
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
-        const threadId = parameters.threadId;
+        const threadId = parameters.body.thread_id;
         const runId = parameters.runId;
 
         return this.getFromEndpoint(`/threads/${threadId}/runs/${runId}/steps`, null, null, customHeaders);
@@ -923,13 +947,13 @@ var OpenaiApi = (function () {
      * @method
      * @name OpenaiApi#getRunStep
      * @param {object} parameters - method options and parameters
-         * @param {string} parameters.threadId - The ID of the thread to which the run and run step belongs.
+         * @param {string} parameters.body.thread_id - The ID of the thread to which the run and run step belongs.
          * @param {string} parameters.runId - The ID of the run to which the run step belongs.
          * @param {string} parameters.stepId - The ID of the run step to retrieve.
      */
     OpenaiApi.prototype.getRunStep = function (parameters) {
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
-        const threadId = parameters.threadId;
+        const threadId = parameters.body.thread_id;
         const runId = parameters.runId;
         const stepId = parameters.stepId;
 
@@ -1010,7 +1034,7 @@ var OpenaiApi = (function () {
      * @method
      * @name OpenaiApi#listMessageFiles
      * @param {object} parameters - method options and parameters
-         * @param {string} parameters.threadId - The ID of the thread that the message and files belong to.
+         * @param {string} parameters.body.thread_id - The ID of the thread that the message and files belong to.
          * @param {string} parameters.messageId - The ID of the message that the files belongs to.
          * @param {integer} parameters.limit - A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20.
     
@@ -1024,7 +1048,7 @@ var OpenaiApi = (function () {
     OpenaiApi.prototype.listMessageFiles = function (parameters) {
 
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
-        const threadId = parameters.threadId;
+        const threadId = parameters.body.thread_id;
         const messageId = parameters.messageId;
 
         return this.getFromEndpoint(`/threads/${threadId}/messages/${messageId}/files`, null, null, customHeaders);
@@ -1034,13 +1058,13 @@ var OpenaiApi = (function () {
      * @method
      * @name OpenaiApi#getMessageFile
      * @param {object} parameters - method options and parameters
-         * @param {string} parameters.threadId - The ID of the thread to which the message and File belong.
+         * @param {string} parameters.body.thread_id - The ID of the thread to which the message and File belong.
          * @param {string} parameters.messageId - The ID of the message the file belongs to.
          * @param {string} parameters.fileId - The ID of the file being retrieved.
      */
     OpenaiApi.prototype.getMessageFile = function (parameters) {
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
-        const threadId = parameters.threadId;
+        const threadId = parameters.body.thread_id;
         const messageId = parameters.messageId;
         const fileId = parameters.fileId;
 
