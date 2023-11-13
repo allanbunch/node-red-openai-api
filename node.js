@@ -8,269 +8,160 @@ module.exports = function (RED) {
         this.service = RED.nodes.getNode(config.service);
         this.method = config.method;
 
-        const entities = {
+        const services = {
             createChatCompletion: {
                 body: 'msg',
             },
             createImage: {
-                prompt: 'str',
-                model: 'str',
-                n: 'num',
-                quality: 'str',
-                response_format: 'str',
-                size: 'str',
-                style: 'str',
-                user: 'str'
+                body: 'msg'
             },
             createImageEdit: {
-                image: 'bin',
-                prompt: 'str',
-                mask: 'str',
-                model: 'str',
-                n: 'num',
-                size: 'str',
-                response_format: 'json',
-                user: 'str'
+                body: 'msg'
             },
             createImageVariation: {
-                image: 'str',
-                model: 'str',
-                n: 'num',
-                response_format: 'json',
-                size: 'str',
-                user: 'str'
+                body: 'msg'
             },
             createEmbedding: {
-                input: 'str',
-                model: 'str',
-                encoding_format: 'str',
-                user: 'str'
+                body: 'msg'
             },
             createSpeech: {
-                model: 'str',
-                input: 'str',
-                voice: 'str',
-                response_format: 'json',
-                speed: 'num'
+                body: 'msg'
             },
             createTranscription: {
-                file: 'bin',
-                model: 'str',
-                language: 'str',
-                prompt: 'str',
-                response_format: 'json',
-                temperature: 'num'
+                body: 'msg'
             },
             createTranslation: {
-                file: 'bin',
-                model: 'str',
-                prompt: 'str',
-                response_format: 'json',
-                temperature: 'num'
+                body: 'msg'
             },
             listFiles: {
-                purpose: 'str'
+                body: 'msg'
             },
             createFile: {
-                file: 'bin',
-                purpose: 'str'
+                body: 'msg'
             },
             deleteFile: {
-                file_id: 'str'
+                body: 'msg'
             },
             retrieveFile: {
-                file_id: 'str'
+                body: 'msg'
             },
             downloadFile: {
-                file_id: 'str'
+                body: 'msg'
             },
             createFineTuningJob: {
-                model: 'str',
-                training_file: 'bin',
-                hyperparameters: 'json',
-                suffix: 'str',
-                validation_file: 'bin'
+                body: 'msg'
             },
             listPaginatedFineTuningJobs: {
-                after: 'str',
-                limit: 'num'
+                body: 'msg'
             },
             retrieveFineTuningJob: {
-                fine_tuning_job_id: 'str'
+                body: 'msg'
             },
             listFineTuningEvents: {
-                fine_tuning_job_id: 'str',
-                after: 'str',
-                limit: 'num'
+                body: 'msg'
             },
             cancelFineTuningJob: {
-                fine_tuning_job_id: 'str'
+                body: 'msg'
             },
-            retrieveModel: {},
+            retrieveModel: {
+                body: 'msg'
+            },
             deleteModel: {
-                model: 'str'
+                body: 'msg'
             },
             createModeration: {
-                input: 'str',
-                model: 'str'
+                body: 'msg'
             },
             listAssistants: {
-                assistant_id: 'str'
+                body: 'msg'
             },
             createAssistant: {
-                model: 'str',
-                name: 'str',
-                description: 'str',
-                instructions: 'str',
-                tools: 'str',
-                file_ids: 'str',
-                metadata: 'str'
+                body: 'msg'
             },
             getAssistant: {
-                assistant_id: 'str'
+                body: 'msg'
             },
             modifyAssistant: {
-                assistant_id: 'str',
-                model: 'str',
-                name: 'str',
-                description: 'str',
-                instructions: 'str',
-                tools: 'str',
-                file_ids: 'str',
-                metadata: 'str'
+                body: 'msg'
             },
             deleteAssistant: {
-                assistant_id: 'str'
+                body: 'msg'
             },
             createThread: {
-                messages: 'json',
-                metadata: 'str'
+                body: 'msg'
             },
             getThread: {
-                thread_id: 'str'
+                body: 'msg'
             },
             modifyThread: {
-                thread_id: 'str',
-                metadata: 'str'
+                body: 'msg'
             },
             deleteThread: {
-                thread_id: 'str'
+                body: 'msg'
             },
             listMessages: {
-                thread_id: 'str',
-                limit: 'num',
-                order: 'str',
-                after: 'str',
-                before: 'str'
+                body: 'msg'
             },
             createMessage: {
-                thread_id: 'str',
-                role: 'str',
-                content: 'str',
-                file_ids: 'str',
-                metadata: 'str'
+                body: 'msg'
             },
             getMessage: {
-                thread_id: 'str',
-                message_id: 'str'
+                body: 'msg'
             },
             modifyMessage: {
-                thread_id: 'str',
-                message_id: 'str',
-                metadata: 'str'
+                body: 'msg'
             },
             createThreadAndRun: {
-                assistant_id: 'str',
-                thread: 'str',
-                model: 'str',
-                instructions: 'str',
-                tools: 'str',
-                metadata: 'str'
+                body: 'msg'
             },
             listRuns: {
-                thread_id: 'str',
-                limit: 'num',
-                order: 'str',
-                after: 'str',
-                before: 'str'
+                body: 'msg'
             },
             createRun: {
-                thread_id: 'str',
-                assistant_id: 'str',
-                model: 'str',
-                instructions: 'str',
-                tools: 'json',
-                metadata: 'str'
+                body: 'msg'
             },
             getRun: {
-                thread_id: 'str',
-                run_id: 'str'
+                body: 'msg'
             },
             modifyRun: {
-                thread_id: 'str',
-                run_id: 'str',
-                metadata: 'str'
+                body: 'msg'
             },
             submitToolOuputsToRun: {
-                thread_id: 'str',
-                run_id: 'str',
-                tool_outputs: 'json'
+                body: 'msg'
             },
             cancelRun: {
-                thread_id: 'str',
-                run_id: 'str'
+                body: 'msg'
             },
             listRunSteps: {
-                thread_id: 'str',
-                run_id: 'str',
-                limit: 'num',
-                order: 'str',
-                after: 'str',
-                before: 'str'
+                body: 'msg'
             },
             getRunStep: {
-                thread_id: 'str',
-                run_id: 'str',
-                step_id: 'str'
+                body: 'msg'
             },
             listAssistantFiles: {
-                assistant_id: 'str',
-                limit: 'num',
-                order: 'str',
-                after: 'str',
-                before: 'str'
+                body: 'msg'
             },
             createAssistantFile: {
-                assistant_id: 'str',
-                file_id: 'str'
+                body: 'msg'
             },
             getAssistantFile: {
-                assistant_id: 'str',
-                file_id: 'str'
+                body: 'msg'
             },
             deleteAssistantFile: {
-                assistant_id: 'str',
-                file_id: 'str'
+                body: 'msg'
             },
             listMessageFiles: {
-                thread_id: 'str',
-                message_id: 'str',
-                limit: 'num',
-                order: 'str',
-                after: 'str',
-                before: 'str'
+                body: 'msg'
             },
             getMessageFile: {
-                thread_id: 'str',
-                message_id: 'str',
-                file_id: 'str'
+                body: 'msg'
             }
         };
 
-        Object.keys(entities).forEach(entity => {
-            Object.keys(entities[entity]).forEach(prop => {
-                this[`${entity}_${prop}`] = config[`${entity}_${prop}`];
-                this[`${entity}_${prop}Type`] = config[`${entity}_${prop}Type`] || entities[entity][prop];
+        Object.keys(services).forEach(service => {
+            Object.keys(services[service]).forEach(prop => {
+                this[`${service}_${prop}`] = config[`${service}_${prop}`];
+                this[`${service}_${prop}Type`] = config[`${service}_${prop}Type`] || services[service][prop];
             });
         });
 
@@ -296,42 +187,15 @@ module.exports = function (RED) {
             var result;
 
             if (!errorFlag) {
-                const entityName = node.method; // Specify the entity you want to process
-                const entityProperties = entities[entityName];
-                let entityParametersObject = {};
+                const serviceName = node.method; // Specify the service you want to process
+                const serviceProperties = services[serviceName];
+                let serviceParametersObject = {};
 
-                Object.keys(entityProperties).forEach(prop => {
-                    let value = this[`${entityName}_${prop}`];
-
-                    // Parse as JSON if the entity property type is 'json'
-                    if (entityProperties[prop] === 'json') {
-                        try {
-                            value = JSON.parse(value);
-                        } catch (error) {
-                            console.error(`Error parsing JSON for ${prop}:`, error);
-                            // Handle or skip the property in case of parsing error
-                            return;
-                        }
-                    } else if (entityProperties[prop] === 'num') {
-                        try {
-                            value = parseFloat(value);
-                        } catch (error) {
-                            console.error(`Error parsing number for ${prop}:`, error);
-                            // Handle or skip the property in case of parsing error
-                            return;
-                        }
-                    } else if (value === '' || value === 'str' || value === undefined) {
-                        // Skip properties if the value is '' or 'str' or undefined
-                        return;
-                    }
-
-                    entityParametersObject[prop] = msg[value];
-                });
-
-                // Dynamically call the function based on the entity name
-                const functionName = `${entityName}`;
+                // Dynamically call the function based on the service name
+                const functionName = `${serviceName}`;
                 if (typeof client[functionName] === 'function') {
-                    result = client[functionName](entityParametersObject);
+                    serviceParametersObject.body = msg.payload;
+                    result = client[functionName](serviceParametersObject);
                 } else {
                     console.error(`Function ${functionName} does not exist on client.`);
                 }
