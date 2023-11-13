@@ -129,7 +129,7 @@ var OpenaiApi = (function () {
     OpenaiApi.prototype.setAuthHeaders = function (headerParams) {
         var headers = headerParams ? headerParams : {};
         if (!this.apiKey.isQuery && this.apiKey.headerOrQueryName) {
-            headers[this.apiKey.headerOrQueryName] = this.apiKey.value;
+            headers[this.apiKey.headerOrQueryName] = `Bearer ${this.apiKey.value}`;
         }
         return headers;
     };
