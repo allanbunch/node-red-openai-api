@@ -14,6 +14,9 @@
         "parameters": {
             "createChatCompletion": "create chat completion",
             "body": "body",
+            "request_body": "Request Body",
+            "data": "data",
+            "payload": "payload",
             "createImage": "create image",
             "createImageEdit": "create image edit",
             "image": "image",

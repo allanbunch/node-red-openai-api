@@ -8,38 +8,8 @@
             service: { value: "", type: "openai-api-service", required: true },
             method: { value: "", required: true },
 
-            createChatCompletion_messages: { value: "" },
-            createChatCompletion_messagesType: { value: "json" },
-            createChatCompletion_model: { value: "" },
-            createChatCompletion_modelType: { value: "str" },
-            createChatCompletion_frequency_penalty: { value: "" },
-            createChatCompletion_frequency_penaltyType: { value: "num" },
-            createChatCompletion_logit_bias: { value: "" },
-            createChatCompletion_logit_biasType: { value: "json" },
-            createChatCompletion_max_tokens: { value: "" },
-            createChatCompletion_max_tokensType: { value: "num" },
-            createChatCompletion_n: { value: "" },
-            createChatCompletion_nType: { value: "num" },
-            createChatCompletion_presence_penalty: { value: "" },
-            createChatCompletion_presence_penaltyType: { value: "num" },
-            createChatCompletion_response_format: { value: "" },
-            createChatCompletion_response_formatType: { value: "json" },
-            createChatCompletion_seed: { value: "" },
-            createChatCompletion_seedType: { value: "num" },
-            createChatCompletion_stop: { value: "" },
-            createChatCompletion_stopType: { value: "str" },
-            createChatCompletion_stream: { value: false },
-            createChatCompletion_streamType: { value: "bool" },
-            createChatCompletion_temperature: { value: "" },
-            createChatCompletion_temperatureType: { value: "num" },
-            createChatCompletion_top_p: { value: "" },
-            createChatCompletion_top_pType: { value: "num" },
-            createChatCompletion_tools: { value: "" },
-            createChatCompletion_toolsType: { value: "json" },
-            createChatCompletion_tool_choice: { value: "" },
-            createChatCompletion_tool_choiceType: { value: "json" },
-            createChatCompletion_user: { value: "" },
-            createChatCompletion_userType: { value: "str" },
+            createChatCompletion_body: { value: "" },
+            createChatCompletion_bodyType: { value: "msg" },
 
             createImage_body: { value: "" },
             createImage_bodyType: { value: "str" },
@@ -300,134 +270,13 @@
             var showParameters = function () {
                 /*** start createChatCompletion completions ***/
 
-                $("#node-input-createChatCompletion_messages").typedInput({
-                    default: 'json',
-                    typeField: $("#node-input-createChatCompletion_messagesType"),
-                    types: ['msg', 'json']
+                $("#node-input-createChatCompletion_body").typedInput({
+                    default: 'msg',
+                    typeField: $("#node-input-createChatCompletion_bodyType"),
+                    types: ['msg']
                 });
 
-                $("#createChatCompletion_messages").hide();
-
-                $("#node-input-createChatCompletion_model").typedInput({
-                    default: 'str',
-                    typeField: $("#node-input-createChatCompletion_modelType"),
-                    types: ['msg', 'str']
-                });
-
-                $("#createChatCompletion_model").hide();
-
-                $("#node-input-createChatCompletion_frequency_penalty").typedInput({
-                    default: 'num',
-                    typeField: $("#node-input-createChatCompletion_frequency_penaltyType"),
-                    types: ['msg', 'num']
-                });
-
-                $("#createChatCompletion_frequency_penalty").hide();
-
-                $("#node-input-createChatCompletion_logit_bias").typedInput({
-                    default: 'json',
-                    typeField: $("#node-input-createChatCompletion_logit_biasType"),
-                    types: ['msg', 'json']
-                });
-
-                $("#createChatCompletion_logit_bias").hide();
-
-                $("#node-input-createChatCompletion_max_tokens").typedInput({
-                    default: 'num',
-                    typeField: $("#node-input-createChatCompletion_max_tokensType"),
-                    types: ['msg', 'num']
-                });
-
-                $("#createChatCompletion_max_tokens").hide();
-
-                $("#node-input-createChatCompletion_n").typedInput({
-                    default: 'num',
-                    typeField: $("#node-input-createChatCompletion_nType"),
-                    types: ['msg', 'num']
-                });
-
-                $("#createChatCompletion_n").hide();
-
-                $("#node-input-createChatCompletion_presence_penalty").typedInput({
-                    default: 'num',
-                    typeField: $("#node-input-createChatCompletion_presence_penaltyType"),
-                    types: ['msg', 'num']
-                });
-
-                $("#createChatCompletion_presence_penalty").hide();
-
-                $("#node-input-createChatCompletion_response_format").typedInput({
-                    default: 'json',
-                    typeField: $("#node-input-createChatCompletion_response_format"),
-                    types: ['msg', 'json']
-                });
-
-                $("#createChatCompletion_response_format").hide();
-
-                $("#node-input-createChatCompletion_seed").typedInput({
-                    default: 'num',
-                    typeField: $("#node-input-createChatCompletion_seed"),
-                    types: ['msg', 'num']
-                });
-
-                $("#createChatCompletion_seed").hide();
-
-                $("#node-input-createChatCompletion_stop").typedInput({
-                    default: 'str',
-                    typeField: $("#node-input-createChatCompletion_stop"),
-                    types: ['msg', 'str', 'json']
-                });
-
-                $("#createChatCompletion_stop").hide();
-
-                $("#node-input-createChatCompletion_stream").typedInput({
-                    default: 'bool',
-                    typeField: $("#node-input-createChatCompletion_stream"),
-                    types: ['msg', 'bool']
-                });
-
-                $("#createChatCompletion_stream").hide();
-
-                $("#node-input-createChatCompletion_temperature").typedInput({
-                    default: 'num',
-                    typeField: $("#node-input-createChatCompletion_temperature"),
-                    types: ['msg', 'num']
-                });
-
-                $("#createChatCompletion_temperature").hide();
-
-                $("#node-input-createChatCompletion_top_p").typedInput({
-                    default: 'num',
-                    typeField: $("#node-input-createChatCompletion_top_p"),
-                    types: ['msg', 'num']
-                });
-
-                $("#createChatCompletion_top_p").hide();
-
-                $("#node-input-createChatCompletion_tools").typedInput({
-                    default: 'json',
-                    typeField: $("#node-input-createChatCompletion_tools"),
-                    types: ['msg', 'json']
-                });
-
-                $("#createChatCompletion_tools").hide();
-
-                $("#node-input-createChatCompletion_tool_choice").typedInput({
-                    default: 'json',
-                    typeField: $("#node-input-createChatCompletion_tool_choice"),
-                    types: ['msg', 'str', 'json']
-                });
-
-                $("#createChatCompletion_tool_choice").hide();
-
-                $("#node-input-createChatCompletion_user").typedInput({
-                    default: 'str',
-                    typeField: $("#node-input-createChatCompletion_user"),
-                    types: ['msg', 'str']
-                });
-
-                $("#createChatCompletion_user").hide();
-                /*** end createChatCompletion completions ***/
+                $("#createChatCompletion_body").hide();
 
                 $("#createImage_body").hide();
 
@@ -1506,37 +1355,7 @@
 
                 if ($("#optional-parameters").prop('checked')) {
                     if ($("#node-input-method").val() === 'createChatCompletion') {
-                        $("#createChatCompletion_messages").show();
-
-                        $("#createChatCompletion_model").show();
-
-                        $("#createChatCompletion_frequency_penalty").show();
-
-                        $("#createChatCompletion_logit_bias").show();
-
-                        $("#createChatCompletion_max_tokens").show();
-
-                        $("#createChatCompletion_n").show();
-
-                        $("#createChatCompletion_presence_penalty").show();
-
-                        $("#createChatCompletion_response_format").show();
-
-                        $("#createChatCompletion_seed").show();
-
-                        $("#createChatCompletion_stop").show();
-
-                        $("#createChatCompletion_stream").show();
-
-                        $("#createChatCompletion_temperature").show();
-
-                        $("#createChatCompletion_top_p").show();
-
-                        $("#createChatCompletion_tools").show();
-
-                        $("#createChatCompletion_tool_choice").show();
-
-                        $("#createChatCompletion_user").show();
+                        $("#createChatCompletion_body").show();
                     }
                     if ($("#node-input-method").val() === 'createImage') {
 
@@ -1892,9 +1711,7 @@
                     }
                 } else {
                     if ($("#node-input-method").val() === 'createChatCompletion') {
-                        $("#createChatCompletion_messages").show();
-
-                        $("#createChatCompletion_model").show();
+                        $("#createChatCompletion_body").show();
                     }
                     if ($("#node-input-method").val() === 'createImage') {
 
@@ -2247,7 +2064,7 @@
         <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
     </div>
     <hr/>
-    
+
     <div class="form-row">
         <label for="node-input-service"><i class="fa fa-cloud"></i> <span data-i18n="OpenaiApi.label.service"></span></label>
         <input type="text" id="node-input-service">
@@ -2337,117 +2154,11 @@
     </div>
 
     <!-- begin chat completionn -->
-    <div class="form-row" id="createChatCompletion_messages">
-        <label for="node-input-createChatCompletion_messages"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.messages"></span></label>
+    <div class="form-row" id="createChatCompletion_body">
+        <label for="node-input-createChatCompletion_body"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.request_body"></span></label>
 
-        <input type="text" id="node-input-createChatCompletion_messages" placeholder="A list of messages comprising the conversation so far." style="width:70%">
-        <input type="hidden" id="node-input-createChatCompletion_messagesType">
-    </div>
-
-    <div class="form-row" id="createChatCompletion_model">
-        <label for="node-input-createChatCompletion_model"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.model"></span></label>
-
-        <input type="text" id="node-input-createChatCompletion_model" placeholder="The ID of the model to use." style="width:70%">
-        <input type="hidden" id="node-input-createChatCompletion_modelType">
-    </div>
-
-    <div class="form-row" id="createChatCompletion_frequency_penalty">
-        <label for="node-input-createChatCompletion_frequency_penalty"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.frequency_penalty"></span></label>
-
-        <input type="text" id="node-input-createChatCompletion_frequency_penalty" placeholder="Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim." style="width:70%">
-        <input type="hidden" id="node-input-createChatCompletion_frequency_penaltyType">
-    </div>
-
-
-    <div class="form-row" id="createChatCompletion_logit_bias">
-        <label for="node-input-createChatCompletion_logit_bias"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.logit_bias"></span></label>
-    
-        <input type="text" id="node-input-createChatCompletion_logit_bias" placeholder="Modify the likelihood of specified tokens appearing in the completion." style="width:70%">
-        <input type="hidden" id="node-input-createChatCompletion_logit_biasType">
-    </div>
-
-    <div class="form-row" id="createChatCompletion_max_tokens">
-        <label for="node-input-createChatCompletion_max_tokens"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.max_tokens"></span></label>
-    
-        <input type="text" id="node-input-createChatCompletion_max_tokens" placeholder="The ID of the max_tokens  to use." style="width:70%">
-        <input type="hidden" id="node-input-createChatCompletion_max_tokensType">
-    </div>
-
-    <div class="form-row" id="createChatCompletion_n">
-        <label for="node-input-createChatCompletion_n"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.n"></span></label>
-    
-        <input type="text" id="node-input-createChatCompletion_n" placeholder="The ID of the n to use." style="width:70%">
-        <input type="hidden" id="node-input-createChatCompletion_nType">
-    </div>
-
-    <div class="form-row" id="createChatCompletion_presence_penalty">
-        <label for="node-input-createChatCompletion_presence_penalty"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.presence_penalty"></span></label>
-    
-        <input type="text" id="node-input-createChatCompletion_presence_penalty" placeholder="The ID of the presence_penalty to use." style="width:70%">
-        <input type="hidden" id="node-input-createChatCompletion_presence_penaltyType">
-    </div>
-
-    <div class="form-row" id="createChatCompletion_response_format">
-        <label for="node-input-createChatCompletion_response_format"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.response_format"></span></label>
-    
-        <input type="text" id="node-input-createChatCompletion_response_format" placeholder="The ID of the response_format to use." style="width:70%">
-        <input type="hidden" id="node-input-createChatCompletion_response_formatType">
-    </div>
-
-    <div class="form-row" id="createChatCompletion_seed">
-        <label for="node-input-createChatCompletion_seed"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.seed"></span></label>
-    
-        <input type="text" id="node-input-createChatCompletion_seed" placeholder="The ID of the seed to use." style="width:70%">
-        <input type="hidden" id="node-input-createChatCompletion_seedType">
-    </div>
-    <div class="form-row" id="createChatCompletion_stop">
-        <label for="node-input-createChatCompletion_stop"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.stop"></span></label>
-    
-        <input type="text" id="node-input-createChatCompletion_stop" placeholder="The ID of the stop to use." style="width:70%">
-        <input type="hidden" id="node-input-createChatCompletion_stopType">
-    </div>
- 
-
-    <div class="form-row" id="createChatCompletion_stream">
-        <label for="node-input-createChatCompletion_stream"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.stream"></span></label>
-    
-        <input type="text" id="node-input-createChatCompletion_stream" placeholder="The ID of the stream to use." style="width:70%">
-        <input type="hidden" id="node-input-createChatCompletion_streamType">
-    </div>
-
-    <div class="form-row" id="createChatCompletion_temperature">
-        <label for="node-input-createChatCompletion_temperature"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.temperature"></span></label>
-    
-        <input type="text" id="node-input-createChatCompletion_temperature" placeholder="The ID of the temperature to use." style="width:70%">
-        <input type="hidden" id="node-input-createChatCompletion_temperatureType">
-    </div>
-
-    <div class="form-row" id="createChatCompletion_top_p">
-        <label for="node-input-createChatCompletion_top_p"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.top_p"></span></label>
-    
-        <input type="text" id="node-input-createChatCompletion_top_p" placeholder="The ID of the top_p to use." style="width:70%">
-        <input type="hidden" id="node-input-createChatCompletion_top_pType">
-    </div>
-
-    <div class="form-row" id="createChatCompletion_tools">
-        <label for="node-input-createChatCompletion_tools"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.tools"></span></label>
-    
-        <input type="text" id="node-input-createChatCompletion_tools" placeholder="The ID of the tools to use." style="width:70%">
-        <input type="hidden" id="node-input-createChatCompletion_toolsType">
-    </div>
-
-    <div class="form-row" id="createChatCompletion_tool_choice">
-        <label for="node-input-createChatCompletion_tool_choice"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.tool_choice"></span></label>
-    
-        <input type="text" id="node-input-createChatCompletion_tool_choice" placeholder="The ID of the tool_choice to use." style="width:70%">
-        <input type="hidden" id="node-input-createChatCompletion_tool_choiceType">
-    </div>
-
-    <div class="form-row" id="createChatCompletion_user">
-        <label for="node-input-createChatCompletion_user"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.parameters.user"></span></label>
-    
-        <input type="text" id="node-input-createChatCompletion_user" placeholder="The ID of the user to use." style="width:70%">
-        <input type="hidden" id="node-input-createChatCompletion_userType">
+        <input type="text" id="node-input-createChatCompletion_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-createChatCompletion_bodyType">
     </div>
     <!-- end chat completion -->
 

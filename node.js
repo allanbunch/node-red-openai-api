@@ -10,22 +10,7 @@ module.exports = function (RED) {
 
         const entities = {
             createChatCompletion: {
-                messages: 'json',
-                model: 'str',
-                frequency_penalty: 'num',
-                logit_bias: 'json',
-                max_tokens: 'num',
-                n: 'num',
-                presence_penalty: 'num',
-                response_format: 'json',
-                seed: 'num',
-                stop: 'str',
-                stream: 'bool',
-                temperature: 'num',
-                top_p: 'num',
-                tools: 'json',
-                tool_choice: 'str',
-                user: 'str'
+                body: 'msg',
             },
             createImage: {
                 prompt: 'str',
@@ -310,10 +295,6 @@ module.exports = function (RED) {
 
             var result;
 
-            // function toCamelCase(str) {
-            //     return str.replace(/([-_][a-z])/g, group => group.toUpperCase().replace('-', '').replace('_', ''));
-            // }
-
             if (!errorFlag) {
                 const entityName = node.method; // Specify the entity you want to process
                 const entityProperties = entities[entityName];
@@ -344,8 +325,7 @@ module.exports = function (RED) {
                         return;
                     }
 
-                    // const camelCaseProp = toCamelCase(prop);
-                    entityParametersObject[prop] = value;
+                    entityParametersObject[prop] = msg[value];
                 });
 
                 // Dynamically call the function based on the entity name
