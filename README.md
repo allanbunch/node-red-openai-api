@@ -41,12 +41,12 @@ npm i @inductiv/node-red-openai-api
 
 ## Usage
 
-You can find example implementations of several service flows in the [example](./examples/api-examples.json) flow.
+Find your _@inductiv/node-red-openai-api_ node in the **AI** palette category.
+You can find example implementation flows in the [example](./examples/) directory.
 
 <img width="722" alt="audio-translation" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/ca3ca6f1-f7df-4a6f-84fd-db0c9eaef957">
 
 Note: Each node's functionality maps to the official OpenAI [API Reference](https://platform.openai.com/docs/api-reference/) documentation.
-
 
 ## License
 
