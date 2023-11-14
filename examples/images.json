@@ -1,0 +1,82 @@
+[
+    {
+        "id": "8b5b83e806871f8b",
+        "type": "tab",
+        "label": "Images Example",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e619113e002286a4",
+        "type": "inject",
+        "z": "8b5b83e806871f8b",
+        "name": "image payload",
+        "props": [
+            {
+                "p": "payload.prompt",
+                "v": "A cute baby sea otter",
+                "vt": "str"
+            },
+            {
+                "p": "payload.model",
+                "v": "dall-e-3",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 280,
+        "y": 200,
+        "wires": [
+            [
+                "979e1bb6732cc292"
+            ]
+        ]
+    },
+    {
+        "id": "b83c3be8fd9e1a43",
+        "type": "debug",
+        "z": "8b5b83e806871f8b",
+        "name": "response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "8f836da49c19b6f9",
+        "type": "comment",
+        "z": "8b5b83e806871f8b",
+        "name": "Creates an image given a prompt.",
+        "info": "",
+        "x": 320,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "979e1bb6732cc292",
+        "type": "openai-api",
+        "z": "8b5b83e806871f8b",
+        "name": "create image",
+        "service": "",
+        "method": "createImage",
+        "x": 490,
+        "y": 200,
+        "wires": [
+            [
+                "b83c3be8fd9e1a43"
+            ]
+        ]
+    }
+]
