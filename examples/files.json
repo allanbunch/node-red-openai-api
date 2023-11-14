@@ -1,23 +1,72 @@
 [
     {
-        "id": "3cd93e7175a2193e",
-        "type": "openai-api",
-        "z": "1eca398ac0dc7b8a",
-        "name": "list files",
-        "service": "39eba92e93450944",
-        "method": "listFiles",
-        "x": 400,
-        "y": 220,
-        "wires": [
-            [
-                "eb81e4a75fb28cf5"
-            ]
-        ]
+        "id": "1e45d9e751f7d036",
+        "type": "tab",
+        "label": "Flow 11",
+        "disabled": false,
+        "info": "",
+        "env": []
     },
     {
-        "id": "39eba92e93450944",
-        "type": "openai-api-service",
-        "secureApiKeyHeaderOrQueryName": "Authorization",
-        "name": "OpenAI Api Key"
+        "id": "72d0fa390cfdbe59",
+        "type": "comment",
+        "z": "1e45d9e751f7d036",
+        "name": "Returns a list of files that belong to the user's organization.",
+        "info": "",
+        "x": 330,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "a27ea2a2de405820",
+        "type": "inject",
+        "z": "1e45d9e751f7d036",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 155,
+        "y": 280,
+        "wires": [
+            [
+                "b2eb824897e04b08"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "1cc99dce76439ced",
+        "type": "debug",
+        "z": "1e45d9e751f7d036",
+        "name": "response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.data",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "b2eb824897e04b08",
+        "type": "openai-api",
+        "z": "1e45d9e751f7d036",
+        "name": "list files",
+        "service": "",
+        "method": "listFiles",
+        "x": 280,
+        "y": 280,
+        "wires": [
+            [
+                "1cc99dce76439ced"
+            ]
+        ]
     }
 ]
