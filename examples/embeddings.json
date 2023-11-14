@@ -1,0 +1,78 @@
+[
+    {
+        "id": "70307b6cbfb7a7c8",
+        "type": "tab",
+        "label": "Embeddings Example",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8b09265787f70886",
+        "type": "inject",
+        "z": "70307b6cbfb7a7c8",
+        "name": "embedding payload",
+        "props": [
+            {
+                "p": "payload.input",
+                "v": "The food was great, and the service was too! 💥",
+                "vt": "str"
+            },
+            {
+                "p": "payload.model",
+                "v": "text-embedding-ada-002",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 290,
+        "y": 260,
+        "wires": [
+            [
+                "5096e563fd5b02cf"
+            ]
+        ]
+    },
+    {
+        "id": "ddf89bf74f316e1f",
+        "type": "debug",
+        "z": "70307b6cbfb7a7c8",
+        "name": "response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.data[0].embedding",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "5096e563fd5b02cf",
+        "type": "openai-api",
+        "z": "70307b6cbfb7a7c8",
+        "name": "create embeddings",
+        "service": "39eba92e93450944",
+        "method": "createEmbedding",
+        "x": 530,
+        "y": 260,
+        "wires": [
+            [
+                "ddf89bf74f316e1f"
+            ]
+        ]
+    },
+    {
+        "id": "39eba92e93450944",
+        "type": "openai-api-service",
+        "secureApiKeyHeaderOrQueryName": "Authorization",
+        "name": "OpenAI Api Key"
+    }
+]
