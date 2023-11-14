@@ -1,8 +1,46 @@
 [
     {
-        "id": "da0f2cae78b2a0af",
+        "id": "6920fb391b5cefcd",
+        "type": "tab",
+        "label": "Fine-tuning Example",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "3cf1ce601d097456",
+        "type": "inject",
+        "z": "6920fb391b5cefcd",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 275,
+        "y": 260,
+        "wires": [
+            [
+                "bdaf36c829550e41"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "91ef7edeb8621f4e",
+        "type": "comment",
+        "z": "6920fb391b5cefcd",
+        "name": "List your organization's fine-tuning jobs",
+        "info": "",
+        "x": 390,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "fadc3f2cbe276ec2",
         "type": "debug",
-        "z": "93f17797b00d70a0",
+        "z": "6920fb391b5cefcd",
         "name": "response",
         "active": true,
         "tosidebar": true,
@@ -12,8 +50,23 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 580,
-        "y": 220,
+        "x": 620,
+        "y": 260,
         "wires": []
+    },
+    {
+        "id": "bdaf36c829550e41",
+        "type": "openai-api",
+        "z": "6920fb391b5cefcd",
+        "name": "list fine-tuning jobs",
+        "service": "",
+        "method": "listPaginatedFineTuningJobs",
+        "x": 430,
+        "y": 260,
+        "wires": [
+            [
+                "fadc3f2cbe276ec2"
+            ]
+        ]
     }
 ]
