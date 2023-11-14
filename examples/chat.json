@@ -1,0 +1,93 @@
+[
+    {
+        "id": "acd4d3697fd487ee",
+        "type": "tab",
+        "label": "Chat Example",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "57cef9ebcf8dfb98",
+        "type": "debug",
+        "z": "acd4d3697fd487ee",
+        "name": "response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.choices[0].message.content",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "c390a96f44686f5c",
+        "type": "inject",
+        "z": "acd4d3697fd487ee",
+        "name": "chat payload",
+        "props": [
+            {
+                "p": "payload.model",
+                "v": "gpt-4-vision-preview",
+                "vt": "str"
+            },
+            {
+                "p": "payload.max_tokens",
+                "v": "1024",
+                "vt": "num"
+            },
+            {
+                "p": "payload.messages",
+                "v": "[{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"Hi there! Do I have carrots in my fridge and if so, can you tell me where I can find them? Thanks!\"},{\"type\":\"image_url\",\"image_url\":{\"url\":\"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Open_refrigerator_with_food_at_night.jpg/1280px-Open_refrigerator_with_food_at_night.jpg\"}}]}]",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 450,
+        "y": 220,
+        "wires": [
+            [
+                "765e638b2f084d76"
+            ]
+        ]
+    },
+    {
+        "id": "b6f7ef395f45bc6f",
+        "type": "comment",
+        "z": "acd4d3697fd487ee",
+        "name": "Chat about an image.",
+        "info": "",
+        "x": 460,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "765e638b2f084d76",
+        "type": "openai-api",
+        "z": "acd4d3697fd487ee",
+        "name": "chat completion",
+        "service": "71860aa02b1968e3",
+        "method": "createChatCompletion",
+        "x": 660,
+        "y": 220,
+        "wires": [
+            [
+                "57cef9ebcf8dfb98"
+            ]
+        ]
+    },
+    {
+        "id": "71860aa02b1968e3",
+        "type": "openai-api-service",
+        "secureApiKeyHeaderOrQueryName": "Authorization",
+        "name": "Autogen-PG API key"
+    }
+]
