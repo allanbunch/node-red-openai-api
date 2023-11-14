@@ -1,0 +1,67 @@
+[
+    {
+        "id": "ec716b03b671e83a",
+        "type": "tab",
+        "label": "Threads Example",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f2673e84297dc231",
+        "type": "inject",
+        "z": "ec716b03b671e83a",
+        "name": "thread payload",
+        "props": [
+            {
+                "p": "payload.thread_id",
+                "v": "thread_z6eZuA1LGsRE6FvoSVcnq12q",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 320,
+        "y": 240,
+        "wires": [
+            [
+                "e0bcde3186fc61aa"
+            ]
+        ]
+    },
+    {
+        "id": "a23c4434e0afbcf2",
+        "type": "debug",
+        "z": "ec716b03b671e83a",
+        "name": "response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "e0bcde3186fc61aa",
+        "type": "openai-api",
+        "z": "ec716b03b671e83a",
+        "name": "retrieve thread",
+        "service": "",
+        "method": "getThread",
+        "x": 540,
+        "y": 240,
+        "wires": [
+            [
+                "a23c4434e0afbcf2"
+            ]
+        ]
+    }
+]
