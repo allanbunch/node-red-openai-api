@@ -61,5 +61,5 @@ Node contains inutitive inline help with links to OpenAI's official API document
 ## Acknowledgements
 
 - [node-red-nodegen](https://github.com/node-red/node-red-nodegen)
-  - For boilerplate code generation.
+  - For boilerplate code generation, though the auto-generated code has been largely refactored.
   - **Note:** This package uses `axios` in place of node-red-nodegen's `request` default.
