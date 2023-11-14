@@ -53,14 +53,10 @@ Note: Each node's functionality maps to the official OpenAI [API Reference](http
 
 ## License
 
-[MIT](./LICENSE).
+[MIT](./LICENSE)
 
 ## Acknowledgements
 
-Made possible by:
-
-1) [node-red-nodegen](https://github.com/node-red/node-red-nodegen): for boilerplate code generation
-&crlf;
-
-- For boilerplate code generation.
-- _Note:_ This packaged uses `axios` in place of node-red-nodegen's `request` default.
+- [node-red-nodegen](https://github.com/node-red/node-red-nodegen)
+  - For boilerplate code generation.
+  - _Note:_ This packaged uses `axios` in place of node-red-nodegen's `request` default.
