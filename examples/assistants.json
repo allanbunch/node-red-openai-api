@@ -1,0 +1,454 @@
+[
+    {
+        "id": "78b174792ca9efaf",
+        "type": "tab",
+        "label": "Assistants Example",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "3aed22e8a8626b49",
+        "type": "group",
+        "z": "78b174792ca9efaf",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "a1dd9dd38256bc37",
+            "94c58ec5fd3ce89a",
+            "78bae2355d746f5b",
+            "16fd166e2cfe1aec",
+            "54cdefbcbbec117f",
+            "e0007c022bce36b9",
+            "e5b83cdfc84c22f9",
+            "6ada9879e91ef156",
+            "a08cc5475a20cc70"
+        ],
+        "x": 94,
+        "y": 113,
+        "w": 1492,
+        "h": 374
+    },
+    {
+        "id": "6ada9879e91ef156",
+        "type": "group",
+        "z": "78b174792ca9efaf",
+        "g": "3aed22e8a8626b49",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "e6cb8abd4fe85ef3",
+            "7a825447030eb842",
+            "e78656f2a1db4141",
+            "50dc0daeab93f1d7",
+            "a342bcf840361d49",
+            "da5c242d75d45b1a"
+        ],
+        "x": 454,
+        "y": 139,
+        "w": 912,
+        "h": 122
+    },
+    {
+        "id": "a08cc5475a20cc70",
+        "type": "group",
+        "z": "78b174792ca9efaf",
+        "g": "3aed22e8a8626b49",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "43d56c48fd18dd0b",
+            "d0ed57739e76eba4"
+        ],
+        "x": 454,
+        "y": 339,
+        "w": 212,
+        "h": 122
+    },
+    {
+        "id": "a1dd9dd38256bc37",
+        "type": "debug",
+        "z": "78b174792ca9efaf",
+        "g": "3aed22e8a8626b49",
+        "name": "response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "94c58ec5fd3ce89a",
+        "type": "inject",
+        "z": "78b174792ca9efaf",
+        "g": "3aed22e8a8626b49",
+        "name": "assistant payload",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            },
+            {
+                "p": "assistant.name",
+                "v": "My Node-RED Assistant",
+                "vt": "str"
+            },
+            {
+                "p": "assistant.model",
+                "v": "gpt-4-1106-preview",
+                "vt": "str"
+            },
+            {
+                "p": "assistant.tools",
+                "v": "[{\"type\":\"retrieval\"}]",
+                "vt": "json"
+            },
+            {
+                "p": "assistant.description",
+                "v": "My helpful assistant.",
+                "vt": "str"
+            },
+            {
+                "p": "assistant.instructions",
+                "v": "You are a helpful assistant with access to files that I share with you.",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "retrieval",
+        "payload": "[\"/path/to/my_file_1.pdf\",\"/path/to/my_file_2.txt\"]",
+        "payloadType": "json",
+        "x": 220,
+        "y": 220,
+        "wires": [
+            [
+                "78bae2355d746f5b"
+            ]
+        ]
+    },
+    {
+        "id": "78bae2355d746f5b",
+        "type": "switch",
+        "z": "78b174792ca9efaf",
+        "g": "3aed22e8a8626b49",
+        "name": "assistant type switch",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "retrieval",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 300,
+        "y": 300,
+        "wires": [
+            [
+                "7a825447030eb842"
+            ],
+            [
+                "43d56c48fd18dd0b"
+            ]
+        ],
+        "outputLabels": [
+            "Document-enhanced Agent",
+            "Standard Agent"
+        ]
+    },
+    {
+        "id": "16fd166e2cfe1aec",
+        "type": "comment",
+        "z": "78b174792ca9efaf",
+        "g": "3aed22e8a8626b49",
+        "name": "Document-Enhanced Assistant",
+        "info": "",
+        "x": 250,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "54cdefbcbbec117f",
+        "type": "inject",
+        "z": "78b174792ca9efaf",
+        "g": "3aed22e8a8626b49",
+        "name": "assistant payload",
+        "props": [
+            {
+                "p": "payload.name",
+                "v": "My Node-RED Standard Assistant",
+                "vt": "str"
+            },
+            {
+                "p": "payload.model",
+                "v": "gpt-4-1106-preview",
+                "vt": "str"
+            },
+            {
+                "p": "payload.tools",
+                "v": "[{\"type\":\"code_interpreter\"}]",
+                "vt": "json"
+            },
+            {
+                "p": "payload.description",
+                "v": "My helpful standard assistant.",
+                "vt": "str"
+            },
+            {
+                "p": "payload.instructions",
+                "v": "You are a helpful assistant.",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 220,
+        "y": 380,
+        "wires": [
+            [
+                "78bae2355d746f5b"
+            ]
+        ]
+    },
+    {
+        "id": "e0007c022bce36b9",
+        "type": "function",
+        "z": "78b174792ca9efaf",
+        "g": "3aed22e8a8626b49",
+        "name": "structure assistant",
+        "func": "// create an array of IDs from the fil upload response.\nconst file_ids = msg.payload.map(element => element.id);\n\n// attach the file IDs to the assistant.\nmsg.assistant.file_ids = file_ids;\n\nmsg.payload = msg.assistant;\n\n// discard the temporary assistant object.\ndelete msg.assistant;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1470,
+        "y": 220,
+        "wires": [
+            [
+                "43d56c48fd18dd0b"
+            ]
+        ]
+    },
+    {
+        "id": "e5b83cdfc84c22f9",
+        "type": "comment",
+        "z": "78b174792ca9efaf",
+        "g": "3aed22e8a8626b49",
+        "name": "Standard Assistant",
+        "info": "",
+        "x": 210,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "e6cb8abd4fe85ef3",
+        "type": "file in",
+        "z": "78b174792ca9efaf",
+        "g": "6ada9879e91ef156",
+        "name": "read file",
+        "filename": "payload",
+        "filenameType": "msg",
+        "format": "",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 740,
+        "y": 220,
+        "wires": [
+            [
+                "da5c242d75d45b1a"
+            ]
+        ]
+    },
+    {
+        "id": "7a825447030eb842",
+        "type": "split",
+        "z": "78b174792ca9efaf",
+        "g": "6ada9879e91ef156",
+        "name": "get file names",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 560,
+        "y": 220,
+        "wires": [
+            [
+                "e6cb8abd4fe85ef3"
+            ]
+        ]
+    },
+    {
+        "id": "e78656f2a1db4141",
+        "type": "join",
+        "z": "78b174792ca9efaf",
+        "g": "6ada9879e91ef156",
+        "name": "gather file ids",
+        "mode": "auto",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1270,
+        "y": 220,
+        "wires": [
+            [
+                "e0007c022bce36b9"
+            ]
+        ]
+    },
+    {
+        "id": "50dc0daeab93f1d7",
+        "type": "openai-api",
+        "z": "78b174792ca9efaf",
+        "g": "6ada9879e91ef156",
+        "name": "upload files",
+        "service": "808a04cb8707d787",
+        "method": "createFile",
+        "x": 1090,
+        "y": 220,
+        "wires": [
+            [
+                "e78656f2a1db4141"
+            ]
+        ]
+    },
+    {
+        "id": "a342bcf840361d49",
+        "type": "comment",
+        "z": "78b174792ca9efaf",
+        "g": "6ada9879e91ef156",
+        "name": "Upload Files",
+        "info": "",
+        "x": 550,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "da5c242d75d45b1a",
+        "type": "function",
+        "z": "78b174792ca9efaf",
+        "g": "6ada9879e91ef156",
+        "name": "structure file",
+        "func": "msg.payload = {\n    \"file\": msg.payload,\n    \"purpose\": \"assistants\",\n    \"filename\": msg.filename\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 910,
+        "y": 220,
+        "wires": [
+            [
+                "50dc0daeab93f1d7"
+            ]
+        ]
+    },
+    {
+        "id": "43d56c48fd18dd0b",
+        "type": "openai-api",
+        "z": "78b174792ca9efaf",
+        "g": "a08cc5475a20cc70",
+        "name": "create assistant",
+        "service": "39eba92e93450944",
+        "method": "createAssistant",
+        "x": 560,
+        "y": 380,
+        "wires": [
+            [
+                "a1dd9dd38256bc37"
+            ]
+        ]
+    },
+    {
+        "id": "d0ed57739e76eba4",
+        "type": "comment",
+        "z": "78b174792ca9efaf",
+        "g": "a08cc5475a20cc70",
+        "name": "Create Assistant",
+        "info": "",
+        "x": 560,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "e3812b47c1b7b918",
+        "type": "comment",
+        "z": "78b174792ca9efaf",
+        "name": "Create Assistants",
+        "info": "",
+        "x": 180,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "808a04cb8707d787",
+        "type": "openai-api-service",
+        "secureApiKeyHeaderOrQueryName": "Authorization",
+        "name": "OpenAI Key - Auto Bearer"
+    },
+    {
+        "id": "39eba92e93450944",
+        "type": "openai-api-service",
+        "secureApiKeyHeaderOrQueryName": "Authorization",
+        "name": "OpenAI Api Key"
+    }
+]
