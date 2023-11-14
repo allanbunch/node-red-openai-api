@@ -1,0 +1,92 @@
+[
+    {
+        "id": "2610fa513fed33f5",
+        "type": "tab",
+        "label": "Models Example",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a399823d7a30b91e",
+        "type": "function",
+        "z": "2610fa513fed33f5",
+        "name": "filter owned models",
+        "func": "// Assuming the payload is the array of objects\nlet data = msg.payload.data;\n\n// Filter the data\ndata = data.filter(item => {\n    return item.owned_by !== 'system' && item.owned_by !== 'openai' && !item.owned_by.startsWith('openai-');\n});\n\n// Set the filtered data back to payload\nmsg.payload = data;\n\n// Return the message to be passed to the next node\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 280,
+        "wires": [
+            [
+                "a60b28cb82cd91d5"
+            ]
+        ]
+    },
+    {
+        "id": "535006a3343dacc3",
+        "type": "openai-api",
+        "z": "2610fa513fed33f5",
+        "name": "list models",
+        "service": "",
+        "method": "listModels",
+        "x": 390,
+        "y": 280,
+        "wires": [
+            [
+                "a399823d7a30b91e"
+            ]
+        ]
+    },
+    {
+        "id": "94386b0ce40460f3",
+        "type": "inject",
+        "z": "2610fa513fed33f5",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 275,
+        "y": 280,
+        "wires": [
+            [
+                "535006a3343dacc3"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "a60b28cb82cd91d5",
+        "type": "debug",
+        "z": "2610fa513fed33f5",
+        "name": "response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "d5eee6b5ac4907f2",
+        "type": "comment",
+        "z": "2610fa513fed33f5",
+        "name": "List owned models (e.g., fine-tuned models).",
+        "info": "",
+        "x": 410,
+        "y": 240,
+        "wires": []
+    }
+]
