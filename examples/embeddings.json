@@ -68,11 +68,5 @@
                 "ddf89bf74f316e1f"
             ]
         ]
-    },
-    {
-        "id": "39eba92e93450944",
-        "type": "openai-api-service",
-        "secureApiKeyHeaderOrQueryName": "Authorization",
-        "name": "OpenAI Api Key"
     }
 ]
