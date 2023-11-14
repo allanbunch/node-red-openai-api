@@ -27,10 +27,10 @@ var OpenaiApi = (function () {
     }
 
     function mergeQueryParams(parameters, queryParameters) {
-        if (parameters.body.$queryParameters) {
-            Object.keys(parameters.body.$queryParameters)
+        if (parameters.$queryParameters) {
+            Object.keys(parameters.$queryParameters)
                 .forEach(function (parameterName) {
-                    var parameter = parameters.body.$queryParameters[parameterName];
+                    var parameter = parameters.$queryParameters[parameterName];
                     queryParameters[parameterName] = parameter;
                 });
         }
@@ -203,6 +203,10 @@ var OpenaiApi = (function () {
 
                 Object.entries(parameters.body).forEach(([key, value]) => {
                     if (value instanceof Buffer) {
+                        if (!filePath) {
+                            throw new Error('msg.payload must include a `filename` property.');
+                        }
+
                         const filename = _path.basename(filePath);
                         formData.append(key, value, filename);
                     } else {
