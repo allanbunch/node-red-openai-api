@@ -36,7 +36,7 @@
     "node-red": "2.2.2",
     "node-red-node-test-helper": "0.2.7"
   },
-  "author": "",
+  "author": "Allan Bunch",
   "license": "MIT",
   "repository": {
     "type": "git",
