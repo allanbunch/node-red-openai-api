@@ -83,11 +83,5 @@
                 "57cef9ebcf8dfb98"
             ]
         ]
-    },
-    {
-        "id": "71860aa02b1968e3",
-        "type": "openai-api-service",
-        "secureApiKeyHeaderOrQueryName": "Authorization",
-        "name": "Autogen-PG API key"
     }
 ]
