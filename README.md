@@ -43,17 +43,17 @@ npm i @inductiv/node-red-openai-api
 
 Find your _@inductiv/node-red-openai-api_ node in the **AI** palette category.
 
-<img width="122" alt="inductiv-node-red-openai-api-node" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/73ec245e-803e-427e-8294-fd95632a6cfd">
+<img width="122" alt="inductiv-node-red-openai-api-node" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/55b6528a-0f94-4e24-8c98-f47104624651">
 
 You'll find a set of example implementation flows in the [examples](./examples/) directory.
 
-<img width="722" alt="audio-translation" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/ca3ca6f1-f7df-4a6f-84fd-db0c9eaef957">
+<img width="722" alt="audio-translation" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/4f2aa5c2-87a9-4cad-af32-10bca094141c">
 
 Note: Each node's functionality maps to the official OpenAI [API Reference](https://platform.openai.com/docs/api-reference/) documentation.
 
 Node contains inutitive inline help with links to OpenAI's official API documentation.
 
-<img width="619" alt="inductiv-node-red-openai-api-node-config" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/a44df975-7f65-47aa-9c35-252e9d438a6d">
+<img width="619" alt="inductiv-node-red-openai-api-node-config" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/15ee5b75-2e29-4806-b427-8e6873f3fb96">
 
 ## License
 
