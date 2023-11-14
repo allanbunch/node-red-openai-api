@@ -26,13 +26,13 @@ Ideal for developers, researchers, and innovators, this node is your tool for un
 
 ## Installation
 
-via the Node-RED Palette Manager, install
+Via the Node-RED Palette Manager, install
 
 ```text
 @inductiv/node-red-openai-api
 ```
 
-via NPM
+Via NPM
 
 ```bash
 cd $HOME/.node-red
@@ -59,4 +59,4 @@ Note: Each node's functionality maps to the official OpenAI [API Reference](http
 
 - [node-red-nodegen](https://github.com/node-red/node-red-nodegen)
   - For boilerplate code generation.
-  - _Note:_ This packaged uses `axios` in place of node-red-nodegen's `request` default.
+  - **Note:** This package uses `axios` in place of node-red-nodegen's `request` default.
