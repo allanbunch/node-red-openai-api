@@ -1,0 +1,77 @@
+[
+    {
+        "id": "47d8fb0adff5a6cc",
+        "type": "tab",
+        "label": "Messages Example",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e2875b512fa3e36a",
+        "type": "comment",
+        "z": "47d8fb0adff5a6cc",
+        "name": "Returns a list of messages for a given thread.",
+        "info": "",
+        "x": 430,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "25b586ac72069905",
+        "type": "inject",
+        "z": "47d8fb0adff5a6cc",
+        "name": "messages payload",
+        "props": [
+            {
+                "p": "payload.thread_id",
+                "v": "thread_ShTYzF0LHfr4geWksTky4Gxu",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 370,
+        "y": 220,
+        "wires": [
+            [
+                "932b2514509c22ea"
+            ]
+        ]
+    },
+    {
+        "id": "1330d46beba61bc0",
+        "type": "debug",
+        "z": "47d8fb0adff5a6cc",
+        "name": "response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.data",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "932b2514509c22ea",
+        "type": "openai-api",
+        "z": "47d8fb0adff5a6cc",
+        "name": "list messages",
+        "service": "",
+        "method": "listMessages",
+        "x": 580,
+        "y": 220,
+        "wires": [
+            [
+                "1330d46beba61bc0"
+            ]
+        ]
+    }
+]
