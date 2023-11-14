@@ -1,0 +1,77 @@
+[
+    {
+        "id": "1dc20442cfd01082",
+        "type": "tab",
+        "label": "Runs Example",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a6e237adf232aed1",
+        "type": "inject",
+        "z": "1dc20442cfd01082",
+        "name": "runs payload",
+        "props": [
+            {
+                "p": "payload.thread_id",
+                "v": "thread_z6eZuA1LGsRE6FvoSVcnq12q",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 270,
+        "y": 260,
+        "wires": [
+            [
+                "bf9fee6ecdfaf14d"
+            ]
+        ]
+    },
+    {
+        "id": "8e69d4f8d638f265",
+        "type": "debug",
+        "z": "1dc20442cfd01082",
+        "name": "response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.data",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "bf9fee6ecdfaf14d",
+        "type": "openai-api",
+        "z": "1dc20442cfd01082",
+        "name": "list runs",
+        "service": "",
+        "method": "listRuns",
+        "x": 440,
+        "y": 260,
+        "wires": [
+            [
+                "8e69d4f8d638f265"
+            ]
+        ]
+    },
+    {
+        "id": "7d779ed24d92fbf7",
+        "type": "comment",
+        "z": "1dc20442cfd01082",
+        "name": "Returns a list of runs belonging to a thread.",
+        "info": "",
+        "x": 340,
+        "y": 200,
+        "wires": []
+    }
+]
