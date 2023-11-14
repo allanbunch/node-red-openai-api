@@ -1,5 +1,7 @@
 <h1 align="center">
-<img width="118" alt="node-red-openai-api" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/e2242df1-c9ad-437a-9543-0e401b14466f">
+  <b>
+<a href="https://github.com/allanbunch/node-red-openai-api"><img width="118" alt="node-red-openai-api" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/e2242df1-c9ad-437a-9543-0e401b14466f"></a><br>
+  </b>
 </h1>
 
 
