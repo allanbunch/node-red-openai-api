@@ -42,9 +42,7 @@ npm i @inductiv/node-red-openai-api
 ## Usage
 
 You can find example implementations of several service flows in the [example](./examples/api-examples.json) flow.
-<img width="118" alt="node-red-openai-api" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/e2caccb9-5eca-4bc7-8ed7-b5a8ec295a9b">
-
-
+<img width="923" alt="assistants-example" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/f3709ec1-9e4f-4823-81c3-5659cb88579f">
 Note: Each node's functionality maps to the official OpenAI [API Reference](https://platform.openai.com/docs/api-reference/) documentation.
 
 ## License
