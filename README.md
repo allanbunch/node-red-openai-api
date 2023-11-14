@@ -50,6 +50,8 @@ You'll find a set of example implementation flows in the [examples](./examples/)
 
 Note: Each node's functionality maps to the official OpenAI [API Reference](https://platform.openai.com/docs/api-reference/) documentation.
 
+Node contains inutitive inline help with links to OpenAI's official API documentation.
+
 ## License
 
 [MIT](./LICENSE)

@@ -42,48 +42,48 @@
     <div class="form-row">
         <label for="node-input-method"><i class="fa fa-tasks"></i> <span data-i18n="OpenaiApi.label.method"></span></label>
         <select id="node-input-method">
-            <optgroup label="🤖 Assistants (Beta)">
-                <option value="listAssistants" data-i18n="OpenaiApi.parameters.listAssistants"></option>
+            <optgroup style="font-style: normal;" label="🤖 Assistants (Beta)">
                 <option value="createAssistant" data-i18n="OpenaiApi.parameters.createAssistant"></option>
                 <option value="getAssistant" data-i18n="OpenaiApi.parameters.getAssistant"></option>
                 <option value="modifyAssistant" data-i18n="OpenaiApi.parameters.modifyAssistant"></option>
                 <option value="deleteAssistant" data-i18n="OpenaiApi.parameters.deleteAssistant"></option>
+                <option value="listAssistants" data-i18n="OpenaiApi.parameters.listAssistants"></option>
                 <option value="listAssistantFiles" data-i18n="OpenaiApi.parameters.listAssistantFiles"></option>
                 <option value="createAssistantFile" data-i18n="OpenaiApi.parameters.createAssistantFile"></option>
                 <option value="getAssistantFile" data-i18n="OpenaiApi.parameters.getAssistantFile"></option>
                 <option value="deleteAssistantFile" data-i18n="OpenaiApi.parameters.deleteAssistantFile"></option>
             </optgroup>
-            <optgroup label="🔉 Audio">
+            <optgroup style="font-style: normal;" label="🔉 Audio">
                 <option value="createSpeech" data-i18n="OpenaiApi.parameters.createSpeech"></option>
                 <option value="createTranscription" data-i18n="OpenaiApi.parameters.createTranscription"></option>
                 <option value="createTranslation" data-i18n="OpenaiApi.parameters.createTranslation"></option>
             </optgroup>
-            <optgroup label="🗨️ Chat">
+            <optgroup style="font-style: normal;" label="🗨️ Chat">
                 <option value="createChatCompletion" data-i18n="OpenaiApi.parameters.createChatCompletion"></option>
             </optgroup>
-            <optgroup label="🔗 Embeddings">
+            <optgroup style="font-style: normal;" label="🔗 Embeddings">
                 <option value="createEmbedding" data-i18n="OpenaiApi.parameters.createEmbedding"></option>
             </optgroup>
-            <optgroup label="🔧 Fine-tuning">
+            <optgroup style="font-style: normal;" label="🔧 Fine-tuning">
                 <option value="createFineTuningJob" data-i18n="OpenaiApi.parameters.createFineTuningJob"></option>
                 <option value="listPaginatedFineTuningJobs" data-i18n="OpenaiApi.parameters.listPaginatedFineTuningJobs"></option>
                 <option value="retrieveFineTuningJob" data-i18n="OpenaiApi.parameters.retrieveFineTuningJob"></option>
                 <option value="listFineTuningEvents" data-i18n="OpenaiApi.parameters.listFineTuningEvents"></option>
                 <option value="cancelFineTuningJob" data-i18n="OpenaiApi.parameters.cancelFineTuningJob"></option>
             </optgroup>
-            <optgroup label="📁 Files">
+            <optgroup style="font-style: normal;" label="📁 Files">
                 <option value="listFiles" data-i18n="OpenaiApi.parameters.listFiles"></option>
                 <option value="createFile" data-i18n="OpenaiApi.parameters.createFile"></option>
                 <option value="deleteFile" data-i18n="OpenaiApi.parameters.deleteFile"></option>
                 <option value="retrieveFile" data-i18n="OpenaiApi.parameters.retrieveFile"></option>
                 <option value="downloadFile" data-i18n="OpenaiApi.parameters.downloadFile"></option>
             </optgroup>
-            <optgroup label="🖼️ Images">
+            <optgroup style="font-style: normal;" label="🖼️ Images">
                 <option value="createImage" data-i18n="OpenaiApi.parameters.createImage"></option>
                 <option value="createImageEdit" data-i18n="OpenaiApi.parameters.createImageEdit"></option>
                 <option value="createImageVariation" data-i18n="OpenaiApi.parameters.createImageVariation"></option>
             </optgroup>
-            <optgroup label="📟 Messages (Beta)">
+            <optgroup style="font-style: normal;" label="📟 Messages (Beta)">
                 <option value="listMessages" data-i18n="OpenaiApi.parameters.listMessages"></option>
                 <option value="createMessage" data-i18n="OpenaiApi.parameters.createMessage"></option>
                 <option value="getMessage" data-i18n="OpenaiApi.parameters.getMessage"></option>
@@ -91,15 +91,15 @@
                 <option value="listMessageFiles" data-i18n="OpenaiApi.parameters.listMessageFiles"></option>
                 <option value="getMessageFile" data-i18n="OpenaiApi.parameters.getMessageFile"></option>
             </optgroup>
-            <optgroup label="🧠 Models">
+            <optgroup style="font-style: normal;" label="🧠 Models">
                 <option value="listModels" data-i18n="OpenaiApi.parameters.listModels"></option>
                 <option value="retrieveModel" data-i18n="OpenaiApi.parameters.retrieveModel"></option>
                 <option value="deleteModel" data-i18n="OpenaiApi.parameters.deleteModel"></option>
             </optgroup>
-            <optgroup label="✅ Moderations">
+            <optgroup style="font-style: normal;" label="✅ Moderations">
                 <option value="createModeration" data-i18n="OpenaiApi.parameters.createModeration"></option>
             </optgroup>
-            <optgroup label="🔄 Runs (Beta)">
+            <optgroup style="font-style: normal;" label="🔄 Runs (Beta)">
                 <option value="createThreadAndRun" data-i18n="OpenaiApi.parameters.createThreadAndRun"></option>
                 <option value="listRuns" data-i18n="OpenaiApi.parameters.listRuns"></option>
                 <option value="createRun" data-i18n="OpenaiApi.parameters.createRun"></option>
@@ -110,7 +110,7 @@
                 <option value="listRunSteps" data-i18n="OpenaiApi.parameters.listRunSteps"></option>
                 <option value="getRunStep" data-i18n="OpenaiApi.parameters.getRunStep"></option>
             </optgroup>
-            <optgroup label="🧵 Threads (Beta)">
+            <optgroup style="font-style: normal;" label="🧵 Threads (Beta)">
                 <option value="createThread" data-i18n="OpenaiApi.parameters.createThread"></option>
                 <option value="getThread" data-i18n="OpenaiApi.parameters.getThread"></option>
                 <option value="modifyThread" data-i18n="OpenaiApi.parameters.modifyThread"></option>
@@ -125,18 +125,8 @@
     <p><b>Reference</b></p>
 
     <section>
-    <h1>🤖 Assistants</h1>
+    <h1 style="font-weight: bold;">🤖 Assistants</h1>
     <a href="https://platform.openai.com/docs/api-reference/assistants" target="_blank">Official Documentation</a>
-    <h2>List Assistants</h2>
-    <p>Returns a list of assistants.</p>
-    <dl class="message-properties">
-        <h2>msg.payload Properties</h2>
-        <dt class="optional">limit <span class="property-type">integer</span></dt>
-        <dt class="optional">order <span class="property-type">string</span></dt>
-        <dt class="optional">action <span class="property-type">string</span></dt>
-        <dt class="optional">before <span class="property-type">string</span></dt>
-    </dl>
-
     <h2>Create Assistant</h2>
     <p>Create an assistant with a model and instructions.</p>
     <dl class="message-properties">
@@ -183,6 +173,16 @@
         <dt>assistant_id <span class="property-type">string</span></dt>
     </dl>
 
+    <h2>List Assistants</h2>
+    <p>Returns a list of assistants.</p>
+    <dl class="message-properties">
+        <h2>msg.payload Properties</h2>
+        <dt class="optional">limit <span class="property-type">integer</span></dt>
+        <dt class="optional">order <span class="property-type">string</span></dt>
+        <dt class="optional">action <span class="property-type">string</span></dt>
+        <dt class="optional">before <span class="property-type">string</span></dt>
+    </dl>
+
     <h2>List Assistant Files</h2>
         <p>Returns a list of assistant files.</p>
         <dl class="message-properties">
@@ -225,7 +225,7 @@
     </section>
 
     <section>
-    <h1>🔉 Audio</h1>
+    <h1 style="font-weight: bold;">🔉 Audio</h1>
     <a href="https://platform.openai.com/docs/api-reference/audio" target="_blank">Official Documentation</a>
     <h2>Create Speech</h2>
     <p>Generates audio from the input text.</p>
@@ -268,7 +268,7 @@
     </section>
 
     <section>
-    <h1>🗨️ Chat</h1>
+        <h1 style="font-weight: bold;">🗨️ Chat</h1>
     <a href="https://platform.openai.com/docs/api-reference/chat" target="_blank">Official Documentation</a>
     <h2>Create Chat Completion</h2>
     <p>Creates a model response for the given chat conversation. <a href="https://platform.openai.com/docs/api-reference/chat/create" target="_blank">Full documentation.</a></p>
@@ -295,7 +295,7 @@
     </section>
 
     <section>
-    <h1>🔗 Embeddings</h1>
+        <h1 style="font-weight: bold;">🔗 Embeddings</h1>
     <a href="https://platform.openai.com/docs/api-reference/embeddings" target="_blank">Official Documentation</a>
     <h2>Create Embeddings</h2>
     <p>Creates an embedding vector representing the input text.</p>
@@ -310,7 +310,7 @@
     </section>
 
     <section>
-    <h1>🔧 Fine-tuning</h1>
+    <h1 style="font-weight: bold;">🔧 Fine-tuning</h1>
     <a href="https://platform.openai.com/docs/api-reference/fine-tuning" target="_blank">Official Documentation</a>
     <h2>Create Fine-tuning Job</h2>
     <p>Creates a job that fine-tunes a specified model from a given dataset. Response includes details of the enqueued job including job status and the name of the fine-tuned models once complete.</p>
@@ -361,7 +361,7 @@
     </section>
 
     <section>
-    <h1>📁 Files</h1>
+    <h1 style="font-weight: bold;">📁 Files</h1>
     <a href="https://platform.openai.com/docs/api-reference/files" target="_blank">Official Documentation</a>
     <h2>List Files</h2>
     <p>Returns a list of files that belong to the user's organization.</p>
@@ -406,7 +406,7 @@
     </section>
 
     <section>
-    <h1>🖼️ Images</h1>
+    <h1 style="font-weight: bold;">🖼️ Images</h1>
     <a href="https://platform.openai.com/docs/api-reference/images" target="_blank">Official Documentation</a>
     <h2>Create Image</h2>
     <p>Creates an image given a prompt.</p>
@@ -455,7 +455,7 @@
     </section>
 
     <section>
-    <h1>📟 Messages</h1>
+    <h1 style="font-weight: bold;">📟 Messages</h1>
     <a href="https://platform.openai.com/docs/api-reference/messages" target="_blank">Official Documentation</a>
     <h2>List Messages</h2>
     <p>Returns a list of messages for a given thread.</p>
@@ -527,7 +527,7 @@
     </section> 
 
     <section>
-    <h1>🧠 Models</h1>
+    <h1 style="font-weight: bold;">🧠 Models</h1>
     <a href="https://platform.openai.com/docs/api-reference/models" target="_blank">Official Documentation</a>
     <h2>List Models</h2>
     <p>Lists the currently available models, and provides basic information about each one such as the owner and availability.</p>
@@ -550,7 +550,7 @@
     </dl>
 
     <section>
-    <h1>✅ Moderations</h1>
+    <h1 style="font-weight: bold;">✅ Moderations</h1>
     <a href="https://platform.openai.com/docs/api-reference/moderations" target="_blank">Official Documentation</a>
     <h2>Create Moderation</h2>
     <p>Classifies if text violates OpenAI's Content Policy</p>
@@ -563,7 +563,7 @@
     </section>
 
     <section>
-    <h1>🔄 Runs</h1>
+    <h1 style="font-weight: bold;">🔄 Runs</h1>
     <a href="https://platform.openai.com/docs/api-reference/runs" target="_blank">Official Documentation</a>
     <h2>Create Thread and Run</h2>
     <p>Create a thread and run it in one request.</p>
@@ -670,7 +670,7 @@
     </section>
 
     <section>
-    <h1>🧵 Threads</h1>
+    <h1 style="font-weight: bold;">🧵 Threads</h1>
     <a href="https://platform.openai.com/docs/api-reference/threads" target="_blank">Official Documentation</a>
     <h2>Create Thread</h2>
     <p>Create a thread.</p>
