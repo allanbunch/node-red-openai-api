@@ -438,17 +438,5 @@
         "x": 180,
         "y": 80,
         "wires": []
-    },
-    {
-        "id": "808a04cb8707d787",
-        "type": "openai-api-service",
-        "secureApiKeyHeaderOrQueryName": "Authorization",
-        "name": "OpenAI Key - Auto Bearer"
-    },
-    {
-        "id": "39eba92e93450944",
-        "type": "openai-api-service",
-        "secureApiKeyHeaderOrQueryName": "Authorization",
-        "name": "OpenAI Api Key"
     }
 ]
