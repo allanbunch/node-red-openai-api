@@ -1,0 +1,77 @@
+[
+    {
+        "id": "4e4adf62cc07faa5",
+        "type": "tab",
+        "label": "Moderations Example",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "1397cceabb2fc6e5",
+        "type": "inject",
+        "z": "4e4adf62cc07faa5",
+        "name": "moderation payload",
+        "props": [
+            {
+                "p": "payload.input",
+                "v": "Today is a wonderful day.",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 290,
+        "y": 300,
+        "wires": [
+            [
+                "58bfb89e83e4cc78"
+            ]
+        ]
+    },
+    {
+        "id": "2456728dbe58d36a",
+        "type": "debug",
+        "z": "4e4adf62cc07faa5",
+        "name": "response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.results",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "58bfb89e83e4cc78",
+        "type": "openai-api",
+        "z": "4e4adf62cc07faa5",
+        "name": "create moderation",
+        "service": "",
+        "method": "createModeration",
+        "x": 510,
+        "y": 300,
+        "wires": [
+            [
+                "2456728dbe58d36a"
+            ]
+        ]
+    },
+    {
+        "id": "04c7ba9de965df5d",
+        "type": "comment",
+        "z": "4e4adf62cc07faa5",
+        "name": "Classifies if text violates OpenAI's Content Policy",
+        "info": "",
+        "x": 360,
+        "y": 240,
+        "wires": []
+    }
+]
