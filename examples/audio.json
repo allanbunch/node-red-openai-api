@@ -1,0 +1,128 @@
+[
+    {
+        "id": "a8f46f8122644718",
+        "type": "tab",
+        "label": "Audio Example",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "467ebc87b8844787",
+        "type": "inject",
+        "z": "a8f46f8122644718",
+        "name": "translation payload",
+        "props": [
+            {
+                "p": "filename",
+                "v": "/path/to/my_file.mp3",
+                "vt": "str"
+            },
+            {
+                "p": "model",
+                "v": "whisper-1",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 190,
+        "y": 260,
+        "wires": [
+            [
+                "3a737dfa6879caa2"
+            ]
+        ]
+    },
+    {
+        "id": "72303cea19bd9de9",
+        "type": "openai-api",
+        "z": "a8f46f8122644718",
+        "name": "translator",
+        "service": "808a04cb8707d787",
+        "method": "createTranslation",
+        "x": 760,
+        "y": 260,
+        "wires": [
+            [
+                "b6fdacab7fb309bd"
+            ]
+        ]
+    },
+    {
+        "id": "b6fdacab7fb309bd",
+        "type": "debug",
+        "z": "a8f46f8122644718",
+        "name": "response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "3a737dfa6879caa2",
+        "type": "file in",
+        "z": "a8f46f8122644718",
+        "name": "audio file",
+        "filename": "filename",
+        "filenameType": "msg",
+        "format": "",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "utf-16be",
+        "allProps": false,
+        "x": 380,
+        "y": 260,
+        "wires": [
+            [
+                "6e882571ec7d2180"
+            ]
+        ]
+    },
+    {
+        "id": "4a3af447f46156b8",
+        "type": "comment",
+        "z": "a8f46f8122644718",
+        "name": "Audio Translation",
+        "info": "",
+        "x": 160,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "6e882571ec7d2180",
+        "type": "function",
+        "z": "a8f46f8122644718",
+        "name": "structure payload",
+        "func": "let newPayload = {};\n\nnewPayload.file = msg.payload;\nnewPayload.model = msg.model;\nnewPayload.filename = msg.filename;\n\nmsg.payload = newPayload;\n\ndelete msg.model;\ndelete msg.filename;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 260,
+        "wires": [
+            [
+                "72303cea19bd9de9"
+            ]
+        ]
+    },
+    {
+        "id": "808a04cb8707d787",
+        "type": "openai-api-service",
+        "secureApiKeyHeaderOrQueryName": "Authorization",
+        "name": "OpenAI Key - Auto Bearer"
+    }
+]
