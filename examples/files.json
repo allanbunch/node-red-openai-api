@@ -1,0 +1,23 @@
+[
+    {
+        "id": "3cd93e7175a2193e",
+        "type": "openai-api",
+        "z": "1eca398ac0dc7b8a",
+        "name": "list files",
+        "service": "39eba92e93450944",
+        "method": "listFiles",
+        "x": 400,
+        "y": 220,
+        "wires": [
+            [
+                "eb81e4a75fb28cf5"
+            ]
+        ]
+    },
+    {
+        "id": "39eba92e93450944",
+        "type": "openai-api-service",
+        "secureApiKeyHeaderOrQueryName": "Authorization",
+        "name": "OpenAI Api Key"
+    }
+]
