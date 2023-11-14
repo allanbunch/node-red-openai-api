@@ -118,11 +118,5 @@
                 "72303cea19bd9de9"
             ]
         ]
-    },
-    {
-        "id": "808a04cb8707d787",
-        "type": "openai-api-service",
-        "secureApiKeyHeaderOrQueryName": "Authorization",
-        "name": "OpenAI Key - Auto Bearer"
     }
 ]
