@@ -1,8 +1,8 @@
 <h3 align="center">
+  @inductiv/node-red-openai-api
   <b>
 <a href="https://github.com/allanbunch/node-red-openai-api"><img width="923" alt="assistants-example" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/f3709ec1-9e4f-4823-81c3-5659cb88579f"></a><br>
   </b>
-  @inductiv/node-red-openai-api
 </h3>
 
 # Your Node-RED Node for OpenAI
