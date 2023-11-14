@@ -52,6 +52,8 @@ Note: Each node's functionality maps to the official OpenAI [API Reference](http
 
 Node contains inutitive inline help with links to OpenAI's official API documentation.
 
+<img width="619" alt="inductiv-node-red-openai-api-node-config" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/a44df975-7f65-47aa-9c35-252e9d438a6d">
+
 ## License
 
 [MIT](./LICENSE)
