@@ -763,7 +763,7 @@ var OpenaiApi = (function () {
 
         const expectedQueryParameters = ['limit', 'order', 'after', 'before'];
 
-        return this.getFromEndpoint(`/threads/${threadId}`, parameters, expectedQueryParameters, customHeaders);
+        return this.getFromEndpoint(`/threads/${threadId}/messages`, parameters, expectedQueryParameters, customHeaders);
     };
     /**
      * Create a message.
