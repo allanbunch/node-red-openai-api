@@ -1,6 +1,6 @@
 <h3 align="center">
   <b>
-<a href="https://github.com/allanbunch/node-red-openai-api"><img width="118" alt="node-red-openai-api" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/e2242df1-c9ad-437a-9543-0e401b14466f"></a><br>
+<a href="https://github.com/allanbunch/node-red-openai-api"><img width="923" alt="assistants-example" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/f3709ec1-9e4f-4823-81c3-5659cb88579f"></a><br>
   </b>
   @inductiv/node-red-openai-api
 </h3>
@@ -42,7 +42,6 @@ npm i @inductiv/node-red-openai-api
 ## Usage
 
 You can find example implementations of several service flows in the [example](./examples/api-examples.json) flow.
-<img width="923" alt="assistants-example" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/f3709ec1-9e4f-4823-81c3-5659cb88579f">
 Note: Each node's functionality maps to the official OpenAI [API Reference](https://platform.openai.com/docs/api-reference/) documentation.
 
 ## License
