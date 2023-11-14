@@ -1,11 +1,12 @@
 <h1 align="center">
   <b>
 <a href="https://github.com/allanbunch/node-red-openai-api"><img width="118" alt="node-red-openai-api" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/e2242df1-c9ad-437a-9543-0e401b14466f"></a><br>
+    @inductiv/node-red-openai-api
   </b>
 </h1>
 
 
-# @inductiv/node-red-openai-api
+# Your Node-RED Node for OpenAI
 
 This package offers a versatile and configurable Node-RED node, designed specifically for seamless integration with OpenAI's advanced platform services. It empowers you to effortlessly connect and orchestrate various OpenAI functionalities, leveraging the full power of Node-RED's sophisticated application nodes. Whether you're aiming to enhance your workflows with cutting-edge AI capabilities or create innovative applications, this node serves as your gateway to harnessing the latest in AI technology from OpenAI, all within the intuitive and flexible environment of Node-RED.
 
