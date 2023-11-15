@@ -1,8 +1,5 @@
 /*jshint -W069 */
 
-const { threadId } = require('worker_threads');
-const { v4: uuidv4 } = require('uuid');
-const FileType = require('file-type');
 
 var OpenaiApi = (function () {
     'use strict';
