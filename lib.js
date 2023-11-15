@@ -100,7 +100,6 @@ var OpenaiApi = (function () {
 
     OpenaiApi.prototype.getFromEndpoint = function (path, parameters, expectedQueryParams, customHeaders) {
         return new Promise((resolve, reject) => {
-            // parameters = parameters || {};
             var domain = this.domain;
             var queryParameters = {}, baseHeaders = {};
 
@@ -133,7 +132,7 @@ var OpenaiApi = (function () {
                 params: queryParameters
             };
 
-            // Axios POST request
+            // Axios GET request
             axios(config)
                 .then(response => {
                     resolve(response);
@@ -256,7 +255,7 @@ var OpenaiApi = (function () {
                 params: queryParameters
             };
 
-            // Axios POST request
+            // Axios DELETE request
             axios(config)
                 .then(response => {
                     resolve(response);
@@ -389,8 +388,8 @@ var OpenaiApi = (function () {
     };
 
     OpenaiApi.prototype.listAssistants = function (parameters) {
-        var expectedQueryParameters = ['limit', 'order', 'after', 'before'];
-        var customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
+        const expectedQueryParameters = ['limit', 'order', 'after', 'before'];
+        const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
 
         return this.getFromEndpoint('/assistants', parameters, expectedQueryParameters, customHeaders);
     };
@@ -471,7 +470,7 @@ var OpenaiApi = (function () {
     OpenaiApi.prototype.getMessage = function (parameters) {
 
         const threadId = parameters.body.thread_id;
-        const messageId = parameters.messageId;
+        const messageId = parameters.body.message_id;
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
 
         return this.getFromEndpoint(`/threads/${threadId}/messages/${messageId}`, parameters, null, customHeaders);
@@ -480,7 +479,7 @@ var OpenaiApi = (function () {
     OpenaiApi.prototype.modifyMessage = function (parameters) {
 
         const threadId = parameters.body.thread_id;
-        const messageId = parameters.messageId;
+        const messageId = parameters.body.message_id;
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
 
         return this.postToEndpoint(`/threads/${threadId}/messages/${messageId}`, parameters, null, null, null, customHeaders);
@@ -511,7 +510,7 @@ var OpenaiApi = (function () {
     OpenaiApi.prototype.getRun = function (parameters) {
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
         const threadId = parameters.body.thread_id;
-        const runId = parameters.runId;
+        const runId = parameters.body.run_id;
 
         return this.getFromEndpoint(`/threads/${threadId}/runs/${runId}`, parameters, null, customHeaders);
     };
@@ -519,7 +518,7 @@ var OpenaiApi = (function () {
     OpenaiApi.prototype.modifyRun = function (parameters) {
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
         const threadId = parameters.body.thread_id;
-        const runId = parameters.runId;
+        const runId = parameters.body.run_id;
 
         return this.postToEndpoint(`/threads/${threadId}/runs/${runId}`, parameters, null, null, null, customHeaders);
     };
@@ -527,7 +526,7 @@ var OpenaiApi = (function () {
     OpenaiApi.prototype.submitToolOuputsToRun = function (parameters) {
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
         const threadId = parameters.body.thread_id;
-        const runId = parameters.runId;
+        const runId = parameters.body.run_id;
 
         return this.postToEndpoint(`/threads/${threadId}/runs/${runId}/submit_tool_outputs`, parameters, null, null, null, customHeaders);
     };
@@ -535,7 +534,7 @@ var OpenaiApi = (function () {
     OpenaiApi.prototype.cancelRun = function (parameters) {
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
         const threadId = parameters.body.thread_id;
-        const runId = parameters.runId;
+        const runId = parameters.body.run_id;
 
         return this.postToEndpoint(`/threads/${threadId}/runs/${runId}/cancel`, parameters, null, null, null, customHeaders);
     };
@@ -543,7 +542,8 @@ var OpenaiApi = (function () {
     OpenaiApi.prototype.listRunSteps = function (parameters) {
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
         const threadId = parameters.body.thread_id;
-        const runId = parameters.runId;
+        const runId = parameters.body.run_id;
+        const expectedQueryParameters = ['limit', 'order', 'after', 'before'];
 
         return this.getFromEndpoint(`/threads/${threadId}/runs/${runId}/steps`, parameters, null, customHeaders);
     };
@@ -551,23 +551,24 @@ var OpenaiApi = (function () {
     OpenaiApi.prototype.getRunStep = function (parameters) {
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
         const threadId = parameters.body.thread_id;
-        const runId = parameters.runId;
-        const stepId = parameters.stepId;
+        const runId = parameters.body.run_id;
+        const stepId = parameters.body.step_id;
 
         return this.getFromEndpoint(`/threads/${threadId}/runs/${runId}/steps/${stepId}`, parameters, null, customHeaders);
     };
 
     OpenaiApi.prototype.listAssistantFiles = function (parameters) {
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
-        const assistantId = parameters.assistantId;
+        const assistantId = parameters.body.assistant_id;
+        const expectedQueryParameters = ['limit', 'order', 'after', 'before'];
 
-        return this.getFromEndpoint(`/assistants/${assistantId}/files`, parameters, null, customHeaders);
+        return this.getFromEndpoint(`/assistants/${assistantId}/files`, parameters, expectedQueryParameters, customHeaders);
     };
 
     OpenaiApi.prototype.createAssistantFile = function (parameters) {
 
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
-        const assistantId = parameters.assistantId;
+        const assistantId = parameters.body.assistant_id;
 
         return this.postToEndpoint(`/assistants/${assistantId}/files`, parameters, null, null, null, customHeaders);
     };
@@ -575,8 +576,8 @@ var OpenaiApi = (function () {
     OpenaiApi.prototype.getAssistantFile = function (parameters) {
 
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
-        const assistantId = parameters.assistantId;
-        const fileId = parameters.fileId;
+        const assistantId = parameters.body.assistant_id;
+        const fileId = parameters.body.file_id;
 
         return this.getFromEndpoint(`/assistants/${assistantId}/files/${fileId}`, parameters, null, customHeaders);
     };
@@ -584,8 +585,8 @@ var OpenaiApi = (function () {
     OpenaiApi.prototype.deleteAssistantFile = function (parameters) {
 
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
-        const assistantId = parameters.assistantId;
-        const fileId = parameters.fileId;
+        const assistantId = parameters.body.assistant_id;
+        const fileId = parameters.body.file_id;
 
         return this.deleteFromEndpoint(`/assistants/${assistantId}/files/${fileId}`, parameters, null, customHeaders);
     };
@@ -594,16 +595,17 @@ var OpenaiApi = (function () {
 
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
         const threadId = parameters.body.thread_id;
-        const messageId = parameters.messageId;
+        const messageId = parameters.body.message_id;
+        const expectedQueryParameters = ['limit', 'order', 'after', 'before'];
 
-        return this.getFromEndpoint(`/threads/${threadId}/messages/${messageId}/files`, parameters, null, customHeaders);
+        return this.getFromEndpoint(`/threads/${threadId}/messages/${messageId}/files`, parameters, expectedQueryParameters, customHeaders);
     };
 
     OpenaiApi.prototype.getMessageFile = function (parameters) {
         const customHeaders = { 'OpenAI-Beta': 'assistants=v1' };
         const threadId = parameters.body.thread_id;
-        const messageId = parameters.messageId;
-        const fileId = parameters.fileId;
+        const messageId = parameters.body.message_id;
+        const fileId = parameters.body.file_id;
 
         return this.getFromEndpoint(`/threads/${threadId}/messages/${messageId}/files/${fileId}`, parameters, null, customHeaders);
     };
