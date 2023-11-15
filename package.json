@@ -29,11 +29,6 @@
     "axios": "^1.6.0",
     "form-data": "^4.0.0"
   },
-  "devDependencies": {
-    "mocha": "9.2.1",
-    "node-red": "2.2.2",
-    "node-red-node-test-helper": "0.2.7"
-  },
   "author": "Allan Bunch",
   "license": "MIT",
   "repository": {
