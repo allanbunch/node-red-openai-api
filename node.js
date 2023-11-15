@@ -238,8 +238,8 @@ module.exports = function (RED) {
         });
     }
 
-    RED.nodes.registerType('openai-api', OpenaiApiNode);
-    function OpenaiApiServiceNode(n) {
+    RED.nodes.registerType('OpenAI API', OpenaiApiNode);
+    function OAIAuthNode(n) {
         RED.nodes.createNode(this, n);
 
         this.secureApiKeyValue = n.secureApiKeyValue;
@@ -247,7 +247,7 @@ module.exports = function (RED) {
         this.secureApiKeyIsQuery = n.secureApiKeyIsQuery;
     }
 
-    RED.nodes.registerType('openai-api-service', OpenaiApiServiceNode, {
+    RED.nodes.registerType('OpenAI Auth', OAIAuthNode, {
         credentials: {
             secureApiKeyValue: { type: 'password' },
             temp: { type: 'text' }

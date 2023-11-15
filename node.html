@@ -1,17 +1,17 @@
 <script type="text/javascript">
-    RED.nodes.registerType('openai-api', {
+    RED.nodes.registerType('OpenAI API', {
         category: 'AI',
         color: '#B8B1FB',
         defaults: {
             name: { value: "" },
-            service: { value: "", type: "openai-api-service", required: true },
+            service: { value: "", type: "OpenAI Auth", required: true },
             method: { value: "", required: true }
         },
         inputs: 1,
         outputs: 1,
         icon: 'icon.png',
         label: function () {
-            return this.name || this.method || "openai-api";
+            return this.name || this.method || "OpenAI API";
         },
         labelStyle: function () {
             return this.name ? "node_label_italic" : "";
@@ -27,7 +27,7 @@
     });
 </script>
 
-<script type="text/html" data-template-name="openai-api">
+<script type="text/html" data-template-name="OpenAI API">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
         <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
@@ -120,7 +120,7 @@
     </div>
 </script>
 
-<script type="text/html" data-help-name="openai-api">
+<script type="text/html" data-help-name="OpenAI API">
     <p>OpenAI Platform Services API. Please see the <a href="https://platform.openai.com/docs/api-reference" target="_blank">OpenAI API Reference</a> for more details.</p>
     <p><b>Reference</b></p>
 
@@ -710,7 +710,7 @@
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('openai-api-service', {
+    RED.nodes.registerType('OpenAI Auth', {
         category: 'config',
         defaults: {
 
@@ -740,7 +740,7 @@
     });
 </script>
 
-<script type="text/html" data-template-name="openai-api-service">
+<script type="text/html" data-template-name="OpenAI Auth">
 
     <div class="form-row">
         <label id="node-config-input-secureApiKeyHeaderOrQueryName-label" for="node-config-input-secureApiKeyHeaderOrQueryName"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.label.header"></span></label>
@@ -764,7 +764,7 @@
     </div>
 </script>
 
-<script type="text/html" data-help-name="openai-api-service">
+<script type="text/html" data-help-name="OpenAI Auth">
 
     <p><b>Header</b>: Variable name to set API key</p>
     <p><b>Value</b>: Value of API key</p>
