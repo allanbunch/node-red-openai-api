@@ -61,7 +61,7 @@
     },
     {
         "id": "932b2514509c22ea",
-        "type": "openai-api",
+        "type": "OpenAI API",
         "z": "47d8fb0adff5a6cc",
         "name": "list messages",
         "service": "",

@@ -56,7 +56,7 @@
     },
     {
         "id": "bdaf36c829550e41",
-        "type": "openai-api",
+        "type": "OpenAI API",
         "z": "6920fb391b5cefcd",
         "name": "list fine-tuning jobs",
         "service": "",

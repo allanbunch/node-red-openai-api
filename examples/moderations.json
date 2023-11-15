@@ -51,7 +51,7 @@
     },
     {
         "id": "58bfb89e83e4cc78",
-        "type": "openai-api",
+        "type": "OpenAI API",
         "z": "4e4adf62cc07faa5",
         "name": "create moderation",
         "service": "",

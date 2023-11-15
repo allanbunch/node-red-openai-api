@@ -39,7 +39,7 @@
     },
     {
         "id": "72303cea19bd9de9",
-        "type": "openai-api",
+        "type": "OpenAI API",
         "z": "a8f46f8122644718",
         "name": "translator",
         "service": "808a04cb8707d787",

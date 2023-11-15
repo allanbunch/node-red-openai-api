@@ -56,7 +56,7 @@
     },
     {
         "id": "b2eb824897e04b08",
-        "type": "openai-api",
+        "type": "OpenAI API",
         "z": "1e45d9e751f7d036",
         "name": "list files",
         "service": "",

@@ -51,7 +51,7 @@
     },
     {
         "id": "bf9fee6ecdfaf14d",
-        "type": "openai-api",
+        "type": "OpenAI API",
         "z": "1dc20442cfd01082",
         "name": "list runs",
         "service": "",

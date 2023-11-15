@@ -71,7 +71,7 @@
     },
     {
         "id": "765e638b2f084d76",
-        "type": "openai-api",
+        "type": "OpenAI API",
         "z": "acd4d3697fd487ee",
         "name": "chat completion",
         "service": "71860aa02b1968e3",

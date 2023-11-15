@@ -56,7 +56,7 @@
     },
     {
         "id": "5096e563fd5b02cf",
-        "type": "openai-api",
+        "type": "OpenAI API",
         "z": "70307b6cbfb7a7c8",
         "name": "create embeddings",
         "service": "39eba92e93450944",

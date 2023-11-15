@@ -51,7 +51,7 @@
     },
     {
         "id": "e0bcde3186fc61aa",
-        "type": "openai-api",
+        "type": "OpenAI API",
         "z": "ec716b03b671e83a",
         "name": "retrieve thread",
         "service": "",

@@ -29,7 +29,7 @@
     },
     {
         "id": "535006a3343dacc3",
-        "type": "openai-api",
+        "type": "OpenAI API",
         "z": "2610fa513fed33f5",
         "name": "list models",
         "service": "",

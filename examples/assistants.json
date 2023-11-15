@@ -356,7 +356,7 @@
     },
     {
         "id": "50dc0daeab93f1d7",
-        "type": "openai-api",
+        "type": "OpenAI API",
         "z": "78b174792ca9efaf",
         "g": "6ada9879e91ef156",
         "name": "upload files",
@@ -404,7 +404,7 @@
     },
     {
         "id": "43d56c48fd18dd0b",
-        "type": "openai-api",
+        "type": "OpenAI API",
         "z": "78b174792ca9efaf",
         "g": "a08cc5475a20cc70",
         "name": "create assistant",
