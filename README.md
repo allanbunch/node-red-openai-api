@@ -41,9 +41,9 @@ npm i @inductiv/node-red-openai-api
 
 ## Usage
 
-Find your _@inductiv/node-red-openai-api_ node in the **AI** palette category.
+Find your _@inductiv/node-red-openai-api_ node in the **AI** palette category, labeled "OpenAI API.
 
-<img width="122" alt="inductiv-node-red-openai-api-node" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/55b6528a-0f94-4e24-8c98-f47104624651">
+<img width="122" alt="inductiv-node-red-openai-api-node" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/1ca1ef14-1839-4355-9f1e-ba4f94cfd2a6">
 
 You'll find a set of example implementation flows in the [examples](./examples/) directory.
 
