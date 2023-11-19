@@ -35,7 +35,7 @@
     <hr/>
 
     <div class="form-row">
-        <label for="node-input-service"><i class="fa fa-cloud"></i> <span data-i18n="OpenaiApi.label.service"></span></label>
+        <label for="node-input-service"><i class="fa fa-cloud"></i> <span data-i18n="OpenaiApi.label.auth"></span></label>
         <input type="text" id="node-input-service">
     </div>
 
@@ -713,10 +713,9 @@
     RED.nodes.registerType('OpenAI Auth', {
         category: 'config',
         defaults: {
-
+            apiBase: { value: "https://api.openai.com/v1", required: true },
             secureApiKeyHeaderOrQueryName: { value: "Authorization" },
             secureApiKeyIsQuery: { value: false },
-
             name: { value: "" },
         },
         credentials: {
@@ -743,11 +742,15 @@
 <script type="text/html" data-template-name="OpenAI Auth">
 
     <div class="form-row">
+        <label id="node-config-input-apiBase-label" for="node-config-input-apiBase"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.label.apiBase"></span></label>
+        <input type="text" id="node-config-input-apiBase" placeholder="https://api.openai.com/v1">
+    </div>
+    <div class="form-row">
         <label id="node-config-input-secureApiKeyHeaderOrQueryName-label" for="node-config-input-secureApiKeyHeaderOrQueryName"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.label.header"></span></label>
         <input type="text" id="node-config-input-secureApiKeyHeaderOrQueryName" placeholder="">
     </div>
     <div class="form-row">
-        <label id="node-config-input-secureApiKeyValue-label" for="node-config-input-secureApiKeyValue"><i class="fa fa-lock"></i> <span data-i18n="OpenaiApi.label.value"></span></label>
+        <label id="node-config-input-secureApiKeyValue-label" for="node-config-input-secureApiKeyValue"><i class="fa fa-lock"></i> <span data-i18n="OpenaiApi.label.apiKey"></span></label>
         <input type="password" id="node-config-input-secureApiKeyValue" placeholder="">
     </div>
     <div class="form-row">

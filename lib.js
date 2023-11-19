@@ -1,6 +1,3 @@
-/*jshint -W069 */
-
-
 var OpenaiApi = (function () {
     'use strict';
 
@@ -8,11 +5,11 @@ var OpenaiApi = (function () {
     const FormData = require('form-data'); // Only if you handle form data
 
     function OpenaiApi(options) {
-        var domain = (typeof options === 'object') ? options.domain : options;
-        this.domain = domain ? domain : 'https://api.openai.com/v1';
-        if (this.domain.length === 0) {
-            throw new Error('Domain parameter must be specified as a string.');
-        }
+        // var domain = (typeof options === 'object') ? options.domain : options;
+        // this.domain = domain ? domain : 'https://api.openai.com/v1';
+        // if (this.domain.length === 0) {
+        //     throw new Error('Domain parameter must be specified as a string.');
+        // }
         this.apiKey = (typeof options === 'object') ? (options.apiKey ? options.apiKey : {}) : {};
     }
 
@@ -88,6 +85,10 @@ var OpenaiApi = (function () {
         this.apiKey.value = value;
         this.apiKey.headerOrQueryName = headerOrQueryName;
         this.apiKey.isQuery = isQuery;
+    };
+
+    OpenaiApi.prototype.setApiBase = function (apiBase) {
+        this.domain = apiBase;
     };
 
     OpenaiApi.prototype.setAuthHeaders = function (headerParams) {

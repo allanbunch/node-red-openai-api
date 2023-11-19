@@ -158,18 +158,22 @@ module.exports = function (RED) {
             }
         };
 
-        Object.keys(services).forEach(service => {
-            Object.keys(services[service]).forEach(prop => {
-                this[`${service}_${prop}`] = config[`${service}_${prop}`];
-                this[`${service}_${prop}Type`] = config[`${service}_${prop}Type`] || services[service][prop];
-            });
-        });
+        // Object.keys(services).forEach(service => {
+        //     Object.keys(services[service]).forEach(prop => {
+        //         this[`${service}_${prop}`] = config[`${service}_${prop}`];
+        //         this[`${service}_${prop}Type`] = config[`${service}_${prop}Type`] || services[service][prop];
+        //     });
+        // });
 
         var node = this;
 
         node.on('input', function (msg) {
             var errorFlag = false;
             var client = new lib.OpenaiApi();
+            if (!errorFlag && this.service) {
+                client.setApiBase(this.service.apiBase);
+            };
+
             if (!errorFlag && this.service && this.service.credentials && this.service.credentials.secureApiKeyValue) {
                 if (this.service.secureApiKeyIsQuery) {
                     client.setApiKey(this.service.credentials.secureApiKeyValue,
@@ -177,7 +181,7 @@ module.exports = function (RED) {
                 } else {
                     client.setApiKey(this.service.credentials.secureApiKeyValue,
                         this.service.secureApiKeyHeaderOrQueryName, false);
-                }
+                };
             }
 
             if (!errorFlag) {
@@ -243,6 +247,7 @@ module.exports = function (RED) {
         RED.nodes.createNode(this, n);
 
         this.secureApiKeyValue = n.secureApiKeyValue;
+        this.apiBase = n.apiBase;
         this.secureApiKeyHeaderOrQueryName = n.secureApiKeyHeaderOrQueryName;
         this.secureApiKeyIsQuery = n.secureApiKeyIsQuery;
     }

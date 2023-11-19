@@ -1,11 +1,12 @@
 {
     "OpenaiApi": {
         "label": {
-            "service": "Service",
+            "apiBase": "API Base",
+            "auth": "Auth",
             "method": "Method",
             "host": "Host",
-            "header": "Header",
-            "value": "Value",
+            "header": "Auth Header",
+            "apiKey": "API Key",
             "isQuery": "isQuery"
         },
         "status": {

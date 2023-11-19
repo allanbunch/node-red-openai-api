@@ -1,7 +1,8 @@
 {
     "OpenaiApi": {
         "label": {
-            "service": "Service",
+            "apiBase": "API Base",
+            "auth": "Auth",
             "method": "Method",
             "host": "Host",
             "header": "Header",
