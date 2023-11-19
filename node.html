@@ -4,7 +4,7 @@
         color: '#B8B1FB',
         defaults: {
             name: { value: "" },
-            service: { value: "", type: "OpenAI Auth", required: true },
+            service: { value: "", type: "Service Host", required: true },
             method: { value: "", required: true }
         },
         inputs: 1,
@@ -35,7 +35,7 @@
     <hr/>
 
     <div class="form-row">
-        <label for="node-input-service"><i class="fa fa-cloud"></i> <span data-i18n="OpenaiApi.label.auth"></span></label>
+        <label for="node-input-service"><i class="fa fa-cloud"></i> <span data-i18n="OpenaiApi.label.serviceHost"></span></label>
         <input type="text" id="node-input-service">
     </div>
 
@@ -710,7 +710,7 @@
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('OpenAI Auth', {
+    RED.nodes.registerType('Service Host', {
         category: 'config',
         defaults: {
             apiBase: { value: "https://api.openai.com/v1", required: true },
@@ -739,7 +739,7 @@
     });
 </script>
 
-<script type="text/html" data-template-name="OpenAI Auth">
+<script type="text/html" data-template-name="Service Host">
 
     <div class="form-row">
         <label id="node-config-input-apiBase-label" for="node-config-input-apiBase"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.label.apiBase"></span></label>
@@ -767,7 +767,7 @@
     </div>
 </script>
 
-<script type="text/html" data-help-name="OpenAI Auth">
+<script type="text/html" data-help-name="Service Host">
 
     <p><b>Header</b>: Variable name to set API key</p>
     <p><b>Value</b>: Value of API key</p>
