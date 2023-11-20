@@ -8,164 +8,14 @@ module.exports = function (RED) {
             this.service = RED.nodes.getNode(config.service);
             this.method = config.method;
 
-            const services = {
-                createChatCompletion: {
-                    body: 'msg',
-                },
-                createImage: {
-                    body: 'msg'
-                },
-                createImageEdit: {
-                    body: 'msg'
-                },
-                createImageVariation: {
-                    body: 'msg'
-                },
-                createEmbedding: {
-                    body: 'msg'
-                },
-                createSpeech: {
-                    body: 'msg'
-                },
-                createTranscription: {
-                    body: 'msg'
-                },
-                createTranslation: {
-                    body: 'msg'
-                },
-                listFiles: {
-                    body: 'msg'
-                },
-                createFile: {
-                    body: 'msg'
-                },
-                deleteFile: {
-                    body: 'msg'
-                },
-                retrieveFile: {
-                    body: 'msg'
-                },
-                downloadFile: {
-                    body: 'msg'
-                },
-                createFineTuningJob: {
-                    body: 'msg'
-                },
-                listPaginatedFineTuningJobs: {
-                    body: 'msg'
-                },
-                retrieveFineTuningJob: {
-                    body: 'msg'
-                },
-                listFineTuningEvents: {
-                    body: 'msg'
-                },
-                cancelFineTuningJob: {
-                    body: 'msg'
-                },
-                retrieveModel: {
-                    body: 'msg'
-                },
-                deleteModel: {
-                    body: 'msg'
-                },
-                createModeration: {
-                    body: 'msg'
-                },
-                listAssistants: {
-                    body: 'msg'
-                },
-                createAssistant: {
-                    body: 'msg'
-                },
-                getAssistant: {
-                    body: 'msg'
-                },
-                modifyAssistant: {
-                    body: 'msg'
-                },
-                deleteAssistant: {
-                    body: 'msg'
-                },
-                createThread: {
-                    body: 'msg'
-                },
-                getThread: {
-                    body: 'msg'
-                },
-                modifyThread: {
-                    body: 'msg'
-                },
-                deleteThread: {
-                    body: 'msg'
-                },
-                listMessages: {
-                    body: 'msg'
-                },
-                createMessage: {
-                    body: 'msg'
-                },
-                getMessage: {
-                    body: 'msg'
-                },
-                modifyMessage: {
-                    body: 'msg'
-                },
-                createThreadAndRun: {
-                    body: 'msg'
-                },
-                listRuns: {
-                    body: 'msg'
-                },
-                createRun: {
-                    body: 'msg'
-                },
-                getRun: {
-                    body: 'msg'
-                },
-                modifyRun: {
-                    body: 'msg'
-                },
-                submitToolOuputsToRun: {
-                    body: 'msg'
-                },
-                cancelRun: {
-                    body: 'msg'
-                },
-                listRunSteps: {
-                    body: 'msg'
-                },
-                getRunStep: {
-                    body: 'msg'
-                },
-                listAssistantFiles: {
-                    body: 'msg'
-                },
-                createAssistantFile: {
-                    body: 'msg'
-                },
-                getAssistantFile: {
-                    body: 'msg'
-                },
-                deleteAssistantFile: {
-                    body: 'msg'
-                },
-                listMessageFiles: {
-                    body: 'msg'
-                },
-                getMessageFile: {
-                    body: 'msg'
-                }
-            };
-
-            var node = this;
+            let node = this;
 
             node.on('input', function (msg) {
-                var errorFlag = false;
-                var client = new lib.OpenaiApi();
+                let errorFlag = false;
+                let client = new lib.OpenaiApi();
                 if (!errorFlag && this.service) {
                     client.setApiBase(this.service.apiBase);
-                };
+                }
 
                 if (!errorFlag && this.service && this.service.credentials && this.service.credentials.secureApiKeyValue) {
                     if (this.service.secureApiKeyIsQuery) {
@@ -174,14 +24,14 @@ module.exports = function (RED) {
                     } else {
                         client.setApiKey(this.service.credentials.secureApiKeyValue,
                             this.service.secureApiKeyHeaderOrQueryName, false);
-                    };
+                    }
                 }
 
                 if (!errorFlag) {
                     client.body = msg.payload;
                 }
 
-                var result;
+                let result;
 
                 if (!errorFlag) {
                     const serviceName = node.method; // Specify the service you want to process
@@ -202,7 +52,7 @@ module.exports = function (RED) {
                     errorFlag = true;
                 }
 
-                var setData = function (msg, response) {
+                let setData = function (msg, response) {
                     if (response) {
                         if (response.status) {
                             msg.statusCode = response.status;
@@ -226,8 +76,8 @@ module.exports = function (RED) {
                         node.send(setData(msg, response));
                         node.status({});
                     }).catch(function (error) {
-                        var message = error.message;
-                        var errorData = error.response || {}; // Fallback to an empty object if response is not available
+                        let message = error.message;
+                        let errorData = error.response || {}; // Fallback to an empty object if response is not available
                         node.error(message, setData(msg, errorData));
                         node.status({ fill: 'red', shape: 'ring', text: 'node-red:common.status.error' });
                     });
