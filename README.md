@@ -31,7 +31,7 @@ New in version 0.3.0: You can now set a custom API service host base URL. This p
 
 To utilize this feature, simply specify the custom API service host base URL in the node configuration. This enhancement is built upon the existing framework, ensuring a smooth and intuitive user experience.
 
-#### Service HOst Configuration Examples
+#### Service Host Configuration Examples
 
 <img width="371" alt="service host node config" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/256362c5-6e78-44c7-af6e-12d5830cdf32">
 

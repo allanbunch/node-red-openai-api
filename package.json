@@ -1,6 +1,6 @@
 {
   "name": "@inductiv/node-red-openai-api",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Node-RED node for interfacing with OpenAI platform services",
   "main": "node.js",
   "engines": {
