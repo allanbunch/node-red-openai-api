@@ -75,7 +75,7 @@ Node contains inutitive inline help with links to OpenAI's official API document
 
 ## Community Contributions and Discussions
 
-We highly value our community's input and invite everyone to shape the future of this project. Whether you have ideas, questions, or simply want to show off your implementations, our GitHub Discussions page is the perfect place to connect and contribute.
+I very much appreciate community input and invite everyone to shape the future of this project. Whether you have ideas, questions, or simply want to show off your implementations, this project's GitHub Discussions page is the perfect place to connect and contribute.
 
 ### Engage in Various Discussions
 
