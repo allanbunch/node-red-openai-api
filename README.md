@@ -17,6 +17,24 @@ _@inductiv/node-red-openai-api_ offers a versatile and configurable Node-RED nod
 
 Ideal for developers, researchers, and innovators, this node is your tool for unlocking the full potential of AI in your projects.
 
+## Custom API Service Host URL Configuration
+
+New in version 0.3.0: You can now set a custom API service host base URL. This powerful feature extends the package's capabilities, allowing you to interface with any API that adheres to the OpenAI REST API request and response signatures and payloads.
+
+### Benefits
+
+- **Versatility**: Seamlessly connect to a broader range of AI services, beyond the default OpenAI offerings, including local model solutions like [Text Generation Web UI](https://github.com/oobabooga/text-generation-webui).
+- **Customization**: Tailor your Node-RED node to interact with custom or specialized AI services, offering greater control and flexibility in your AI integrations.
+- **Expanded Scope**: Ideal for unique use cases where standard OpenAI services may not suffice, or when working within specialized AI environments.
+
+### How to Use
+
+To utilize this feature, simply specify the custom API service host base URL in the node configuration. This enhancement is built upon the existing framework, ensuring a smooth and intuitive user experience.
+
+### Migrating from Previous Versions
+
+This package's configuration node is now named "Service Host" to serve as a more generalized representation, considering the node's expanded capability scope. This node's previous versions used a config node named "OpenAI Auth" which is no longer referenced starting with this version (0.3.0). Be sure to update your existing node configurations accordingly.
+
 ## Table of Contents
 
 - [Installation](#installation)
@@ -54,6 +72,21 @@ Note: Each node's functionality maps to the official OpenAI [API Reference](http
 Node contains inutitive inline help with links to OpenAI's official API documentation.
 
 <img width="619" alt="inductiv-node-red-openai-api-node-config" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/15ee5b75-2e29-4806-b427-8e6873f3fb96">
+
+## Community Contributions and Discussions
+
+We highly value our community's input and invite everyone to shape the future of this project. Whether you have ideas, questions, or simply want to show off your implementations, our GitHub Discussions page is the perfect place to connect and contribute.
+
+### Engage in Various Discussions
+
+- **Announcements**: Stay updated with the latest project news.
+- **General**: Share thoughts or seek advice on broader topics.
+- **Ideas**: Propose new features or improvements.
+- **Polls**: Participate in polls to influence project decisions.
+- **Q&A**: Get answers to your questions and share your expertise.
+- **Show and Tell**: Showcase your creative implementations and inspire others.
+
+Join the conversation [here](https://github.com/allanbunch/node-red-openai-api/discussions) and let's build a vibrant and collaborative community together!
 
 ## License
 
