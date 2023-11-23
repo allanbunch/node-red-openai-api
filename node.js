@@ -27,6 +27,10 @@ module.exports = function (RED) {
                     }
                 }
 
+                if (!errorFlag){
+                    client.setNodeRef(node);
+                }
+
                 if (!errorFlag) {
                     client.body = msg.payload;
                 }

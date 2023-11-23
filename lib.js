@@ -29,6 +29,11 @@ var OpenaiApi = (function () {
       }
       return headers;
     }
+
+    setNodeRef(node){
+      this.node = node;
+    }
+
     getFromEndpoint(path, parameters, expectedQueryParams, customHeaders) {
       return new Promise((resolve, reject) => {
         var domain = this.domain;
@@ -148,18 +153,37 @@ var OpenaiApi = (function () {
           headers: headers,
           params: queryParameters,
           data: data,
+          responseType: data.stream === true ? "stream" : "json"
         };
 
-        // Axios POST request
         axios(config)
           .then((response) => {
-            resolve(response);
+            if (config.responseType === "stream") {
+              // Handle the stream response
+              response.data.on('data', (chunk) => {
+                // Convert chunk from Uint8Array to string
+                const chunkAsString = new TextDecoder().decode(chunk);
+        
+                // Emit converted data chunks as Node-RED messages
+                this.node.send({ payload: chunkAsString });
+              }).on('end', () => {
+                // Handle the end of the stream
+                resolve({ payload: "Stream ended" });
+              }).on('error', (err) => {
+                // Handle any errors
+                reject(err);
+              });
+            } else {
+              // Handle non-stream response (e.g., JSON)
+              resolve(response);
+            }
           })
           .catch((error) => {
             reject(error);
           });
       });
     }
+
     deleteFromEndpoint(path, parameters, expectedQueryParams, customHeaders) {
       return new Promise((resolve, reject) => {
         parameters = parameters || {};
