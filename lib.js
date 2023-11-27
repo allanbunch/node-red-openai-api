@@ -315,14 +315,17 @@ var OpenaiApi = (function () {
     }
     deleteFile(parameters) {
       const file_id = parameters.body.file_id;
+      delete parameters.body.file_id;
       return this.deleteFromEndpoint(`/files/${file_id}`, parameters);
     }
     retrieveFile(parameters) {
       const file_id = parameters.body.file_id;
+      delete parameters.body.file_id;
       return this.getFromEndpoint(`/files/${file_id}`, parameters);
     }
     downloadFile(parameters) {
       const file_id = parameters.body.file_id;
+      delete parameters.body.file_id;
       return this.getFromEndpoint(`/files/${file_id}/content`, parameters);
     }
     createFineTuningJob(parameters) {
@@ -338,6 +341,7 @@ var OpenaiApi = (function () {
     }
     retrieveFineTuningJob(parameters) {
       const fine_tuning_job_id = parameters.body.fine_tuning_job_id;
+      delete parameters.body.fine_tuning_job_id;
       return this.getFromEndpoint(
         `/fine_tuning/jobs/${fine_tuning_job_id}`,
         parameters,
@@ -346,6 +350,7 @@ var OpenaiApi = (function () {
     listFineTuningEvents(parameters) {
       const expectedQueryParameters = ["after", "limit"];
       const fine_tuning_job_id = parameters.body.fine_tuning_job_id;
+      delete parameters.body.fine_tuning_job_id;
 
       return this.getFromEndpoint(
         `/fine_tuning/jobs/${fine_tuning_job_id}/events`,
@@ -355,6 +360,7 @@ var OpenaiApi = (function () {
     }
     cancelFineTuningJob(parameters) {
       const fine_tuning_job_id = parameters.body.fine_tuning_job_id;
+      delete parameters.body.fine_tuning_job_id;
       return this.postToEndpoint(
         `/fine_tuning/jobs/${fine_tuning_job_id}/cancel`,
         parameters,
@@ -365,12 +371,12 @@ var OpenaiApi = (function () {
     }
     retrieveModel(parameters) {
       const model = parameters.body.model;
-
+      delete parameters.body.model;
       return this.getFromEndpoint(`/models/${model}`, parameters);
     }
     deleteModel(parameters) {
       const model = parameters.body.model;
-
+      delete parameters.body.model;
       return this.deleteFromEndpoint(`/models/${model}`, parameters);
     }
     createModeration(parameters) {
@@ -401,9 +407,8 @@ var OpenaiApi = (function () {
     }
     getAssistant(parameters) {
       const assistantId = parameters.body.assistant_id;
-
-      var customHeaders = { "OpenAI-Beta": "assistants=v1" };
-
+      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
+      delete parameters.body.assistant_id;
       return this.getFromEndpoint(
         `/assistants/${assistantId}`,
         parameters,
@@ -414,7 +419,7 @@ var OpenaiApi = (function () {
     modifyAssistant(parameters) {
       const assistant_id = parameters.body.assistant_id;
       const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-
+      delete parameters.body.assistant_id;
       return this.postToEndpoint(
         `/assistants/${assistant_id}`,
         parameters,
@@ -427,7 +432,7 @@ var OpenaiApi = (function () {
     deleteAssistant(parameters) {
       const assistant_id = parameters.body.assistant_id;
       const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-
+      delete parameters.body.assistant_id;
       return this.deleteFromEndpoint(
         `/assistants/${assistant_id}`,
         parameters,
@@ -449,7 +454,7 @@ var OpenaiApi = (function () {
     getThread(parameters) {
       const threadId = parameters.body.thread_id;
       const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-
+      delete parameters.body.thread_id;
       return this.getFromEndpoint(
         `/threads/${threadId}`,
         parameters,
@@ -460,7 +465,7 @@ var OpenaiApi = (function () {
     modifyThread(parameters) {
       const threadId = parameters.body.thread_id;
       const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-
+      delete parameters.body.thread_id;
       return this.postToEndpoint(
         `/threads/${threadId}`,
         parameters,
@@ -473,7 +478,7 @@ var OpenaiApi = (function () {
     deleteThread(parameters) {
       const threadId = parameters.body.thread_id;
       const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-
+      delete parameters.body.thread_id;
       return this.deleteFromEndpoint(
         `/threads/${threadId}`,
         parameters,
@@ -484,9 +489,8 @@ var OpenaiApi = (function () {
     listMessages(parameters) {
       const threadId = parameters.body.thread_id;
       const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-
       const expectedQueryParameters = ["limit", "order", "after", "before"];
-
+      delete parameters.body.thread_id;
       return this.getFromEndpoint(
         `/threads/${threadId}/messages`,
         parameters,
@@ -497,7 +501,7 @@ var OpenaiApi = (function () {
     createMessage(parameters) {
       const threadId = parameters.body.thread_id;
       const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-
+      delete parameters.body.thread_id;
       return this.postToEndpoint(
         `/threads/${threadId}/messages`,
         parameters,
@@ -511,7 +515,8 @@ var OpenaiApi = (function () {
       const threadId = parameters.body.thread_id;
       const messageId = parameters.body.message_id;
       const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-
+      delete parameters.body.thread_id;
+      delete parameters.body.message_id;
       return this.getFromEndpoint(
         `/threads/${threadId}/messages/${messageId}`,
         parameters,
@@ -523,7 +528,8 @@ var OpenaiApi = (function () {
       const threadId = parameters.body.thread_id;
       const messageId = parameters.body.message_id;
       const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-
+      delete parameters.body.thread_id;
+      delete parameters.body.message_id;
       return this.postToEndpoint(
         `/threads/${threadId}/messages/${messageId}`,
         parameters,
@@ -549,7 +555,7 @@ var OpenaiApi = (function () {
       const customHeaders = { "OpenAI-Beta": "assistants=v1" };
       const expectedQueryParameters = ["limit", "order", "after", "before"];
       const threadId = parameters.body.thread_id;
-
+      delete parameters.body.thread_id;
       return this.getFromEndpoint(
         `/threads/${threadId}/runs`,
         parameters,
@@ -560,7 +566,7 @@ var OpenaiApi = (function () {
     createRun(parameters) {
       const customHeaders = { "OpenAI-Beta": "assistants=v1" };
       const threadId = parameters.body.thread_id;
-
+      delete parameters.body.thread_id;
       return this.postToEndpoint(
         `/threads/${threadId}/runs`,
         parameters,
@@ -574,7 +580,8 @@ var OpenaiApi = (function () {
       const customHeaders = { "OpenAI-Beta": "assistants=v1" };
       const threadId = parameters.body.thread_id;
       const runId = parameters.body.run_id;
-
+      delete parameters.body.thread_id;
+      delete parameters.body.run_id;
       return this.getFromEndpoint(
         `/threads/${threadId}/runs/${runId}`,
         parameters,
@@ -586,7 +593,8 @@ var OpenaiApi = (function () {
       const customHeaders = { "OpenAI-Beta": "assistants=v1" };
       const threadId = parameters.body.thread_id;
       const runId = parameters.body.run_id;
-
+      delete parameters.body.thread_id;
+      delete parameters.body.run_id;
       return this.postToEndpoint(
         `/threads/${threadId}/runs/${runId}`,
         parameters,
@@ -600,7 +608,8 @@ var OpenaiApi = (function () {
       const customHeaders = { "OpenAI-Beta": "assistants=v1" };
       const threadId = parameters.body.thread_id;
       const runId = parameters.body.run_id;
-
+      delete parameters.body.thread_id;
+      delete parameters.body.run_id;
       return this.postToEndpoint(
         `/threads/${threadId}/runs/${runId}/submit_tool_outputs`,
         parameters,
@@ -614,7 +623,8 @@ var OpenaiApi = (function () {
       const customHeaders = { "OpenAI-Beta": "assistants=v1" };
       const threadId = parameters.body.thread_id;
       const runId = parameters.body.run_id;
-
+      delete parameters.body.thread_id;
+      delete parameters.body.run_id;
       return this.postToEndpoint(
         `/threads/${threadId}/runs/${runId}/cancel`,
         parameters,
@@ -629,7 +639,8 @@ var OpenaiApi = (function () {
       const threadId = parameters.body.thread_id;
       const runId = parameters.body.run_id;
       const expectedQueryParameters = ["limit", "order", "after", "before"];
-
+      delete parameters.body.thread_id;
+      delete parameters.body.run_id;
       return this.getFromEndpoint(
         `/threads/${threadId}/runs/${runId}/steps`,
         parameters,
@@ -642,7 +653,8 @@ var OpenaiApi = (function () {
       const threadId = parameters.body.thread_id;
       const runId = parameters.body.run_id;
       const stepId = parameters.body.step_id;
-
+      delete parameters.body.thread_id;
+      delete parameters.body.step_id;
       return this.getFromEndpoint(
         `/threads/${threadId}/runs/${runId}/steps/${stepId}`,
         parameters,
@@ -654,7 +666,7 @@ var OpenaiApi = (function () {
       const customHeaders = { "OpenAI-Beta": "assistants=v1" };
       const assistantId = parameters.body.assistant_id;
       const expectedQueryParameters = ["limit", "order", "after", "before"];
-
+      delete parameters.body.assistant_id;
       return this.getFromEndpoint(
         `/assistants/${assistantId}/files`,
         parameters,
@@ -665,7 +677,7 @@ var OpenaiApi = (function () {
     createAssistantFile(parameters) {
       const customHeaders = { "OpenAI-Beta": "assistants=v1" };
       const assistantId = parameters.body.assistant_id;
-
+      delete parameters.body.assistant_id;
       return this.postToEndpoint(
         `/assistants/${assistantId}/files`,
         parameters,
@@ -679,7 +691,8 @@ var OpenaiApi = (function () {
       const customHeaders = { "OpenAI-Beta": "assistants=v1" };
       const assistantId = parameters.body.assistant_id;
       const fileId = parameters.body.file_id;
-
+      delete parameters.body.assistant_id;
+      delete parameters.body.file_id;
       return this.getFromEndpoint(
         `/assistants/${assistantId}/files/${fileId}`,
         parameters,
@@ -691,7 +704,8 @@ var OpenaiApi = (function () {
       const customHeaders = { "OpenAI-Beta": "assistants=v1" };
       const assistantId = parameters.body.assistant_id;
       const fileId = parameters.body.file_id;
-
+      delete parameters.body.assistant_id;
+      delete parameters.body.file_id;
       return this.deleteFromEndpoint(
         `/assistants/${assistantId}/files/${fileId}`,
         parameters,
@@ -704,7 +718,8 @@ var OpenaiApi = (function () {
       const threadId = parameters.body.thread_id;
       const messageId = parameters.body.message_id;
       const expectedQueryParameters = ["limit", "order", "after", "before"];
-
+      delete parameters.body.thread_id;
+      delete parameters.body.message_id;
       return this.getFromEndpoint(
         `/threads/${threadId}/messages/${messageId}/files`,
         parameters,
@@ -717,7 +732,9 @@ var OpenaiApi = (function () {
       const threadId = parameters.body.thread_id;
       const messageId = parameters.body.message_id;
       const fileId = parameters.body.file_id;
-
+      delete parameters.body.thread_id;
+      delete parameters.body.message_id;
+      delete parameters.body.file_id;
       return this.getFromEndpoint(
         `/threads/${threadId}/messages/${messageId}/files/${fileId}`,
         parameters,
