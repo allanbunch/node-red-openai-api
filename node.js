@@ -15,6 +15,7 @@ module.exports = function (RED) {
                 let client = new lib.OpenaiApi();
                 if (!errorFlag && this.service) {
                     client.setApiBase(this.service.apiBase);
+                    client.setOrganizationIdHeader(this.service.organizationId);
                 }
 
                 if (!errorFlag && this.service && this.service.credentials && this.service.credentials.secureApiKeyValue) {
@@ -99,6 +100,7 @@ module.exports = function (RED) {
             this.apiBase = n.apiBase;
             this.secureApiKeyHeaderOrQueryName = n.secureApiKeyHeaderOrQueryName;
             this.secureApiKeyIsQuery = n.secureApiKeyIsQuery;
+            this.organizationId = n.organizationId;
         }
     }
 

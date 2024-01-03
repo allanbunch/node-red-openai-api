@@ -715,6 +715,7 @@
         defaults: {
             apiBase: { value: "https://api.openai.com/v1", required: true },
             secureApiKeyHeaderOrQueryName: { value: "Authorization" },
+            organizationId: { value: "" },
             secureApiKeyIsQuery: { value: false },
             name: { value: "" },
         },
@@ -752,6 +753,10 @@
     <div class="form-row">
         <label id="node-config-input-secureApiKeyValue-label" for="node-config-input-secureApiKeyValue"><i class="fa fa-lock"></i> <span data-i18n="OpenaiApi.label.apiKey"></span></label>
         <input type="password" id="node-config-input-secureApiKeyValue" placeholder="">
+    </div>
+    <div class="form-row">
+        <label id="node-config-input-organizationId-label" for="node-config-input-organizationId"><i class="fa fa-list"></i> <span data-i18n="OpenaiApi.label.organizationId"></span></label>
+        <input type="text" id="node-config-input-organizationId" placeholder="OpenAI Organization Id">
     </div>
     <div class="form-row">
         <label id="node-config-input-secureApiKeyIsQuery-label" for="node-config-input-secureApiKeyIsQuery"><i class="fa fa-dot-circle-o"></i> <span data-i18n="OpenaiApi.label.isQuery"></span></label>

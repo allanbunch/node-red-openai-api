@@ -22,6 +22,11 @@ var OpenaiApi = (function () {
     setApiBase(apiBase) {
       this.domain = apiBase;
     }
+
+    setOrganizationIdHeader(organizationId) {
+      this.organizationId = organizationId;
+    }
+
     setAuthHeaders(headerParams) {
       var headers = headerParams ? headerParams : {};
       if (!this.apiKey.isQuery && this.apiKey.headerOrQueryName) {
@@ -30,18 +35,22 @@ var OpenaiApi = (function () {
       return headers;
     }
 
-    setNodeRef(node){
+    setNodeRef(node) {
       this.node = node;
     }
 
-    getFromEndpoint(path, parameters, expectedQueryParams, customHeaders) {
+    getFromEndpoint(path, parameters, expectedQueryParams, customHeaders = {}) {
       return new Promise((resolve, reject) => {
         var domain = this.domain;
-        var queryParameters = {},
-          baseHeaders = {};
+        var organizationId = this.organizationId;
+        var queryParameters = {};
+        var baseHeaders = {};
 
         baseHeaders = this.setAuthHeaders(headers);
         baseHeaders["Accept"] = "application/json";
+        if (organizationId) {
+          customHeaders["OpenAI-Organization"] = organizationId;
+        }
 
         var headers = {
           ...baseHeaders,
@@ -78,25 +87,31 @@ var OpenaiApi = (function () {
           });
       });
     }
+
     postToEndpoint(
       path,
       parameters,
       expectedQueryParams,
       contentType,
       filePath,
-      customHeaders,
+      customHeaders = {},
     ) {
       return new Promise((resolve, reject) => {
         const _path = require("path");
 
         parameters = parameters || {};
         var domain = this.domain;
+        var organizationId = this.organizationId;
         var queryParameters = {},
           baseHeaders = {},
           data;
 
-        baseHeaders = this.setAuthHeaders({});
+        baseHeaders = this.setAuthHeaders(baseHeaders);
         baseHeaders["Accept"] = "application/json";
+
+        if (organizationId) {
+          customHeaders["OpenAI-Organization"] = organizationId;
+        }
 
         var headers = {
           ...baseHeaders,
@@ -153,26 +168,29 @@ var OpenaiApi = (function () {
           headers: headers,
           params: queryParameters,
           data: data,
-          responseType: data.stream === true ? "stream" : "json"
+          responseType: data.stream === true ? "stream" : "json",
         };
 
         axios(config)
           .then((response) => {
             if (config.responseType === "stream") {
               // Handle the stream response
-              response.data.on('data', (chunk) => {
-                // Convert chunk from Uint8Array to string
-                const chunkAsString = new TextDecoder().decode(chunk);
-        
-                // Emit converted data chunks as Node-RED messages
-                this.node.send({ payload: chunkAsString });
-              }).on('end', () => {
-                // Handle the end of the stream
-                resolve({ payload: "Stream ended" });
-              }).on('error', (err) => {
-                // Handle any errors
-                reject(err);
-              });
+              response.data
+                .on("data", (chunk) => {
+                  // Convert chunk from Uint8Array to string
+                  const chunkAsString = new TextDecoder().decode(chunk);
+
+                  // Emit converted data chunks as Node-RED messages
+                  this.node.send({ payload: chunkAsString });
+                })
+                .on("end", () => {
+                  // Handle the end of the stream
+                  resolve({ payload: "Stream ended" });
+                })
+                .on("error", (err) => {
+                  // Handle any errors
+                  reject(err);
+                });
             } else {
               // Handle non-stream response (e.g., JSON)
               resolve(response);
@@ -184,15 +202,25 @@ var OpenaiApi = (function () {
       });
     }
 
-    deleteFromEndpoint(path, parameters, expectedQueryParams, customHeaders) {
+    deleteFromEndpoint(
+      path,
+      parameters,
+      expectedQueryParams,
+      customHeaders = {},
+    ) {
       return new Promise((resolve, reject) => {
         parameters = parameters || {};
         var domain = this.domain;
+        var organizationId = this.organizationId;
         var queryParameters = {},
           baseHeaders = {};
 
         baseHeaders = this.setAuthHeaders(headers);
         baseHeaders["Accept"] = "application/json";
+
+        if (organizationId) {
+          customHeaders["OpenAI-Organization"] = organizationId;
+        }
 
         var headers = {
           ...baseHeaders,
@@ -229,6 +257,7 @@ var OpenaiApi = (function () {
           });
       });
     }
+
     createChatCompletion(parameters) {
       const response = this.postToEndpoint("/chat/completions", parameters);
       return response;

@@ -6,6 +6,7 @@
             "method": "Method",
             "host": "Host",
             "header": "Auth Header",
+            "organizationId": "Org Id",
             "apiKey": "API Key",
             "isQuery": "isQuery"
         },
