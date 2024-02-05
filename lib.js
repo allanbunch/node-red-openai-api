@@ -1,271 +1,10 @@
 var OpenaiApi = (function () {
   "use strict";
 
-  const axios = require("axios");
-  const FormData = require("form-data"); // Only if you handle form data
+  const fs = require("fs");
+  const OpenAI = require("openai").OpenAI;
 
   class OpenaiApi {
-    constructor(options) {
-      this.apiKey =
-        typeof options === "object"
-          ? options.apiKey
-            ? options.apiKey
-            : {}
-          : {};
-    }
-
-    setApiKey(value, headerOrQueryName, isQuery) {
-      this.apiKey.value = value;
-      this.apiKey.headerOrQueryName = headerOrQueryName;
-      this.apiKey.isQuery = isQuery;
-    }
-    setApiBase(apiBase) {
-      this.domain = apiBase;
-    }
-
-    setOrganizationIdHeader(organizationId) {
-      this.organizationId = organizationId;
-    }
-
-    setAuthHeaders(headerParams) {
-      var headers = headerParams ? headerParams : {};
-      if (!this.apiKey.isQuery && this.apiKey.headerOrQueryName) {
-        headers[this.apiKey.headerOrQueryName] = `Bearer ${this.apiKey.value}`;
-      }
-      return headers;
-    }
-
-    setNodeRef(node) {
-      this.node = node;
-    }
-
-    getFromEndpoint(path, parameters, expectedQueryParams, customHeaders = {}) {
-      return new Promise((resolve, reject) => {
-        var domain = this.domain;
-        var organizationId = this.organizationId;
-        var queryParameters = {};
-        var baseHeaders = {};
-
-        baseHeaders = this.setAuthHeaders(headers);
-        baseHeaders["Accept"] = "application/json";
-        if (organizationId) {
-          customHeaders["OpenAI-Organization"] = organizationId;
-        }
-
-        var headers = {
-          ...baseHeaders,
-          ...customHeaders,
-        };
-
-        // Only add query parameters if they are expected and exist
-        if (expectedQueryParams) {
-          expectedQueryParams.forEach((param) => {
-            if (parameters.body[param] !== undefined) {
-              queryParameters[param] = parameters.body[param];
-            }
-          });
-        }
-
-        // Merge any additional query parameters from the parameters object
-        queryParameters = mergeQueryParams(parameters, queryParameters);
-
-        // Axios request configuration
-        const config = {
-          method: "GET",
-          url: domain + path,
-          headers: headers,
-          params: queryParameters,
-        };
-
-        // Axios GET request
-        axios(config)
-          .then((response) => {
-            resolve(response);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    }
-
-    postToEndpoint(
-      path,
-      parameters,
-      expectedQueryParams,
-      contentType,
-      filePath,
-      customHeaders = {},
-    ) {
-      return new Promise((resolve, reject) => {
-        const _path = require("path");
-
-        parameters = parameters || {};
-        var domain = this.domain;
-        var organizationId = this.organizationId;
-        var queryParameters = {},
-          baseHeaders = {},
-          data;
-
-        baseHeaders = this.setAuthHeaders(baseHeaders);
-        baseHeaders["Accept"] = "application/json";
-
-        if (organizationId) {
-          customHeaders["OpenAI-Organization"] = organizationId;
-        }
-
-        var headers = {
-          ...baseHeaders,
-          ...customHeaders,
-        };
-
-        // Determine the responseType
-
-        let responseType;
-        if (contentType === "form-data") {
-          var formData = new FormData();
-
-          responseType = "json";
-          Object.entries(parameters.body).forEach(([key, value]) => {
-            if (value instanceof Buffer) {
-              if (!filePath) {
-                throw new Error(
-                  "msg.payload must include a `filename` property.",
-                );
-              }
-
-              const filename = _path.basename(filePath);
-              formData.append(key, value, filename);
-            } else {
-              if (parameters.body[key] !== undefined) {
-                formData.append(key, value);
-              }
-            }
-          });
-
-          data = formData;
-          let formHeaders = formData.getHeaders();
-
-          Object.assign(headers, formHeaders);
-        } else if (contentType === "arraybuffer") {
-          // Handle binary requests
-          data = parameters.body || {};
-          responseType = "arraybuffer";
-        } else {
-          // Handle json requests
-          // headers["Content-Type"] = "application/json";
-          data = parameters.body || {};
-          responseType = "json";
-        }
-
-        // Add expected query parameters to the queryParameters object
-        if (expectedQueryParams) {
-          expectedQueryParams.forEach((param) => {
-            if (parameters.body[param] !== undefined) {
-              queryParameters[param] = parameters.body[param];
-            }
-          });
-        }
-
-        // Merge any additional query parameters from the parameters object
-        queryParameters = mergeQueryParams(parameters.body, queryParameters);
-
-        // Axios request configuration
-        const config = {
-          method: "POST",
-          url: domain + path,
-          headers: headers,
-          params: queryParameters,
-          data: data,
-          responseType: responseType,
-        };
-
-        axios(config)
-          .then((response) => {
-            if (config.responseType === "stream") {
-              // Handle the stream response
-              response.data
-                .on("data", (chunk) => {
-                  // Convert chunk from Uint8Array to string
-                  const chunkAsString = new TextDecoder().decode(chunk);
-
-                  // Emit converted data chunks as Node-RED messages
-                  this.node.send({ payload: chunkAsString });
-                })
-                .on("end", () => {
-                  // Handle the end of the stream
-                  resolve({ payload: "Stream ended" });
-                })
-                .on("error", (err) => {
-                  // Handle any errors
-                  reject(err);
-                });
-            } else {
-              // Handle non-stream response (e.g., binary data or JSON)
-              resolve(response);
-            }
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    }
-
-    deleteFromEndpoint(
-      path,
-      parameters,
-      expectedQueryParams,
-      customHeaders = {},
-    ) {
-      return new Promise((resolve, reject) => {
-        parameters = parameters || {};
-        var domain = this.domain;
-        var organizationId = this.organizationId;
-        var queryParameters = {},
-          baseHeaders = {};
-
-        baseHeaders = this.setAuthHeaders(headers);
-        baseHeaders["Accept"] = "application/json";
-
-        if (organizationId) {
-          customHeaders["OpenAI-Organization"] = organizationId;
-        }
-
-        var headers = {
-          ...baseHeaders,
-          ...customHeaders,
-        };
-
-        // Only add query parameters if they are expected and exist
-        if (expectedQueryParams) {
-          expectedQueryParams.forEach((param) => {
-            if (parameters[param] !== undefined) {
-              queryParameters[param] = parameters.body[param];
-            }
-          });
-        }
-
-        // Merge any additional query parameters from the parameters object
-        queryParameters = mergeQueryParams(parameters, queryParameters);
-
-        // Axios request configuration
-        const config = {
-          method: "DELETE",
-          url: domain + path,
-          headers: headers,
-          params: queryParameters,
-        };
-
-        // Axios DELETE request
-        axios(config)
-          .then((response) => {
-            resolve(response);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    }
-
     createChatCompletion(parameters) {
       const response = this.postToEndpoint("/chat/completions", parameters);
       return response;
@@ -310,18 +49,20 @@ var OpenaiApi = (function () {
       );
     }
 
-    createTranscription(parameters) {
-      const filename = parameters.body.filename;
-      delete parameters.body.filename;
+    async createTranscription(parameters) {
 
-      return this.postToEndpoint(
-        "/audio/transcriptions",
-        parameters,
-        null,
-        "form-data",
-        filename,
-      );
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization
+      });
+      const transcription = await openai.audio.transcriptions.create({
+        file: fs.createReadStream(parameters.file),
+        model: parameters.model,
+      });
+
+      return transcription;
     }
+
     createTranslation(parameters) {
       const filename = parameters.body.filename;
       delete parameters.body.filename;
@@ -788,17 +529,6 @@ var OpenaiApi = (function () {
     }
   }
 
-  function mergeQueryParams(parameters, queryParameters) {
-    if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(
-        function (parameterName) {
-          var parameter = parameters.$queryParameters[parameterName];
-          queryParameters[parameterName] = parameter;
-        },
-      );
-    }
-    return queryParameters;
-  }
 
   return OpenaiApi;
 })();
