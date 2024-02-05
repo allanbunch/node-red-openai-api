@@ -118,10 +118,13 @@ var OpenaiApi = (function () {
           ...customHeaders,
         };
 
-        // Determine the Content-Type
+        // Determine the responseType
+
+        let responseType;
         if (contentType === "form-data") {
           var formData = new FormData();
 
+          responseType = "json";
           Object.entries(parameters.body).forEach(([key, value]) => {
             if (value instanceof Buffer) {
               if (!filePath) {
@@ -140,13 +143,18 @@ var OpenaiApi = (function () {
           });
 
           data = formData;
-
           let formHeaders = formData.getHeaders();
+
           Object.assign(headers, formHeaders);
-        } else {
-          // Handle JSON payloads
-          headers["Content-Type"] = "application/json";
+        } else if (contentType === "arraybuffer") {
+          // Handle binary requests
           data = parameters.body || {};
+          responseType = "arraybuffer";
+        } else {
+          // Handle json requests
+          // headers["Content-Type"] = "application/json";
+          data = parameters.body || {};
+          responseType = "json";
         }
 
         // Add expected query parameters to the queryParameters object
@@ -168,7 +176,7 @@ var OpenaiApi = (function () {
           headers: headers,
           params: queryParameters,
           data: data,
-          responseType: data.stream === true ? "stream" : "json",
+          responseType: responseType,
         };
 
         axios(config)
@@ -192,7 +200,7 @@ var OpenaiApi = (function () {
                   reject(err);
                 });
             } else {
-              // Handle non-stream response (e.g., JSON)
+              // Handle non-stream response (e.g., binary data or JSON)
               resolve(response);
             }
           })
@@ -292,9 +300,16 @@ var OpenaiApi = (function () {
     createEmbedding(parameters) {
       return this.postToEndpoint("/embeddings", parameters);
     }
+
     createSpeech(parameters) {
-      return this.postToEndpoint("/audio/speech", parameters);
+      return this.postToEndpoint(
+        "/audio/speech",
+        parameters,
+        null,
+        "arraybuffer",
+      );
     }
+
     createTranscription(parameters) {
       const filename = parameters.body.filename;
       delete parameters.body.filename;
