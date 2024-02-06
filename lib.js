@@ -36,7 +36,7 @@ var OpenaiApi = (function () {
       });
 
       parameters.payload.image = fs.createReadStream(parameters.payload.image);
-      if (parameters.payload.mask){
+      if (parameters.payload.mask) {
         parameters.payload.mask = fs.createReadStream(parameters.payload.mask);
       }
 
@@ -80,7 +80,7 @@ var OpenaiApi = (function () {
         organization: parameters.organization,
       });
 
-      const audio = await openai.audio.speech.create({...parameters.payload});
+      const audio = await openai.audio.speech.create({ ...parameters.payload });
       const response = Buffer.from(await audio.arrayBuffer());
 
       return response;
@@ -95,7 +95,7 @@ var OpenaiApi = (function () {
       parameters.payload.file = fs.createReadStream(parameters.payload.file);
 
       const response = await openai.audio.transcriptions.create({
-        ...parameters.payload
+        ...parameters.payload,
       });
 
       return response;
@@ -132,7 +132,7 @@ var OpenaiApi = (function () {
 
       return files;
     }
-    
+
     async createFile(parameters) {
       const openai = new OpenAI({
         apiKey: parameters.apiKey,
@@ -210,7 +210,7 @@ var OpenaiApi = (function () {
         ...parameters.payload,
       });
 
-      let response = []
+      let response = [];
       for await (const fineTune of list) {
         response.push(fineTune);
       }
@@ -224,7 +224,7 @@ var OpenaiApi = (function () {
       });
 
       const response = await openai.fineTuning.jobs.retrieve(
-        parameters.payload.fine_tuning_job_id
+        parameters.payload.fine_tuning_job_id,
       );
 
       return response;
@@ -236,7 +236,9 @@ var OpenaiApi = (function () {
       });
 
       let response = [];
-      const list = await openai.fineTuning.list_events(parameters.payload.fine_tuning_job_id);
+      const list = await openai.fineTuning.jobs.listEvents(
+        parameters.payload.fine_tuning_job_id,
+      );
       for await (const fineTuneEvent of list) {
         response.push(fineTuneEvent);
       }
@@ -248,7 +250,9 @@ var OpenaiApi = (function () {
         organization: parameters.organization,
       });
 
-      const response = await openai.fineTuning.jobs.cancel(parameters.payload.fine_tuning_job_id);
+      const response = await openai.fineTuning.jobs.cancel(
+        parameters.payload.fine_tuning_job_id,
+      );
 
       return response;
     }
@@ -323,7 +327,7 @@ var OpenaiApi = (function () {
         organization: parameters.organization,
       });
 
-      const id = parameters.payload.assistant_id
+      const id = parameters.payload.assistant_id;
       const response = await openai.beta.assistants.retrieve(id);
 
       return response;
@@ -349,7 +353,7 @@ var OpenaiApi = (function () {
         organization: parameters.organization,
       });
 
-      const id =  parameters.payload.assistant_id;
+      const id = parameters.payload.assistant_id;
       const response = await openai.beta.assistants.del(id);
 
       return response;
@@ -439,7 +443,8 @@ var OpenaiApi = (function () {
       const message_id = parameters.payload.message_id;
 
       const response = await openai.beta.threads.messages.retrieve(
-        thread_id, message_id
+        thread_id,
+        message_id,
       );
 
       return response;
@@ -455,9 +460,13 @@ var OpenaiApi = (function () {
       delete parameters.payload.thread_id;
       delete parameters.payload.message_id;
 
-      const response = await openai.beta.threads.messages.update(thread_id, message_id, {
-        ...parameters.payload,
-      });
+      const response = await openai.beta.threads.messages.update(
+        thread_id,
+        message_id,
+        {
+          ...parameters.payload,
+        },
+      );
 
       return response;
     }
@@ -482,7 +491,9 @@ var OpenaiApi = (function () {
       const thred_id = parameters.payload.thread_id;
       delete parameters.payload.thread_id;
 
-      const response = await openai.beta.threads.runs.list(thred_id, {...parameters.payload});
+      const response = await openai.beta.threads.runs.list(thred_id, {
+        ...parameters.payload,
+      });
 
       return response.body;
     }
@@ -512,7 +523,10 @@ var OpenaiApi = (function () {
       delete parameters.payload.thread_id;
       delete parameters.payload.run_id;
 
-      const response = await openai.beta.threads.runs.retrieve(thread_id, run_id);
+      const response = await openai.beta.threads.runs.retrieve(
+        thread_id,
+        run_id,
+      );
 
       return response;
     }
@@ -527,9 +541,13 @@ var OpenaiApi = (function () {
       delete parameters.payload.thread_id;
       delete parameters.payload.run_id;
 
-      const response = await openai.beta.threads.runs.update(thread_id, run_id, {
-        ...parameters.payload,
-      });
+      const response = await openai.beta.threads.runs.update(
+        thread_id,
+        run_id,
+        {
+          ...parameters.payload,
+        },
+      );
 
       return response;
     }
@@ -544,9 +562,13 @@ var OpenaiApi = (function () {
       delete parameters.payload.thread_id;
       delete parameters.payload.run_id;
 
-      const response = await openai.beta.threads.runs.submitToolOutputs(thread_id, run_id, {
-        ...parameters.payload,
-      });
+      const response = await openai.beta.threads.runs.submitToolOutputs(
+        thread_id,
+        run_id,
+        {
+          ...parameters.payload,
+        },
+      );
 
       return response;
     }
@@ -560,10 +582,14 @@ var OpenaiApi = (function () {
       const run_id = parameters.payload.run_id;
       delete parameters.payload.thread_id;
       delete parameters.payload.run_id;
-  
-      const response = await openai.beta.threads.runs.cancel(thread_id, run_id, {
-        ...parameters.payload,
-      });
+
+      const response = await openai.beta.threads.runs.cancel(
+        thread_id,
+        run_id,
+        {
+          ...parameters.payload,
+        },
+      );
 
       return response;
     }
@@ -578,9 +604,13 @@ var OpenaiApi = (function () {
       delete parameters.payload.thread_id;
       delete parameters.payload.run_id;
 
-      const response = await openai.beta.threads.runs.steps.list(thread_id, run_id, {
-        ...parameters.payload,
-      });
+      const response = await openai.beta.threads.runs.steps.list(
+        thread_id,
+        run_id,
+        {
+          ...parameters.payload,
+        },
+      );
 
       return response.body;
     }
@@ -594,7 +624,11 @@ var OpenaiApi = (function () {
       const run_id = parameters.payload.run_id;
       const step_id = parameters.payload.step_id;
 
-      const response = await openai.beta.threads.runs.steps.retrieve(thread_id, run_id, step_id);
+      const response = await openai.beta.threads.runs.steps.retrieve(
+        thread_id,
+        run_id,
+        step_id,
+      );
 
       return response;
     }
@@ -639,9 +673,13 @@ var OpenaiApi = (function () {
       delete parameters.payload.assistant_id;
       delete parameters.payload.file_id;
 
-      const response = await openai.beta.assistants.files.retrieve(assistant_id, file_id, {
-        ...parameters.payload,
-      });
+      const response = await openai.beta.assistants.files.retrieve(
+        assistant_id,
+        file_id,
+        {
+          ...parameters.payload,
+        },
+      );
 
       return response;
     }
@@ -656,9 +694,13 @@ var OpenaiApi = (function () {
       delete parameters.payload.assistant_id;
       delete parameters.payload.file_id;
 
-      const response = await openai.beta.assistants.files.del(assistant_id, file_id, {
-        ...parameters.payload,
-      });
+      const response = await openai.beta.assistants.files.del(
+        assistant_id,
+        file_id,
+        {
+          ...parameters.payload,
+        },
+      );
 
       return response;
     }
@@ -673,9 +715,13 @@ var OpenaiApi = (function () {
       delete parameters.payload.thread_id;
       delete parameters.payload.message_id;
 
-      const response = await openai.beta.threads.messages.files.list(thread_id, message_id, {
-        ...parameters.payload,
-      });
+      const response = await openai.beta.threads.messages.files.list(
+        thread_id,
+        message_id,
+        {
+          ...parameters.payload,
+        },
+      );
 
       return response;
     }
@@ -692,10 +738,15 @@ var OpenaiApi = (function () {
       delete parameters.payload.thread_id;
       delete parameters.payload.message_id;
       delete parameters.payload.file_id;
-      
-      const response = await openai.beta.threads.messages.files.retrieve(thread_id, message_id, file_id, {
-        ...parameters.payload,
-      });
+
+      const response = await openai.beta.threads.messages.files.retrieve(
+        thread_id,
+        message_id,
+        file_id,
+        {
+          ...parameters.payload,
+        },
+      );
 
       return response;
     }
