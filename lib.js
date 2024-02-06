@@ -5,530 +5,701 @@ var OpenaiApi = (function () {
   const OpenAI = require("openai").OpenAI;
 
   class OpenaiApi {
-    createChatCompletion(parameters) {
-      const response = this.postToEndpoint("/chat/completions", parameters);
+    async createChatCompletion(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+      const response = await openai.chat.completions.create({
+        ...parameters.payload,
+      });
+
       return response;
     }
-    createImage(parameters) {
-      return this.postToEndpoint("/images/generations", parameters);
-    }
-    createImageEdit(parameters) {
-      const filename = parameters.body.filename;
-      delete parameters.body.filename;
 
-      return this.postToEndpoint(
-        "/images/edits",
-        parameters,
-        null,
-        "form-data",
-        filename,
-      );
-    }
-    createImageVariation(parameters) {
-      const filename = parameters.body.filename;
-      delete parameters.body.filename;
+    async createImage(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+      const response = await openai.images.generate({
+        ...parameters.payload,
+      });
 
-      return this.postToEndpoint(
-        "/images/variations",
-        parameters,
-        null,
-        "form-data",
-        filename,
-      );
-    }
-    createEmbedding(parameters) {
-      return this.postToEndpoint("/embeddings", parameters);
+      return response;
     }
 
-    createSpeech(parameters) {
-      return this.postToEndpoint(
-        "/audio/speech",
-        parameters,
-        null,
-        "arraybuffer",
-      );
+    async createImageEdit(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      parameters.payload.image = fs.createReadStream(parameters.payload.image);
+      if (parameters.payload.mask){
+        parameters.payload.mask = fs.createReadStream(parameters.payload.mask);
+      }
+
+      const response = await openai.images.edit({
+        ...parameters.payload,
+      });
+
+      return response;
+    }
+
+    async createImageVariation(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      parameters.payload.image = fs.createReadStream(parameters.payload.image);
+      const response = await openai.images.createVariation({
+        ...parameters.payload,
+      });
+
+      return response;
+    }
+
+    async createEmbedding(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const response = await openai.embeddings.create({
+        ...parameters.payload,
+      });
+
+      return response;
+    }
+
+    async createSpeech(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const audio = await openai.audio.speech.create({...parameters.payload});
+      const response = Buffer.from(await audio.arrayBuffer());
+
+      return response;
     }
 
     async createTranscription(parameters) {
-
       const openai = new OpenAI({
         apiKey: parameters.apiKey,
-        organization: parameters.organization
-      });
-      const transcription = await openai.audio.transcriptions.create({
-        file: fs.createReadStream(parameters.file),
-        model: parameters.model,
+        organization: parameters.organization,
       });
 
-      return transcription;
+      parameters.payload.file = fs.createReadStream(parameters.payload.file);
+
+      const response = await openai.audio.transcriptions.create({
+        ...parameters.payload
+      });
+
+      return response;
     }
 
-    createTranslation(parameters) {
-      const filename = parameters.body.filename;
-      delete parameters.body.filename;
+    async createTranslation(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
 
-      return this.postToEndpoint(
-        "/audio/translations",
-        parameters,
-        null,
-        "form-data",
-        filename,
-      );
-    }
-    listFiles(parameters) {
-      const expectedQueryParameters = ["purpose"];
-      return this.getFromEndpoint(
-        "/files",
-        parameters,
-        expectedQueryParameters,
-      );
-    }
-    createFile(parameters) {
-      let filename;
+      parameters.payload.file = fs.createReadStream(parameters.payload.file);
+      const response = await openai.audio.translations.create({
+        ...parameters.payload,
+      });
 
-      // reference the incoming filename
-      filename = parameters.body.filename;
-      delete parameters.body.filename;
+      return response;
+    }
 
-      return this.postToEndpoint(
-        "/files",
-        parameters,
-        null,
-        "form-data",
-        filename,
-      );
-    }
-    deleteFile(parameters) {
-      const file_id = parameters.body.file_id;
-      delete parameters.body.file_id;
-      return this.deleteFromEndpoint(`/files/${file_id}`, parameters);
-    }
-    retrieveFile(parameters) {
-      const file_id = parameters.body.file_id;
-      delete parameters.body.file_id;
-      return this.getFromEndpoint(`/files/${file_id}`, parameters);
-    }
-    downloadFile(parameters) {
-      const file_id = parameters.body.file_id;
-      delete parameters.body.file_id;
-      return this.getFromEndpoint(`/files/${file_id}/content`, parameters);
-    }
-    createFineTuningJob(parameters) {
-      return this.postToEndpoint("/fine_tuning/jobs", parameters);
-    }
-    listPaginatedFineTuningJobs(parameters) {
-      const expectedQueryParameters = ["after", "limit"];
-      return this.getFromEndpoint(
-        "/fine_tuning/jobs",
-        parameters,
-        expectedQueryParameters,
-      );
-    }
-    retrieveFineTuningJob(parameters) {
-      const fine_tuning_job_id = parameters.body.fine_tuning_job_id;
-      delete parameters.body.fine_tuning_job_id;
-      return this.getFromEndpoint(
-        `/fine_tuning/jobs/${fine_tuning_job_id}`,
-        parameters,
-      );
-    }
-    listFineTuningEvents(parameters) {
-      const expectedQueryParameters = ["after", "limit"];
-      const fine_tuning_job_id = parameters.body.fine_tuning_job_id;
-      delete parameters.body.fine_tuning_job_id;
+    async listFiles(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
 
-      return this.getFromEndpoint(
-        `/fine_tuning/jobs/${fine_tuning_job_id}/events`,
-        parameters,
-        expectedQueryParameters,
-      );
-    }
-    cancelFineTuningJob(parameters) {
-      const fine_tuning_job_id = parameters.body.fine_tuning_job_id;
-      delete parameters.body.fine_tuning_job_id;
-      return this.postToEndpoint(
-        `/fine_tuning/jobs/${fine_tuning_job_id}/cancel`,
-        parameters,
-      );
-    }
-    listModels(parameters) {
-      return this.getFromEndpoint("/models", parameters);
-    }
-    retrieveModel(parameters) {
-      const model = parameters.body.model;
-      delete parameters.body.model;
-      return this.getFromEndpoint(`/models/${model}`, parameters);
-    }
-    deleteModel(parameters) {
-      const model = parameters.body.model;
-      delete parameters.body.model;
-      return this.deleteFromEndpoint(`/models/${model}`, parameters);
-    }
-    createModeration(parameters) {
-      return this.postToEndpoint("/moderations", parameters);
-    }
-    listAssistants(parameters) {
-      const expectedQueryParameters = ["limit", "order", "after", "before"];
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
+      const list = await openai.files.list({
+        ...parameters.payload,
+      });
 
-      return this.getFromEndpoint(
-        "/assistants",
-        parameters,
-        expectedQueryParameters,
-        customHeaders,
-      );
-    }
-    createAssistant(parameters) {
-      var customHeaders = { "OpenAI-Beta": "assistants=v1" };
+      let files = [];
+      for await (const file of list) {
+        files.push(file);
+      }
 
-      return this.postToEndpoint(
-        "/assistants",
-        parameters,
-        null,
-        null,
-        null,
-        customHeaders,
-      );
+      return files;
     }
-    getAssistant(parameters) {
-      const assistantId = parameters.body.assistant_id;
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      delete parameters.body.assistant_id;
-      return this.getFromEndpoint(
-        `/assistants/${assistantId}`,
-        parameters,
-        null,
-        customHeaders,
-      );
-    }
-    modifyAssistant(parameters) {
-      const assistant_id = parameters.body.assistant_id;
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      delete parameters.body.assistant_id;
-      return this.postToEndpoint(
-        `/assistants/${assistant_id}`,
-        parameters,
-        null,
-        null,
-        null,
-        customHeaders,
-      );
-    }
-    deleteAssistant(parameters) {
-      const assistant_id = parameters.body.assistant_id;
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      delete parameters.body.assistant_id;
-      return this.deleteFromEndpoint(
-        `/assistants/${assistant_id}`,
-        parameters,
-        null,
-        customHeaders,
-      );
-    }
-    createThread(parameters) {
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      return this.postToEndpoint(
-        "/threads",
-        parameters,
-        null,
-        null,
-        null,
-        customHeaders,
-      );
-    }
-    getThread(parameters) {
-      const threadId = parameters.body.thread_id;
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      delete parameters.body.thread_id;
-      return this.getFromEndpoint(
-        `/threads/${threadId}`,
-        parameters,
-        null,
-        customHeaders,
-      );
-    }
-    modifyThread(parameters) {
-      const threadId = parameters.body.thread_id;
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      delete parameters.body.thread_id;
-      return this.postToEndpoint(
-        `/threads/${threadId}`,
-        parameters,
-        null,
-        null,
-        null,
-        customHeaders,
-      );
-    }
-    deleteThread(parameters) {
-      const threadId = parameters.body.thread_id;
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      delete parameters.body.thread_id;
-      return this.deleteFromEndpoint(
-        `/threads/${threadId}`,
-        parameters,
-        null,
-        customHeaders,
-      );
-    }
-    listMessages(parameters) {
-      const threadId = parameters.body.thread_id;
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      const expectedQueryParameters = ["limit", "order", "after", "before"];
-      delete parameters.body.thread_id;
-      return this.getFromEndpoint(
-        `/threads/${threadId}/messages`,
-        parameters,
-        expectedQueryParameters,
-        customHeaders,
-      );
-    }
-    createMessage(parameters) {
-      const threadId = parameters.body.thread_id;
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      delete parameters.body.thread_id;
-      return this.postToEndpoint(
-        `/threads/${threadId}/messages`,
-        parameters,
-        null,
-        null,
-        null,
-        customHeaders,
-      );
-    }
-    getMessage(parameters) {
-      const threadId = parameters.body.thread_id;
-      const messageId = parameters.body.message_id;
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      delete parameters.body.thread_id;
-      delete parameters.body.message_id;
-      return this.getFromEndpoint(
-        `/threads/${threadId}/messages/${messageId}`,
-        parameters,
-        null,
-        customHeaders,
-      );
-    }
-    modifyMessage(parameters) {
-      const threadId = parameters.body.thread_id;
-      const messageId = parameters.body.message_id;
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      delete parameters.body.thread_id;
-      delete parameters.body.message_id;
-      return this.postToEndpoint(
-        `/threads/${threadId}/messages/${messageId}`,
-        parameters,
-        null,
-        null,
-        null,
-        customHeaders,
-      );
-    }
-    createThreadAndRun(parameters) {
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
+    
+    async createFile(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
 
-      return this.postToEndpoint(
-        "/threads/runs",
-        parameters,
-        null,
-        null,
-        null,
-        customHeaders,
-      );
+      parameters.payload.file = fs.createReadStream(parameters.payload.file);
+      const response = await openai.files.create({
+        ...parameters.payload,
+      });
+
+      return response;
     }
-    listRuns(parameters) {
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      const expectedQueryParameters = ["limit", "order", "after", "before"];
-      const threadId = parameters.body.thread_id;
-      delete parameters.body.thread_id;
-      return this.getFromEndpoint(
-        `/threads/${threadId}/runs`,
-        parameters,
-        expectedQueryParameters,
-        customHeaders,
-      );
+    async deleteFile(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const response = await openai.files.del({
+        ...parameters.payload,
+      });
+
+      return response;
     }
-    createRun(parameters) {
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      const threadId = parameters.body.thread_id;
-      delete parameters.body.thread_id;
-      return this.postToEndpoint(
-        `/threads/${threadId}/runs`,
-        parameters,
-        null,
-        null,
-        null,
-        customHeaders,
-      );
+    async retrieveFile(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const file_id = parameters.payload.file_id;
+      delete parameters.payload.file_id;
+
+      const response = await openai.files.retrieve(file_id, {
+        ...parameters.payload,
+      });
+
+      return response;
     }
-    getRun(parameters) {
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      const threadId = parameters.body.thread_id;
-      const runId = parameters.body.run_id;
-      delete parameters.body.thread_id;
-      delete parameters.body.run_id;
-      return this.getFromEndpoint(
-        `/threads/${threadId}/runs/${runId}`,
-        parameters,
-        null,
-        customHeaders,
-      );
+    async downloadFile(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const file_id = parameters.payload.file_id;
+      delete parameters.payload.file_id;
+
+      const response = await openai.files.retrieveContent(file_id, {
+        ...parameters.payload,
+      });
+
+      return response;
     }
-    modifyRun(parameters) {
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      const threadId = parameters.body.thread_id;
-      const runId = parameters.body.run_id;
-      delete parameters.body.thread_id;
-      delete parameters.body.run_id;
-      return this.postToEndpoint(
-        `/threads/${threadId}/runs/${runId}`,
-        parameters,
-        null,
-        null,
-        null,
-        customHeaders,
-      );
+    async createFineTuningJob(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const response = await openai.fineTuning.jobs.create({
+        ...parameters.payload,
+      });
+
+      return response;
     }
-    submitToolOuputsToRun(parameters) {
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      const threadId = parameters.body.thread_id;
-      const runId = parameters.body.run_id;
-      delete parameters.body.thread_id;
-      delete parameters.body.run_id;
-      return this.postToEndpoint(
-        `/threads/${threadId}/runs/${runId}/submit_tool_outputs`,
-        parameters,
-        null,
-        null,
-        null,
-        customHeaders,
-      );
+    async listPaginatedFineTuningJobs(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const list = await openai.fineTuning.jobs.list({
+        ...parameters.payload,
+      });
+
+      let response = []
+      for await (const fineTune of list) {
+        response.push(fineTune);
+      }
+
+      return response;
     }
-    cancelRun(parameters) {
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      const threadId = parameters.body.thread_id;
-      const runId = parameters.body.run_id;
-      delete parameters.body.thread_id;
-      delete parameters.body.run_id;
-      return this.postToEndpoint(
-        `/threads/${threadId}/runs/${runId}/cancel`,
-        parameters,
-        null,
-        null,
-        null,
-        customHeaders,
+    async retrieveFineTuningJob(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const response = await openai.fineTuning.jobs.retrieve(
+        parameters.payload.fine_tuning_job_id
       );
+
+      return response;
     }
-    listRunSteps(parameters) {
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      const threadId = parameters.body.thread_id;
-      const runId = parameters.body.run_id;
-      const expectedQueryParameters = ["limit", "order", "after", "before"];
-      delete parameters.body.thread_id;
-      delete parameters.body.run_id;
-      return this.getFromEndpoint(
-        `/threads/${threadId}/runs/${runId}/steps`,
-        parameters,
-        expectedQueryParameters,
-        customHeaders,
-      );
+    async listFineTuningEvents(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      let response = [];
+      const list = await openai.fineTuning.list_events(parameters.payload.fine_tuning_job_id);
+      for await (const fineTuneEvent of list) {
+        response.push(fineTuneEvent);
+      }
+      return response;
     }
-    getRunStep(parameters) {
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      const threadId = parameters.body.thread_id;
-      const runId = parameters.body.run_id;
-      const stepId = parameters.body.step_id;
-      delete parameters.body.thread_id;
-      delete parameters.body.step_id;
-      return this.getFromEndpoint(
-        `/threads/${threadId}/runs/${runId}/steps/${stepId}`,
-        parameters,
-        null,
-        customHeaders,
-      );
+    async cancelFineTuningJob(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const response = await openai.fineTuning.jobs.cancel(parameters.payload.fine_tuning_job_id);
+
+      return response;
     }
-    listAssistantFiles(parameters) {
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      const assistantId = parameters.body.assistant_id;
-      const expectedQueryParameters = ["limit", "order", "after", "before"];
-      delete parameters.body.assistant_id;
-      return this.getFromEndpoint(
-        `/assistants/${assistantId}/files`,
-        parameters,
-        expectedQueryParameters,
-        customHeaders,
-      );
+    async listModels(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const response = await openai.models.list();
+
+      return response.body;
     }
-    createAssistantFile(parameters) {
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      const assistantId = parameters.body.assistant_id;
-      delete parameters.body.assistant_id;
-      return this.postToEndpoint(
-        `/assistants/${assistantId}/files`,
-        parameters,
-        null,
-        null,
-        null,
-        customHeaders,
-      );
+    async retrieveModel(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const model = parameters.payload.model;
+      const response = await openai.models.retrieve(model);
+
+      return response;
     }
-    getAssistantFile(parameters) {
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      const assistantId = parameters.body.assistant_id;
-      const fileId = parameters.body.file_id;
-      delete parameters.body.assistant_id;
-      delete parameters.body.file_id;
-      return this.getFromEndpoint(
-        `/assistants/${assistantId}/files/${fileId}`,
-        parameters,
-        null,
-        customHeaders,
-      );
+    async deleteModel(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const model = parameters.payload.model;
+      const response = await openai.models.del(model);
+
+      return response;
     }
-    deleteAssistantFile(parameters) {
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      const assistantId = parameters.body.assistant_id;
-      const fileId = parameters.body.file_id;
-      delete parameters.body.assistant_id;
-      delete parameters.body.file_id;
-      return this.deleteFromEndpoint(
-        `/assistants/${assistantId}/files/${fileId}`,
-        parameters,
-        null,
-        customHeaders,
-      );
+    async createModeration(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const response = await openai.moderations.create(parameters.payload);
+      return response;
     }
-    listMessageFiles(parameters) {
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      const threadId = parameters.body.thread_id;
-      const messageId = parameters.body.message_id;
-      const expectedQueryParameters = ["limit", "order", "after", "before"];
-      delete parameters.body.thread_id;
-      delete parameters.body.message_id;
-      return this.getFromEndpoint(
-        `/threads/${threadId}/messages/${messageId}/files`,
-        parameters,
-        expectedQueryParameters,
-        customHeaders,
-      );
+    async listAssistants(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const response = await openai.beta.assistants.list({
+        ...parameters.payload,
+      });
+
+      return response.body;
     }
-    getMessageFile(parameters) {
-      const customHeaders = { "OpenAI-Beta": "assistants=v1" };
-      const threadId = parameters.body.thread_id;
-      const messageId = parameters.body.message_id;
-      const fileId = parameters.body.file_id;
-      delete parameters.body.thread_id;
-      delete parameters.body.message_id;
-      delete parameters.body.file_id;
-      return this.getFromEndpoint(
-        `/threads/${threadId}/messages/${messageId}/files/${fileId}`,
-        parameters,
-        null,
-        customHeaders,
+    async createAssistant(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const response = await openai.beta.assistants.create({
+        ...parameters.payload,
+      });
+
+      return response;
+    }
+    async getAssistant(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const id = parameters.payload.assistant_id
+      const response = await openai.beta.assistants.retrieve(id);
+
+      return response;
+    }
+    async modifyAssistant(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const id = parameters.payload.assistant_id;
+      delete parameters.payload.assistant_id;
+
+      const response = await openai.beta.assistants.update(id, {
+        ...parameters.payload,
+      });
+
+      return response;
+    }
+    async deleteAssistant(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const id =  parameters.payload.assistant_id;
+      const response = await openai.beta.assistants.del(id);
+
+      return response;
+    }
+    async createThread(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const response = await openai.beta.threads.create({
+        ...parameters.payload,
+      });
+
+      return response;
+    }
+    async getThread(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const id = parameters.payload.thread_id;
+      const response = await openai.beta.threads.retrieve(id);
+
+      return response;
+    }
+    async modifyThread(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const id = parameters.payload.thread_id;
+      delete parameters.payload.thread_id;
+
+      const response = await openai.beta.threads.update(id, {
+        ...parameters.payload,
+      });
+
+      return response;
+    }
+    async deleteThread(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const id = parameters.payload.thread_id;
+      const response = await openai.beta.threads.del(id);
+
+      return response;
+    }
+    async listMessages(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const id = parameters.payload.thread_id;
+      const response = await openai.beta.threads.messages.list(id);
+
+      return response.body;
+    }
+    async createMessage(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const thread_id = parameters.payload.thread_id;
+      delete parameters.payload.thread_id;
+
+      const response = await openai.beta.threads.messages.create(thread_id, {
+        ...parameters.payload,
+      });
+
+      return response;
+    }
+    async getMessage(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const thread_id = parameters.payload.thread_id;
+      const message_id = parameters.payload.message_id;
+
+      const response = await openai.beta.threads.messages.retrieve(
+        thread_id, message_id
       );
+
+      return response;
+    }
+    async modifyMessage(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const thread_id = parameters.payload.thread_id;
+      const message_id = parameters.payload.message_id;
+      delete parameters.payload.thread_id;
+      delete parameters.payload.message_id;
+
+      const response = await openai.beta.threads.messages.update(thread_id, message_id, {
+        ...parameters.payload,
+      });
+
+      return response;
+    }
+    async createThreadAndRun(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const response = await openai.beta.threads.createAndRun({
+        ...parameters.payload,
+      });
+
+      return response;
+    }
+    async listRuns(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const thred_id = parameters.payload.thread_id;
+      delete parameters.payload.thread_id;
+
+      const response = await openai.beta.threads.runs.list(thred_id, {...parameters.payload});
+
+      return response.body;
+    }
+    async createRun(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const thread_id = parameters.payload.thread_id;
+      delete parameters.payload.thread_id;
+
+      const response = await openai.beta.threads.runs.create(thread_id, {
+        ...parameters.payload,
+      });
+
+      return response;
+    }
+    async getRun(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const thread_id = parameters.payload.thread_id;
+      const run_id = parameters.payload.run_id;
+      delete parameters.payload.thread_id;
+      delete parameters.payload.run_id;
+
+      const response = await openai.beta.threads.runs.retrieve(thread_id, run_id);
+
+      return response;
+    }
+    async modifyRun(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const thread_id = parameters.payload.thread_id;
+      const run_id = parameters.payload.run_id;
+      delete parameters.payload.thread_id;
+      delete parameters.payload.run_id;
+
+      const response = await openai.beta.threads.runs.update(thread_id, run_id, {
+        ...parameters.payload,
+      });
+
+      return response;
+    }
+    async submitToolOuputsToRun(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const thread_id = parameters.payload.thread_id;
+      const run_id = parameters.payload.run_id;
+      delete parameters.payload.thread_id;
+      delete parameters.payload.run_id;
+
+      const response = await openai.beta.threads.runs.submitToolOutputs(thread_id, run_id, {
+        ...parameters.payload,
+      });
+
+      return response;
+    }
+    async cancelRun(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const thread_id = parameters.payload.thread_id;
+      const run_id = parameters.payload.run_id;
+      delete parameters.payload.thread_id;
+      delete parameters.payload.run_id;
+  
+      const response = await openai.beta.threads.runs.cancel(thread_id, run_id, {
+        ...parameters.payload,
+      });
+
+      return response;
+    }
+    async listRunSteps(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const thread_id = parameters.payload.thread_id;
+      const run_id = parameters.payload.run_id;
+      delete parameters.payload.thread_id;
+      delete parameters.payload.run_id;
+
+      const response = await openai.beta.threads.runs.steps.list(thread_id, run_id, {
+        ...parameters.payload,
+      });
+
+      return response.body;
+    }
+    async getRunStep(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const thread_id = parameters.payload.thread_id;
+      const run_id = parameters.payload.run_id;
+      const step_id = parameters.payload.step_id;
+
+      const response = await openai.beta.threads.runs.steps.retrieve(thread_id, run_id, step_id);
+
+      return response;
+    }
+    async listAssistantFiles(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const assistant_id = parameters.payload.assistant_id;
+      delete parameters.payload.assistant_id;
+
+      const response = await openai.beta.assistants.files.list(assistant_id, {
+        ...parameters.payload,
+      });
+
+      return response.body;
+    }
+    async createAssistantFile(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const assistant_id = parameters.payload.assistant_id;
+      delete parameters.payload.assistant_id;
+
+      const response = await openai.beta.assistants.files.create(assistant_id, {
+        ...parameters.payload,
+      });
+
+      return response;
+    }
+    async getAssistantFile(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const assistant_id = parameters.payload.assistant_id;
+      const file_id = parameters.payload.file_id;
+      delete parameters.payload.assistant_id;
+      delete parameters.payload.file_id;
+
+      const response = await openai.beta.assistants.files.retrieve(assistant_id, file_id, {
+        ...parameters.payload,
+      });
+
+      return response;
+    }
+    async deleteAssistantFile(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const assistant_id = parameters.payload.assistant_id;
+      const file_id = parameters.payload.file_id;
+      delete parameters.payload.assistant_id;
+      delete parameters.payload.file_id;
+
+      const response = await openai.beta.assistants.files.del(assistant_id, file_id, {
+        ...parameters.payload,
+      });
+
+      return response;
+    }
+    async listMessageFiles(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const thread_id = parameters.payload.thread_id;
+      const message_id = parameters.payload.message_id;
+      delete parameters.payload.thread_id;
+      delete parameters.payload.message_id;
+
+      const response = await openai.beta.threads.messages.files.list(thread_id, message_id, {
+        ...parameters.payload,
+      });
+
+      return response;
+    }
+    async getMessageFile(parameters) {
+      const openai = new OpenAI({
+        apiKey: parameters.apiKey,
+        organization: parameters.organization,
+      });
+
+      const thread_id = parameters.payload.thread_id;
+      const message_id = parameters.payload.message_id;
+      const file_id = parameters.payload.file_id;
+
+      delete parameters.payload.thread_id;
+      delete parameters.payload.message_id;
+      delete parameters.payload.file_id;
+      
+      const response = await openai.beta.threads.messages.files.retrieve(thread_id, message_id, file_id, {
+        ...parameters.payload,
+      });
+
+      return response;
     }
   }
-
 
   return OpenaiApi;
 })();
