@@ -1,4 +1,4 @@
-var OpenaiApi = (function () {
+let OpenaiApi = (function () {
   "use strict";
 
   const fs = require("fs");
@@ -6,15 +6,26 @@ var OpenaiApi = (function () {
 
   class OpenaiApi {
     async createChatCompletion(parameters) {
+      let node = parameters._node;
+      delete parameters._node;
+
       const openai = new OpenAI({
         apiKey: parameters.apiKey,
+        baseURL: parameters.apiBase,
         organization: parameters.organization,
       });
       const response = await openai.chat.completions.create({
         ...parameters.payload,
       });
 
-      return response;
+      if (parameters.payload.stream) {
+        for await (const chunk of response) {
+          node.send(chunk);
+        }
+        return { code: 0, status: "complete" };
+      } else {
+        return response;
+      }
     }
 
     async createImage(parameters) {

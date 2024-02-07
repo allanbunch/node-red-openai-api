@@ -13,11 +13,12 @@ module.exports = function (RED) {
       node.on("input", function (msg) {
         let client = new lib.OpenaiApi();
 
-        const serviceName = node.method; // Specify the service to call
+        const serviceName = node.method; // Set the service name to call.
         let serviceParametersObject = {
           organization: node.service.organizationId,
           apiBase: node.service.apiBase,
-          apiKey: node.service.credentials.secureApiKeyValue,
+          apiKey: node.service.credentials.secureApiKeyValue || "",
+          _node: node,
           payload: { ...msg.payload },
         };
 
@@ -29,10 +30,12 @@ module.exports = function (RED) {
             shape: "dot",
             text: "OpenaiApi.status.requesting",
           });
+
           client[functionName](serviceParametersObject)
             .then((payload) => {
-              let response = { payload: payload };
-              node.send(response);
+              // Update `msg.payload` with the payload from the API response.
+              msg.payload = payload;
+              node.send(msg);
               node.status({});
             })
             .catch(function (error) {
