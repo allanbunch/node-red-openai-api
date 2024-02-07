@@ -49,7 +49,7 @@
             "createTranslation": "create translation",
             "listFiles": "list files",
             "purpose": "purpose",
-            "createFile": "create file",
+            "uploadFile": "upload file",
             "deleteFile": "delete file",
             "file_id": "file_id",
             "retrieveFile": "retrieve file",

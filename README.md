@@ -9,12 +9,19 @@
 
 _@inductiv/node-red-openai-api_ offers a versatile and configurable Node-RED node, designed specifically for seamless integration with OpenAI's advanced platform services. It empowers you to effortlessly connect and orchestrate various OpenAI functionalities, leveraging the full power of Node-RED's sophisticated application nodes. Whether you're aiming to enhance your workflows with cutting-edge AI capabilities or create innovative applications, this node serves as your gateway to harnessing the latest in AI technology from OpenAI, all within the intuitive and flexible environment of Node-RED.
 
-## New in Version 0.3.9
+## New in Version 0.4.0
 
-- Support for new OpenAI embedding models
-  - text-embedding-3-small
-  - text-embedding-3-large
-- Updated node documentation
+- Simplified file uploads.
+  - The `create file` function is now named `upload file` -- update your nodes accordingly.
+  - You no longer need to manually retrieve files in your flow using extra nodes (function, read file, etc.). The `upload file` function now accepts your desired file's absolute path as the `msg.payload.file` value.
+  - See the following updated examples (located in the `examples` directory) for more:
+    - Files
+    - Audio
+    - Images
+    - Assistants
+- Reliability improvements.
+- Now has full OpenAI Node.js package spec parity.
+- Bug fixes.
 
 ## Key Features
 
