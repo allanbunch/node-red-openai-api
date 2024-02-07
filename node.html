@@ -148,7 +148,7 @@
         ></option>
         <option
           value="createFile"
-          data-i18n="OpenaiApi.parameters.createFile"
+          data-i18n="OpenaiApi.parameters.uploadFile"
         ></option>
         <option
           value="deleteFile"
@@ -771,8 +771,7 @@
         <span class="property-type">file</span>
       </dt>
       <dd>
-        The audio file object (not file name) to transcribe, in one of these
-        formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm.
+        Absolute path to the file that's being transcribed, in one of these formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm.
       </dd>
       <dt>
         model
@@ -847,8 +846,7 @@
         <span class="property-type">file</span>
       </dt>
       <dd>
-        The audio file object (not file name) translate, in one of these
-        formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm.
+        Absolute path to the file that's being translated, in one of these formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm.
       </dd>
       <dt>
         model
@@ -1201,6 +1199,101 @@
   </section>
 
   <section>
+    <h1 style="font-weight: bold;">📁 Files</h1>
+    <a
+      href="https://platform.openai.com/docs/api-reference/files"
+      target="_blank"
+      >Official Documentation
+      <i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+    ></a>
+    <h2>List Files</h2>
+    <p>Returns a list of files that belong to the user's organization.</p>
+    <dl class="message-properties">
+      <h2>msg.payload Properties</h2>
+
+      <dt class="optional">
+        purpose
+        <a
+          href="https://platform.openai.com/docs/api-reference/files/list#files-list-purpose"
+          target="_blank"
+          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+        ></a>
+        <span class="property-type">string</span>
+      </dt>
+      <dd>Only return files with the given purpose.</dd>
+    </dl>
+
+    <h2>Upload File</h2>
+    <dl class="message-properties">
+      <h2>msg.payload Properties</h2>
+
+      <dt>
+        file
+        <a
+          href="https://platform.openai.com/docs/api-reference/files/create#files-create-file"
+          target="_blank"
+          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+        ></a>
+        <span class="property-type">file</span>
+      </dt>
+      <dd>Absolute path to the file that's being uploaded.</dd>
+      <dt>
+        purpose
+        <a
+          href="https://platform.openai.com/docs/api-reference/files/create#files-create-purpose"
+          target="_blank"
+          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+        ></a>
+        <span class="property-type">string</span>
+      </dt>
+      <dd>The intended purpose of the uploaded file.</dd>
+    </dl>
+
+    <h2>Delete File</h2>
+    <p>Delete a file.</p>
+    <dl class="message-properties">
+      <h2>msg.payload Properties</h2>
+
+      <dt>file_id <span class="property-type">string</span></dt>
+      <dd>The ID of the file to use for this request.</dd>
+    </dl>
+
+    <h2>Retrieve File</h2>
+    <p>Returns information about a specific file.</p>
+    <dl class="message-properties">
+      <h2>msg.payload Properties</h2>
+
+      <dt>
+        file_id
+        <a
+          href="https://platform.openai.com/docs/api-reference/files/delete#files-delete-file_id"
+          target="_blank"
+          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+        ></a>
+        <span class="property-type">string</span>
+      </dt>
+      <dd>The ID of the file to use for this request.</dd>
+    </dl>
+
+    <h2>Retrieve File Content</h2>
+    <p>Returns the contents of the specified file.</p>
+    <dl class="message-properties">
+      <h2>msg.payload Properties</h2>
+
+      <dt>
+        file_id
+        <a
+          href="https://platform.openai.com/docs/api-reference/files/retrieve-contents#files-retrieve-contents-file_id"
+          target="_blank"
+          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+        ></a>
+        <span class="property-type">string</span>
+      </dt>
+      <dd>The ID of the file to use for this request.</dd>
+    </dl>
+  </section>
+
+  <section>
     <h1 style="font-weight: bold;">🔧 Fine-tuning</h1>
     <a
       href="https://platform.openai.com/docs/api-reference/fine-tuning"
@@ -1370,101 +1463,6 @@
         <span class="property-type">string</span>
       </dt>
       <dd>The ID of the fine-tuning job to cancel.</dd>
-    </dl>
-  </section>
-
-  <section>
-    <h1 style="font-weight: bold;">📁 Files</h1>
-    <a
-      href="https://platform.openai.com/docs/api-reference/files"
-      target="_blank"
-      >Official Documentation
-      <i class="fa fa-external-link fa-sm" aria-hidden="true"></i
-    ></a>
-    <h2>List Files</h2>
-    <p>Returns a list of files that belong to the user's organization.</p>
-    <dl class="message-properties">
-      <h2>msg.payload Properties</h2>
-
-      <dt class="optional">
-        purpose
-        <a
-          href="https://platform.openai.com/docs/api-reference/files/list#files-list-purpose"
-          target="_blank"
-          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
-        ></a>
-        <span class="property-type">string</span>
-      </dt>
-      <dd>Only return files with the given purpose.</dd>
-    </dl>
-
-    <h2>Upload File</h2>
-    <dl class="message-properties">
-      <h2>msg.payload Properties</h2>
-
-      <dt>
-        file
-        <a
-          href="https://platform.openai.com/docs/api-reference/files/create#files-create-file"
-          target="_blank"
-          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
-        ></a>
-        <span class="property-type">file</span>
-      </dt>
-      <dd>The File object (not file name) to be uploaded.</dd>
-      <dt>
-        purpose
-        <a
-          href="https://platform.openai.com/docs/api-reference/files/create#files-create-purpose"
-          target="_blank"
-          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
-        ></a>
-        <span class="property-type">string</span>
-      </dt>
-      <dd>The intended purpose of the uploaded file.</dd>
-    </dl>
-
-    <h2>Delete File</h2>
-    <p>Delete a file.</p>
-    <dl class="message-properties">
-      <h2>msg.payload Properties</h2>
-
-      <dt>file_id <span class="property-type">string</span></dt>
-      <dd>The ID of the file to use for this request.</dd>
-    </dl>
-
-    <h2>Retrieve File</h2>
-    <p>Returns information about a specific file.</p>
-    <dl class="message-properties">
-      <h2>msg.payload Properties</h2>
-
-      <dt>
-        file_id
-        <a
-          href="https://platform.openai.com/docs/api-reference/files/delete#files-delete-file_id"
-          target="_blank"
-          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
-        ></a>
-        <span class="property-type">string</span>
-      </dt>
-      <dd>The ID of the file to use for this request.</dd>
-    </dl>
-
-    <h2>Retrieve File Content</h2>
-    <p>Returns the contents of the specified file.</p>
-    <dl class="message-properties">
-      <h2>msg.payload Properties</h2>
-
-      <dt>
-        file_id
-        <a
-          href="https://platform.openai.com/docs/api-reference/files/retrieve-contents#files-retrieve-contents-file_id"
-          target="_blank"
-          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
-        ></a>
-        <span class="property-type">string</span>
-      </dt>
-      <dd>The ID of the file to use for this request.</dd>
     </dl>
   </section>
 
