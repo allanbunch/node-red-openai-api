@@ -1,25 +1,75 @@
 [
     {
-        "id": "a8f46f8122644718",
+        "id": "8a949045c2bde44f",
         "type": "tab",
-        "label": "Audio Example",
+        "label": "Audio Examples",
         "disabled": false,
         "info": "",
         "env": []
     },
     {
-        "id": "467ebc87b8844787",
+        "id": "cfc4e326cf246fe9",
+        "type": "group",
+        "z": "8a949045c2bde44f",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "fe06a0eb68e7942b",
+            "dfaea51753a120f1",
+            "3bf87f7cccba7d76",
+            "378ed95ad08397c6"
+        ],
+        "x": 154,
+        "y": 139,
+        "w": 572,
+        "h": 142
+    },
+    {
+        "id": "3b463393064f49b9",
+        "type": "group",
+        "z": "8a949045c2bde44f",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "adbe3dd2124bd65e",
+            "254e24ddcedb56fb",
+            "ea94f3df99cb5ad9",
+            "c870615f02a9f85e",
+            "c09d2cb245a00b1d"
+        ],
+        "x": 154,
+        "y": 339,
+        "w": 752,
+        "h": 142
+    },
+    {
+        "id": "fe06a0eb68e7942b",
         "type": "inject",
-        "z": "a8f46f8122644718",
-        "name": "translation payload",
+        "z": "8a949045c2bde44f",
+        "g": "cfc4e326cf246fe9",
+        "name": "request",
         "props": [
             {
-                "p": "filename",
-                "v": "/path/to/my_file.mp3",
+                "p": "payload.file",
+                "v": "/path/to/my/input-file.mp3",
                 "vt": "str"
             },
             {
-                "p": "model",
+                "p": "payload.model",
                 "v": "whisper-1",
                 "vt": "str"
             }
@@ -29,34 +79,20 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 190,
-        "y": 260,
+        "x": 250,
+        "y": 240,
         "wires": [
             [
-                "3a737dfa6879caa2"
+                "378ed95ad08397c6"
             ]
         ]
     },
     {
-        "id": "72303cea19bd9de9",
-        "type": "OpenAI API",
-        "z": "a8f46f8122644718",
-        "name": "translator",
-        "service": "808a04cb8707d787",
-        "method": "createTranslation",
-        "x": 760,
-        "y": 260,
-        "wires": [
-            [
-                "b6fdacab7fb309bd"
-            ]
-        ]
-    },
-    {
-        "id": "b6fdacab7fb309bd",
+        "id": "dfaea51753a120f1",
         "type": "debug",
-        "z": "a8f46f8122644718",
-        "name": "response",
+        "z": "8a949045c2bde44f",
+        "g": "cfc4e326cf246fe9",
+        "name": "Response",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -65,58 +101,141 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 920,
-        "y": 260,
+        "x": 620,
+        "y": 240,
         "wires": []
     },
     {
-        "id": "3a737dfa6879caa2",
-        "type": "file in",
-        "z": "a8f46f8122644718",
-        "name": "audio file",
+        "id": "3bf87f7cccba7d76",
+        "type": "comment",
+        "z": "8a949045c2bde44f",
+        "g": "cfc4e326cf246fe9",
+        "name": "Create Translation",
+        "info": "",
+        "x": 270,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "adbe3dd2124bd65e",
+        "type": "inject",
+        "z": "8a949045c2bde44f",
+        "g": "3b463393064f49b9",
+        "name": "request",
+        "props": [
+            {
+                "p": "payload.model",
+                "v": "tts-1",
+                "vt": "str"
+            },
+            {
+                "p": "payload.input",
+                "v": "Hello world!",
+                "vt": "str"
+            },
+            {
+                "p": "payload.voice",
+                "v": "onyx",
+                "vt": "str"
+            },
+            {
+                "p": "filename",
+                "v": "/path/to/my/output-file.mp3",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 250,
+        "y": 440,
+        "wires": [
+            [
+                "c870615f02a9f85e"
+            ]
+        ]
+    },
+    {
+        "id": "378ed95ad08397c6",
+        "type": "OpenAI API",
+        "z": "8a949045c2bde44f",
+        "g": "cfc4e326cf246fe9",
+        "name": "Create Translation",
+        "service": "",
+        "method": "createTranslation",
+        "x": 430,
+        "y": 240,
+        "wires": [
+            [
+                "dfaea51753a120f1"
+            ]
+        ]
+    },
+    {
+        "id": "254e24ddcedb56fb",
+        "type": "file",
+        "z": "8a949045c2bde44f",
+        "g": "3b463393064f49b9",
+        "name": "save audio file",
         "filename": "filename",
         "filenameType": "msg",
-        "format": "",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "utf-16be",
-        "allProps": false,
-        "x": 380,
-        "y": 260,
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 620,
+        "y": 440,
         "wires": [
             [
-                "6e882571ec7d2180"
+                "ea94f3df99cb5ad9"
             ]
         ]
     },
     {
-        "id": "4a3af447f46156b8",
-        "type": "comment",
-        "z": "a8f46f8122644718",
-        "name": "Audio Translation",
-        "info": "",
-        "x": 160,
-        "y": 220,
+        "id": "ea94f3df99cb5ad9",
+        "type": "debug",
+        "z": "8a949045c2bde44f",
+        "g": "3b463393064f49b9",
+        "name": "response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 440,
         "wires": []
     },
     {
-        "id": "6e882571ec7d2180",
-        "type": "function",
-        "z": "a8f46f8122644718",
-        "name": "structure payload",
-        "func": "let newPayload = {};\n\nnewPayload.file = msg.payload;\nnewPayload.model = msg.model;\nnewPayload.filename = msg.filename;\n\nmsg.payload = newPayload;\n\ndelete msg.model;\ndelete msg.filename;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 570,
-        "y": 260,
+        "id": "c870615f02a9f85e",
+        "type": "OpenAI API",
+        "z": "8a949045c2bde44f",
+        "g": "3b463393064f49b9",
+        "name": "create speech",
+        "service": "",
+        "method": "createSpeech",
+        "x": 420,
+        "y": 440,
         "wires": [
             [
-                "72303cea19bd9de9"
+                "254e24ddcedb56fb"
             ]
         ]
+    },
+    {
+        "id": "c09d2cb245a00b1d",
+        "type": "comment",
+        "z": "8a949045c2bde44f",
+        "g": "3b463393064f49b9",
+        "name": "Create Speech",
+        "info": "",
+        "x": 260,
+        "y": 380,
+        "wires": []
     }
 ]

@@ -1,26 +1,51 @@
 [
     {
-        "id": "8b5b83e806871f8b",
+        "id": "dc40eecb9611dce6",
         "type": "tab",
-        "label": "Images Example",
+        "label": "Image Examples",
         "disabled": false,
         "info": "",
         "env": []
     },
     {
-        "id": "e619113e002286a4",
+        "id": "610413b8d258c093",
+        "type": "group",
+        "z": "dc40eecb9611dce6",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "d463be1fb4f4b316",
+            "defe047606001648",
+            "4e5290689cc38e3f",
+            "1ba407d00dd42425"
+        ],
+        "x": 114,
+        "y": 139,
+        "w": 592,
+        "h": 142
+    },
+    {
+        "id": "d463be1fb4f4b316",
         "type": "inject",
-        "z": "8b5b83e806871f8b",
-        "name": "image payload",
+        "z": "dc40eecb9611dce6",
+        "g": "610413b8d258c093",
+        "name": "file details",
         "props": [
             {
-                "p": "payload.prompt",
-                "v": "A cute baby sea otter",
+                "p": "payload.image",
+                "v": "/path/to/my/image/png",
                 "vt": "str"
             },
             {
-                "p": "payload.model",
-                "v": "dall-e-3",
+                "p": "payload.prompt",
+                "v": "A graphic design logo with a blue dot in the middle.",
                 "vt": "str"
             }
         ],
@@ -29,18 +54,19 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 280,
-        "y": 200,
+        "x": 220,
+        "y": 240,
         "wires": [
             [
-                "979e1bb6732cc292"
+                "1ba407d00dd42425"
             ]
         ]
     },
     {
-        "id": "b83c3be8fd9e1a43",
+        "id": "defe047606001648",
         "type": "debug",
-        "z": "8b5b83e806871f8b",
+        "z": "dc40eecb9611dce6",
+        "g": "610413b8d258c093",
         "name": "response",
         "active": true,
         "tosidebar": true,
@@ -50,32 +76,34 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 680,
-        "y": 200,
+        "x": 600,
+        "y": 240,
         "wires": []
     },
     {
-        "id": "8f836da49c19b6f9",
+        "id": "4e5290689cc38e3f",
         "type": "comment",
-        "z": "8b5b83e806871f8b",
-        "name": "Creates an image given a prompt.",
+        "z": "dc40eecb9611dce6",
+        "g": "610413b8d258c093",
+        "name": "Create Image Edit",
         "info": "",
-        "x": 320,
-        "y": 140,
+        "x": 230,
+        "y": 180,
         "wires": []
     },
     {
-        "id": "979e1bb6732cc292",
+        "id": "1ba407d00dd42425",
         "type": "OpenAI API",
-        "z": "8b5b83e806871f8b",
-        "name": "create image",
+        "z": "dc40eecb9611dce6",
+        "g": "610413b8d258c093",
+        "name": "create image edit",
         "service": "",
-        "method": "createImage",
-        "x": 490,
-        "y": 200,
+        "method": "createImageEdit",
+        "x": 410,
+        "y": 240,
         "wires": [
             [
-                "b83c3be8fd9e1a43"
+                "defe047606001648"
             ]
         ]
     }

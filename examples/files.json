@@ -1,71 +1,109 @@
 [
     {
-        "id": "1e45d9e751f7d036",
+        "id": "c95856327794f489",
         "type": "tab",
-        "label": "Files Example",
+        "label": "File Examples",
         "disabled": false,
         "info": "",
         "env": []
     },
     {
-        "id": "72d0fa390cfdbe59",
-        "type": "comment",
-        "z": "1e45d9e751f7d036",
-        "name": "Returns a list of files that belong to the user's organization.",
-        "info": "",
-        "x": 330,
-        "y": 220,
-        "wires": []
+        "id": "2eb6bac23f83d38b",
+        "type": "group",
+        "z": "c95856327794f489",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "54186a1f39edeeac",
+            "c9e22fbc2113f3a0",
+            "cff979baa8adcc5d",
+            "90a86dfe209b300e"
+        ],
+        "x": 94,
+        "y": 139,
+        "w": 672,
+        "h": 142
     },
     {
-        "id": "a27ea2a2de405820",
+        "id": "54186a1f39edeeac",
         "type": "inject",
-        "z": "1e45d9e751f7d036",
-        "name": "",
-        "props": [],
+        "z": "c95856327794f489",
+        "g": "2eb6bac23f83d38b",
+        "name": "File Reference",
+        "props": [
+            {
+                "p": "payload.file",
+                "v": "/path/to/my/file.txt",
+                "vt": "str"
+            },
+            {
+                "p": "payload.purpose",
+                "v": "assistants",
+                "vt": "str"
+            }
+        ],
         "repeat": "",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 155,
-        "y": 280,
+        "x": 220,
+        "y": 240,
         "wires": [
             [
-                "b2eb824897e04b08"
+                "90a86dfe209b300e"
             ]
-        ],
-        "l": false
+        ]
     },
     {
-        "id": "1cc99dce76439ced",
+        "id": "c9e22fbc2113f3a0",
         "type": "debug",
-        "z": "1e45d9e751f7d036",
-        "name": "response",
+        "z": "c95856327794f489",
+        "g": "2eb6bac23f83d38b",
+        "name": "Response",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "payload.data",
+        "complete": "payload",
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 460,
-        "y": 280,
+        "x": 660,
+        "y": 240,
         "wires": []
     },
     {
-        "id": "b2eb824897e04b08",
+        "id": "cff979baa8adcc5d",
+        "type": "comment",
+        "z": "c95856327794f489",
+        "g": "2eb6bac23f83d38b",
+        "name": "Upload Single File",
+        "info": "",
+        "x": 210,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "90a86dfe209b300e",
         "type": "OpenAI API",
-        "z": "1e45d9e751f7d036",
-        "name": "list files",
+        "z": "c95856327794f489",
+        "g": "2eb6bac23f83d38b",
+        "name": "Uplad File",
         "service": "",
-        "method": "listFiles",
-        "x": 280,
-        "y": 280,
+        "method": "createFile",
+        "x": 440,
+        "y": 240,
         "wires": [
             [
-                "1cc99dce76439ced"
+                "c9e22fbc2113f3a0"
             ]
         ]
     }

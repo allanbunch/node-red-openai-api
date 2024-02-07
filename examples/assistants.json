@@ -2,7 +2,7 @@
     {
         "id": "78b174792ca9efaf",
         "type": "tab",
-        "label": "Assistants Example",
+        "label": "Assistants Examples",
         "disabled": false,
         "info": "",
         "env": []
@@ -33,7 +33,7 @@
         ],
         "x": 94,
         "y": 113,
-        "w": 1492,
+        "w": 1472,
         "h": 374
     },
     {
@@ -51,16 +51,15 @@
             "color": "#a4a4a4"
         },
         "nodes": [
-            "e6cb8abd4fe85ef3",
             "7a825447030eb842",
             "e78656f2a1db4141",
-            "50dc0daeab93f1d7",
             "a342bcf840361d49",
-            "da5c242d75d45b1a"
+            "da5c242d75d45b1a",
+            "faf6244b17ba1131"
         ],
         "x": 454,
         "y": 139,
-        "w": 912,
+        "w": 832,
         "h": 122
     },
     {
@@ -78,8 +77,8 @@
             "color": "#a4a4a4"
         },
         "nodes": [
-            "43d56c48fd18dd0b",
-            "d0ed57739e76eba4"
+            "d0ed57739e76eba4",
+            "a319c0690ad183bc"
         ],
         "x": 454,
         "y": 339,
@@ -96,8 +95,8 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
         "x": 760,
@@ -120,12 +119,12 @@
             },
             {
                 "p": "assistant.name",
-                "v": "My Node-RED Assistant",
+                "v": "_node-red-openai-api-rag-example_",
                 "vt": "str"
             },
             {
                 "p": "assistant.model",
-                "v": "gpt-4-1106-preview",
+                "v": "gpt-3.5-turbo-1106",
                 "vt": "str"
             },
             {
@@ -149,7 +148,7 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "retrieval",
-        "payload": "[\"/path/to/my_file_1.pdf\",\"/path/to/my_file_2.txt\"]",
+        "payload": "[\"/path/to/my/file-1.txt\",\"/path/to/my/file-2.txt\"]",
         "payloadType": "json",
         "x": 220,
         "y": 220,
@@ -187,7 +186,7 @@
                 "7a825447030eb842"
             ],
             [
-                "43d56c48fd18dd0b"
+                "a319c0690ad183bc"
             ]
         ],
         "outputLabels": [
@@ -200,9 +199,9 @@
         "type": "comment",
         "z": "78b174792ca9efaf",
         "g": "3aed22e8a8626b49",
-        "name": "Document-Enhanced Assistant",
+        "name": "Document-Enhanced (RAG) Assistant",
         "info": "",
-        "x": 250,
+        "x": 270,
         "y": 180,
         "wires": []
     },
@@ -215,7 +214,7 @@
         "props": [
             {
                 "p": "payload.name",
-                "v": "My Node-RED Standard Assistant",
+                "v": "_node-red-openai-api-example_",
                 "vt": "str"
             },
             {
@@ -257,19 +256,19 @@
         "type": "function",
         "z": "78b174792ca9efaf",
         "g": "3aed22e8a8626b49",
-        "name": "structure assistant",
-        "func": "// create an array of IDs from the fil upload response.\nconst file_ids = msg.payload.map(element => element.id);\n\n// attach the file IDs to the assistant.\nmsg.assistant.file_ids = file_ids;\n\nmsg.payload = msg.assistant;\n\n// discard the temporary assistant object.\ndelete msg.assistant;\n\nreturn msg;",
+        "name": "structure assistant payload",
+        "func": "// create an array of IDs from the fil upload response.\nconst file_ids = msg.payload.map(element => element.id);\n\n// attach the file IDs to the assistant.\nmsg.assistant.file_ids = file_ids;\n\nmsg.payload = msg.assistant;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1470,
+        "x": 1420,
         "y": 220,
         "wires": [
             [
-                "43d56c48fd18dd0b"
+                "a319c0690ad183bc"
             ]
         ]
     },
@@ -285,19 +284,18 @@
         "wires": []
     },
     {
-        "id": "e6cb8abd4fe85ef3",
-        "type": "file in",
+        "id": "7a825447030eb842",
+        "type": "split",
         "z": "78b174792ca9efaf",
         "g": "6ada9879e91ef156",
-        "name": "read file",
-        "filename": "payload",
-        "filenameType": "msg",
-        "format": "",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "none",
-        "allProps": false,
-        "x": 740,
+        "name": "gather file details",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 570,
         "y": 220,
         "wires": [
             [
@@ -306,31 +304,11 @@
         ]
     },
     {
-        "id": "7a825447030eb842",
-        "type": "split",
-        "z": "78b174792ca9efaf",
-        "g": "6ada9879e91ef156",
-        "name": "get file names",
-        "splt": "\\n",
-        "spltType": "str",
-        "arraySplt": 1,
-        "arraySpltType": "len",
-        "stream": false,
-        "addname": "",
-        "x": 560,
-        "y": 220,
-        "wires": [
-            [
-                "e6cb8abd4fe85ef3"
-            ]
-        ]
-    },
-    {
         "id": "e78656f2a1db4141",
         "type": "join",
         "z": "78b174792ca9efaf",
         "g": "6ada9879e91ef156",
-        "name": "gather file ids",
+        "name": "gather files",
         "mode": "auto",
         "build": "object",
         "property": "payload",
@@ -346,27 +324,11 @@
         "reduceInit": "",
         "reduceInitType": "",
         "reduceFixup": "",
-        "x": 1270,
+        "x": 1190,
         "y": 220,
         "wires": [
             [
                 "e0007c022bce36b9"
-            ]
-        ]
-    },
-    {
-        "id": "50dc0daeab93f1d7",
-        "type": "OpenAI API",
-        "z": "78b174792ca9efaf",
-        "g": "6ada9879e91ef156",
-        "name": "upload files",
-        "service": "808a04cb8707d787",
-        "method": "createFile",
-        "x": 1090,
-        "y": 220,
-        "wires": [
-            [
-                "e78656f2a1db4141"
             ]
         ]
     },
@@ -386,7 +348,7 @@
         "type": "function",
         "z": "78b174792ca9efaf",
         "g": "6ada9879e91ef156",
-        "name": "structure file",
+        "name": "structure file payload",
         "func": "msg.payload = {\n    \"file\": msg.payload,\n    \"purpose\": \"assistants\",\n    \"filename\": msg.filename\n};\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
@@ -394,27 +356,11 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 910,
+        "x": 800,
         "y": 220,
         "wires": [
             [
-                "50dc0daeab93f1d7"
-            ]
-        ]
-    },
-    {
-        "id": "43d56c48fd18dd0b",
-        "type": "OpenAI API",
-        "z": "78b174792ca9efaf",
-        "g": "a08cc5475a20cc70",
-        "name": "create assistant",
-        "service": "39eba92e93450944",
-        "method": "createAssistant",
-        "x": 560,
-        "y": 380,
-        "wires": [
-            [
-                "a1dd9dd38256bc37"
+                "faf6244b17ba1131"
             ]
         ]
     },
@@ -438,5 +384,37 @@
         "x": 180,
         "y": 80,
         "wires": []
+    },
+    {
+        "id": "faf6244b17ba1131",
+        "type": "OpenAI API",
+        "z": "78b174792ca9efaf",
+        "g": "6ada9879e91ef156",
+        "name": "upload file",
+        "service": "",
+        "method": "createFile",
+        "x": 1010,
+        "y": 220,
+        "wires": [
+            [
+                "e78656f2a1db4141"
+            ]
+        ]
+    },
+    {
+        "id": "a319c0690ad183bc",
+        "type": "OpenAI API",
+        "z": "78b174792ca9efaf",
+        "g": "a08cc5475a20cc70",
+        "name": "create assistant",
+        "service": "",
+        "method": "createAssistant",
+        "x": 560,
+        "y": 380,
+        "wires": [
+            [
+                "a1dd9dd38256bc37"
+            ]
+        ]
     }
 ]
