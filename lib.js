@@ -13,7 +13,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
 
       const openai = new OpenAI(clientParams);
       const response = await openai.chat.completions.create({
@@ -21,22 +21,29 @@ let OpenaiApi = (function () {
       });
 
       if (parameters.payload.stream) {
+        node.status({
+          fill: "green",
+          shape: "dot",
+          text: "OpenaiApi.status.streaming",
+        });
         for await (const chunk of response) {
-          node.send(chunk);
+          if (typeof chunk === "object") {
+            let payload = { payload: chunk };
+            node.send(payload);
+          }
         }
-        return { code: 0, status: "complete" };
+        node.status({});
       } else {
         return response;
       }
     }
 
     async createImage(parameters) {
-
       const clientParams = {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
 
       const openai = new OpenAI(clientParams);
       const response = await openai.images.generate({
@@ -51,7 +58,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       parameters.payload.image = fs.createReadStream(parameters.payload.image);
@@ -71,7 +78,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       parameters.payload.image = fs.createReadStream(parameters.payload.image);
@@ -87,7 +94,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const response = await openai.embeddings.create({
@@ -102,7 +109,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const audio = await openai.audio.speech.create({ ...parameters.payload });
@@ -116,7 +123,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       parameters.payload.file = fs.createReadStream(parameters.payload.file);
@@ -133,7 +140,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       parameters.payload.file = fs.createReadStream(parameters.payload.file);
@@ -149,7 +156,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const list = await openai.files.list({
@@ -169,7 +176,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       parameters.payload.file = fs.createReadStream(parameters.payload.file);
@@ -184,7 +191,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const response = await openai.files.del({
@@ -198,7 +205,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const file_id = parameters.payload.file_id;
@@ -215,7 +222,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const file_id = parameters.payload.file_id;
@@ -232,7 +239,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const response = await openai.fineTuning.jobs.create({
@@ -246,7 +253,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const list = await openai.fineTuning.jobs.list({
@@ -265,7 +272,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const response = await openai.fineTuning.jobs.retrieve(
@@ -279,7 +286,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       let response = [];
@@ -296,7 +303,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const response = await openai.fineTuning.jobs.cancel(
@@ -310,7 +317,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const response = await openai.models.list();
@@ -322,7 +329,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const model = parameters.payload.model;
@@ -335,7 +342,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const model = parameters.payload.model;
@@ -348,7 +355,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const response = await openai.moderations.create(parameters.payload);
@@ -359,7 +366,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const response = await openai.beta.assistants.list({
@@ -373,7 +380,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const response = await openai.beta.assistants.create({
@@ -387,7 +394,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const id = parameters.payload.assistant_id;
@@ -400,7 +407,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const id = parameters.payload.assistant_id;
@@ -417,7 +424,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const id = parameters.payload.assistant_id;
@@ -430,7 +437,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const response = await openai.beta.threads.create({
@@ -444,7 +451,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const id = parameters.payload.thread_id;
@@ -457,7 +464,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const id = parameters.payload.thread_id;
@@ -474,7 +481,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const id = parameters.payload.thread_id;
@@ -487,7 +494,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const id = parameters.payload.thread_id;
@@ -500,7 +507,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const thread_id = parameters.payload.thread_id;
@@ -517,7 +524,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const thread_id = parameters.payload.thread_id;
@@ -535,7 +542,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const thread_id = parameters.payload.thread_id;
@@ -558,7 +565,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const response = await openai.beta.threads.createAndRun({
@@ -572,7 +579,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const thred_id = parameters.payload.thread_id;
@@ -589,7 +596,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const thread_id = parameters.payload.thread_id;
@@ -606,7 +613,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const thread_id = parameters.payload.thread_id;
@@ -626,7 +633,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const thread_id = parameters.payload.thread_id;
@@ -649,7 +656,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const thread_id = parameters.payload.thread_id;
@@ -672,7 +679,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const thread_id = parameters.payload.thread_id;
@@ -695,7 +702,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const thread_id = parameters.payload.thread_id;
@@ -718,7 +725,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const thread_id = parameters.payload.thread_id;
@@ -738,7 +745,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const assistant_id = parameters.payload.assistant_id;
@@ -755,7 +762,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const assistant_id = parameters.payload.assistant_id;
@@ -772,7 +779,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const assistant_id = parameters.payload.assistant_id;
@@ -795,7 +802,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const assistant_id = parameters.payload.assistant_id;
@@ -818,7 +825,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const thread_id = parameters.payload.thread_id;
@@ -841,7 +848,7 @@ let OpenaiApi = (function () {
         apiKey: parameters.apiKey,
         baseURL: parameters.apiBase,
         organization: parameters.organization,
-      }
+      };
       const openai = new OpenAI(clientParams);
 
       const thread_id = parameters.payload.thread_id;

@@ -33,10 +33,12 @@ module.exports = function (RED) {
 
           client[functionName](serviceParametersObject)
             .then((payload) => {
-              // Update `msg.payload` with the payload from the API response.
-              msg.payload = payload;
-              node.send(msg);
-              node.status({});
+              if (payload !== undefined) {
+                // Update `msg.payload` with the payload from the API response, then send resonse to client.
+                msg.payload = payload;
+                node.send(msg);
+                node.status({});
+              }
             })
             .catch(function (error) {
               node.status({

@@ -11,7 +11,8 @@
             "isQuery": "isQuery"
         },
         "status": {
-            "requesting": "requesting"
+            "requesting": "requesting",
+            "streaming": "streaming"
         },
         "parameters": {
             "createChatCompletion": "create chat completion",
