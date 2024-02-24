@@ -1,4 +1,7 @@
 {
   "tabWidth": 2,
-  "useTabs": false
+  "useTabs": false,
+  "htmlWhitespaceSensitivity": "ignore",
+  "bracketSameLine": true,
+  "printWidth": 80
 }
