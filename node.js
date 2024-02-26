@@ -5,21 +5,32 @@ module.exports = function (RED) {
   class OpenaiApiNode {
     constructor(config) {
       RED.nodes.createNode(this, config);
-      this.service = RED.nodes.getNode(config.service);
-      this.method = config.method;
 
       let node = this;
+      node.service = RED.nodes.getNode(config.service);
+      node.config = config;
 
       node.on("input", function (msg) {
         let client = new lib.OpenaiApi();
+        let payload;
 
-        const serviceName = node.method; // Set the service name to call.
+        const propertyType = node.config.propertyType || "msg";
+        const propertyPath = node.config.property || "payload";
+
+        if (propertyType === "msg") {
+          payload = RED.util.getMessageProperty(msg, propertyPath);
+        } else {
+          // For flow and global contexts
+          payload = node.context()[propertyType].get(propertyPath);
+        }
+
+        const serviceName = node.config.method; // Set the service name to call.
         let serviceParametersObject = {
           organization: node.service.organizationId,
           apiBase: node.service.apiBase,
           apiKey: node.service.credentials.secureApiKeyValue || "",
           _node: node,
-          payload: { ...msg.payload },
+          payload: payload,
         };
 
         // Dynamically call the function based on the service name

@@ -4,6 +4,8 @@
     color: "#B8B1FB",
     defaults: {
       name: { value: "" },
+      property: { value: "payload", required: true },
+      propertyType: { value: "msg" },
       service: { value: "", type: "Service Host", required: true },
       method: { value: "", required: true },
     },
@@ -22,8 +24,20 @@
         var methods = $("#node-input-method").children();
         var firstMethod = methods.first();
         $("#node-input-method").val(firstMethod.val());
+      };
+
+      // set the default property type value to "payload"
+      if (this.property === undefined) {
+        $("#node-input-property").val("payload");
       }
-    },
+
+      $("#node-input-property").typedInput({
+        default: "msg",
+        value: "payload",
+        types:["msg", "flow", "global"],
+        typeField: "#node-input-propertyType"
+      })
+    }
   });
 </script>
 
@@ -47,6 +61,15 @@
       <span data-i18n="OpenaiApi.label.serviceHost"></span
     ></label>
     <input type="text" id="node-input-service" />
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-property"
+      ><i class="fa fa-ellipsis-h"></i>
+      <span data-i18n="OpenaiApi.label.property"></span
+    ></label>
+    <input type="text" id="node-input-property">
+    <input type="hidden" id="node-input-propertyType">
   </div>
 
   <div class="form-row">
@@ -2681,7 +2704,7 @@
       );
       if (!selected.val()) {
         $("#node-config-input-secureApiKeyIsQuery").val(false);
-      }
+      };
     },
   });
 </script>
