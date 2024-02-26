@@ -9,11 +9,13 @@
 
 _@inductiv/node-red-openai-api_ offers a versatile and configurable Node-RED node, designed specifically for seamless integration with OpenAI's advanced platform services. It empowers you to effortlessly connect and orchestrate various OpenAI functionalities, leveraging the full power of Node-RED's sophisticated application nodes. Whether you're aiming to enhance your workflows with cutting-edge AI capabilities or create innovative applications, this node serves as your gateway to harnessing the latest in AI technology from OpenAI, all within the intuitive and flexible environment of Node-RED.
 
-## New in Version 0.5.0
+## New in Version 0.6.0
 
-- Chat completion streaming responses are now returned in the `msg.payload` object, consistent with other
-endpont response structures.
-- Bug fixes.
+- The node now has a customizable input type field in the editor dialog.
+  - You can now configure your API call payload using either a `msg`, `flow`, or `global` property setting. This brings even greater contextual control to your AI requests.
+  - **Note:** Existing implementations default to `msg.payload` and _should_ continue to work as implemented using previous versions of this node.
+
+Please report any issues [here on Github](https://github.com/allanbunch/node-red-openai-api/issues).
 
 ## Key Features
 
@@ -92,21 +94,15 @@ I very much appreciate community input and invite everyone to shape the future o
 
 ### Engage in Various Discussions
 
-- **Announcements**: Stay updated with the latest project news.
-- **General**: Share thoughts or seek advice on broader topics.
-- **Ideas**: Propose new features or improvements.
-- **Polls**: Participate in polls to influence project decisions.
-- **Q&A**: Get answers to your questions and share your expertise.
-- **Show and Tell**: Showcase your creative implementations and inspire others.
+- **[Announcements](https://github.com/allanbunch/node-red-openai-api/discussions/categories/announcements)**: Stay updated with the latest project news.
+- **[General](https://github.com/allanbunch/node-red-openai-api/discussions/categories/general)**: Share thoughts or seek advice on broader topics.
+- **[Ideas](https://github.com/allanbunch/node-red-openai-api/discussions/categories/ideas)**: Propose new features or improvements.
+- **[Polls](https://github.com/allanbunch/node-red-openai-api/discussions/categories/polls)**: Participate in polls to influence project decisions.
+- **[Q&A](https://github.com/allanbunch/node-red-openai-api/discussions/categories/q-a)**: Get answers to your questions and share your expertise.
+- **[Show and Tell](https://github.com/allanbunch/node-red-openai-api/discussions/categories/show-and-tell)**: Showcase your creative implementations and inspire others.
 
 Join the conversation [here](https://github.com/allanbunch/node-red-openai-api/discussions) and let's build a vibrant and collaborative community together!
 
 ## License
 
 [MIT](./LICENSE)
-
-## Acknowledgements
-
-- [node-red-nodegen](https://github.com/node-red/node-red-nodegen)
-  - For boilerplate code generation, though the auto-generated code has been largely refactored.
-  - **Note:** This package uses `axios` in place of node-red-nodegen's `request` default.
