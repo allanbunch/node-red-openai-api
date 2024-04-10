@@ -17,10 +17,10 @@ let OpenaiApi = (function () {
 
       const openai = new OpenAI(clientParams);
       const response = await openai.chat.completions.create({
-        ...parameters.payload,
+        ...parameters.msg.payload,
       });
 
-      if (parameters.payload.stream) {
+      if (parameters.msg.payload.stream) {
         node.status({
           fill: "green",
           shape: "dot",
@@ -28,8 +28,9 @@ let OpenaiApi = (function () {
         });
         for await (const chunk of response) {
           if (typeof chunk === "object") {
-            let payload = { payload: chunk };
-            node.send(payload);
+            let msg = parameters.msg;
+            msg.payload = chunk;
+            node.send(msg);
           }
         }
         node.status({});

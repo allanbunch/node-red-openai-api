@@ -30,7 +30,7 @@ module.exports = function (RED) {
           apiBase: node.service.apiBase,
           apiKey: node.service.credentials.secureApiKeyValue || "",
           _node: node,
-          payload: payload,
+          msg: msg,
         };
 
         // Dynamically call the function based on the service name
