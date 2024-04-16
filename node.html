@@ -1,3 +1,5 @@
+<!--TODO: Implement Batch API endpoints: https://github.com/openai/openai-node/blob/6f72e7ad3e4e151c9334f4449d1c3555255c2793/CHANGELOG.md#features-2 -->
+
 <script type="text/javascript">
   RED.nodes.registerType("OpenAI API", {
     category: "AI",
@@ -1842,6 +1844,18 @@
         <span class="property-type">string</span>
       </dt>
       <dd>A cursor for use in pagination.</dd>
+
+      <dt class="optional">
+        run_id
+        <a
+          href="https://platform.openai.com/docs/api-reference/messages/listMessages#messages-listmessages-run_id"
+          target="_blank"
+          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+        ></a>
+        <span class="property-type">string</span>
+      </dt>
+      <dd>Filter messages by the run ID that generated them.</dd>
+
     </dl>
 
     <h3>Create Message</h3>
@@ -2235,6 +2249,90 @@
           <span class="property-type">object</span>
         </dt>
         <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
+
+
+        <dt class="optional">
+          temperature
+          <a
+            href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-temperature"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">number</span>
+        </dt>
+        <dd>What sampling temperature to use, between 0 and 2.</dd>
+        
+        <dt class="optional">
+          stream
+          <a
+            href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-stream"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">boolean</span>
+        </dt>
+        <dd>If <code>true</code>, returns a stream of events that happen during the Run as server-sent events, terminating when the Run enters a terminal state with a <code>data: [DONE]</code> message.</dd>
+        
+        <dt class="optional">
+          max_prompt_tokens
+          <a
+            href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-max_prompt_tokens"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">integer</span>
+        </dt>
+        <dd>The maximum number of prompt tokens that may be used over the course of the run.</dd>
+        
+        <dt class="optional">
+          max_completion_tokens
+          <a
+            href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-max_completion_tokens"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">integer</span>
+        </dt>
+        <dd>The maximum number of completion tokens that may be used over the course of the run.</dd>
+
+        <dt class="optional">
+          truncation_strategy
+          <a
+            href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-truncation_strategy"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">object</span>
+          <dd>
+            <strong><code>@property {string} type</code></strong> - The truncation strategy to use for the thread. The default is <code>auto</code>. If set to <code>last_messages</code>, the thread will be truncated to the n most recent messages in the thread. When set to <code>auto</code>, messages in the middle of the thread will be dropped to fit the context length of the model, <code>max_prompt_tokens</code>.
+          </dd>
+          <dd>
+            <strong><code>@property {integer} [last_messages]</code></strong> - The number of most recent messages from the thread when constructing the context for the run.
+          </dd>
+        </dt>
+
+        <dt class="optional">
+          tool_choice
+          <a
+            href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-tool_choice"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string | object</span>
+        </dt>
+        <dd>Controls which (if any) tool is called by the model. <code>none</code> means the model will not call any tools and instead generates a message. <code>auto</code> is the default value and means the model can pick between generating a message or calling a tool. Specifying a particular tool like <code>{"type": "TOOL_TYPE"}</code> forces the model to call that tool.</dd>
+
+        <dt class="optional">
+          response_format
+          <a
+            href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-response_format"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string | object</span>
+        </dt>
+        <dd>Specifies the format that the model must output.</dd>
+
       </dl>
 
       <h2>List Runs</h2>
@@ -2339,9 +2437,35 @@
           <span class="property-type">string</span>
         </dt>
         <dd>
-          Appends additional instructions at the end of the instructions for the
-          run.
+          Overrides the instructions of the assistant. This is useful for modifying the behavior on a per-run basis.
         </dd>
+
+        <dt class="optional">
+          additional_instructions
+          <a
+            href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-additional_instructions"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string</span>
+        </dt>
+        <dd>
+          Appends additional instructions at the end of the instructions for the run. This is useful for modifying the behavior on a per-run basis without overriding other instructions.
+        </dd>
+
+        <dt class="optional">
+          additional_messages
+          <a
+            href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-additional_messages"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">array</span>
+        </dt>
+        <dd>
+          Adds additional messages to the thread before creating the run.
+        </dd>
+
         <dt class="optional">
           tools
           <a
