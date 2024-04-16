@@ -48,7 +48,7 @@ let OpenaiApi = (function () {
 
       const openai = new OpenAI(clientParams);
       const response = await openai.images.generate({
-        ...parameters.payload,
+        ...parameters.msg.payload,
       });
 
       return response;
@@ -62,13 +62,17 @@ let OpenaiApi = (function () {
       };
       const openai = new OpenAI(clientParams);
 
-      parameters.payload.image = fs.createReadStream(parameters.payload.image);
-      if (parameters.payload.mask) {
-        parameters.payload.mask = fs.createReadStream(parameters.payload.mask);
+      parameters.msg.payload.image = fs.createReadStream(
+        parameters.msg.payload.image,
+      );
+      if (parameters.msg.payload.mask) {
+        parameters.msg.payload.mask = fs.createReadStream(
+          parameters.msg.payload.mask,
+        );
       }
 
       const response = await openai.images.edit({
-        ...parameters.payload,
+        ...parameters.msg.payload,
       });
 
       return response;
@@ -187,6 +191,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async deleteFile(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -201,6 +206,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async retrieveFile(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -218,6 +224,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async downloadFile(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -235,6 +242,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async createFineTuningJob(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -249,6 +257,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async listPaginatedFineTuningJobs(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -268,6 +277,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async retrieveFineTuningJob(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -282,6 +292,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async listFineTuningEvents(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -299,6 +310,7 @@ let OpenaiApi = (function () {
       }
       return response;
     }
+
     async cancelFineTuningJob(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -313,6 +325,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async listModels(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -325,6 +338,7 @@ let OpenaiApi = (function () {
 
       return response.body;
     }
+
     async retrieveModel(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -338,6 +352,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async deleteModel(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -351,6 +366,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async createModeration(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -362,6 +378,7 @@ let OpenaiApi = (function () {
       const response = await openai.moderations.create(parameters.payload);
       return response;
     }
+
     async listAssistants(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -376,6 +393,7 @@ let OpenaiApi = (function () {
 
       return response.body;
     }
+
     async createAssistant(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -390,6 +408,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async getAssistant(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -403,6 +422,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async modifyAssistant(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -420,6 +440,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async deleteAssistant(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -433,6 +454,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async createThread(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -447,6 +469,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async getThread(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -460,6 +483,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async modifyThread(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -477,6 +501,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async deleteThread(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -490,6 +515,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async listMessages(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -503,6 +529,7 @@ let OpenaiApi = (function () {
 
       return response.body;
     }
+
     async createMessage(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -520,6 +547,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async getMessage(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -538,6 +566,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async modifyMessage(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -561,6 +590,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async createThreadAndRun(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -575,6 +605,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async listRuns(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -592,6 +623,7 @@ let OpenaiApi = (function () {
 
       return response.body;
     }
+
     async createRun(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -609,6 +641,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async getRun(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -629,6 +662,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async modifyRun(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -652,6 +686,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async submitToolOuputsToRun(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -675,6 +710,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async cancelRun(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -698,6 +734,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async listRunSteps(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -721,6 +758,7 @@ let OpenaiApi = (function () {
 
       return response.body;
     }
+
     async getRunStep(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -741,6 +779,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async listAssistantFiles(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -758,6 +797,7 @@ let OpenaiApi = (function () {
 
       return response.body;
     }
+
     async createAssistantFile(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -775,6 +815,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async getAssistantFile(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -798,6 +839,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async deleteAssistantFile(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -821,6 +863,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async listMessageFiles(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
@@ -844,6 +887,7 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
     async getMessageFile(parameters) {
       const clientParams = {
         apiKey: parameters.apiKey,
