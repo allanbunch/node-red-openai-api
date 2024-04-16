@@ -86,9 +86,11 @@ let OpenaiApi = (function () {
       };
       const openai = new OpenAI(clientParams);
 
-      parameters.payload.image = fs.createReadStream(parameters.payload.image);
+      parameters.msg.payload.image = fs.createReadStream(
+        parameters.msg.payload.image,
+      );
       const response = await openai.images.createVariation({
-        ...parameters.payload,
+        ...parameters.msg.payload,
       });
 
       return response;
