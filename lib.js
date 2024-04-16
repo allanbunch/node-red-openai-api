@@ -105,7 +105,7 @@ let OpenaiApi = (function () {
       const openai = new OpenAI(clientParams);
 
       const response = await openai.embeddings.create({
-        ...parameters.payload,
+        ...parameters.msg.payload,
       });
 
       return response;
@@ -119,7 +119,9 @@ let OpenaiApi = (function () {
       };
       const openai = new OpenAI(clientParams);
 
-      const audio = await openai.audio.speech.create({ ...parameters.payload });
+      const audio = await openai.audio.speech.create({
+        ...parameters.msg.payload,
+      });
       const response = Buffer.from(await audio.arrayBuffer());
 
       return response;
