@@ -34,7 +34,7 @@
       $("#node-input-property").typedInput({
         default: "msg",
         value: "payload",
-        types:["msg", "flow", "global"],
+        types: ["msg", "flow", "global"],
         typeField: "#node-input-propertyType"
       })
     }
@@ -852,6 +852,17 @@
         <span class="property-type">number</span>
       </dt>
       <dd>The sampling temperature, between 0 and 1.</dd>
+
+      <dt class="optional">
+        timestamp_granularities
+        <a
+          href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-timestamp_granularities"
+          target="_blank"
+          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+        ></a>
+        <span class="property-type">array</span>
+      </dt>
+      <dd>The timestamp granularities to populate for this transcription. <code>response_format</code> must be set to <code>verbose_json</code> to use timestamp granularities. Either or both of these options are supported: <code>word</code>, or <code>segment</code>.</dd>
     </dl>
 
     <h2>Create Translation</h2>
