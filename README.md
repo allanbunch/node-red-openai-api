@@ -9,11 +9,9 @@
 
 _@inductiv/node-red-openai-api_ offers a versatile and configurable Node-RED node, designed specifically for seamless integration with OpenAI's advanced platform services. It empowers you to effortlessly connect and orchestrate various OpenAI functionalities, leveraging the full power of Node-RED's sophisticated application nodes. Whether you're aiming to enhance your workflows with cutting-edge AI capabilities or create innovative applications, this node serves as your gateway to harnessing the latest in AI technology from OpenAI, all within the intuitive and flexible environment of Node-RED.
 
-## New in Version 0.6.0
+## New in Version 0.7.0
 
-- The node now has a customizable input type field in the editor dialog.
-  - You can now configure your API call payload using either a `msg`, `flow`, or `global` property setting. This brings even greater contextual control to your AI requests.
-  - **Note:** Existing implementations default to `msg.payload` and _should_ continue to work as implemented using previous versions of this node.
+- The ```createChatCompletion``` endpoint now retains top-level message (```msg```) properties in responses. This means that all custom message properties--aside from the `msg.payload` object--are returned from ```createChatCompletion``` requests.
 
 Please report any issues [here on Github](https://github.com/allanbunch/node-red-openai-api/issues).
 
