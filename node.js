@@ -11,7 +11,15 @@ module.exports = function (RED) {
       node.config = config;
 
       node.on("input", function (msg) {
-        let client = new lib.OpenaiApi();
+        let clientApiKey = node.service.credentials.secureApiKeyValue || "";
+        let clientApiBase = node.service.apiBase;
+        let clientOrganization = node.service.organizationId;
+
+        let client = new lib.OpenaiApi(
+          clientApiKey,
+          clientApiBase,
+          clientOrganization,
+        );
         let payload;
 
         const propertyType = node.config.propertyType || "msg";
@@ -26,9 +34,6 @@ module.exports = function (RED) {
 
         const serviceName = node.config.method; // Set the service name to call.
         let serviceParametersObject = {
-          organization: node.service.organizationId,
-          apiBase: node.service.apiBase,
-          apiKey: node.service.credentials.secureApiKeyValue || "",
           _node: node,
           msg: msg,
         };

@@ -5,17 +5,19 @@ let OpenaiApi = (function () {
   const OpenAI = require("openai").OpenAI;
 
   class OpenaiApi {
+    constructor(apiKey, baseURL, organization) {
+      this.clientParams = {
+        apiKey: apiKey,
+        baseURL: baseURL,
+        organization: organization
+      }
+    }
+
     async createChatCompletion(parameters) {
       let node = parameters._node;
       delete parameters._node;
 
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-
-      const openai = new OpenAI(clientParams);
+      const openai = new OpenAI(this.clientParams);
       const response = await openai.chat.completions.create({
         ...parameters.msg.payload,
       });
@@ -28,9 +30,11 @@ let OpenaiApi = (function () {
         });
         for await (const chunk of response) {
           if (typeof chunk === "object") {
-            let msg = parameters.msg;
-            msg.payload = chunk;
-            node.send(msg);
+            
+            let {_msgid, ...newMsg} = parameters.msg;
+            newMsg.payload = chunk;
+
+            node.send(newMsg);
           }
         }
         node.status({});
@@ -40,13 +44,7 @@ let OpenaiApi = (function () {
     }
 
     async createImage(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-
-      const openai = new OpenAI(clientParams);
+      const openai = new OpenAI(this.clientParams);
       const response = await openai.images.generate({
         ...parameters.msg.payload,
       });
@@ -55,12 +53,7 @@ let OpenaiApi = (function () {
     }
 
     async createImageEdit(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
+      const openai = new OpenAI(this.clientParams);
 
       parameters.msg.payload.image = fs.createReadStream(
         parameters.msg.payload.image,
@@ -79,12 +72,7 @@ let OpenaiApi = (function () {
     }
 
     async createImageVariation(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
+      const openai = new OpenAI(this.clientParams);
 
       parameters.msg.payload.image = fs.createReadStream(
         parameters.msg.payload.image,
@@ -97,12 +85,7 @@ let OpenaiApi = (function () {
     }
 
     async createEmbedding(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
+      const openai = new OpenAI(this.clientParams);
 
       const response = await openai.embeddings.create({
         ...parameters.msg.payload,
@@ -112,12 +95,7 @@ let OpenaiApi = (function () {
     }
 
     async createSpeech(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
+      const openai = new OpenAI(this.clientParams);
 
       const audio = await openai.audio.speech.create({
         ...parameters.msg.payload,
@@ -128,12 +106,7 @@ let OpenaiApi = (function () {
     }
 
     async createTranscription(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
+      const openai = new OpenAI(this.clientParams);
 
       parameters.msg.payload.file = fs.createReadStream(
         parameters.msg.payload.file,
@@ -147,12 +120,7 @@ let OpenaiApi = (function () {
     }
 
     async createTranslation(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
+      const openai = new OpenAI(this.clientParams);
 
       parameters.msg.payload.file = fs.createReadStream(
         parameters.msg.payload.file,
@@ -165,12 +133,7 @@ let OpenaiApi = (function () {
     }
 
     async listFiles(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
+      const openai = new OpenAI(this.clientParams);
 
       const list = await openai.files.list({
         ...parameters.msg.payload,
@@ -185,12 +148,7 @@ let OpenaiApi = (function () {
     }
 
     async createFile(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
+      const openai = new OpenAI(this.clientParams);
 
       parameters.msg.payload.file = fs.createReadStream(
         parameters.msg.payload.file,
@@ -203,12 +161,7 @@ let OpenaiApi = (function () {
     }
 
     async deleteFile(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
+      const openai = new OpenAI(this.clientParams);
 
       const response = await openai.files.del({
         ...parameters.msg.payload,
@@ -218,12 +171,7 @@ let OpenaiApi = (function () {
     }
 
     async retrieveFile(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
+      const openai = new OpenAI(this.clientParams);
 
       const file_id = parameters.msg.payload.file_id;
       delete parameters.msg.payload.file_id;
@@ -236,12 +184,7 @@ let OpenaiApi = (function () {
     }
 
     async downloadFile(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
+      const openai = new OpenAI(this.clientParams);
 
       const file_id = parameters.msg.payload.file_id;
       delete parameters.msg.payload.file_id;
@@ -254,12 +197,7 @@ let OpenaiApi = (function () {
     }
 
     async createFineTuningJob(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
+      const openai = new OpenAI(this.clientParams);
 
       const response = await openai.fineTuning.jobs.create({
         ...parameters.msg.payload,
@@ -269,12 +207,7 @@ let OpenaiApi = (function () {
     }
 
     async listPaginatedFineTuningJobs(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
+      const openai = new OpenAI(this.clientParams);
 
       const list = await openai.fineTuning.jobs.list({
         ...parameters.msg.payload,
@@ -289,12 +222,7 @@ let OpenaiApi = (function () {
     }
 
     async retrieveFineTuningJob(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
+      const openai = new OpenAI(this.clientParams);
 
       const response = await openai.fineTuning.jobs.retrieve(
         parameters.msg.payload.fine_tuning_job_id,
@@ -304,12 +232,7 @@ let OpenaiApi = (function () {
     }
 
     async listFineTuningEvents(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
+      const openai = new OpenAI(this.clientParams);
 
       let response = [];
       const list = await openai.fineTuning.jobs.listEvents(
@@ -322,12 +245,7 @@ let OpenaiApi = (function () {
     }
 
     async cancelFineTuningJob(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
+      const openai = new OpenAI(this.clientParams);
 
       const response = await openai.fineTuning.jobs.cancel(
         parameters.msg.payload.fine_tuning_job_id,
@@ -337,26 +255,14 @@ let OpenaiApi = (function () {
     }
 
     async listModels(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const response = await openai.models.list();
 
       return response.body;
     }
 
     async retrieveModel(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const model = parameters.msg.payload.model;
       const response = await openai.models.retrieve(model);
 
@@ -364,13 +270,7 @@ let OpenaiApi = (function () {
     }
 
     async deleteModel(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const model = parameters.msg.payload.model;
       const response = await openai.models.del(model);
 
@@ -378,25 +278,13 @@ let OpenaiApi = (function () {
     }
 
     async createModeration(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const response = await openai.moderations.create(parameters.msg.payload);
       return response;
     }
 
     async listAssistants(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const response = await openai.beta.assistants.list({
         ...parameters.msg.payload,
       });
@@ -405,13 +293,7 @@ let OpenaiApi = (function () {
     }
 
     async createAssistant(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const response = await openai.beta.assistants.create({
         ...parameters.msg.payload,
       });
@@ -420,13 +302,7 @@ let OpenaiApi = (function () {
     }
 
     async getAssistant(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const id = parameters.msg.payload.assistant_id;
       const response = await openai.beta.assistants.retrieve(id);
 
@@ -434,13 +310,7 @@ let OpenaiApi = (function () {
     }
 
     async modifyAssistant(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const id = parameters.msg.payload.assistant_id;
       delete parameters.msg.payload.assistant_id;
 
@@ -452,13 +322,7 @@ let OpenaiApi = (function () {
     }
 
     async deleteAssistant(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const id = parameters.msg.payload.assistant_id;
       const response = await openai.beta.assistants.del(id);
 
@@ -466,13 +330,7 @@ let OpenaiApi = (function () {
     }
 
     async createThread(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const response = await openai.beta.threads.create({
         ...parameters.msg.payload,
       });
@@ -481,13 +339,7 @@ let OpenaiApi = (function () {
     }
 
     async getThread(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const id = parameters.msg.payload.thread_id;
       const response = await openai.beta.threads.retrieve(id);
 
@@ -495,13 +347,7 @@ let OpenaiApi = (function () {
     }
 
     async modifyThread(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const id = parameters.msg.payload.thread_id;
       delete parameters.msg.payload.thread_id;
 
@@ -513,13 +359,7 @@ let OpenaiApi = (function () {
     }
 
     async deleteThread(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const id = parameters.msg.payload.thread_id;
       const response = await openai.beta.threads.del(id);
 
@@ -527,13 +367,7 @@ let OpenaiApi = (function () {
     }
 
     async listMessages(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const id = parameters.msg.payload.thread_id;
       const response = await openai.beta.threads.messages.list(id);
 
@@ -541,13 +375,7 @@ let OpenaiApi = (function () {
     }
 
     async createMessage(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const thread_id = parameters.msg.payload.thread_id;
       delete parameters.msg.payload.thread_id;
 
@@ -559,13 +387,7 @@ let OpenaiApi = (function () {
     }
 
     async getMessage(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const thread_id = parameters.msg.payload.thread_id;
       const message_id = parameters.msg.payload.message_id;
 
@@ -578,13 +400,7 @@ let OpenaiApi = (function () {
     }
 
     async modifyMessage(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const thread_id = parameters.msg.payload.thread_id;
       const message_id = parameters.msg.payload.message_id;
       delete parameters.msg.payload.thread_id;
@@ -602,13 +418,7 @@ let OpenaiApi = (function () {
     }
 
     async createThreadAndRun(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const response = await openai.beta.threads.createAndRun({
         ...parameters.msg.payload,
       });
@@ -617,13 +427,7 @@ let OpenaiApi = (function () {
     }
 
     async listRuns(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const thred_id = parameters.msg.payload.thread_id;
       delete parameters.msg.payload.thread_id;
 
@@ -635,13 +439,7 @@ let OpenaiApi = (function () {
     }
 
     async createRun(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const thread_id = parameters.msg.payload.thread_id;
       delete parameters.msg.payload.thread_id;
 
@@ -653,13 +451,7 @@ let OpenaiApi = (function () {
     }
 
     async getRun(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const thread_id = parameters.msg.payload.thread_id;
       const run_id = parameters.msg.payload.run_id;
       delete parameters.msg.payload.thread_id;
@@ -674,13 +466,7 @@ let OpenaiApi = (function () {
     }
 
     async modifyRun(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const thread_id = parameters.msg.payload.thread_id;
       const run_id = parameters.msg.payload.run_id;
       delete parameters.msg.payload.thread_id;
@@ -698,13 +484,7 @@ let OpenaiApi = (function () {
     }
 
     async submitToolOuputsToRun(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const thread_id = parameters.msg.payload.thread_id;
       const run_id = parameters.msg.payload.run_id;
       delete parameters.msg.payload.thread_id;
@@ -722,13 +502,7 @@ let OpenaiApi = (function () {
     }
 
     async cancelRun(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const thread_id = parameters.msg.payload.thread_id;
       const run_id = parameters.msg.payload.run_id;
       delete parameters.msg.payload.thread_id;
@@ -746,13 +520,7 @@ let OpenaiApi = (function () {
     }
 
     async listRunSteps(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const thread_id = parameters.msg.payload.thread_id;
       const run_id = parameters.msg.payload.run_id;
       delete parameters.msg.payload.thread_id;
@@ -770,13 +538,7 @@ let OpenaiApi = (function () {
     }
 
     async getRunStep(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const thread_id = parameters.msg.payload.thread_id;
       const run_id = parameters.msg.payload.run_id;
       const step_id = parameters.msg.payload.step_id;
@@ -791,13 +553,7 @@ let OpenaiApi = (function () {
     }
 
     async listAssistantFiles(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const assistant_id = parameters.msg.payload.assistant_id;
       delete parameters.msg.payload.assistant_id;
 
@@ -809,13 +565,7 @@ let OpenaiApi = (function () {
     }
 
     async createAssistantFile(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const assistant_id = parameters.msg.payload.assistant_id;
       delete parameters.msg.payload.assistant_id;
 
@@ -827,13 +577,7 @@ let OpenaiApi = (function () {
     }
 
     async getAssistantFile(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const assistant_id = parameters.msg.payload.assistant_id;
       const file_id = parameters.msg.payload.file_id;
       delete parameters.msg.payload.assistant_id;
@@ -851,13 +595,7 @@ let OpenaiApi = (function () {
     }
 
     async deleteAssistantFile(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const assistant_id = parameters.msg.payload.assistant_id;
       const file_id = parameters.msg.payload.file_id;
       delete parameters.msg.payload.assistant_id;
@@ -875,13 +613,7 @@ let OpenaiApi = (function () {
     }
 
     async listMessageFiles(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const thread_id = parameters.msg.payload.thread_id;
       const message_id = parameters.msg.payload.message_id;
       delete parameters.msg.payload.thread_id;
@@ -899,13 +631,7 @@ let OpenaiApi = (function () {
     }
 
     async getMessageFile(parameters) {
-      const clientParams = {
-        apiKey: parameters.apiKey,
-        baseURL: parameters.apiBase,
-        organization: parameters.organization,
-      };
-      const openai = new OpenAI(clientParams);
-
+      const openai = new OpenAI(this.clientParams);
       const thread_id = parameters.msg.payload.thread_id;
       const message_id = parameters.msg.payload.message_id;
       const file_id = parameters.msg.payload.file_id;
