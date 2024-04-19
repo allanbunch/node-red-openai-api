@@ -9,9 +9,10 @@
 
 _@inductiv/node-red-openai-api_ offers a versatile and configurable Node-RED node, designed specifically for seamless integration with OpenAI's advanced platform services. It empowers you to effortlessly connect and orchestrate various OpenAI functionalities, leveraging the full power of Node-RED's sophisticated application nodes. Whether you're aiming to enhance your workflows with cutting-edge AI capabilities or create innovative applications, this node serves as your gateway to harnessing the latest in AI technology from OpenAI, all within the intuitive and flexible environment of Node-RED.
 
-## New in Version 0.7.0
+## New in Version 0.8.0
 
-- The ```createChatCompletion``` endpoint now retains top-level message (```msg```) properties in responses. This means that all custom message properties--aside from the `msg.payload` object--are returned from ```createChatCompletion``` requests.
+- **Bug Fix**: Fixed an issue introduced in v. 0.7.0 that caused the `createChatCompletion` endpoint to return duplicate messages.
+- **Enhancement**: Bumped the OpenAI API package dependency to version 4.36.0. Updated the node's documentation accordingly.
 
 Please report any issues [here on Github](https://github.com/allanbunch/node-red-openai-api/issues).
 
@@ -53,7 +54,6 @@ This package's configuration node is now named "Service Host" to serve as a more
 - [Installation](#installation)
 - [Usage](#usage)
 - [License](#license)
-- [Acknowledgements](#acknowledgements)
 
 ## Installation
 
