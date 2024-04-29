@@ -263,10 +263,13 @@ let OpenaiApi = (function () {
 
     async listFineTuningEvents(parameters) {
       const openai = new OpenAI(this.clientParams);
+      let fine_tuning_job_id = parameters.msg.payload.fine_tuning_job_id;
+      delete parameters.msg.payload.fine_tuning_job_id
 
       let response = [];
       const list = await openai.fineTuning.jobs.listEvents(
-        parameters.msg.payload.fine_tuning_job_id,
+        fine_tuning_job_id,
+        {...parameters.msg.payload}
       );
       for await (const fineTuneEvent of list) {
         response.push(fineTuneEvent);
