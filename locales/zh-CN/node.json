@@ -8,13 +8,23 @@
             "header": "Auth Header",
             "organizationId": "Org Id",
             "apiKey": "API Key",
-            "isQuery": "isQuery"
+            "isQuery": "isQuery",
+            "property": "Property"
         },
         "status": {
             "requesting": "requesting",
             "streaming": "streaming"
         },
         "parameters": {
+            "createVectorStore": "create vector store",
+            "listVectorStores": "list vector stores",
+            "retrieveVectorStore": "retrieve vector store",
+            "modifyVectorStore": "modify vector store",
+            "deleteVectorStore": "delete vector store",
+            "createBatch": "create batch",
+            "retrieveBatch": "retrieve batch",
+            "cancelBatch": "cancel batch",
+            "listBatch": "list batch",
             "createChatCompletion": "create chat completion",
             "body": "body",
             "request_body": "Request Body",

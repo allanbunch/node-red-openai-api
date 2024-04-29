@@ -16,6 +16,11 @@
             "streaming": "streaming"
         },
         "parameters": {
+            "createVectorStore": "create vector store",
+            "listVectorStores": "list vector stores",
+            "retrieveVectorStore": "retrieve vector store",
+            "modifyVectorStore": "modify vector store",
+            "deleteVectorStore": "delete vector store",
             "createBatch": "create batch",
             "retrieveBatch": "retrieve batch",
             "cancelBatch": "cancel batch",

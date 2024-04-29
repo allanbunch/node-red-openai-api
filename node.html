@@ -322,6 +322,29 @@
           data-i18n="OpenaiApi.parameters.deleteThread"
         ></option>
       </optgroup>
+
+      <optgroup style="font-style: normal;" label="🔢 Vector Stores (Beta)">
+        <option
+          value="createVectorStore"
+          data-i18n="OpenaiApi.parameters.createVectorStore"
+        ></option>
+        <option
+          value="listVectorStores"
+          data-i18n="OpenaiApi.parameters.listVectorStores"
+        ></option>
+        <option
+          value="retrieveVectorStore"
+          data-i18n="OpenaiApi.parameters.retrieveVectorStore"
+        ></option>
+        <option
+          value="modifyVectorStore"
+          data-i18n="OpenaiApi.parameters.modifyVectorStore"
+        ></option>
+        <option
+          value="deleteVectorStore"
+          data-i18n="OpenaiApi.parameters.deleteVectorStore"
+        ></option>
+      </optgroup>
     </select>
   </div>
 </script>
@@ -2975,6 +2998,117 @@
         <dd>The ID of the thread to delete.</dd>
       </dl>
     </section>
+
+    <!-- Begin Vector Stores Documentation-->
+    <section>
+      <h1 style="font-weight: bold;">🔢 Vector Stores</h1>
+      <a
+        href="https://platform.openai.com/docs/api-reference/vector-stores"
+        target="_blank"
+        >Official Documentation
+        <i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+      ></a>
+      <h2>Create Vector Store</h2>
+      <p>Create a vector store.</p>
+      <dl class="message-properties">
+        <h2>msg.payload Properties</h2>
+        <dt class="optional">
+          file_ids
+          <a
+            href="https://platform.openai.com/docs/api-reference/vector-stores/create"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">array</span>
+        </dt>
+        <dd>A list of File IDs that the vector store should use. Useful for tools like file_search that can access files.</dd>
+       
+        <dt class="optional">
+          name
+          <a
+            href="https://platform.openai.com/docs/api-reference/vector-stores/create#vector-stores-create-name"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string</span>
+        </dt>
+        <dd>The name of the vector store.</dd>
+
+        <dt class="optional">
+          expires_after
+          <a
+            href="https://platform.openai.com/docs/api-reference/vector-stores/create#vector-stores-create-expires_after"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">object</span>
+        </dt>
+        <dd>The expiration policy for a vector store.</dd>
+
+        <dt class="optional">
+          metadata
+          <a
+            href="https://platform.openai.com/docs/api-reference/vector-stores/create#vector-stores-create-metadata"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">object</span>
+        </dt>
+        <dd>Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format. Keys can be a maximum of 64 characters long and values can be a maximum of 512 characters long.</dd>
+      </dl>
+
+      <h2>List Vector Stores</h2>
+      <p>Returns a list of vector stores.</p>
+      <dl class="message-properties">
+        <h2>msg.payload Properties</h2>
+
+        <dt class="optional">
+          limit
+          <a
+            href="https://platform.openai.com/docs/api-reference/vector-stores/list#vector-stores-list-limit"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">integer</span>
+        </dt>
+        <dd>A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20.</dd>
+        
+        <dt class="optional">
+          order
+          <a
+            href="https://platform.openai.com/docs/api-reference/vector-stores/list#vector-stores-list-order"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string</span>
+        </dt>
+        <dd>Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order.</dd>
+
+        <dt class="optional">
+          after
+          <a
+            href="https://platform.openai.com/docs/api-reference/vector-stores/list#vector-stores-list-after"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string</span>
+        </dt>
+        <dd>A cursor for use in pagination. after is an object ID that defines your place in the list.</dd>
+
+        <dt class="optional">
+          before
+          <a
+            href="https://platform.openai.com/docs/api-reference/vector-stores/list#vector-stores-list-before"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string</span>
+        </dt>
+        <dd>A cursor for use in pagination. before is an object ID that defines your place in the list.</dd>
+      </dl>
+    </section>
+    <!-- End Vector Stores Documentation -->
+
   </section>
 </script>
 
