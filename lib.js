@@ -26,7 +26,9 @@ let OpenaiApi = (function () {
     async retrieveBatch(parameters) {
       const openai = new OpenAI(this.clientParams);
 
-      const response = await openai.batches.retrieve(parameters.msg.payload.batch_id);
+      const response = await openai.batches.retrieve(
+        parameters.msg.payload.batch_id,
+      );
 
       return response;
     }
@@ -48,7 +50,9 @@ let OpenaiApi = (function () {
 
     async cancelBatch(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const response = await openai.batches.cancel(parameters.msg.payload.batch_id);
+      const response = await openai.batches.cancel(
+        parameters.msg.payload.batch_id,
+      );
 
       return response;
     }
@@ -201,36 +205,23 @@ let OpenaiApi = (function () {
 
     async deleteFile(parameters) {
       const openai = new OpenAI(this.clientParams);
-
-      const response = await openai.files.del({
-        ...parameters.msg.payload,
-      });
+      const response = await openai.files.del(parameters.msg.payload.file_id);
 
       return response;
     }
 
     async retrieveFile(parameters) {
       const openai = new OpenAI(this.clientParams);
-
-      const file_id = parameters.msg.payload.file_id;
-      delete parameters.msg.payload.file_id;
-
-      const response = await openai.files.retrieve(file_id, {
-        ...parameters.msg.payload,
-      });
+      const response = await openai.files.retrieve(
+        parameters.msg.payload.file_id,
+      );
 
       return response;
     }
 
     async downloadFile(parameters) {
       const openai = new OpenAI(this.clientParams);
-
-      const file_id = parameters.msg.payload.file_id;
-      delete parameters.msg.payload.file_id;
-
-      const response = await openai.files.retrieveContent(file_id, {
-        ...parameters.msg.payload,
-      });
+      const response = await openai.files.content(parameters.msg.payload.file_id);
 
       return response;
     }
