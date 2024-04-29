@@ -132,6 +132,27 @@
           data-i18n="OpenaiApi.parameters.createTranslation"
         ></option>
       </optgroup>
+
+      <!-- Batch Endpoint-->
+      <optgroup style="font-style: normal;" label="📦 Batch">
+        <option
+          value="createBatch"
+          data-i18n="OpenaiApi.parameters.createBatch"
+        ></option>
+        <option
+          value="retrieveBatch"
+          data-i18n="OpenaiApi.parameters.retrieveBatch"
+        ></option>
+        <option
+          value="cancelBatch"
+          data-i18n="OpenaiApi.parameters.cancelBatch"
+        ></option>
+        <option
+          value="listBatch"
+          data-i18n="OpenaiApi.parameters.listBatch"
+        ></option>
+      </optgroup>
+
       <optgroup style="font-style: normal;" label="🗨️ Chat">
         <option
           value="createChatCompletion"
@@ -932,6 +953,129 @@
       <dd>The sampling temperature, between 0 and 1.</dd>
     </dl>
   </section>
+
+  <!-- Begin Batch Endpoint Documentation-->
+  <section>
+    <h1 style="font-weight: bold;">📦 Batch</h1>
+    <a
+      href="https://platform.openai.com/docs/api-reference/batch"
+      target="_blank"
+      >Official Documentation
+      <i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+    ></a>
+    <h2>Create Batch</h2>
+    <p>Creates and executes a batch from an uploaded file of requests.</p>
+    <dl class="message-properties">
+      <h2>msg.payload Properties</h2>
+
+      <dt>
+        input_file_id
+        <a
+          href="https://platform.openai.com/docs/api-reference/batch/create#batch-create-input_file_id"
+          target="_blank"
+          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+        ></a>
+        <span class="property-type">string</span>
+      </dt>
+      <dd>The ID of an uploaded file that contains requests for the new batch.</dd>
+      <dt>
+        endpoint
+        <a
+          href="https://platform.openai.com/docs/api-reference/batch/create#batch-create-endpoint"
+          target="_blank"
+          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+        ></a>
+        <span class="property-type">string</span>
+      </dt>
+      <dd>The endpoint to be used for all requests in the batch. Currently only /v1/chat/completions is supported.</dd>
+      <dt>
+        completion_window
+        <a
+          href="https://platform.openai.com/docs/api-reference/batch/create#batch-create-completion_window"
+          target="_blank"
+          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+        ></a>
+        <span class="property-type">string</span>
+      </dt>
+      <dd>
+        The time frame within which the batch should be processed. Currently only 24h is supported.
+      </dd>
+      <dt class="optional">
+        metadata
+        <a
+          href="https://platform.openai.com/docs/api-reference/batch/create#batch-create-metadata"
+          target="_blank"
+          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+        ></a>
+        <span class="property-type">string</span>
+      </dt>
+      <dd>
+        Optional custom metadata for the batch.
+      </dd>
+    </dl>
+
+    <h2>Retrieve Batch</h2>
+    <p>Retrieves a batch.</p>
+    <dl class="message-properties">
+      <h2>msg.payload Properties</h2>
+
+      <dt>
+        batch_id
+        <a
+          href="https://platform.openai.com/docs/api-reference/batch/retrieve#batch-retrieve-batch_id"
+          target="_blank"
+          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+        ></a>
+        <span class="property-type">string</span>
+      </dt>
+      <dd>The ID of the batch to retrieve.</dd>
+    </dl>
+
+    <h2>Cancel Batch</h2>
+    <p>Cancels an in-progress batch.</p>
+    <dl class="message-properties">
+      <h2>msg.payload Properties</h2>
+      <dt>
+        batch_id
+        <a
+          href="https://platform.openai.com/docs/api-reference/batch/cancel#batch-cancel-batch_id"
+          target="_blank"
+          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+        ></a>
+        <span class="property-type">string</span>
+      </dt>
+      <dd>The ID of the batch to cancel.</dd>
+    </dl>
+
+    <h2>List Batch</h2>
+    <p>List your organization's batches.</p>
+    <dl class="message-properties">
+      <h2>msg.payload Properties</h2>
+      <dt class="optional">
+        after
+        <a
+          href="https://platform.openai.com/docs/api-reference/batch/list#batch-list-after"
+          target="_blank"
+          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+        ></a>
+        <span class="property-type">string</span>
+      </dt>
+      <dd>A cursor for use in pagination. after is an object ID that defines your place in the list.</dd>
+
+      <dt class="optional">
+        limit
+        <a
+          href="https://platform.openai.com/docs/api-reference/batch/list#batch-list-limit"
+          target="_blank"
+          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+        ></a>
+        <span class="property-type">integer</span>
+      </dt>
+      <dd>A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20.</dd>
+    </dl>
+
+  </section>
+  <!-- End Batch Endpoitn Documentation -->
 
   <section>
     <h1 style="font-weight: bold;">🗨️ Chat</h1>

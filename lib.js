@@ -9,8 +9,48 @@ let OpenaiApi = (function () {
       this.clientParams = {
         apiKey: apiKey,
         baseURL: baseURL,
-        organization: organization
+        organization: organization,
+      };
+    }
+
+    async createBatch(parameters) {
+      const openai = new OpenAI(this.clientParams);
+
+      const response = await openai.batches.create({
+        ...parameters.msg.payload,
+      });
+
+      return response;
+    }
+
+    async retrieveBatch(parameters) {
+      const openai = new OpenAI(this.clientParams);
+
+      const response = await openai.batches.retrieve(parameters.msg.payload.batch_id);
+
+      return response;
+    }
+
+    async listBatch(parameters) {
+      const openai = new OpenAI(this.clientParams);
+
+      const list = await openai.batches.list({
+        ...parameters.msg.payload,
+      });
+
+      let batches = [];
+      for await (const batch of list) {
+        batches.push(batch);
       }
+
+      return batches;
+    }
+
+    async cancelBatch(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.batches.cancel(parameters.msg.payload.batch_id);
+
+      return response;
     }
 
     async createChatCompletion(parameters) {
@@ -30,8 +70,7 @@ let OpenaiApi = (function () {
         });
         for await (const chunk of response) {
           if (typeof chunk === "object") {
-            
-            let {_msgid, ...newMsg} = parameters.msg;
+            let { _msgid, ...newMsg } = parameters.msg;
             newMsg.payload = chunk;
 
             node.send(newMsg);

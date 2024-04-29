@@ -16,6 +16,10 @@
             "streaming": "streaming"
         },
         "parameters": {
+            "createBatch": "create batch",
+            "retrieveBatch": "retrieve batch",
+            "cancelBatch": "cancel batch",
+            "listBatch": "list batch",
             "createChatCompletion": "create chat completion",
             "body": "body",
             "request_body": "Request Body",
