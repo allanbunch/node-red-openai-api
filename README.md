@@ -7,16 +7,30 @@
 @inductiv/node-red-openai-api
 </h1>
 
-_@inductiv/node-red-openai-api_ offers a versatile and configurable Node-RED node, designed specifically for seamless integration with OpenAI's advanced platform services. It empowers you to effortlessly connect and orchestrate various OpenAI functionalities, leveraging the full power of Node-RED's sophisticated application nodes. Whether you're aiming to enhance your workflows with cutting-edge AI capabilities or create innovative applications, this node serves as your gateway to harnessing the latest in AI technology from OpenAI, all within the intuitive and flexible environment of Node-RED.
+_@inductiv/node-red-openai-api_ offers a versatile and configurable Node-RED node, designed specifically for seamless integration with any OpenAI API compatible platform. This node empowers you to effortlessly connect and orchestrate various advanced AI workflows, leveraging the full power of Node-RED's sophisticated node ecosystem. Whether you're aiming to enhance your workflows with cutting-edge AI capabilities or create innovative applications, this node serves as your gateway to harnessing the latest in AI technology from a growing number of OpenAI compatible AI solutions, all within the intuitive and flexible environment of Node-RED.
 
-## New in Version 0.8.0
+### What's New in Version 1.0
 
-- **Bug Fix**: Fixed an issue introduced in v. 0.7.0 that caused the `createChatCompletion` endpoint to return duplicate messages.
-- **Enhancement**: Bumped the OpenAI API package dependency to version 4.36.0. Updated the node's documentation accordingly.
+I'm thrilled to release version 1.0 of the **node-red-openai-api** node, which brings significant enhancements and new possibilities. This update includes a shift to the [latest OpenAI API](https://platform.openai.com/docs/assistants/whats-new) and beta features to better serve the Node-RED community.
 
-Please report any issues [here on Github](https://github.com/allanbunch/node-red-openai-api/issues).
+#### Key Changes Summary
 
-## Key Features
+| Feature                   | Description                                  | Impact                           |
+|---------------------------|----------------------------------------------|----------------------------------|
+| **API Upgrade to Assistants v2**   | Transition to new Assistants v2 API version with extended features. | Requires update to some assistant workflows. |
+| **Response Object Parity**| Updated response objects to closely align with the OpenAI documented response object structures.              | Requires impact validation on downstream object usage. |
+| **New Functionalities**   | Addition of new capabilities including [Batch requests](https://platform.openai.com/docs/guides/batch) and [Vector Store features](https://platform.openai.com/docs/assistants/tools/file-search/vector-stores) to enhance your projects.                    | New opportunities for development and integration. |
+| **Bug Fixes**   | Closed out a bunch of nagging bugs that I've had my eye on. | Improved usability. |
+
+#### Migration Guide
+
+For those who need to adapt to the new version, OpenAI published a handy migration guide available at [Migration Guide Link](https://platform.openai.com/docs/assistants/migration). I encourage you to review this guide to ensure a smooth transition and take full advantage of the new features introduced.
+
+#### Support and Feedback
+
+Your feedback is very much appreciated, and I'm here to help. If you encounter any issues or have suggestions, please visit the [Community Discussions](https://github.com/allanbunch/node-red-openai-api/discussions) or [raise an issue](https://github.com/allanbunch/node-red-openai-api/issues).
+
+#### Core Features
 
 - **Seamless Integration**: Directly connect with OpenAI services without the hassle of complex coding or setup.
 - **Configurable and Flexible**: Designed for adaptability, this node can be easily configured to suit a wide range of project requirements, streamlining your development workflow.
@@ -24,30 +38,11 @@ Please report any issues [here on Github](https://github.com/allanbunch/node-red
 
 Ideal for developers, researchers, and innovators, this node is your tool for unlocking the full potential of AI in your projects.
 
-## Custom API Service Host URL Configuration
-
-New in version 0.3.0: You can now set a custom API service host base URL. This powerful feature extends the package's capabilities, allowing you to interface with any API that adheres to the OpenAI REST API request and response signatures and payloads.
-
-### Benefits
-
-- **Versatility**: Seamlessly connect to a broader range of AI services, beyond the default OpenAI offerings, including local model solutions like [Text Generation Web UI](https://github.com/oobabooga/text-generation-webui).
-- **Customization**: Tailor your Node-RED node to interact with custom or specialized AI services, offering greater control and flexibility in your AI integrations.
-- **Expanded Scope**: Ideal for unique use cases where standard OpenAI services may not suffice, or when working within specialized AI environments.
-
-### How to Use
-
-To utilize this feature, simply specify the custom API service host base URL in the node configuration. This enhancement is built upon the existing framework, ensuring a smooth and intuitive user experience.
-
 #### Service Host Configuration Examples
 
 <img width="371" alt="service host node config" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/256362c5-6e78-44c7-af6e-12d5830cdf32">
 
 <img width="373" alt="OpenAI service host node config" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/a6e9d4b9-836a-4d0e-8349-4eceda72cb72">
-
-
-### Migrating from Previous Versions
-
-This package's configuration node is now named "Service Host" to serve as a more generalized representation, considering the node's expanded capability scope. This node's previous versions used a config node named "OpenAI Auth" which is no longer referenced starting with this version (0.3.0). Be sure to update your existing node configurations accordingly.
 
 ## Table of Contents
 
@@ -85,21 +80,6 @@ Note: Each node's functionality maps to the official OpenAI [API Reference](http
 Node contains inutitive inline help with links to OpenAI's official API documentation.
 
 <img width="619" alt="inductiv-node-red-openai-api-node-config" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/15ee5b75-2e29-4806-b427-8e6873f3fb96">
-
-## Community Contributions and Discussions
-
-I very much appreciate community input and invite everyone to shape the future of this project. Whether you have ideas, questions, or simply want to show off your implementations, this project's GitHub Discussions page is the perfect place to connect and contribute.
-
-### Engage in Various Discussions
-
-- **[Announcements](https://github.com/allanbunch/node-red-openai-api/discussions/categories/announcements)**: Stay updated with the latest project news.
-- **[General](https://github.com/allanbunch/node-red-openai-api/discussions/categories/general)**: Share thoughts or seek advice on broader topics.
-- **[Ideas](https://github.com/allanbunch/node-red-openai-api/discussions/categories/ideas)**: Propose new features or improvements.
-- **[Polls](https://github.com/allanbunch/node-red-openai-api/discussions/categories/polls)**: Participate in polls to influence project decisions.
-- **[Q&A](https://github.com/allanbunch/node-red-openai-api/discussions/categories/q-a)**: Get answers to your questions and share your expertise.
-- **[Show and Tell](https://github.com/allanbunch/node-red-openai-api/discussions/categories/show-and-tell)**: Showcase your creative implementations and inspire others.
-
-Join the conversation [here](https://github.com/allanbunch/node-red-openai-api/discussions) and let's build a vibrant and collaborative community together!
 
 ## License
 
