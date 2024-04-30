@@ -13,15 +13,25 @@ let OpenaiApi = (function () {
       };
     }
 
+    // Begin Vector Store File functions
+    async createVectorStoreFile(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { vector_store_id, ...params } = parameters.msg.payload;
+      const response = await openai.beta.vectorStores.files.create(
+        vector_store_id,
+        params,
+      );
+
+      return response;
+    }
+    // End Vector Store File functions
+
     async createVectorStoreFileBatch(parameters) {
       const openai = new OpenAI(this.clientParams);
-
-      let vector_store_id = parameters.msg.payload.vector_store_id;
-      delete parameters.msg.payload.vector_store_id;
-
+      const { vector_store_id, ...params } = parameters.msg.payload;
       const response = await openai.beta.vectorStores.fileBatches.create(
         vector_store_id,
-        parameters.msg.payload,
+        params,
       );
 
       return response;
@@ -29,24 +39,19 @@ let OpenaiApi = (function () {
 
     async retrieveVectorStoreFileBatch(parameters) {
       const openai = new OpenAI(this.clientParams);
-
-      let vector_store_id = parameters.msg.payload.vector_store_id;
-
-      const response =
-        await openai.beta.vectorStores.fileBatches.retrieve(vector_store_id);
+      const {vector_store_id, batch_id, ...params} = parameters.msg.payload
+      const response = await openai.beta.vectorStores.fileBatches.retrieve(vector_store_id, batch_id, params);
 
       return response;
     }
 
     async cancelVectorStoreFileBatch(parameters) {
       const openai = new OpenAI(this.clientParams);
-
-      let vector_store_id = parameters.msg.payload.vector_store_id;
-      let batch_id = parameters.msg.payload.batch_id;
-
+      const {vector_store_id, batch_id, ...params} = parameters.msg.payload;
       const response = await openai.beta.vectorStores.fileBatches.retrieve(
         vector_store_id,
         batch_id,
+        params
       );
 
       return response;
@@ -54,137 +59,94 @@ let OpenaiApi = (function () {
 
     async listVectorStoreBatchFiles(parameters) {
       const openai = new OpenAI(this.clientParams);
-
-      let vector_store_id = parameters.msg.payload.vector_store_id;
-      delete parameters.msg.payload.vector_store_id;
-      let batch_id = parameters.msg.payload.batch_id;
-      delete parameters.msg.payload.batch_id;
-
+      const { vector_store_id, batch_id, ...params } = parameters.msg.payload;
       const list = await openai.beta.vectorStores.fileBatches.listFiles(
         vector_store_id,
         batch_id,
-        parameters.msg.payload,
+        params,
       );
-
-      let batchFiles = [];
-      for await (const batchFile of list) {
-        batchFiles.push(batchFile);
-      }
+      const batchFiles = [...list.data];
 
       return batchFiles;
     }
 
     async createVectorStore(parameters) {
       const openai = new OpenAI(this.clientParams);
-
-      const response = await openai.beta.vectorStores.create({
-        ...parameters.msg.payload,
-      });
+      const response = await openai.beta.vectorStores.create(parameters.msg.payload);
 
       return response;
     }
 
     async listVectorStores(parameters) {
       const openai = new OpenAI(this.clientParams);
-
       const list = await openai.beta.vectorStores.list(parameters.msg.payload);
-
-      let vectorStores = [];
-      for await (const vectorStore of list) {
-        vectorStores.push(vectorStore);
-      }
+      const vectorStores = [...list.data]
 
       return vectorStores;
     }
 
     async retrieveVectorStore(parameters) {
       const openai = new OpenAI(this.clientParams);
-
-      let vector_store_id = parameters.msg.payload.vector_store_id;
-
-      const response = await openai.beta.vectorStores.retrieve(vector_store_id);
+      const {vector_store_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.vectorStores.retrieve(vector_store_id, params);
 
       return response;
     }
 
     async modifyVectorStore(parameters) {
       const openai = new OpenAI(this.clientParams);
-
-      let vector_store_id = parameters.msg.payload.vector_store_id;
-      delete parameters.msg.payload.vector_store_id;
-
-      const response = await openai.beta.vectorStores.update(
-        vector_store_id,
-        parameters.msg.payload,
-      );
+      const {vector_store_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.vectorStores.update(vector_store_id, params);
 
       return response;
     }
 
     async deleteVectorStore(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const response = await openai.beta.vectorStores.del(
-        parameters.msg.payload.vector_store_id,
-      );
+      const {vector_store_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.vectorStores.del(vector_store_id, params);
 
       return response;
     }
 
     async createBatch(parameters) {
       const openai = new OpenAI(this.clientParams);
-
-      const response = await openai.batches.create({
-        ...parameters.msg.payload,
-      });
+      const response = await openai.batches.create(parameters.msg.payload);
 
       return response;
     }
 
     async retrieveBatch(parameters) {
       const openai = new OpenAI(this.clientParams);
-
-      const response = await openai.batches.retrieve(
-        parameters.msg.payload.batch_id,
-      );
+      const {batch_id, ...params} = parameters.msg.payload;
+      const response = await openai.batches.retrieve(batch_id, params);
 
       return response;
     }
 
     async listBatch(parameters) {
       const openai = new OpenAI(this.clientParams);
-
-      const list = await openai.batches.list({
-        ...parameters.msg.payload,
-      });
-
-      let batches = [];
-      for await (const batch of list) {
-        batches.push(batch);
-      }
+      const list = await openai.batches.list(parameters.msg.payload);
+      const batches = [...list.data];
 
       return batches;
     }
 
     async cancelBatch(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const response = await openai.batches.cancel(
-        parameters.msg.payload.batch_id,
-      );
+      const {batch_id, ...params} = parameters.msg.payload;
+      const response = await openai.batches.cancel(batch_id, params);
 
       return response;
     }
 
     async createChatCompletion(parameters) {
-      let node = parameters._node;
-      delete parameters._node;
-
+      const { _node, ...params } = parameters;
       const openai = new OpenAI(this.clientParams);
-      const response = await openai.chat.completions.create({
-        ...parameters.msg.payload,
-      });
+      const response = await openai.chat.completions.create(parameters.msg.payload);
 
       if (parameters.msg.payload.stream) {
-        node.status({
+        _node.status({
           fill: "green",
           shape: "dot",
           text: "OpenaiApi.status.streaming",
@@ -194,10 +156,10 @@ let OpenaiApi = (function () {
             let { _msgid, ...newMsg } = parameters.msg;
             newMsg.payload = chunk;
 
-            node.send(newMsg);
+            _node.send(newMsg);
           }
         }
-        node.status({});
+        _node.status({});
       } else {
         return response;
       }
@@ -205,61 +167,44 @@ let OpenaiApi = (function () {
 
     async createImage(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const response = await openai.images.generate({
-        ...parameters.msg.payload,
-      });
+      const response = await openai.images.generate(parameters.msg.payload);
 
       return response;
     }
 
     async createImageEdit(parameters) {
       const openai = new OpenAI(this.clientParams);
+      let {image, mask, ...params} = parameters.msg.payload;
 
-      parameters.msg.payload.image = fs.createReadStream(
-        parameters.msg.payload.image,
-      );
-      if (parameters.msg.payload.mask) {
-        parameters.msg.payload.mask = fs.createReadStream(
-          parameters.msg.payload.mask,
-        );
+      params.image = fs.createReadStream(image);
+      if (mask) {
+        params.mask = fs.createReadStream(mask);
       }
-
-      const response = await openai.images.edit({
-        ...parameters.msg.payload,
-      });
+      const response = await openai.images.edit(params);
 
       return response;
     }
 
     async createImageVariation(parameters) {
       const openai = new OpenAI(this.clientParams);
+      let {image, ...params} = parameters.msg.payload;
 
-      parameters.msg.payload.image = fs.createReadStream(
-        parameters.msg.payload.image,
-      );
-      const response = await openai.images.createVariation({
-        ...parameters.msg.payload,
-      });
+      params.image = fs.createReadStream(image);
+      const response = await openai.images.createVariation(params);
 
       return response;
     }
 
     async createEmbedding(parameters) {
       const openai = new OpenAI(this.clientParams);
-
-      const response = await openai.embeddings.create({
-        ...parameters.msg.payload,
-      });
+      const response = await openai.embeddings.create(parameters.msg.payload);
 
       return response;
     }
 
     async createSpeech(parameters) {
       const openai = new OpenAI(this.clientParams);
-
-      const audio = await openai.audio.speech.create({
-        ...parameters.msg.payload,
-      });
+      const audio = await openai.audio.speech.create(parameters.msg.payload);
       const response = Buffer.from(await audio.arrayBuffer());
 
       return response;
@@ -267,140 +212,102 @@ let OpenaiApi = (function () {
 
     async createTranscription(parameters) {
       const openai = new OpenAI(this.clientParams);
+      let {file, ...params} = parameters.msg.payload;
 
-      parameters.msg.payload.file = fs.createReadStream(
-        parameters.msg.payload.file,
-      );
+      params.file = fs.createReadStream(file);
 
-      const response = await openai.audio.transcriptions.create({
-        ...parameters.msg.payload,
-      });
+      const response = await openai.audio.transcriptions.create(params);
 
       return response;
     }
 
     async createTranslation(parameters) {
       const openai = new OpenAI(this.clientParams);
+      let {file, ...params} = parameters.msg.payload;
 
-      parameters.msg.payload.file = fs.createReadStream(
-        parameters.msg.payload.file,
-      );
-      const response = await openai.audio.translations.create({
-        ...parameters.msg.payload,
-      });
+      params.file =  fs.createReadStream(file);
+
+      const response = await openai.audio.translations.create(params);
 
       return response;
     }
 
     async listFiles(parameters) {
       const openai = new OpenAI(this.clientParams);
+      const list = await openai.files.list(parameters.msg.payload);
 
-      const list = await openai.files.list({
-        ...parameters.msg.payload,
-      });
-
-      let files = [];
-      for await (const file of list) {
-        files.push(file);
-      }
-
-      return files;
+      return [...list.data];
     }
 
     async createFile(parameters) {
       const openai = new OpenAI(this.clientParams);
+      let {file, ...params} = parameters.msg.payload;
 
-      parameters.msg.payload.file = fs.createReadStream(
-        parameters.msg.payload.file,
-      );
-      const response = await openai.files.create({
-        ...parameters.msg.payload,
-      });
+      params.file = fs.createReadStream(file);
+
+      const response = await openai.files.create(params);
 
       return response;
     }
 
     async deleteFile(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const response = await openai.files.del(parameters.msg.payload.file_id);
+      const {file_id, ...params} = parameters.msg.payload;
+      const response = await openai.files.del(file_id, params);
 
       return response;
     }
 
     async retrieveFile(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const response = await openai.files.retrieve(
-        parameters.msg.payload.file_id,
-      );
+      const {file_id, ...params} = parameters.msg.payload;
+      const response = await openai.files.retrieve(file_id, params);
 
       return response;
     }
 
     async downloadFile(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const response = await openai.files.content(
-        parameters.msg.payload.file_id,
-      );
+      const {file_id, ...params} = parameters.msg.payload;
+      const response = await openai.files.content(file_id, params);
 
       return response;
     }
 
     async createFineTuningJob(parameters) {
       const openai = new OpenAI(this.clientParams);
-
-      const response = await openai.fineTuning.jobs.create({
-        ...parameters.msg.payload,
-      });
+      const response = await openai.fineTuning.jobs.create(parameters.msg.payload);
 
       return response;
     }
 
     async listPaginatedFineTuningJobs(parameters) {
       const openai = new OpenAI(this.clientParams);
+      const list = await openai.fineTuning.jobs.list(parameters.msg.payload);
 
-      const list = await openai.fineTuning.jobs.list({
-        ...parameters.msg.payload,
-      });
-
-      let response = [];
-      for await (const fineTune of list) {
-        response.push(fineTune);
-      }
-
-      return response;
+      return [...list.data];
     }
 
     async retrieveFineTuningJob(parameters) {
       const openai = new OpenAI(this.clientParams);
-
-      const response = await openai.fineTuning.jobs.retrieve(
-        parameters.msg.payload.fine_tuning_job_id,
-      );
+      const {fine_tuning_job_id, ...params} = parameters.msg.payload;
+      const response = await openai.fineTuning.jobs.retrieve(fine_tuning_job_id, params);
 
       return response;
     }
 
     async listFineTuningEvents(parameters) {
       const openai = new OpenAI(this.clientParams);
-      let fine_tuning_job_id = parameters.msg.payload.fine_tuning_job_id;
-      delete parameters.msg.payload.fine_tuning_job_id;
+      const {fine_tuning_job_id, ...params} = parameters.msg.payload;
+      const list = await openai.fineTuning.jobs.listEvents(fine_tuning_job_id, params);
 
-      let response = [];
-      const list = await openai.fineTuning.jobs.listEvents(fine_tuning_job_id, {
-        ...parameters.msg.payload,
-      });
-      for await (const fineTuneEvent of list) {
-        response.push(fineTuneEvent);
-      }
-      return response;
+      return [...list.data];
     }
 
     async cancelFineTuningJob(parameters) {
       const openai = new OpenAI(this.clientParams);
-
-      const response = await openai.fineTuning.jobs.cancel(
-        parameters.msg.payload.fine_tuning_job_id,
-      );
+      const {fine_tuning_job_id, ...params} = parameters.msg.payload;
+      const response = await openai.fineTuning.jobs.cancel(fine_tuning_job_id, params);
 
       return response;
     }
@@ -436,115 +343,96 @@ let OpenaiApi = (function () {
 
     async listAssistants(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const response = await openai.beta.assistants.list({
-        ...parameters.msg.payload,
-      });
+      const response = await openai.beta.assistants.list(parameters.msg.payload);
 
       return response.body;
     }
 
     async createAssistant(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const response = await openai.beta.assistants.create({
-        ...parameters.msg.payload,
-      });
+      const response = await openai.beta.assistants.create(parameters.msg.payload);
 
       return response;
     }
 
     async getAssistant(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const id = parameters.msg.payload.assistant_id;
-      const response = await openai.beta.assistants.retrieve(id);
+      const {assistant_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.assistants.retrieve(assistant_id, params);
 
       return response;
     }
 
     async modifyAssistant(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const id = parameters.msg.payload.assistant_id;
-      delete parameters.msg.payload.assistant_id;
-
-      const response = await openai.beta.assistants.update(id, {
-        ...parameters.msg.payload,
-      });
+      const {assistant_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.assistants.update(assistant_id, params);
 
       return response;
     }
 
     async deleteAssistant(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const id = parameters.msg.payload.assistant_id;
-      const response = await openai.beta.assistants.del(id);
+      const {assistant_id, ...params} = parameters.msg.payload
+      const response = await openai.beta.assistants.del(assistant_id, params);
 
       return response;
     }
 
     async createThread(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const response = await openai.beta.threads.create({
-        ...parameters.msg.payload,
-      });
+      const response = await openai.beta.threads.create(parameters.msg.payload);
 
       return response;
     }
 
     async getThread(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const id = parameters.msg.payload.thread_id;
-      const response = await openai.beta.threads.retrieve(id);
+      const {thread_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.threads.retrieve(thread_id, params);
 
       return response;
     }
 
     async modifyThread(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const id = parameters.msg.payload.thread_id;
-      delete parameters.msg.payload.thread_id;
-
-      const response = await openai.beta.threads.update(id, {
-        ...parameters.msg.payload,
-      });
+      const {thread_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.threads.update(thread_id, params);
 
       return response;
     }
 
     async deleteThread(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const id = parameters.msg.payload.thread_id;
-      const response = await openai.beta.threads.del(id);
+      const {thread_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.threads.del(thread_id, params);
 
       return response;
     }
 
     async listMessages(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const id = parameters.msg.payload.thread_id;
-      const response = await openai.beta.threads.messages.list(id);
+      const {thread_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.threads.messages.list(thread_id, params);
 
       return response.body;
     }
 
     async createMessage(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const thread_id = parameters.msg.payload.thread_id;
-      delete parameters.msg.payload.thread_id;
-
-      const response = await openai.beta.threads.messages.create(thread_id, {
-        ...parameters.msg.payload,
-      });
+      const {thread_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.threads.messages.create(thread_id, params);
 
       return response;
     }
 
     async getMessage(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const thread_id = parameters.msg.payload.thread_id;
-      const message_id = parameters.msg.payload.message_id;
-
+      const {thread_id, message_id, ...params} = parameters.msg.payload;
       const response = await openai.beta.threads.messages.retrieve(
         thread_id,
         message_id,
+        params
       );
 
       return response;
@@ -552,253 +440,127 @@ let OpenaiApi = (function () {
 
     async modifyMessage(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const thread_id = parameters.msg.payload.thread_id;
-      const message_id = parameters.msg.payload.message_id;
-      delete parameters.msg.payload.thread_id;
-      delete parameters.msg.payload.message_id;
-
-      const response = await openai.beta.threads.messages.update(
-        thread_id,
-        message_id,
-        {
-          ...parameters.msg.payload,
-        },
-      );
+      const {thread_id, message_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.threads.messages.update(thread_id, message_id, params);
 
       return response;
     }
 
     async createThreadAndRun(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const response = await openai.beta.threads.createAndRun({
-        ...parameters.msg.payload,
-      });
+      const response = await openai.beta.threads.createAndRun(parameters.msg.payload);
 
       return response;
     }
 
     async listRuns(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const thred_id = parameters.msg.payload.thread_id;
-      delete parameters.msg.payload.thread_id;
-
-      const response = await openai.beta.threads.runs.list(thred_id, {
-        ...parameters.msg.payload,
-      });
+      const {thread_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.threads.runs.list(thred_id, params);
 
       return response.body;
     }
 
     async createRun(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const thread_id = parameters.msg.payload.thread_id;
-      delete parameters.msg.payload.thread_id;
-
-      const response = await openai.beta.threads.runs.create(thread_id, {
-        ...parameters.msg.payload,
-      });
+      const {thread_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.threads.runs.create(thread_id, params);
 
       return response;
     }
 
     async getRun(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const thread_id = parameters.msg.payload.thread_id;
-      const run_id = parameters.msg.payload.run_id;
-      delete parameters.msg.payload.thread_id;
-      delete parameters.msg.payload.run_id;
-
-      const response = await openai.beta.threads.runs.retrieve(
-        thread_id,
-        run_id,
-      );
+      const {thread_id, run_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.threads.runs.retrieve(thread_id, run_id, params);
 
       return response;
     }
 
     async modifyRun(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const thread_id = parameters.msg.payload.thread_id;
-      const run_id = parameters.msg.payload.run_id;
-      delete parameters.msg.payload.thread_id;
-      delete parameters.msg.payload.run_id;
-
-      const response = await openai.beta.threads.runs.update(
-        thread_id,
-        run_id,
-        {
-          ...parameters.msg.payload,
-        },
-      );
+      const {thread_id, run_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.threads.runs.update(thread_id, run_id, params);
 
       return response;
     }
 
     async submitToolOuputsToRun(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const thread_id = parameters.msg.payload.thread_id;
-      const run_id = parameters.msg.payload.run_id;
-      delete parameters.msg.payload.thread_id;
-      delete parameters.msg.payload.run_id;
-
-      const response = await openai.beta.threads.runs.submitToolOutputs(
-        thread_id,
-        run_id,
-        {
-          ...parameters.msg.payload,
-        },
-      );
+      const {thread_id, run_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.threads.runs.submitToolOutputs(thread_id, run_id, params);
 
       return response;
     }
 
     async cancelRun(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const thread_id = parameters.msg.payload.thread_id;
-      const run_id = parameters.msg.payload.run_id;
-      delete parameters.msg.payload.thread_id;
-      delete parameters.msg.payload.run_id;
-
-      const response = await openai.beta.threads.runs.cancel(
-        thread_id,
-        run_id,
-        {
-          ...parameters.msg.payload,
-        },
-      );
+      const {thread_id, run_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.threads.runs.cancel(thread_id, run_id, params);
 
       return response;
     }
 
     async listRunSteps(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const thread_id = parameters.msg.payload.thread_id;
-      const run_id = parameters.msg.payload.run_id;
-      delete parameters.msg.payload.thread_id;
-      delete parameters.msg.payload.run_id;
-
-      const response = await openai.beta.threads.runs.steps.list(
-        thread_id,
-        run_id,
-        {
-          ...parameters.msg.payload,
-        },
-      );
+      const {thread_id, run_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.threads.runs.steps.list(thread_id, run_id, params);
 
       return response.body;
     }
 
     async getRunStep(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const thread_id = parameters.msg.payload.thread_id;
-      const run_id = parameters.msg.payload.run_id;
-      const step_id = parameters.msg.payload.step_id;
-
-      const response = await openai.beta.threads.runs.steps.retrieve(
-        thread_id,
-        run_id,
-        step_id,
-      );
+      const {thread_id, run_id, step_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.threads.runs.steps.retrieve(thread_id, run_id, step_id, params);
 
       return response;
     }
 
     async listAssistantFiles(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const assistant_id = parameters.msg.payload.assistant_id;
-      delete parameters.msg.payload.assistant_id;
-
-      const response = await openai.beta.assistants.files.list(assistant_id, {
-        ...parameters.msg.payload,
-      });
+      const {assistant_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.assistants.files.list(assistant_id, params);
 
       return response.body;
     }
 
     async createAssistantFile(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const assistant_id = parameters.msg.payload.assistant_id;
-      delete parameters.msg.payload.assistant_id;
-
-      const response = await openai.beta.assistants.files.create(assistant_id, {
-        ...parameters.msg.payload,
-      });
+      const {assistant_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.assistants.files.create(assistant_id, params);
 
       return response;
     }
 
     async getAssistantFile(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const assistant_id = parameters.msg.payload.assistant_id;
-      const file_id = parameters.msg.payload.file_id;
-      delete parameters.msg.payload.assistant_id;
-      delete parameters.msg.payload.file_id;
-
-      const response = await openai.beta.assistants.files.retrieve(
-        assistant_id,
-        file_id,
-        {
-          ...parameters.msg.payload,
-        },
-      );
+      const {assistant_id, file_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.assistants.files.retrieve(assistant_id, file_id, params);
 
       return response;
     }
 
     async deleteAssistantFile(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const assistant_id = parameters.msg.payload.assistant_id;
-      const file_id = parameters.msg.payload.file_id;
-      delete parameters.msg.payload.assistant_id;
-      delete parameters.msg.payload.file_id;
-
-      const response = await openai.beta.assistants.files.del(
-        assistant_id,
-        file_id,
-        {
-          ...parameters.msg.payload,
-        },
-      );
+      const {assistant_id, file_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.assistants.files.del(assistant_id, file_id, params);
 
       return response;
     }
 
     async listMessageFiles(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const thread_id = parameters.msg.payload.thread_id;
-      const message_id = parameters.msg.payload.message_id;
-      delete parameters.msg.payload.thread_id;
-      delete parameters.msg.payload.message_id;
-
-      const response = await openai.beta.threads.messages.files.list(
-        thread_id,
-        message_id,
-        {
-          ...parameters.msg.payload,
-        },
-      );
+      const {thread_id, message_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.threads.messages.files.list(thread_id, message_id, params);
 
       return response;
     }
 
     async getMessageFile(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const thread_id = parameters.msg.payload.thread_id;
-      const message_id = parameters.msg.payload.message_id;
-      const file_id = parameters.msg.payload.file_id;
-
-      delete parameters.msg.payload.thread_id;
-      delete parameters.msg.payload.message_id;
-      delete parameters.msg.payload.file_id;
-
-      const response = await openai.beta.threads.messages.files.retrieve(
-        thread_id,
-        message_id,
-        file_id,
-        {
-          ...parameters.msg.payload,
-        },
-      );
+      const {thread_id, message_id, file_id, ...params} = parameters.msg.payload;
+      const response = await openai.beta.threads.messages.files.retrieve(thread_id, message_id, file_id, params);
 
       return response;
     }
