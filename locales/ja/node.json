@@ -112,7 +112,7 @@
             "getRun": "retrieve run",
             "run_id": "run id",
             "modifyRun": "modify run",
-            "submitToolOuputsToRun": "submit tool outputs to run",
+            "submitToolOutputsToRun": "submit tool outputs to run",
             "cancelRun": "cancel run",
             "listRunSteps": "list run steps",
             "getRunStep": "retrieve run step",
