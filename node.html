@@ -460,16 +460,18 @@
         <span class="property-type">array</span>
       </dt>
       <dd>A list of tool enabled on the assistant.</dd>
+
       <dt class="optional">
-        file_ids
+        tool_resources
         <a
-          href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-file_ids"
+          href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-tool_resources"
           target="_blank"
           ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
         ></a>
-        <span class="property-type">array</span>
+        <span class="property-type">object</span>
       </dt>
-      <dd>A list of file IDs attached to this assistant.</dd>
+      <dd>A set of resources that are used by the assistant's tools. </dd>
+
       <dt class="optional">
         metadata
         <a
@@ -480,6 +482,40 @@
         <span class="property-type">object</span>
       </dt>
       <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
+
+      <dt class="optional">
+        temperature
+        <a
+          href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-temperature"
+          target="_blank"
+          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+        ></a>
+        <span class="property-type">number</span>
+      </dt>
+      <dd>What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.</dd>
+
+      <dt class="optional">
+        top_p
+        <a
+          href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-top_p"
+          target="_blank"
+          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+        ></a>
+        <span class="property-type">number</span>
+      </dt>
+      <dd>An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass.</dd>
+
+      <dt class="optional">
+        response_format
+        <a
+          href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-response_format"
+          target="_blank"
+          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+        ></a>
+        <span class="property-type">string</span>
+      </dt>
+      <dd>Specifies the format that the model must output.</dd>
+
     </dl>
 
     <h2>Retrieve Assistant</h2>
@@ -513,7 +549,8 @@
         ></a>
         <span class="property-type">string</span>
       </dt>
-      <dd>The ID of the assistant to modify.</dd>
+      <dd>The ID of the assistant to retrieve.</dd>
+
       <dt class="optional">
         model
         <a
@@ -564,16 +601,18 @@
         <span class="property-type">array</span>
       </dt>
       <dd>A list of tool enabled on the assistant.</dd>
+
       <dt class="optional">
-        file_ids
+        tool_resources
         <a
-          href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-file_ids"
+          href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-tool_resources"
           target="_blank"
           ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
         ></a>
-        <span class="property-type">array</span>
+        <span class="property-type">object</span>
       </dt>
-      <dd>A list of File IDs attached to this assistant.</dd>
+      <dd>A set of resources that are used by the assistant's tools. </dd>
+
       <dt class="optional">
         metadata
         <a
@@ -584,6 +623,40 @@
         <span class="property-type">object</span>
       </dt>
       <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
+
+      <dt class="optional">
+        temperature
+        <a
+          href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-temperature"
+          target="_blank"
+          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+        ></a>
+        <span class="property-type">number</span>
+      </dt>
+      <dd>What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.</dd>
+
+      <dt class="optional">
+        top_p
+        <a
+          href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-top_p"
+          target="_blank"
+          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+        ></a>
+        <span class="property-type">number</span>
+      </dt>
+      <dd>An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass.</dd>
+
+      <dt class="optional">
+        response_format
+        <a
+          href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-response_format"
+          target="_blank"
+          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+        ></a>
+        <span class="property-type">string</span>
+      </dt>
+      <dd>Specifies the format that the model must output.</dd>
+
     </dl>
 
     <h2>Delete Assistant</h2>
