@@ -1,3 +1,5 @@
+const { response } = require("express");
+
 let OpenaiApi = (function () {
   "use strict";
 
@@ -24,6 +26,41 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
+    async listVectorStoreFiles(parameters){
+      /* Returns a list of vector store files. */
+
+      const openai = new OpenAI(this.clientParams);
+      const { vector_store_id, ...params } = parameters.msg.payload;
+      const list = await openai.beta.vectorStores.files.list(
+        vector_store_id,
+        params,
+      );
+
+      return [...list.data];
+    }
+
+    async retrieveVectorStoreFile(parameters){
+      /* Retrieves a vector store file. */
+
+      const openai = new OpenAI(this.clientParams);
+      const {vector_store_id, file_id} = parameters.msg.payload;
+      const response = openai.beta.vectorStores.files.retrieve(vector_store_id, file_id);
+
+      return response;
+
+    }
+
+    async deleteVectorStoreFile(parameters){
+      /* Removes a file from the vector store. */
+
+      const openai = new OpenAI(this.clientParams);
+      const {vector_store_id, file_id, ...params} = parameters.msg.payload;
+      const response = openai.beta.vectorStores.files.del(vector_store_id, file_id, params);
+
+      return response;
+    }
+
     // End Vector Store File functions
 
     async createVectorStoreFileBatch(parameters) {

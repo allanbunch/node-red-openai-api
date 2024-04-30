@@ -346,7 +346,26 @@
         ></option>
       </optgroup>
 
-      <optgroup style="font-style: normal;" label="🗃️ Vector Store File Batches (Beta)">
+      <optgroup style="font-style: normal;" label="🗃️ Vector Store Files (Beta)">
+        <option
+          value="createVectorStoreFile"
+          data-i18n="OpenaiApi.parameters.createVectorStoreFile"
+        ></option>
+        <option
+          value="listVectorStoreFiles"
+          data-i18n="OpenaiApi.parameters.listVectorStoreFiles"
+        ></option>
+        <option
+          value="retrieveVectorStoreFile"
+          data-i18n="OpenaiApi.parameters.retrieveVectorStoreFile"
+        ></option>
+        <option
+          value="deleteVectorStoreFile"
+          data-i18n="OpenaiApi.parameters.deleteVectorStoreFile"
+        ></option>
+      </optgroup>
+
+      <optgroup style="font-style: normal;" label="🗄️ Vector Store File Batches (Beta)">
         <option
           value="createVectorStoreFileBatch"
           data-i18n="OpenaiApi.parameters.createVectorStoreFileBatch"
@@ -3212,6 +3231,177 @@
 
     </section>
     <!-- End Vector Stores Documentation -->
+
+    <!-- Begin Vector Store Files Documentation -->
+
+    <section>
+      <h1 style="font-weight: bold;">🔢 Vector Store Files</h1>
+      <a
+        href="https://platform.openai.com/docs/api-reference/vector-stores-files"
+        target="_blank"
+        >Official Documentation
+        <i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+      ></a>
+
+      <h2>Create Vector Store File</h2>
+      <p>Create a vector store file by attaching a File to a vector store.</p>
+      <dl class="message-properties">
+        <h2>msg.payload Properties</h2>
+        <dt>
+          vector_store_id
+          <a
+            href="https://platform.openai.com/docs/api-reference/vector-stores-files/createFile#vector-stores-files-createfile-vector_store_id"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string</span>
+        </dt>
+        <dd>The ID of the vector store for which to create a File.</dd>
+       
+        <dt>
+          file_id
+          <a
+            href="https://platform.openai.com/docs/api-reference/vector-stores-files/createFile#vector-stores-files-createfile-file_id"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string</span>
+        </dt>
+        <dd>A File ID that the vector store should use. Useful for tools like file_search that can access files.</dd>
+      </dl>
+
+
+      <h2>List Vector Store Files</h2>
+      <p>Returns a list of vector store files.</p>
+      <dl class="message-properties">
+        <h2>msg.payload Properties</h2>
+        <dt>
+          vector_store_id
+          <a
+            href="https://platform.openai.com/docs/api-reference/vector-stores-files/listFiles#vector-stores-files-listfiles-vector_store_id"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string</span>
+        </dt>
+        <dd>The ID of the vector store that the files belong to.</dd>
+       
+        <dt class="optional">
+          limit
+          <a
+            href="https://platform.openai.com/docs/api-reference/vector-stores-files/listFiles#vector-stores-files-listfiles-limit"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">integer</span>
+        </dt>
+        <dd>A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20.</dd>
+        
+        <dt class="optional">
+          order
+          <a
+            href="https://platform.openai.com/docs/api-reference/vector-stores-files/listFiles#vector-stores-files-listfiles-order"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string</span>
+        </dt>
+        <dd>Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order.</dd>
+        
+        <dt class="optional">
+          before
+          <a
+            href="https://platform.openai.com/docs/api-reference/vector-stores-files/listFiles#vector-stores-files-listfiles-before"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string</span>
+        </dt>
+        <dd>A cursor for use in pagination. before is an object ID that defines your place in the list.</dd>
+        
+        <dt class="optional">
+          after
+          <a
+            href="https://platform.openai.com/docs/api-reference/vector-stores-files/listFiles#vector-stores-files-listfiles-after"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string</span>
+        </dt>
+        <dd>A cursor for use in pagination. after is an object ID that defines your place in the list.</dd>
+        
+        <dt class="optional">
+          filter
+          <a
+            href="https://platform.openai.com/docs/api-reference/vector-stores-files/listFiles#vector-stores-files-listfiles-filter"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string</span>
+        </dt>
+        <dd>Filter by file status. One of in_progress, completed, failed, cancelled.</dd>
+        
+      </dl>
+
+      <h2>Retrieve Vector Store File</h2>
+      <p>Retrieves a vector store file.</p>
+      <dl class="message-properties">
+        <h2>msg.payload Properties</h2>
+        <dt>
+          vector_store_id
+          <a
+            href="https://platform.openai.com/docs/api-reference/vector-stores-files/getFile#vector-stores-files-getfile-vector_store_id"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string</span>
+        </dt>
+        <dd>The ID of the vector store that the file belongs to.</dd>
+       
+        <dt>
+          file_id
+          <a
+            href="https://platform.openai.com/docs/api-reference/vector-stores-files/getFile#vector-stores-files-getfile-file_id"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string</span>
+        </dt>
+        <dd>The ID of the file being retrieved.</dd>
+
+      </dl>
+
+      <h2>Delete Vector Store File</h2>
+      <p>Remove a file from a vector store.</p>
+      <dl class="message-properties">
+        <h2>msg.payload Properties</h2>
+        <dt>
+          vector_store_id
+          <a
+            href="https://platform.openai.com/docs/api-reference/vector-stores-files/deleteFile#vector-stores-files-deletefile-vector_store_id"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string</span>
+        </dt>
+        <dd>The ID of the vector store that the file belongs to.</dd>
+       
+        <dt>
+          file_id
+          <a
+            href="https://platform.openai.com/docs/api-reference/vector-stores-files/deleteFile#vector-stores-files-deletefile-file_id"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string</span>
+        </dt>
+        <dd>The ID of the file to remove from the vector store.</dd>
+
+      </dl>
+
+    </section>
+
+    <!-- End Vector Store Files Documentation -->
 
     <!-- Begin Vector Store File Batch Documentation -->
     <section>
