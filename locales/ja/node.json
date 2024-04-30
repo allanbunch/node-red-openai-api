@@ -16,6 +16,10 @@
             "streaming": "streaming"
         },
         "parameters": {
+            "createVectorStoreFileBatch": "create vector stoe file batch",
+            "retrieveVectorStoreFileBatch": "retrieve vector store file batch",
+            "cancelVectorStoreFileBatch": "cancel vector store file batch",
+            "listVectorStoreBatchFiles": "list vector store batch files",
             "createVectorStore": "create vector store",
             "listVectorStores": "list vector stores",
             "retrieveVectorStore": "retrieve vector store",

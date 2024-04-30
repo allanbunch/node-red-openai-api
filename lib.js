@@ -13,6 +13,67 @@ let OpenaiApi = (function () {
       };
     }
 
+    async createVectorStoreFileBatch(parameters) {
+      const openai = new OpenAI(this.clientParams);
+
+      let vector_store_id = parameters.msg.payload.vector_store_id;
+      delete parameters.msg.payload.vector_store_id;
+
+      const response = await openai.beta.vectorStores.fileBatches.create(
+        vector_store_id,
+        parameters.msg.payload,
+      );
+
+      return response;
+    }
+
+    async retrieveVectorStoreFileBatch(parameters) {
+      const openai = new OpenAI(this.clientParams);
+
+      let vector_store_id = parameters.msg.payload.vector_store_id;
+
+      const response =
+        await openai.beta.vectorStores.fileBatches.retrieve(vector_store_id);
+
+      return response;
+    }
+
+    async cancelVectorStoreFileBatch(parameters) {
+      const openai = new OpenAI(this.clientParams);
+
+      let vector_store_id = parameters.msg.payload.vector_store_id;
+      let batch_id = parameters.msg.payload.batch_id;
+
+      const response = await openai.beta.vectorStores.fileBatches.retrieve(
+        vector_store_id,
+        batch_id,
+      );
+
+      return response;
+    }
+
+    async listVectorStoreBatchFiles(parameters) {
+      const openai = new OpenAI(this.clientParams);
+
+      let vector_store_id = parameters.msg.payload.vector_store_id;
+      delete parameters.msg.payload.vector_store_id;
+      let batch_id = parameters.msg.payload.batch_id;
+      delete parameters.msg.payload.batch_id;
+
+      const list = await openai.beta.vectorStores.fileBatches.listFiles(
+        vector_store_id,
+        batch_id,
+        parameters.msg.payload,
+      );
+
+      let batchFiles = [];
+      for await (const batchFile of list) {
+        batchFiles.push(batchFile);
+      }
+
+      return batchFiles;
+    }
+
     async createVectorStore(parameters) {
       const openai = new OpenAI(this.clientParams);
 
@@ -26,9 +87,7 @@ let OpenaiApi = (function () {
     async listVectorStores(parameters) {
       const openai = new OpenAI(this.clientParams);
 
-      const list = await openai.beta.vectorStores.list({
-        ...parameters.msg.payload,
-      });
+      const list = await openai.beta.vectorStores.list(parameters.msg.payload);
 
       let vectorStores = [];
       for await (const vectorStore of list) {
