@@ -13,25 +13,25 @@
     }
   },
   "keywords": [
-    "Node-RED",
-    "AIoT",
-    "OpenAI",
-    "AI",
-    "OpenAI API",
-    "Assistants v2",
+    "node-red",
+    "aiot",
+    "openai",
+    "ai",
+    "openai api",
+    "assistants v2",
     "batch requests",
     "vector store",
-    "IoT",
+    "iot",
     "node-red-contrib",
-    "Automation",
+    "automation",
     "smart devices",
     "node-red-node",
     "artificial intelligence",
-    "API integration",
-    "LLM",
-    "SLM",
-    "AI Agent",
-    "Low-code"
+    "api integration",
+    "llm",
+    "slm",
+    "ai agent",
+    "low-code"
   ],
   "dependencies": {
     "openai": "^4.38.5"
