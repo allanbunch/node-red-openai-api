@@ -10,7 +10,7 @@ Welcome to _@inductiv/node-red-openai-api_, a versatile and configurable Node-RE
 
 ## Core Features
 
-- **Seamless Integration**: Connect directly with OpenAI API services without the hassle of complex coding or setup. Ideal for rapid prototyping and deployment in IoT contexts.
+- **Seamless Integration**: Connect directly with OpenAI API compatible services without the hassle of complex coding or setup. Ideal for rapid prototyping and deployment in IoT contexts.
 - **Configurable and Flexible**: Adapt to a wide range of project requirements, making it easy to integrate AI into your IoT solutions.
 - **Powerful Combinations**: Utilize Node-RED's diverse nodes to build complex, AI-driven IoT workflows with ease.
 
@@ -26,7 +26,7 @@ Version 1.0 of the **node-red-openai-api** node brings significant enhancements 
 
 ### Important Notice Regarding Compatibility
 
-- **Backwards Incompatible Changes**: Please be aware that this version includes breaking changes that may affect existing implementations due to the updated OpenAI NodeJS package:
+- **Backward Incompatible Changes**: Please be aware that this version includes breaking changes that may affect existing implementations due to the updated OpenAI NodeJS package:
   - The API call structure and parameters have been refined to align with the latest OpenAI specifications.
   - Some functions and settings from previous versions may no longer be compatible with this update.
   - List responses now exist at the top level of the `msg.payload` object; previously `msg.payload.data`.
@@ -58,7 +58,7 @@ After installation, find your _@inductiv/node-red-openai-api_ node in the **AI**
 
 ## Contribute
 
-We value community contributions that help us enhance this Node-RED node and expand its capabilities in AIoT applications. Whether you're fixing bugs, adding new features, or improving documentation, your help is welcome!
+I value community contributions that help enhance this Node-RED node and expand its capabilities in AIoT applications. Whether you're fixing bugs, adding new features, or improving documentation, your help is welcome!
 
 ### How to Contribute
 
