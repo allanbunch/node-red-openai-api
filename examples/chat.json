@@ -2,7 +2,7 @@
     {
         "id": "acd4d3697fd487ee",
         "type": "tab",
-        "label": "Chat Example",
+        "label": "Image Chat Example",
         "disabled": false,
         "info": "",
         "env": []
@@ -32,7 +32,7 @@
         "props": [
             {
                 "p": "payload.model",
-                "v": "gpt-4-vision-preview",
+                "v": "gpt-4-turbo",
                 "vt": "str"
             },
             {
@@ -74,7 +74,9 @@
         "type": "OpenAI API",
         "z": "acd4d3697fd487ee",
         "name": "chat completion",
-        "service": "71860aa02b1968e3",
+        "property": "payload",
+        "propertyType": "msg",
+        "service": "",
         "method": "createChatCompletion",
         "x": 660,
         "y": 220,
