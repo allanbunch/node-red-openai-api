@@ -2774,7 +2774,7 @@
             target="_blank"
             ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
           ></a>
-          <span class="property-type"></span>array
+          <span class="property-type">array</span>
         </dt>
         <dd>Override the tools the assistant can use for this run.</dd>
         <dt class="optional">
@@ -2787,6 +2787,95 @@
           <span class="property-type">object</span>
         </dt>
         <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
+
+        <dt class="optional">
+          temperature
+          <a
+            href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-temperature"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">number</span>
+        </dt>
+        <dd>What sampling temperature to use, between 0 and 2.</dd>
+
+        <dt class="optional">
+          top_p
+          <a
+            href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-top_p"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">number</span>
+        </dt>
+        <dd>An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass.</dd>
+
+        <dt class="optional">
+          stream
+          <a
+            href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-stream"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">boolean</span>
+        </dt>
+        <dd>If true, returns a stream of events that happen during the Run as server-sent events, terminating when the Run enters a terminal state with a data: [DONE] message.</dd>
+
+        <dt class="optional">
+          max_prompt_tokens
+          <a
+            href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-max_prompt_tokens"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">integer</span>
+        </dt>
+        <dd>The maximum number of prompt tokens that may be used over the course of the run.</dd>
+
+        <dt class="optional">
+          max_completion_tokens
+          <a
+            href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-max_completion_tokens"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">integer</span>
+        </dt>
+        <dd>The maximum number of completion tokens that may be used over the course of the run.</dd>
+
+        <dt class="optional">
+          truncation_strategy
+          <a
+            href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-truncation_strategy"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">object</span>
+        </dt>
+        <dd>Controls for how a thread will be truncated prior to the run.</dd>
+
+        <dt class="optional">
+          tool_choice
+          <a
+            href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-tool_choice"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string or object</span>
+        </dt>
+        <dd>Controls for how a thread will be truncated prior to the run.</dd>
+
+        <dt class="optional">
+          response_format
+          <a
+            href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-response_format"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string or object</span>
+        </dt>
+        <dd>Specifies the format that the model must output.</dd>
+
       </dl>
 
       <h2>Retrieve Run</h2>
