@@ -240,14 +240,6 @@
           value="modifyMessage"
           data-i18n="OpenaiApi.parameters.modifyMessage"
         ></option>
-        <option
-          value="listMessageFiles"
-          data-i18n="OpenaiApi.parameters.listMessageFiles"
-        ></option>
-        <option
-          value="getMessageFile"
-          data-i18n="OpenaiApi.parameters.getMessageFile"
-        ></option>
       </optgroup>
       <optgroup style="font-style: normal;" label="🧠 Models">
         <option
@@ -2280,109 +2272,6 @@
       <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
     </dl>
 
-    <h3>List Message Files</h3>
-    <p>Returns a list of message files.</p>
-    <dl class="message-properties">
-      <h2>msg.payload Properties</h2>
-
-      <dt>
-        thread_id
-        <a
-          href="https://platform.openai.com/docs/api-reference/messages/listMessageFiles#messages-listmessagefiles-thread_id"
-          target="_blank"
-          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
-        ></a>
-        <span class="property-type">string</span>
-      </dt>
-      <dd>The ID of the thread that the message and files belong to.</dd>
-      <dt>
-        message_id
-        <a
-          href="https://platform.openai.com/docs/api-reference/messages/listMessageFiles#messages-listmessagefiles-message_id"
-          target="_blank"
-          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
-        ></a>
-        <span class="property-type">string</span>
-      </dt>
-      <dd>The ID of the message that the files belongs to.</dd>
-      <dt class="optional">
-        limit
-        <a
-          href="https://platform.openai.com/docs/api-reference/messages/listMessageFiles#messages-listmessagefiles-limit"
-          target="_blank"
-          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
-        ></a>
-        <span class="property-type">integer</span>
-      </dt>
-      <dd>A limit on the number of objects to be returned.</dd>
-      <dt class="optional">
-        order
-        <a
-          href="https://platform.openai.com/docs/api-reference/messages/listMessageFiles#messages-listmessagefiles-order"
-          target="_blank"
-          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
-        ></a>
-        <span class="property-type">string</span>
-      </dt>
-      <dd>Sort order by the created_at timestamp of the objects.</dd>
-      <dt class="optional">
-        after
-        <a
-          href="https://platform.openai.com/docs/api-reference/messages/listMessageFiles#messages-listmessagefiles-after"
-          target="_blank"
-          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
-        ></a>
-        <span class="property-type">string</span>
-      </dt>
-      <dd>A cursor for use in pagination.</dd>
-      <dt class="optional">
-        before
-        <a
-          href="https://platform.openai.com/docs/api-reference/messages/listMessageFiles#messages-listmessagefiles-before"
-          target="_blank"
-          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
-        ></a>
-        <span class="property-type">string</span>
-      </dt>
-      <dd>A cursor for use in pagination.</dd>
-    </dl>
-
-    <h3>Retrieve Message File</h3>
-    <p>Retrieves a message file.</p>
-    <dl class="message-properties">
-      <h2>msg.payload Properties</h2>
-
-      <dt>
-        thread_id
-        <a
-          href="https://platform.openai.com/docs/api-reference/messages/getMessageFile#messages-getmessagefile-thread_id"
-          target="_blank"
-          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
-        ></a>
-        <span class="property-type">string</span>
-      </dt>
-      <dd>The ID of the thread to which the message and File belong.</dd>
-      <dt>
-        message_id
-        <a
-          href="https://platform.openai.com/docs/api-reference/messages/getMessageFile#messages-getmessagefile-message_id"
-          target="_blank"
-          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
-        ></a>
-        <span class="property-type">string</span>
-      </dt>
-      <dd>The ID of the message the file belongs to.</dd>
-      <dt>
-        file_id
-        <a
-          href="https://platform.openai.com/docs/api-reference/messages/getMessageFile#messages-getmessagefile-file_id"
-          target="_blank"
-          ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
-        ></a>
-        <span class="property-type">string</span>
-      </dt>
-      <dd>The ID of the file being retrieved.</dd>
-    </dl>
   </section>
 
   <section>

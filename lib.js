@@ -680,32 +680,6 @@ let OpenaiApi = (function () {
 
       return response;
     }
-
-    async listMessageFiles(parameters) {
-      const openai = new OpenAI(this.clientParams);
-      const { thread_id, message_id, ...params } = parameters.msg.payload;
-      const response = await openai.beta.threads.messages.files.list(
-        thread_id,
-        message_id,
-        params,
-      );
-
-      return response;
-    }
-
-    async getMessageFile(parameters) {
-      const openai = new OpenAI(this.clientParams);
-      const { thread_id, message_id, file_id, ...params } =
-        parameters.msg.payload;
-      const response = await openai.beta.threads.messages.files.retrieve(
-        thread_id,
-        message_id,
-        file_id,
-        params,
-      );
-
-      return response;
-    }
   }
 
   return OpenaiApi;
