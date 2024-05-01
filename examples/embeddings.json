@@ -20,8 +20,13 @@
             },
             {
                 "p": "payload.model",
-                "v": "text-embedding-ada-002",
+                "v": "text-embedding-3-small",
                 "vt": "str"
+            },
+            {
+                "p": "payload.dimensions",
+                "v": "768",
+                "vt": "num"
             }
         ],
         "repeat": "",
@@ -59,7 +64,9 @@
         "type": "OpenAI API",
         "z": "70307b6cbfb7a7c8",
         "name": "create embeddings",
-        "service": "39eba92e93450944",
+        "property": "payload",
+        "propertyType": "msg",
+        "service": "",
         "method": "createEmbedding",
         "x": 530,
         "y": 260,
