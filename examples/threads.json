@@ -15,7 +15,7 @@
         "props": [
             {
                 "p": "payload.thread_id",
-                "v": "thread_z6eZuA1LGsRE6FvoSVcnq12q",
+                "v": "thread_id",
                 "vt": "str"
             }
         ],
@@ -54,6 +54,8 @@
         "type": "OpenAI API",
         "z": "ec716b03b671e83a",
         "name": "retrieve thread",
+        "property": "payload",
+        "propertyType": "msg",
         "service": "",
         "method": "getThread",
         "x": 540,
