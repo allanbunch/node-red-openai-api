@@ -1,16 +1,16 @@
 [
     {
-        "id": "78b174792ca9efaf",
+        "id": "2e6fd52cd06882a1",
         "type": "tab",
-        "label": "Assistants Examples",
+        "label": "Assistants V2 Examples",
         "disabled": false,
         "info": "",
         "env": []
     },
     {
-        "id": "3aed22e8a8626b49",
+        "id": "b2325ede9b42d787",
         "type": "group",
-        "z": "78b174792ca9efaf",
+        "z": "2e6fd52cd06882a1",
         "style": {
             "stroke": "#999999",
             "stroke-opacity": "1",
@@ -21,26 +21,26 @@
             "color": "#a4a4a4"
         },
         "nodes": [
-            "a1dd9dd38256bc37",
-            "94c58ec5fd3ce89a",
-            "78bae2355d746f5b",
-            "16fd166e2cfe1aec",
-            "54cdefbcbbec117f",
-            "e0007c022bce36b9",
-            "e5b83cdfc84c22f9",
-            "6ada9879e91ef156",
-            "a08cc5475a20cc70"
+            "4a8b69a0d666e4b1",
+            "c93a90f1145d7097",
+            "80f2fcaea376e6fa",
+            "7d03d073350147e7",
+            "6e0b6eedb964bb59",
+            "f478ebac3078686d",
+            "979ed3ff6205acfb",
+            "5b0b2790637ab2b5",
+            "b0c1fc6cafdb4e10"
         ],
         "x": 94,
         "y": 113,
-        "w": 1472,
-        "h": 374
+        "w": 1732,
+        "h": 308
     },
     {
-        "id": "6ada9879e91ef156",
+        "id": "f478ebac3078686d",
         "type": "group",
-        "z": "78b174792ca9efaf",
-        "g": "3aed22e8a8626b49",
+        "z": "2e6fd52cd06882a1",
+        "g": "b2325ede9b42d787",
         "style": {
             "stroke": "#999999",
             "stroke-opacity": "1",
@@ -51,45 +51,23 @@
             "color": "#a4a4a4"
         },
         "nodes": [
-            "7a825447030eb842",
-            "e78656f2a1db4141",
-            "a342bcf840361d49",
-            "da5c242d75d45b1a",
-            "faf6244b17ba1131"
+            "fa3a845583809a96",
+            "b7515492cea3f1fb",
+            "dc3d68ba96e95f34",
+            "47e765406b4b7af7",
+            "4bfcbf55e88e61dd",
+            "ab3a2c80ba3eacbd"
         ],
-        "x": 454,
+        "x": 334,
         "y": 139,
-        "w": 832,
+        "w": 1112,
         "h": 122
     },
     {
-        "id": "a08cc5475a20cc70",
-        "type": "group",
-        "z": "78b174792ca9efaf",
-        "g": "3aed22e8a8626b49",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "d0ed57739e76eba4",
-            "a319c0690ad183bc"
-        ],
-        "x": 454,
-        "y": 339,
-        "w": 212,
-        "h": 122
-    },
-    {
-        "id": "a1dd9dd38256bc37",
+        "id": "4a8b69a0d666e4b1",
         "type": "debug",
-        "z": "78b174792ca9efaf",
-        "g": "3aed22e8a8626b49",
+        "z": "2e6fd52cd06882a1",
+        "g": "b2325ede9b42d787",
         "name": "response",
         "active": true,
         "tosidebar": true,
@@ -99,37 +77,33 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 760,
-        "y": 380,
+        "x": 600,
+        "y": 340,
         "wires": []
     },
     {
-        "id": "94c58ec5fd3ce89a",
+        "id": "c93a90f1145d7097",
         "type": "inject",
-        "z": "78b174792ca9efaf",
-        "g": "3aed22e8a8626b49",
+        "z": "2e6fd52cd06882a1",
+        "g": "b2325ede9b42d787",
         "name": "assistant payload",
         "props": [
-            {
-                "p": "topic",
-                "vt": "str"
-            },
             {
                 "p": "payload"
             },
             {
                 "p": "assistant.name",
-                "v": "_node-red-openai-api-rag-example_",
+                "v": "_node-red-openai-api-file-search-example_",
                 "vt": "str"
             },
             {
                 "p": "assistant.model",
-                "v": "gpt-3.5-turbo-1106",
+                "v": "gpt-4-turbo",
                 "vt": "str"
             },
             {
                 "p": "assistant.tools",
-                "v": "[{\"type\":\"retrieval\"}]",
+                "v": "[{\"type\":\"file_search\"}]",
                 "vt": "json"
             },
             {
@@ -147,69 +121,33 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "retrieval",
-        "payload": "[\"/path/to/my/file-1.txt\",\"/path/to/my/file-2.txt\"]",
+        "topic": "",
+        "payload": "[\"/path/to/my/assistant/file.1\",\"/path/to/my/assistant/file.2\"]",
         "payloadType": "json",
         "x": 220,
         "y": 220,
         "wires": [
             [
-                "78bae2355d746f5b"
+                "fa3a845583809a96"
             ]
         ]
     },
     {
-        "id": "78bae2355d746f5b",
-        "type": "switch",
-        "z": "78b174792ca9efaf",
-        "g": "3aed22e8a8626b49",
-        "name": "assistant type switch",
-        "property": "topic",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "retrieval",
-                "vt": "str"
-            },
-            {
-                "t": "else"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 300,
-        "y": 300,
-        "wires": [
-            [
-                "7a825447030eb842"
-            ],
-            [
-                "a319c0690ad183bc"
-            ]
-        ],
-        "outputLabels": [
-            "Document-enhanced Agent",
-            "Standard Agent"
-        ]
-    },
-    {
-        "id": "16fd166e2cfe1aec",
+        "id": "80f2fcaea376e6fa",
         "type": "comment",
-        "z": "78b174792ca9efaf",
-        "g": "3aed22e8a8626b49",
-        "name": "Document-Enhanced (RAG) Assistant",
+        "z": "2e6fd52cd06882a1",
+        "g": "b2325ede9b42d787",
+        "name": "File Search Assistant",
         "info": "",
-        "x": 270,
+        "x": 220,
         "y": 180,
         "wires": []
     },
     {
-        "id": "54cdefbcbbec117f",
+        "id": "7d03d073350147e7",
         "type": "inject",
-        "z": "78b174792ca9efaf",
-        "g": "3aed22e8a8626b49",
+        "z": "2e6fd52cd06882a1",
+        "g": "b2325ede9b42d787",
         "name": "assistant payload",
         "props": [
             {
@@ -219,7 +157,7 @@
             },
             {
                 "p": "payload.model",
-                "v": "gpt-4-1106-preview",
+                "v": "gpt-4-turbo",
                 "vt": "str"
             },
             {
@@ -244,50 +182,29 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 220,
-        "y": 380,
+        "y": 340,
         "wires": [
             [
-                "78bae2355d746f5b"
+                "5b0b2790637ab2b5"
             ]
         ]
     },
     {
-        "id": "e0007c022bce36b9",
-        "type": "function",
-        "z": "78b174792ca9efaf",
-        "g": "3aed22e8a8626b49",
-        "name": "structure assistant payload",
-        "func": "// create an array of IDs from the fil upload response.\nconst file_ids = msg.payload.map(element => element.id);\n\n// attach the file IDs to the assistant.\nmsg.assistant.file_ids = file_ids;\n\nmsg.payload = msg.assistant;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1420,
-        "y": 220,
-        "wires": [
-            [
-                "a319c0690ad183bc"
-            ]
-        ]
-    },
-    {
-        "id": "e5b83cdfc84c22f9",
+        "id": "6e0b6eedb964bb59",
         "type": "comment",
-        "z": "78b174792ca9efaf",
-        "g": "3aed22e8a8626b49",
+        "z": "2e6fd52cd06882a1",
+        "g": "b2325ede9b42d787",
         "name": "Standard Assistant",
         "info": "",
         "x": 210,
-        "y": 420,
+        "y": 380,
         "wires": []
     },
     {
-        "id": "7a825447030eb842",
+        "id": "fa3a845583809a96",
         "type": "split",
-        "z": "78b174792ca9efaf",
-        "g": "6ada9879e91ef156",
+        "z": "2e6fd52cd06882a1",
+        "g": "f478ebac3078686d",
         "name": "gather file details",
         "splt": "\\n",
         "spltType": "str",
@@ -295,59 +212,59 @@
         "arraySpltType": "len",
         "stream": false,
         "addname": "",
-        "x": 570,
+        "x": 450,
         "y": 220,
         "wires": [
             [
-                "da5c242d75d45b1a"
+                "47e765406b4b7af7"
             ]
         ]
     },
     {
-        "id": "e78656f2a1db4141",
+        "id": "b7515492cea3f1fb",
         "type": "join",
-        "z": "78b174792ca9efaf",
-        "g": "6ada9879e91ef156",
-        "name": "gather files",
-        "mode": "auto",
-        "build": "object",
-        "property": "payload",
+        "z": "2e6fd52cd06882a1",
+        "g": "f478ebac3078686d",
+        "name": "gather file ids",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload.id",
         "propertyType": "msg",
         "key": "topic",
         "joiner": "\\n",
         "joinerType": "str",
-        "accumulate": true,
+        "accumulate": false,
         "timeout": "",
         "count": "",
         "reduceRight": false,
         "reduceExp": "",
         "reduceInit": "",
-        "reduceInitType": "",
+        "reduceInitType": "num",
         "reduceFixup": "",
-        "x": 1190,
+        "x": 1070,
         "y": 220,
         "wires": [
             [
-                "e0007c022bce36b9"
+                "ab3a2c80ba3eacbd"
             ]
         ]
     },
     {
-        "id": "a342bcf840361d49",
+        "id": "dc3d68ba96e95f34",
         "type": "comment",
-        "z": "78b174792ca9efaf",
-        "g": "6ada9879e91ef156",
-        "name": "Upload Files",
+        "z": "2e6fd52cd06882a1",
+        "g": "f478ebac3078686d",
+        "name": "Vector Store Tasks",
         "info": "",
-        "x": 550,
+        "x": 450,
         "y": 180,
         "wires": []
     },
     {
-        "id": "da5c242d75d45b1a",
+        "id": "47e765406b4b7af7",
         "type": "function",
-        "z": "78b174792ca9efaf",
-        "g": "6ada9879e91ef156",
+        "z": "2e6fd52cd06882a1",
+        "g": "f478ebac3078686d",
         "name": "structure file payload",
         "func": "msg.payload = {\n    \"file\": msg.payload,\n    \"purpose\": \"assistants\",\n    \"filename\": msg.filename\n};\nreturn msg;",
         "outputs": 1,
@@ -356,29 +273,18 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 800,
+        "x": 680,
         "y": 220,
         "wires": [
             [
-                "faf6244b17ba1131"
+                "4bfcbf55e88e61dd"
             ]
         ]
     },
     {
-        "id": "d0ed57739e76eba4",
+        "id": "a28af876056ff894",
         "type": "comment",
-        "z": "78b174792ca9efaf",
-        "g": "a08cc5475a20cc70",
-        "name": "Create Assistant",
-        "info": "",
-        "x": 560,
-        "y": 420,
-        "wires": []
-    },
-    {
-        "id": "e3812b47c1b7b918",
-        "type": "comment",
-        "z": "78b174792ca9efaf",
+        "z": "2e6fd52cd06882a1",
         "name": "Create Assistants",
         "info": "",
         "x": 180,
@@ -386,35 +292,96 @@
         "wires": []
     },
     {
-        "id": "faf6244b17ba1131",
+        "id": "4bfcbf55e88e61dd",
         "type": "OpenAI API",
-        "z": "78b174792ca9efaf",
-        "g": "6ada9879e91ef156",
+        "z": "2e6fd52cd06882a1",
+        "g": "f478ebac3078686d",
         "name": "upload file",
+        "property": "payload",
+        "propertyType": "msg",
         "service": "",
         "method": "createFile",
-        "x": 1010,
+        "x": 890,
         "y": 220,
         "wires": [
             [
-                "e78656f2a1db4141"
+                "b7515492cea3f1fb"
             ]
         ]
     },
     {
-        "id": "a319c0690ad183bc",
-        "type": "OpenAI API",
-        "z": "78b174792ca9efaf",
-        "g": "a08cc5475a20cc70",
-        "name": "create assistant",
-        "service": "",
-        "method": "createAssistant",
-        "x": 560,
-        "y": 380,
+        "id": "ab3a2c80ba3eacbd",
+        "type": "function",
+        "z": "2e6fd52cd06882a1",
+        "g": "f478ebac3078686d",
+        "name": "construct Assistant payload",
+        "func": "const {payload, assistant, ...newMsg} = msg;\nconst file_ids = payload.id;\n\nnewMsg.payload = assistant;\nnewMsg.payload.tool_resources = {\n    \"file_search\": {\n        \"vector_stores\": [{\"file_ids\": file_ids}]\n    }\n};\n\nreturn newMsg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1300,
+        "y": 220,
         "wires": [
             [
-                "a1dd9dd38256bc37"
+                "979ed3ff6205acfb"
             ]
         ]
+    },
+    {
+        "id": "979ed3ff6205acfb",
+        "type": "OpenAI API",
+        "z": "2e6fd52cd06882a1",
+        "g": "b2325ede9b42d787",
+        "name": "Create Assistant",
+        "property": "payload",
+        "propertyType": "msg",
+        "service": "",
+        "method": "createAssistant",
+        "x": 1540,
+        "y": 220,
+        "wires": [
+            [
+                "b0c1fc6cafdb4e10"
+            ]
+        ]
+    },
+    {
+        "id": "5b0b2790637ab2b5",
+        "type": "OpenAI API",
+        "z": "2e6fd52cd06882a1",
+        "g": "b2325ede9b42d787",
+        "name": "Create Assistant",
+        "property": "payload",
+        "propertyType": "msg",
+        "service": "",
+        "method": "createAssistant",
+        "x": 420,
+        "y": 340,
+        "wires": [
+            [
+                "4a8b69a0d666e4b1"
+            ]
+        ]
+    },
+    {
+        "id": "b0c1fc6cafdb4e10",
+        "type": "debug",
+        "z": "2e6fd52cd06882a1",
+        "g": "b2325ede9b42d787",
+        "name": "response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1720,
+        "y": 220,
+        "wires": []
     }
 ]
