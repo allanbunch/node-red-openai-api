@@ -227,7 +227,7 @@ let OpenaiApi = (function () {
       const openai = new OpenAI(this.clientParams);
       const response = await openai.images.generate(parameters.msg.payload);
 
-      return response;
+      return response.data;
     }
 
     async createImageEdit(parameters) {
@@ -240,7 +240,7 @@ let OpenaiApi = (function () {
       }
       const response = await openai.images.edit(params);
 
-      return response;
+      return response.data;
     }
 
     async createImageVariation(parameters) {
@@ -250,14 +250,14 @@ let OpenaiApi = (function () {
       params.image = fs.createReadStream(image);
       const response = await openai.images.createVariation(params);
 
-      return response;
+      return response.data;
     }
 
     async createEmbedding(parameters) {
       const openai = new OpenAI(this.clientParams);
       const response = await openai.embeddings.create(parameters.msg.payload);
 
-      return response;
+      return response.data;
     }
 
     async createSpeech(parameters) {
