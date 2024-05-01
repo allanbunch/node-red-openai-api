@@ -25,7 +25,7 @@
         "props": [
             {
                 "p": "payload.thread_id",
-                "v": "thread_ShTYzF0LHfr4geWksTky4Gxu",
+                "v": "thread_id",
                 "vt": "str"
             }
         ],
@@ -51,7 +51,7 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "payload.data",
+        "complete": "payload",
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
@@ -64,6 +64,8 @@
         "type": "OpenAI API",
         "z": "47d8fb0adff5a6cc",
         "name": "list messages",
+        "property": "payload",
+        "propertyType": "msg",
         "service": "",
         "method": "listMessages",
         "x": 580,
