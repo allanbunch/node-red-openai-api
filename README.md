@@ -21,6 +21,7 @@ Version 1.0 of the **node-red-openai-api** node brings significant enhancements 
 - **API Upgrade to OpenAI Assistants v2**: Transition to the new Assistants v2 API version with extended features. This upgrade leverages the updated OpenAI NodeJS package, which supports newer models and capabilities, enhancing AIoT applications.
 - **Response Object Parity**: Updated response objects to closely align with the OpenAI documented response object structures, ensuring that your integration can seamlessly handle newer data formats.
 - **New Functionalities**: Addition of new capabilities such as Batch requests and Vector Store features to enhance your projects.
+- **Updated Examples**: Updated [examples](./examples/) showcasing new API features and functionality.
 - **Bug Fixes**: Closed out a series of bugs improving overall usability and stability.
 
 ### Important Notice Regarding Compatibility
