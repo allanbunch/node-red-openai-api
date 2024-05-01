@@ -29,6 +29,7 @@ Version 1.0 of the **node-red-openai-api** node brings significant enhancements 
 - **Backwards Incompatible Changes**: Please be aware that this version includes breaking changes that may affect existing implementations due to the updated OpenAI NodeJS package:
   - The API call structure and parameters have been refined to align with the latest OpenAI specifications.
   - Some functions and settings from previous versions may no longer be compatible with this update.
+  - List responses now exist at the top level of the `msg.payload` object; previously `msg.payload.data`.
 
 I recommend reviewing current setups and testing them with this new version in a development environment before updating to ensure a smooth transition. This will help you take full advantage of the enhanced features while managing any necessary adjustments in your existing applications.
 
