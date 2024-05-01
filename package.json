@@ -1,6 +1,6 @@
 {
   "name": "@inductiv/node-red-openai-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Enhance your Node-RED flows with advanced AI capabilities. This package offers seamless integration with OpenAI's latest Assistants v2 API, including support for batch requests and vector store features, ensuring robust AIoT solutions with improved usability and stability.",
   "main": "node.js",
   "engines": {
