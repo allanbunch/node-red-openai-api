@@ -563,13 +563,10 @@ let OpenaiApi = (function () {
 
     async createThreadAndRun(parameters) {
       const openai = new OpenAI(this.clientParams);
-
       const { _node, ...params } = parameters;
-      const response = await openai.beta.threads.createAndRun(
-        params.msg.payload,
-      );
+      const response = await openai.beta.threads.createAndRun(params.payload);
 
-      if (params.msg.payload.stream) {
+      if (params.payload.stream) {
         _node.status({
           fill: "green",
           shape: "dot",
