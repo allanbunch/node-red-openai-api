@@ -16,6 +16,12 @@ Welcome to _@inductiv/node-red-openai-api_, a versatile and configurable Node-RE
 - **Configurable and Flexible**: Adapt to a wide range of project requirements, making it easy to integrate AI into your IoT solutions.
 - **Powerful Combinations**: Utilize Node-RED's diverse nodes to build complex, AI-driven IoT workflows with ease.
 
+## Release Notes (v1.1.0)
+
+- **Fixed a bug** that prevented custom property paths not honored. [#22](https://github.com/allanbunch/node-red-openai-api/issues/22)
+- Added the ```vectorStores.fileBatches.uploadAndPoll``` endpoint to the **Vector Store File Batches** endpoint group.
+- Updated the node's documentation panel.
+
 ## What's New in Version 1.0
 
 Version 1.0 of the **node-red-openai-api** node brings significant enhancements and new possibilities, including:
@@ -52,10 +58,10 @@ npm i @inductiv/node-red-openai-api
 
 ## Usage
 
-After installation, find your _@inductiv/node-red-openai-api_ node in the **AI** palette category labeled "OpenAI API". Here's how you can start integrating AI into your IoT projects:
+After installation, find your node in the **AI** palette category labeled "OpenAI API". Here's how you can start integrating AI into your IoT projects:
 
 1. Configure the node with your AI platform's API key (if required).
-2. Use the node to send and receive data to/from OpenAI API compatible platforms, incorporating AI responses into your IoT workflows.
+2. Send [OpenAI documented](https://platform.openai.com/docs/api-reference/) API service configuration paramaters to the node using the default `msg.payload` property, or confiure your desired incoming object property reference on the node itself.
 3. Explore the [examples](./examples/) directory for sample implementations.
 
 ## Contribute
