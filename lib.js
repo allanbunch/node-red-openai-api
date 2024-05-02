@@ -598,7 +598,7 @@ let OpenaiApi = (function () {
       const openai = new OpenAI(this.clientParams);
 
       const { _node, ..._params } = parameters;
-      const { thread_id, ...params } = _params.msg.payload;
+      const { thread_id, ...params } = _params.payload;
       const response = await openai.beta.threads.runs.create(thread_id, params);
 
       if (params.stream) {
