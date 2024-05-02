@@ -596,7 +596,6 @@ let OpenaiApi = (function () {
 
     async createRun(parameters) {
       const openai = new OpenAI(this.clientParams);
-
       const { _node, ..._params } = parameters;
       const { thread_id, ...params } = _params.payload;
       const response = await openai.beta.threads.runs.create(thread_id, params);
@@ -647,9 +646,8 @@ let OpenaiApi = (function () {
 
     async submitToolOutputsToRun(parameters) {
       const openai = new OpenAI(this.clientParams);
-
       const { _node, ..._params } = parameters;
-      const { thread_id, run_id, ...params } = _params.msg.payload;
+      const { thread_id, run_id, ...params } = _params.payload;
       const response = await openai.beta.threads.runs.submitToolOutputs(
         thread_id,
         run_id,
@@ -691,7 +689,7 @@ let OpenaiApi = (function () {
     async listRunSteps(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { thread_id, run_id, ...params } = parameters.payload;
-      const list = await openai.beta.threads.runs.steps.list(run_id, params);
+      const list = await openai.beta.threads.runs.steps.list(thread_id, run_id, params);
 
       return [...list.data];
     }
