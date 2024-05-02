@@ -34,7 +34,6 @@ module.exports = function (RED) {
 
         const serviceName = node.config.method; // Set the service name to call.
 
-        delete msg[propertyPath];
         let serviceParametersObject = {
           "_node": node,
           "payload": payload,
