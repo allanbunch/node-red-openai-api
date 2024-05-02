@@ -3649,14 +3649,19 @@
         <h2>msg.payload Properties</h2>
         <dt>
           vector_store_id
-          <span class="property-type">array</span>
+          <span class="property-type">string</span>
         </dt>
         <dd>The id of the vector store to which the files are being uploaded.</dd>
         <dt>
-          file_paths
+          files
           <span class="property-type">array</span>
         </dt>
         <dd>A list of absolute file paths to the files that are being uploaded.</dd>
+        <dt class="optional">
+          file_ids
+          <span class="property-type">array</span>
+        </dt>
+        <dd>A list of previously uploaded file ids.</dd>
       </dl>
     </section>
     <!-- End Vector Store File Batch Documentation -->
