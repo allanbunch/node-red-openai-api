@@ -33,21 +33,23 @@ module.exports = function (RED) {
         }
 
         const serviceName = node.config.method; // Set the service name to call.
+
+        delete msg[propertyPath];
         let serviceParametersObject = {
-          _node: node,
-          msg: msg,
+          "_node": node,
+          "payload": payload,
+          "msg": msg
         };
 
         // Dynamically call the function based on the service name
-        const functionName = `${serviceName}`;
-        if (typeof client[functionName] === "function") {
+        if (typeof client[serviceName] === "function") {
           node.status({
             fill: "blue",
             shape: "dot",
             text: "OpenaiApi.status.requesting",
           });
 
-          client[functionName](serviceParametersObject)
+          client[serviceName](serviceParametersObject)
             .then((payload) => {
               if (payload !== undefined) {
                 // Update `msg.payload` with the payload from the API response, then send resonse to client.
@@ -66,7 +68,7 @@ module.exports = function (RED) {
               node.error(errorMessage, { payload: {} });
             });
         } else {
-          console.error(`Function ${functionName} does not exist on client.`);
+          console.error(`Function ${serviceName} does not exist on client.`);
         }
       });
     }
