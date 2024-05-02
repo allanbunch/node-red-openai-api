@@ -374,6 +374,10 @@
           value="listVectorStoreBatchFiles"
           data-i18n="OpenaiApi.parameters.listVectorStoreBatchFiles"
         ></option>
+        <option
+          value="uploadAndPollVectorStoreFileBatch"
+          data-i18n="OpenaiApi.parameters.uploadAndPollVectorStoreFileBatch"
+        ></option>
       </optgroup>
     </select>
   </div>
@@ -3639,6 +3643,20 @@
         </dt>
         <dd>Filter by file status. One of in_progress, completed, failed, cancelled.</dd>
 
+      <h2>Upload and Poll File Batch [undocumented]</h2>
+      <p>Uploads the given files concurrently and then creates a vector store file batch.</p>
+      <dl class="message-properties">
+        <h2>msg.payload Properties</h2>
+        <dt>
+          vector_store_id
+          <span class="property-type">array</span>
+        </dt>
+        <dd>The id of the vector store to which the files are being uploaded.</dd>
+        <dt>
+          file_paths
+          <span class="property-type">array</span>
+        </dt>
+        <dd>A list of absolute file paths to the files that are being uploaded.</dd>
       </dl>
     </section>
     <!-- End Vector Store File Batch Documentation -->

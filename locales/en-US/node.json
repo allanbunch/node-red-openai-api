@@ -24,6 +24,7 @@
             "retrieveVectorStoreFileBatch": "retrieve vector store file batch",
             "cancelVectorStoreFileBatch": "cancel vector store file batch",
             "listVectorStoreBatchFiles": "list vector store batch files",
+            "uploadAndPollVectorStoreFileBatch": "upload and poll file batch",
             "createVectorStore": "create vector store",
             "listVectorStores": "list vector stores",
             "retrieveVectorStore": "retrieve vector store",

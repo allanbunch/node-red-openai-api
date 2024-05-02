@@ -69,6 +69,8 @@ let OpenaiApi = (function () {
 
     // End Vector Store File functions
 
+    // >>> Begin File Batch functions
+
     async createVectorStoreFileBatch(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { vector_store_id, ...params } = parameters.msg.payload;
@@ -116,6 +118,35 @@ let OpenaiApi = (function () {
 
       return batchFiles;
     }
+
+    async uploadAndPollVectorStoreFileBatch(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { vector_store_id, files, fileIds, ...params } = parameters.msg.payload;
+    
+      if (!files || !Array.isArray(files)) {
+        throw new Error("Files is not defined or not an array");
+      }
+    
+      // Validate file paths
+      files.forEach(path => {
+        if (!fs.existsSync(path)) {
+          throw new Error(`File does not exist: ${path}`);
+        }
+      });
+    
+      const fileStreams = files.map(path => fs.createReadStream(path));
+    
+      const response = await openai.beta.vectorStores.fileBatches.uploadAndPoll(
+        vector_store_id,
+        {files: fileStreams, fileIds: fileIds},
+        params
+      );
+    
+      return response;
+    }
+    
+    
+    // <<< End File Batch Functions
 
     async createVectorStore(parameters) {
       const openai = new OpenAI(this.clientParams);
@@ -620,7 +651,7 @@ let OpenaiApi = (function () {
     async submitToolOutputsToRun(parameters) {
       const openai = new OpenAI(this.clientParams);
 
-      const {_node, ..._params} = parameters;
+      const { _node, ..._params } = parameters;
       const { thread_id, run_id, ...params } = _params.msg.payload;
       const response = await openai.beta.threads.runs.submitToolOutputs(
         thread_id,
