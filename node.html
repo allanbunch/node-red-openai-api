@@ -183,6 +183,10 @@
           data-i18n="OpenaiApi.parameters.listFineTuningEvents"
         ></option>
         <option
+          value="listFineTuningCheckpoints"
+          data-i18n="OpenaiApi.parameters.listFineTuningCheckpoints"
+        ></option>
+        <option
           value="cancelFineTuningJob"
           data-i18n="OpenaiApi.parameters.cancelFineTuningJob"
         ></option>
@@ -1798,6 +1802,47 @@
           </dt>
           <dd>Number of events to retrieve.</dd>
         </dl>
+
+        <!-- >>> Begin List Fine-tuning Checkpoints -->
+        <h4 style="font-weight: bolder;"> ⋙ List Fine-tuning Events</h4>
+        <p>List checkpoints for a fine-tuning job.</p>
+        <dl class="message-properties">
+          <h4>msg.payload Properties</h4>
+
+          <dt>
+            fine_tuning_job_id
+            <a
+              href="https://platform.openai.com/docs/api-reference/fine-tuning/list-checkpoints#fine-tuning-list-checkpoints-fine_tuning_job_id"
+              target="_blank"
+              ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+            ></a>
+            <span class="property-type">string</span>
+          </dt>
+          <dd>The ID of the fine-tuning job to get checkpoints for.</dd>
+          <dt class="optional">
+            after
+            <a
+              href="https://platform.openai.com/docs/api-reference/fine-tuning/list-checkpoints#fine-tuning-list-checkpoints-after"
+              target="_blank"
+              ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+            ></a>
+            <span class="property-type">string</span>
+          </dt>
+          <dd>
+            Identifier for the last checkpoint ID from the previous pagination request.
+          </dd>
+          <dt class="optional">
+            limit
+            <a
+              href="https://platform.openai.com/docs/api-reference/fine-tuning/list-checkpoints#fine-tuning-list-checkpoints-limit"
+              target="_blank"
+              ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+            ></a>
+            <span class="property-type">integer</span>
+          </dt>
+          <dd>Number of events to retrieve.</dd>
+        </dl>
+        <!-- <<< End List Fine-tuning Checkpoints -->
 
         <h4 style="font-weight: bolder;"> ⋙ Cancel Fine-tuning Job</h4>
         <p>Immediately cancel a fine-tune job.</p>

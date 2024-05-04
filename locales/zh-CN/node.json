@@ -81,6 +81,7 @@
             "retrieveFineTuningJob": "retrieve fine-tuning job",
             "fine_tuning_job_id": "fine-tuning job id",
             "listFineTuningEvents": "list fine-tuning events",
+            "listFineTuningCheckpoints": "list fine-tuning checkpoints",
             "cancelFineTuningJob": "cancel fine-tuning",
             "createFineTune": "POST /fine-tunes",
             "listFineTunes": "GET /fine-tunes",

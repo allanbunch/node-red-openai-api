@@ -401,6 +401,17 @@ let OpenaiApi = (function () {
       return [...list.data];
     }
 
+    async listFineTuningCheckpoints(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { fine_tuning_job_id, ...params } = parameters.payload;
+      const list = await openai.fineTuning.jobs.checkpoints.list(
+        fine_tuning_job_id,
+        params,
+      );
+
+      return [...list.data];
+    }
+
     async cancelFineTuningJob(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { fine_tuning_job_id, ...params } = parameters.payload;
