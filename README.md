@@ -2,7 +2,7 @@
   Node-RED OpenAI API: Unleashing AIoT Innovation
   <br>
 <a href="https://github.com/allanbunch/node-red-openai-api">
-  <img width="265" alt="node-red-openai-api-node" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/9588aba4-0a97-4cbe-a446-58e06d5dd016">
+  <img width="265" alt="node-red-openai-api-node" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/ee954c8e-fbf4-4812-a38a-f047cecd1982">
 </a>
 <br>
 @inductiv/node-red-openai-api
