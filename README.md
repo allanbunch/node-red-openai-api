@@ -16,13 +16,13 @@ Welcome to _@inductiv/node-red-openai-api_, a versatile and configurable Node-RE
 - **Configurable and Flexible**: Adapt to a wide range of project requirements, making it easy to integrate AI into your IoT solutions.
 - **Powerful Combinations**: Utilize Node-RED's diverse nodes to build complex, AI-driven IoT workflows with ease.
 
-## Release Notes (v1.1.0)
+## Release Notes (v1.2.0)
 
-- **Fixed a bug** that prevented custom property paths not honored. [#22](https://github.com/allanbunch/node-red-openai-api/issues/22)
-- Added the ```vectorStores.fileBatches.uploadAndPoll``` endpoint to the **Vector Store File Batches** endpoint group.
+- Added the [```fineTuning.jobs.checkpoints.list```](https://platform.openai.com/docs/api-reference/fine-tuning/list-checkpoints) endpoint to the **Fine-tuning** API.
 - Updated the node's documentation panel.
+- Code stability & formatting updates.
 
-## What's New in Version 1.0
+## What's New in Version 1.x
 
 Version 1.0 of the **node-red-openai-api** node brings significant enhancements and new possibilities, including:
 
