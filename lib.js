@@ -1,5 +1,3 @@
-const { response } = require("express");
-
 let OpenaiApi = (function () {
   "use strict";
 
@@ -121,31 +119,31 @@ let OpenaiApi = (function () {
 
     async uploadAndPollVectorStoreFileBatch(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const { vector_store_id, files, file_ids, ...params } = parameters.payload;
-    
+      const { vector_store_id, files, file_ids, ...params } =
+        parameters.payload;
+
       if (!files || !Array.isArray(files)) {
         throw new Error("Files is not defined or not an array");
       }
-    
+
       // Validate file paths
-      files.forEach(path => {
+      files.forEach((path) => {
         if (!fs.existsSync(path)) {
           throw new Error(`File does not exist: ${path}`);
         }
       });
-    
-      const fileStreams = files.map(path => fs.createReadStream(path));
-    
+
+      const fileStreams = files.map((path) => fs.createReadStream(path));
+
       const response = await openai.beta.vectorStores.fileBatches.uploadAndPoll(
         vector_store_id,
-        {files: fileStreams, fileIds: file_ids},
-        params
+        { files: fileStreams, fileIds: file_ids },
+        params,
       );
-    
+
       return response;
     }
-    
-    
+
     // <<< End File Batch Functions
 
     async createVectorStore(parameters) {
@@ -365,9 +363,7 @@ let OpenaiApi = (function () {
 
     async createFineTuningJob(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const response = await openai.fineTuning.jobs.create(
-        parameters.payload,
-      );
+      const response = await openai.fineTuning.jobs.create(parameters.payload);
 
       return response;
     }
@@ -461,9 +457,7 @@ let OpenaiApi = (function () {
 
     async createAssistant(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const response = await openai.beta.assistants.create(
-        parameters.payload,
-      );
+      const response = await openai.beta.assistants.create(parameters.payload);
 
       return response;
     }
@@ -700,7 +694,11 @@ let OpenaiApi = (function () {
     async listRunSteps(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { thread_id, run_id, ...params } = parameters.payload;
-      const list = await openai.beta.threads.runs.steps.list(thread_id, run_id, params);
+      const list = await openai.beta.threads.runs.steps.list(
+        thread_id,
+        run_id,
+        params,
+      );
 
       return [...list.data];
     }
