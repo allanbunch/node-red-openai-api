@@ -240,9 +240,7 @@ let OpenaiApi = (function () {
         });
         for await (const chunk of response) {
           if (typeof chunk === "object") {
-            let { _msgid, ...newMsg } = parameters.msg;
-            newMsg.payload = chunk;
-
+            const newMsg = { ...parameters.msg, payload: chunk };
             _node.send(newMsg);
           }
         }
@@ -579,9 +577,7 @@ let OpenaiApi = (function () {
         });
         for await (const chunk of response) {
           if (typeof chunk === "object") {
-            let { _msgid, ...newMsg } = parameters.msg;
-            newMsg.payload = chunk.data;
-
+            const newMsg = { ...parameters.msg, payload: chunk.data };
             _node.send(newMsg);
           }
         }
@@ -613,9 +609,7 @@ let OpenaiApi = (function () {
         });
         for await (const chunk of response) {
           if (typeof chunk === "object") {
-            let { _msgid, ...newMsg } = parameters.msg;
-            newMsg.payload = chunk.data;
-
+            const newMsg = { ...parameters.msg, payload: chunk.data };
             _node.send(newMsg);
           }
         }
@@ -667,9 +661,7 @@ let OpenaiApi = (function () {
         });
         for await (const chunk of response) {
           if (typeof chunk === "object") {
-            let { _msgid, ...newMsg } = parameters.msg;
-            newMsg.payload = chunk.data;
-
+            const newMsg = { ...parameters.msg, payload: chunk.data };
             _node.send(newMsg);
           }
         }
