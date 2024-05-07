@@ -35,9 +35,9 @@ module.exports = function (RED) {
         const serviceName = node.config.method; // Set the service name to call.
 
         let serviceParametersObject = {
-          "_node": node,
-          "payload": payload,
-          "msg": msg
+          _node: node,
+          payload: payload,
+          msg: msg,
         };
 
         // Dynamically call the function based on the service name
