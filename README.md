@@ -1,14 +1,39 @@
-<h1 align="center">
-  Node-RED OpenAI API: Unleashing AIoT Innovation
-  <br>
+
+# @inductiv/node-red-openai-api
+
+![NPM Version](https://img.shields.io/npm/v/%40inductiv%2Fnode-red-openai-api) ![GitHub Release Date](https://img.shields.io/github/release-date/allanbunch/node-red-openai-api) ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/allanbunch/node-red-openai-api) ![GitHub Repo stars](https://img.shields.io/github/stars/allanbunch/node-red-openai-api)
+
+This library provides convenient access to the OpenAI Node API Library from Node-RED.
+
 <a href="https://github.com/allanbunch/node-red-openai-api">
   <img width="265" alt="node-red-openai-api-node" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/ee954c8e-fbf4-4812-a38a-f047cecd1982">
 </a>
 <br>
-@inductiv/node-red-openai-api
-</h1>
 
-Welcome to _@inductiv/node-red-openai-api_, a versatile and configurable Node-RED node designed for seamless integration with any OpenAI API compatible platform. This node empowers innovators and developers to effortlessly connect and orchestrate complex AI and IoT workflows, leveraging Node-RED's sophisticated ecosystem. Ideal for enhancing IoT operations with advanced AI capabilities, this node serves as your gateway to applying the latest AI technology in an IoT context, facilitating innovative applications across diverse environments.
+Node-RED OpenAI API is a versatile and configurable Node-RED node designed for seamless integration with any OpenAI API compatible platform. This node empowers innovators and developers to effortlessly connect and orchestrate complex AI and IoT workflows, leveraging Node-RED's sophisticated ecosystem. Ideal for enhancing IoT operations with advanced AI capabilities, this node serves as your gateway to applying the latest AI technology in an IoT context, facilitating innovative applications across diverse environments.
+
+## Installation
+
+### Via Node-RED Palette Manager
+
+```text
+@inductiv/node-red-openai-api
+```
+
+### Via NPM
+
+```bash
+cd $HOME/.node-red # or the location of your Node-RED configuration directory.
+npm i @inductiv/node-red-openai-api
+```
+
+## Usage
+
+After installation, find your node in the **AI** palette category labeled "OpenAI API". Here's how you can start integrating AI into your IoT projects:
+
+1. Configure the node with your AI platform's API key (if required).
+2. Send [OpenAI documented](https://platform.openai.com/docs/api-reference/) API service configuration paramaters to the node using the default `msg.payload` property, or confiure your desired incoming object property reference on the node itself.
+3. Explore the [examples](./examples/) directory for sample implementations.
 
 ## Core Features
 
@@ -16,11 +41,11 @@ Welcome to _@inductiv/node-red-openai-api_, a versatile and configurable Node-RE
 - **Configurable and Flexible**: Adapt to a wide range of project requirements, making it easy to integrate AI into your IoT solutions.
 - **Powerful Combinations**: Utilize Node-RED's diverse nodes to build complex, AI-driven IoT workflows with ease.
 
-## Release Notes (v1.2.0)
+## Release Notes (v1.3.0)
 
-- Added the [```fineTuning.jobs.checkpoints.list```](https://platform.openai.com/docs/api-reference/fine-tuning/list-checkpoints) endpoint to the **Fine-tuning** API.
-- Updated the node's documentation panel.
-- Code stability & formatting updates.
+- Upgraded to OpenAI Node API Library v4.42.0
+- Updated the node's documentation panel
+- Code stability & formatting updates
 
 ## What's New in Version 1.x
 
@@ -34,35 +59,12 @@ Version 1.0 of the **node-red-openai-api** node brings significant enhancements 
 
 ### Important Notice Regarding Compatibility
 
-- **Backward Incompatible Changes**: Please be aware that this version includes breaking changes that may affect existing implementations due to the updated OpenAI NodeJS package:
+- **Backward Incompatible Changes**: Please be aware that v1.0 includes breaking changes that may affect existing implementations (v0.x.x instllations) due to the updated OpenAI NodeJS package:
   - The API call structure and parameters have been refined to align with the latest OpenAI specifications.
   - Some functions and settings from previous versions may no longer be compatible with this update.
   - List responses now exist at the top level of the `msg.payload` object; previously `msg.payload.data`.
 
 I recommend reviewing current setups and testing them with this new version in a development environment before updating to ensure a smooth transition. This will help you take full advantage of the enhanced features while managing any necessary adjustments in your existing applications.
-
-## Installation
-
-### Via Node-RED Palette Manager
-
-```text
-@inductiv/node-red-openai-api
-```
-
-### Via NPM
-
-```bash
-cd $HOME/.node-red
-npm i @inductiv/node-red-openai-api
-```
-
-## Usage
-
-After installation, find your node in the **AI** palette category labeled "OpenAI API". Here's how you can start integrating AI into your IoT projects:
-
-1. Configure the node with your AI platform's API key (if required).
-2. Send [OpenAI documented](https://platform.openai.com/docs/api-reference/) API service configuration paramaters to the node using the default `msg.payload` property, or confiure your desired incoming object property reference on the node itself.
-3. Explore the [examples](./examples/) directory for sample implementations.
 
 ## Contribute
 
