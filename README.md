@@ -43,6 +43,7 @@ After installation, find your node in the **AI** palette category labeled "OpenA
 
 ## Release Notes (v1.3.0)
 
+- Streamed responses now share the same `msg._msgid` value
 - Upgraded to OpenAI Node API Library v4.42.0
 - Updated the node's documentation panel
 - Code stability & formatting updates
