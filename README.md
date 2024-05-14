@@ -1,4 +1,3 @@
-
 # @inductiv/node-red-openai-api
 
 ![NPM Version](https://img.shields.io/npm/v/%40inductiv%2Fnode-red-openai-api) ![GitHub Release Date](https://img.shields.io/github/release-date/allanbunch/node-red-openai-api) ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/allanbunch/node-red-openai-api) ![GitHub Repo stars](https://img.shields.io/github/stars/allanbunch/node-red-openai-api)
@@ -41,10 +40,10 @@ After installation, find your node in the **AI** palette category labeled "OpenA
 - **Configurable and Flexible**: Adapt to a wide range of project requirements, making it easy to integrate AI into your IoT solutions.
 - **Powerful Combinations**: Utilize Node-RED's diverse nodes to build complex, AI-driven IoT workflows with ease.
 
-## Release Notes (v1.3.0)
+## Release Notes (v1.4.0)
 
-- Streamed responses now share the same `msg._msgid` value
-- Upgraded to OpenAI Node API Library v4.42.0
+- Upgraded to OpenAI Node API Library package dependency v4.47.1
+  - Supporting OpenAI's new [gpt-4o](https://platform.openai.com/docs/models/gpt-4o) model capabilities
 - Updated the node's documentation panel
 - Code stability & formatting updates
 
