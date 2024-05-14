@@ -1,7 +1,7 @@
 {
   "name": "@inductiv/node-red-openai-api",
-  "version": "1.3.0",
-  "description": "Enhance your Node-RED flows with advanced AI capabilities.",
+  "version": "1.4.0",
+  "description": "Enhance your Node-RED projects with advanced AI capabilities.",
   "main": "node.js",
   "engines": {
     "node": ">=12.0.0"
@@ -16,25 +16,21 @@
     "node-red",
     "aiot",
     "openai",
+    "gpt-4o",
     "ai",
     "openai api",
-    "assistants v2",
-    "batch requests",
-    "vector store",
     "iot",
     "node-red-contrib",
     "automation",
     "smart devices",
-    "node-red-node",
+    "node-red node",
     "artificial intelligence",
     "api integration",
-    "llm",
-    "slm",
     "ai agent",
     "low-code"
   ],
   "dependencies": {
-    "openai": "~4.46.1"
+    "openai": "~4.47.1"
   },
   "devDependencies": {
     "eslint": "^9.2.0",
