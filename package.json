@@ -1,6 +1,6 @@
 {
   "name": "@inductiv/node-red-openai-api",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Enhance your Node-RED projects with advanced AI capabilities.",
   "main": "node.js",
   "engines": {
@@ -16,7 +16,7 @@
     "node-red",
     "aiot",
     "openai",
-    "gpt-4o",
+    "gpt-4o-audio-preview",
     "ai",
     "openai api",
     "iot",
@@ -30,7 +30,7 @@
     "low-code"
   ],
   "dependencies": {
-    "openai": "~4.47.1"
+    "openai": "~4.68.0"
   },
   "devDependencies": {
     "eslint": "^9.2.0",
