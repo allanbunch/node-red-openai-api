@@ -64,6 +64,31 @@ Version 1.0 of the **node-red-openai-api** node brings significant enhancements 
 
 I recommend reviewing existing flows and testing them with this new version in a development environment before updating to ensure a smooth transition. This will help you take full advantage of the enhanced features while managing any necessary adjustments in your existing applications.
 
+## OpenAI API Compatible Servers
+
+Node-RED OpenAI API Works with your favorite OpenAI API compatible servers, including:
+
+- [Baseten](https://www.baseten.co/)
+- [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/)
+- [Groq](https://groq.com/)
+- [Hugging Face TGI](https://huggingface.co/docs/text-generation-inference/en/index)
+- [Jan](https://jan.ai/)
+- [Lightning AI](https://lightning.ai/)
+- [LiteLLM](https://www.litellm.ai/)
+- [llama.cpp](https://github.com/ggerganov/llama.cpp?tab=readme-ov-file)
+- [llamafile](https://github.com/Mozilla-Ocho/llamafile)
+- [LlamaIndex](https://www.llamaindex.ai/)
+- [LM Studio](https://lmstudio.ai/)
+- [LMDeploy](https://github.com/InternLM/lmdeploy)
+- [LocalAI](https://localai.io/)
+- [Mistral AI](https://mistral.ai/)
+- [Ollama](https://ollama.com/)
+- [OpenRouter](https://openrouter.ai/)
+- [Titan ML](https://www.titanml.co/)
+- [Vllm](https://docs.vllm.ai/en/v0.6.0/index.html)
+- [gpt4all](https://github.com/nomic-ai/gpt4all)
+- and many more...
+
 ## Contribute
 
 I value community contributions that help enhance this Node-RED node and expand its capabilities in AIoT applications. Whether you're fixing bugs, adding new features, or improving documentation, your help is welcome!
