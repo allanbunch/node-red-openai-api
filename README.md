@@ -71,7 +71,7 @@ Node-RED OpenAI API Works with your favorite OpenAI API compatible servers, incl
 - [Baseten](https://www.baseten.co/)
 - [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/)
 - [Groq](https://groq.com/)
-- [Hugging Face TGI](https://huggingface.co/docs/text-generation-inference/en/index)
+- [Hugging Face Inference API](https://huggingface.co/docs/api-inference/tasks/chat-completion)
 - [Jan](https://jan.ai/)
 - [Lightning AI](https://lightning.ai/)
 - [LiteLLM](https://www.litellm.ai/)
