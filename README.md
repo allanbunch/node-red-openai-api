@@ -40,10 +40,11 @@ After installation, find your node in the **AI** palette category labeled "OpenA
 - **Configurable and Flexible**: Adapt to a wide range of project requirements, making it easy to integrate AI into your IoT solutions.
 - **Powerful Combinations**: Utilize Node-RED's diverse nodes to build complex, AI-driven IoT workflows with ease.
 
-## Release Notes (v1.5.0)
+## Release Notes (v1.6.0)
 
-- Upgraded to OpenAI Node API Library package dependency v4.68.0
-  - Supporting OpenAI's new [chat completion audio generation](https://platform.openai.com/docs/guides/audio) functionality with **gpt-4o-audio-preview** model capabilities
+- Upgraded to OpenAI Node API Library package dependency [v4.72.0](https://www.npmjs.com/package/openai/v/4.72.0)
+  - Supporting OpenAI's new [Predicted Outputs](https://platform.openai.com/docs/guides/predicted-outputs) functionality.
+  - New expressive voices for [audio generation API](https://platform.openai.com/docs/guides/audio) chat completion requests.
 
 ## What's New in Version 1.x
 
