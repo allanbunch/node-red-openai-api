@@ -1775,16 +1775,7 @@
             <span class="property-type">string</span>
           </dt>
           <dd>The ID of an uploaded file that contains training data.</dd>
-          <dt class="optional">
-            hyperparameters
-            <a
-              href="https://platform.openai.com/docs/api-reference/fine-tuning/create#fine-tuning-create-hyperparameters"
-              target="_blank"
-              ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
-            ></a>
-            <span class="property-type">object</span>
-          </dt>
-          <dd>The hyperparameters used for the fine-tuning job.</dd>
+
           <dt class="optional">
             suffix
             <a
@@ -1798,6 +1789,7 @@
             A string of up to 18 characters that will be added to your fine-tuned
             model name.
           </dd>
+
           <dt class="optional">
             validation_file
             <a
@@ -1830,6 +1822,17 @@
             <span class="property-type">array</span>
           </dt>
           <dd>The seed controls the reproducibility of the job.</dd>
+
+          <dt class="optional">
+            method
+            <a
+              href="https://platform.openai.com/docs/api-reference/fine-tuning/create#fine-tuning-create-method"
+              target="_blank"
+              ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+            ></a>
+            <span class="property-type">object</span>
+          </dt>
+          <dd>The method used for fine-tuning.</dd>
 
         </dl>
 
