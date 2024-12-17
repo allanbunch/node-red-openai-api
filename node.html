@@ -1260,6 +1260,40 @@
             <span class="property-type">string</span>
           </dt>
           <dd>ID of the model to use.</dd>
+
+          <dt class="optional">
+            store
+            <a
+              href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-store"
+              target="_blank"
+              ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+            ></a>
+            <span class="property-type">boolean | null</span>
+          </dt>
+          <dd>Whether to store the output of this chat completion request.</dd>
+
+          <dt class="optional">
+            reasoning_effort
+            <a
+              href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-reasoning_effort"
+              target="_blank"
+              ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+            ></a>
+            <span class="property-type">string</span>
+          </dt>
+          <dd>Constrains effort on reasoning for reasoning models.</dd>
+
+          <dt class="optional">
+            metadata
+            <a
+              href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-metadata"
+              target="_blank"
+              ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+            ></a>
+            <span class="property-type">object or null</span>
+          </dt>
+          <dd>Developer-defined tags and values used for filtering completions in the dashboard.</dd>
+
           <dt class="optional">
             frequency_penalty
             <a
@@ -1331,6 +1365,46 @@
           <dd>
             How many chat completion choices to generate for each input message.
           </dd>
+
+          <dt class="optional">
+            modalities
+            <a
+              href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-modalities"
+              target="_blank"
+              ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+            ></a>
+            <span class="property-type">array or null</span>
+          </dt>
+          <dd>
+            Output types that you would like the model to generate for this request.
+          </dd>
+
+          <dt class="optional">
+            prediction
+            <a
+              href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-prediction"
+              target="_blank"
+              ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+            ></a>
+            <span class="property-type">object</span>
+          </dt>
+          <dd>
+            Configuration for a Predicted Output.
+          </dd>
+
+          <dt class="optional">
+            audio
+            <a
+              href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-audio"
+              target="_blank"
+              ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+            ></a>
+            <span class="property-type">object or null</span>
+          </dt>
+          <dd>
+            Parameters for audio output.
+          </dd>
+
           <dt class="optional">
             presence_penalty
             <a
@@ -1365,6 +1439,20 @@
             effort to sample deterministically, such that repeated requests with the
             same seed and parameters should return the same result.
           </dd>
+
+          <dt class="optional">
+            service_tier
+            <a
+              href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-service_tier"
+              target="_blank"
+              ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+            ></a>
+            <span class="property-type">string or null</span>
+          </dt>
+          <dd>
+            Specifies the latency tier to use for processing the request.
+          </dd>
+
           <dt class="optional">
             stop
             <a
@@ -1442,7 +1530,19 @@
             ></a>
             <span class="property-type">string | object</span>
           </dt>
-          <dd>Controls which (if any) function is called by the model.</dd>
+          <dd>Whether to enable parallel function calling during tool use.</dd>
+
+          <dt class="optional">
+            parallel_tool_calls
+            <a
+              href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-parallel_tool_calls"
+              target="_blank"
+              ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+            ></a>
+            <span class="property-type">string | object</span>
+          </dt>
+          <dd>Whether to enable parallel function calling during tool use.</dd>
+
           <dt class="optional">
             user
             <a
@@ -1456,6 +1556,7 @@
             A unique identifier representing your end-user, which can help OpenAI to
             monitor and detect abuse.
           </dd>
+
         </dl>
       
     </details>
