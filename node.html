@@ -3339,6 +3339,157 @@
     </details>
   </section>
 
+  <section>
+    <details>
+          <summary style="font-weight: bold;">☁️ Uploads</summary>
+          <a
+            href="https://platform.openai.com/docs/api-reference/uploads"
+            target="_blank"
+            >Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <h4 style="font-weight: bolder;"> ⋙ Create Upload</h4>
+          <p>Creates an intermediate Upload object that you can add Parts to. </p>
+          <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+              filename
+              <a
+                href="https://platform.openai.com/docs/api-reference/uploads/create#uploads-create-filename"
+                target="_blank"
+                ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+              ></a>
+              <span class="property-type">string</span>
+            </dt>
+            <dd>The name of the file to upload.</dd>
+
+            <dt>
+              purpose
+              <a
+                href="https://platform.openai.com/docs/api-reference/uploads/create#uploads-create-purpose"
+                target="_blank"
+                ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+              ></a>
+              <span class="property-type">string</span>
+            </dt>
+            <dd>The intended purpose of the uploaded file.</dd>
+
+            <dt>
+              bytes
+              <a
+                href="https://platform.openai.com/docs/api-reference/uploads/create#uploads-create-bytes"
+                target="_blank"
+                ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+              ></a>
+              <span class="property-type">integer</span>
+            </dt>
+            <dd>The number of bytes in the file you are uploading.</dd>
+
+            <dt>
+              mime_type
+              <a
+                href="https://platform.openai.com/docs/api-reference/uploads/create#uploads-create-mime_type"
+                target="_blank"
+                ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+              ></a>
+              <span class="property-type">integer</span>
+            </dt>
+            <dd>This must fall within the supported MIME types for your file purpose.</dd>
+
+          </dl>
+
+          <h4 style="font-weight: bolder;"> ⋙ Add Upload Part</h4>
+          <p>Adds a Part to an Upload object.</p>
+          <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+              upload_id
+              <a
+                href="https://platform.openai.com/docs/api-reference/uploads/add-part#uploads-add-part-upload_id"
+                target="_blank"
+                ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+              ></a>
+              <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the Upload.</dd>
+
+            <dt>
+              data
+              <a
+                href="https://platform.openai.com/docs/api-reference/uploads/add-part#uploads-add-part-data"
+                target="_blank"
+                ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+              ></a>
+              <span class="property-type">file</span>
+            </dt>
+            <dd>The chunk of bytes for this Part.</dd>
+
+          </dl>
+
+          <h4 style="font-weight: bolder;"> ⋙ Complete Upload</h4>
+          <p>Completes the Upload.</p>
+          <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+              upload_id
+              <a
+                href="https://platform.openai.com/docs/api-reference/uploads/complete#uploads-complete-upload_id"
+                target="_blank"
+                ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+              ></a>
+              <span class="property-type">string</span>
+            </dt>
+            <dd>
+              The ID of the Upload.
+            </dd>
+
+            <dt>
+              part_ids
+              <a
+                href="https://platform.openai.com/docs/api-reference/uploads/complete#uploads-complete-part_ids"
+                target="_blank"
+                ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+              ></a>
+              <span class="property-type">array</span>
+            </dt>
+            <dd>The ordered list of Part IDs.</dd>
+
+            <dt>
+              md5
+              <a
+                href="https://platform.openai.com/docs/api-reference/uploads/complete#uploads-complete-md5"
+                target="_blank"
+                ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+              ></a>
+              <span class="property-type">string</span>
+            </dt>
+            <dd>The optional md5 checksum for the file contents.</dd>
+
+          </dl>
+
+          <h4 style="font-weight: bolder;"> ⋙ Cancel Upload</h4>
+          <p>Cancels the Upload.</p>
+          <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+              upload_id
+              <a
+                href="https://platform.openai.com/docs/api-reference/uploads/cancel#uploads-cancel-upload_id"
+                target="_blank"
+                ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+              ></a>
+              <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the Upload.</dd>
+          </dl>
+        
+    </details>
+  </section>
+
   <!-- Begin Vector Stores Documentation-->
   <section>
     <details>
