@@ -112,6 +112,7 @@
             "getMessage": "retrieve message",
             "message_id": "message id",
             "modifyMessage": "modify message",
+            "createSession": "create session",
             "createThreadAndRun": "create thread and run",
             "listRuns": "list runs",
             "createRun": "create run",
