@@ -19,7 +19,7 @@ let OpenaiApi = (function () {
       const { vector_store_id, ...params } = parameters.payload;
       const response = await openai.beta.vectorStores.files.create(
         vector_store_id,
-        params,
+        params
       );
 
       return response;
@@ -32,7 +32,7 @@ let OpenaiApi = (function () {
       const { vector_store_id, ...params } = parameters.payload;
       const list = await openai.beta.vectorStores.files.list(
         vector_store_id,
-        params,
+        params
       );
 
       return [...list.data];
@@ -45,7 +45,7 @@ let OpenaiApi = (function () {
       const { vector_store_id, file_id } = parameters.payload;
       const response = openai.beta.vectorStores.files.retrieve(
         vector_store_id,
-        file_id,
+        file_id
       );
 
       return response;
@@ -59,7 +59,7 @@ let OpenaiApi = (function () {
       const response = openai.beta.vectorStores.files.del(
         vector_store_id,
         file_id,
-        params,
+        params
       );
 
       return response;
@@ -74,7 +74,7 @@ let OpenaiApi = (function () {
       const { vector_store_id, ...params } = parameters.payload;
       const response = await openai.beta.vectorStores.fileBatches.create(
         vector_store_id,
-        params,
+        params
       );
 
       return response;
@@ -86,7 +86,7 @@ let OpenaiApi = (function () {
       const response = await openai.beta.vectorStores.fileBatches.retrieve(
         vector_store_id,
         batch_id,
-        params,
+        params
       );
 
       return response;
@@ -98,7 +98,7 @@ let OpenaiApi = (function () {
       const response = await openai.beta.vectorStores.fileBatches.retrieve(
         vector_store_id,
         batch_id,
-        params,
+        params
       );
 
       return response;
@@ -110,7 +110,7 @@ let OpenaiApi = (function () {
       const list = await openai.beta.vectorStores.fileBatches.listFiles(
         vector_store_id,
         batch_id,
-        params,
+        params
       );
       const batchFiles = [...list.data];
 
@@ -138,7 +138,7 @@ let OpenaiApi = (function () {
       const response = await openai.beta.vectorStores.fileBatches.uploadAndPoll(
         vector_store_id,
         { files: fileStreams, fileIds: file_ids },
-        params,
+        params
       );
 
       return response;
@@ -149,7 +149,7 @@ let OpenaiApi = (function () {
     async createVectorStore(parameters) {
       const openai = new OpenAI(this.clientParams);
       const response = await openai.beta.vectorStores.create(
-        parameters.payload,
+        parameters.payload
       );
 
       return response;
@@ -168,7 +168,7 @@ let OpenaiApi = (function () {
       const { vector_store_id, ...params } = parameters.payload;
       const response = await openai.beta.vectorStores.retrieve(
         vector_store_id,
-        params,
+        params
       );
 
       return response;
@@ -179,7 +179,7 @@ let OpenaiApi = (function () {
       const { vector_store_id, ...params } = parameters.payload;
       const response = await openai.beta.vectorStores.update(
         vector_store_id,
-        params,
+        params
       );
 
       return response;
@@ -190,7 +190,7 @@ let OpenaiApi = (function () {
       const { vector_store_id, ...params } = parameters.payload;
       const response = await openai.beta.vectorStores.del(
         vector_store_id,
-        params,
+        params
       );
 
       return response;
@@ -378,7 +378,7 @@ let OpenaiApi = (function () {
       const { fine_tuning_job_id, ...params } = parameters.payload;
       const response = await openai.fineTuning.jobs.retrieve(
         fine_tuning_job_id,
-        params,
+        params
       );
 
       return response;
@@ -389,7 +389,7 @@ let OpenaiApi = (function () {
       const { fine_tuning_job_id, ...params } = parameters.payload;
       const list = await openai.fineTuning.jobs.listEvents(
         fine_tuning_job_id,
-        params,
+        params
       );
 
       return [...list.data];
@@ -400,7 +400,7 @@ let OpenaiApi = (function () {
       const { fine_tuning_job_id, ...params } = parameters.payload;
       const list = await openai.fineTuning.jobs.checkpoints.list(
         fine_tuning_job_id,
-        params,
+        params
       );
 
       return [...list.data];
@@ -411,7 +411,7 @@ let OpenaiApi = (function () {
       const { fine_tuning_job_id, ...params } = parameters.payload;
       const response = await openai.fineTuning.jobs.cancel(
         fine_tuning_job_id,
-        params,
+        params
       );
 
       return response;
@@ -465,7 +465,7 @@ let OpenaiApi = (function () {
       const { assistant_id, ...params } = parameters.payload;
       const response = await openai.beta.assistants.retrieve(
         assistant_id,
-        params,
+        params
       );
 
       return response;
@@ -476,7 +476,7 @@ let OpenaiApi = (function () {
       const { assistant_id, ...params } = parameters.payload;
       const response = await openai.beta.assistants.update(
         assistant_id,
-        params,
+        params
       );
 
       return response;
@@ -534,7 +534,7 @@ let OpenaiApi = (function () {
       const { thread_id, ...params } = parameters.payload;
       const response = await openai.beta.threads.messages.create(
         thread_id,
-        params,
+        params
       );
 
       return response;
@@ -546,7 +546,7 @@ let OpenaiApi = (function () {
       const response = await openai.beta.threads.messages.retrieve(
         thread_id,
         message_id,
-        params,
+        params
       );
 
       return response;
@@ -558,11 +558,33 @@ let OpenaiApi = (function () {
       const response = await openai.beta.threads.messages.update(
         thread_id,
         message_id,
-        params,
+        params
       );
 
       return response;
     }
+
+    /* Begin Realtime */
+    async createSession(parameters) {
+      const openai = new OpenAI(this.clientParams);
+
+      // Destructure `model` and validate its presence
+      const { model, ...params } = parameters.payload || {};
+
+      if (!model) {
+        throw new Error(
+          "The 'model' parameter is required to create a Realtime session."
+        );
+      }
+
+      // Make the API call with validated parameters
+      const response = await openai.post("/realtime/sessions", {
+        body: { model, ...params },
+      });
+
+      return response;
+    }
+    /* End Realtime */
 
     async createThreadAndRun(parameters) {
       const openai = new OpenAI(this.clientParams);
@@ -625,7 +647,7 @@ let OpenaiApi = (function () {
       const response = await openai.beta.threads.runs.retrieve(
         thread_id,
         run_id,
-        params,
+        params
       );
 
       return response;
@@ -637,7 +659,7 @@ let OpenaiApi = (function () {
       const response = await openai.beta.threads.runs.update(
         thread_id,
         run_id,
-        params,
+        params
       );
 
       return response;
@@ -650,7 +672,7 @@ let OpenaiApi = (function () {
       const response = await openai.beta.threads.runs.submitToolOutputs(
         thread_id,
         run_id,
-        params,
+        params
       );
 
       if (params.stream) {
@@ -677,7 +699,7 @@ let OpenaiApi = (function () {
       const response = await openai.beta.threads.runs.cancel(
         thread_id,
         run_id,
-        params,
+        params
       );
 
       return response;
@@ -689,7 +711,7 @@ let OpenaiApi = (function () {
       const list = await openai.beta.threads.runs.steps.list(
         thread_id,
         run_id,
-        params,
+        params
       );
 
       return [...list.data];
@@ -702,7 +724,7 @@ let OpenaiApi = (function () {
         thread_id,
         run_id,
         step_id,
-        params,
+        params
       );
 
       return response;
