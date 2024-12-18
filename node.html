@@ -2534,7 +2534,7 @@
           <dd>The ID of the model to use for this request</dd>
         </dl>
 
-        <h4 style="font-weight: bolder;"> ⋙ Delete Fine-tun Model</h4>
+        <h4 style="font-weight: bolder;"> ⋙ Delete Fine-tuned Model</h4>
         <p>
           Delete a fine-tuned model. You must have the Owner role in your
           organization to delete a model.
@@ -3261,6 +3261,18 @@
               <span class="property-type">array</span>
             </dt>
             <dd>A list of messages to start the thread with.</dd>
+
+            <dt class="optional">
+              tool_resources
+              <a
+                href="https://platform.openai.com/docs/api-reference/threads/createThread#threads-createthread-tool_resources"
+                target="_blank"
+                ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+              ></a>
+              <span class="property-type">array</span>
+            </dt>
+            <dd>A set of resources that are made available to the assistant's tools in this thread.</dd>
+
             <dt class="optional">
               metadata
               <a
