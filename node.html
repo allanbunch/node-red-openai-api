@@ -2409,15 +2409,15 @@
           </dt>
           <dd>The content of the message.</dd>
           <dt class="optional">
-            file_ids
+            attachments
             <a
-              href="https://platform.openai.com/docs/api-reference/messages/createMessage#messages-createmessage-file_ids"
+              href="https://platform.openai.com/docs/api-reference/messages/createMessage#messages-createmessage-attachments"
               target="_blank"
               ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
             ></a>
             <span class="property-type">array</span>
           </dt>
-          <dd>A list of File IDs that the message should use.</dd>
+          <dd>A list of files attached to the message, and the tools they should be added to.</dd>
           <dt class="optional">
             metadata
             <a
@@ -2428,6 +2428,33 @@
             <span class="property-type">object</span>
           </dt>
           <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Message</h4>
+        <p>Deletes a message.</p>
+        <dl class="message-properties">
+          <h4>msg.payload Properties</h4>
+
+          <dt>
+            thread_id
+            <a
+              href="https://platform.openai.com/docs/api-reference/messages/deleteMessage#messages-deletemessage-thread_id"
+              target="_blank"
+              ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+            ></a>
+            <span class="property-type">string</span>
+          </dt>
+          <dd>The ID of the thread to which this message belongs.</dd>
+          <dt>
+            message_id
+            <a
+              href="https://platform.openai.com/docs/api-reference/messages/deleteMessage#messages-deletemessage-message_id"
+              target="_blank"
+              ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+            ></a>
+            <span class="property-type">string</span>
+          </dt>
+          <dd>The ID of the message to delete.</dd>
         </dl>
 
         <h4 style="font-weight: bolder;"> ⋙ Retrieve Message</h4>
@@ -2652,6 +2679,7 @@
               <span class="property-type">string</span>
             </dt>
             <dd>Override the default system message of the assistant.</dd>
+
             <dt class="optional">
               tools
               <a
@@ -2662,6 +2690,19 @@
               <span class="property-type">array</span>
             </dt>
             <dd>Override the tools the assistant can use for this run.</dd>
+            
+            <dt class="optional">
+              tool_resources
+              <a
+                href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-tool_resources"
+                target="_blank"
+                ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+              ></a>
+              <span class="property-type">object or null</span>
+            </dt>
+            <dd>A set of resources that are used by the assistant's tools.</dd>
+
+
             <dt class="optional">
               metadata
               <a
@@ -2673,7 +2714,6 @@
             </dt>
             <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
 
-
             <dt class="optional">
               temperature
               <a
@@ -2684,6 +2724,18 @@
               <span class="property-type">number</span>
             </dt>
             <dd>What sampling temperature to use, between 0 and 2.</dd>
+
+            <dt class="optional">
+              top_p
+              <a
+                href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-top_p"
+                target="_blank"
+                ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+              ></a>
+              <span class="property-type">number or null</span>
+            </dt>
+            <dd>An alternative to sampling with temperature.</dd>
+            
             
             <dt class="optional">
               stream
@@ -2744,6 +2796,17 @@
               <span class="property-type">string | object</span>
             </dt>
             <dd>Controls which (if any) tool is called by the model. <code>none</code> means the model will not call any tools and instead generates a message. <code>auto</code> is the default value and means the model can pick between generating a message or calling a tool. Specifying a particular tool like <code>{"type": "TOOL_TYPE"}</code> forces the model to call that tool.</dd>
+
+            <dt class="optional">
+              parallel_tool_calls
+              <a
+                href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-parallel_tool_calls"
+                target="_blank"
+                ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+              ></a>
+              <span class="property-type">boolean</span>
+            </dt>
+            <dd>Whether to enable parallel function calling during tool use.</dd>
 
             <dt class="optional">
               response_format
@@ -2830,6 +2893,18 @@
               <span class="property-type">string</span>
             </dt>
             <dd>The ID of the thread to run.</dd>
+
+            <dt>
+              include
+              <a
+                href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-include"
+                target="_blank"
+                ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+              ></a>
+              <span class="property-type">array</span>
+            </dt>
+            <dd>A list of additional fields to include in the response.</dd>
+
             <dt>
               assistant_id
               <a
@@ -2988,6 +3063,17 @@
             <dd>Controls for how a thread will be truncated prior to the run.</dd>
 
             <dt class="optional">
+              parallel_tool_calls
+              <a
+                href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-parallel_tool_calls"
+                target="_blank"
+                ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+              ></a>
+              <span class="property-type">boolean</span>
+            </dt>
+            <dd>Whether to enable parallel function calling during tool use.</dd>
+
+            <dt class="optional">
               response_format
               <a
                 href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-response_format"
@@ -3005,9 +3091,24 @@
           <dl class="message-properties">
             <h4>msg.payload Properties</h4>
 
-            <dt>thread_id <span class="property-type">string</span></dt>
+            <dt>thread_id
+              <a
+                href="https://platform.openai.com/docs/api-reference/runs/getRun#runs-getrun-thread_id"
+                target="_blank"
+                ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+              ></a>
+              <span class="property-type">string</span>
+            </dt>
             <dd>The ID of the thread that was run.</dd>
-            <dt>run_id <span class="property-type">string</span></dt>
+
+            <dt>run_id
+              <a
+                href="https://platform.openai.com/docs/api-reference/runs/getRun#runs-getrun-run_id"
+                target="_blank"
+                ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+              ></a>
+              <span class="property-type">string</span>
+            </dt>
             <dd>The ID of the run to retrieve.</dd>
           </dl>
 
@@ -3185,6 +3286,7 @@
               <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination.</dd>
+
             <dt class="optional">
               before
               <a
@@ -3195,6 +3297,17 @@
               <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination.</dd>
+
+            <dt class="optional">
+              include
+              <a
+                href="https://platform.openai.com/docs/api-reference/run-steps/listRunSteps#run-steps-listrunsteps-include"
+                target="_blank"
+                ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+              ></a>
+              <span class="property-type">array</span>
+            </dt>
+            <dd>A list of additional fields to include in the response.</dd>
           </dl>
 
           <h4 style="font-weight: bolder;"> ⋙ Retrieve Run Step</h4>
@@ -3222,6 +3335,7 @@
               <span class="property-type">string</span>
             </dt>
             <dd>The ID of the run to which the run step belongs.</dd>
+
             <dt>
               step_id
               <a
@@ -3232,6 +3346,18 @@
               <span class="property-type">string</span>
             </dt>
             <dd>The ID of the run step to retrieve.</dd>
+            
+            <dt>
+              include
+              <a
+                href="https://platform.openai.com/docs/api-reference/run-steps/getRunStep#run-steps-getrunstep-include"
+                target="_blank"
+                ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+              ></a>
+              <span class="property-type">array</span>
+            </dt>
+            <dd>A list of additional fields to include in the response.</dd>
+
           </dl>
         
     </details>
