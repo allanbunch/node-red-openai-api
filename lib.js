@@ -1,3 +1,5 @@
+const { json } = require("stream/consumers");
+
 let OpenaiApi = (function () {
   "use strict";
 
@@ -563,6 +565,151 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
+    /* Begin Uploads */
+    async createUpload(parameters) {
+      const openai = new OpenAI(this.clientParams);
+
+      // Define required parameters
+      const required_params = ["filename", "purpose", "bytes", "mime_type"];
+
+      // Validate that all required parameters are present
+      const missing_params = required_params.filter(
+        (param) => !parameters.payload?.[param]
+      );
+      if (missing_params.length > 0) {
+        throw new Error(
+          `Missing required parameter(s): ${missing_params.join(", ")}`
+        );
+      }
+
+      // Destructure and assign the payload to match SDK expectations
+      const { filename, purpose, bytes, mime_type, ...optionalParams } =
+        parameters.payload;
+
+      const response = await openai.uploads.parts({
+        filename,
+        purpose,
+        bytes,
+        mime_type,
+        ...optionalParams, // Include optional parameters if any
+      });
+
+      return response;
+    }
+
+    async addUploadPart(parameters) {
+      const clientParams = {
+        ...this.clientParams,
+      };
+    
+      const openai = new OpenAI(clientParams);
+    
+      // Validate required parameters
+      const required_params = ["upload_id", "data"];
+      const missing_params = required_params.filter(
+        (param) => !parameters.payload?.[param]
+      );
+      if (missing_params.length > 0) {
+        throw new Error(
+          `Missing required parameter(s): ${missing_params.join(", ")}`
+        );
+      }
+    
+      const { upload_id, data, ...optionalParams } = parameters.payload;
+    
+      // Create FormData with a single field matching the curl example
+      const formData = new FormData();
+      formData.append('data', data);
+    
+      try {
+        const response = await openai.post(`/uploads/${upload_id}/parts`, {
+          body: { data: formData, ...optionalParams },
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+    
+        return response;
+      } catch (error) {
+        console.error('Upload error details:', error);
+        if (error.response) {
+          throw new Error(`Upload failed: ${error.response.status} - ${error.response.data?.error?.message || error.message}`);
+        }
+        throw error;
+      }
+    }
+    
+    async completeUpload(parameters) {
+      const clientParams = {
+        ...this.clientParams,
+      };
+    
+      const openai = new OpenAI(clientParams);
+    
+      // Validate required parameters
+      const required_params = ["upload_id", "part_ids"];
+      const missing_params = required_params.filter(
+        (param) => !parameters.payload?.[param]
+      );
+      if (missing_params.length > 0) {
+        throw new Error(
+          `Missing required parameter(s): ${missing_params.join(", ")}`
+        );
+      }
+    
+      const { upload_id, part_ids, ...optionalParams } = parameters.payload;
+    
+      try {
+        const response = await openai.post(`/uploads/{upload_id}/complete`, {
+          body: { part_ids, ...optionalParams },
+        });
+    
+        return response;
+      } catch (error) {
+        console.error('Upload error details:', error);
+        if (error.response) {
+          throw new Error(`Upload failed: ${error.response.status} - ${error.response.data?.error?.message || error.message}`);
+        }
+        throw error;
+      }
+    }
+
+    async cancelUpload(parameters) {
+      const clientParams = {
+        ...this.clientParams,
+      };
+    
+      const openai = new OpenAI(clientParams);
+    
+      // Validate required parameters
+      const required_params = ["upload_id"];
+      const missing_params = required_params.filter(
+        (param) => !parameters.payload?.[param]
+      );
+      if (missing_params.length > 0) {
+        throw new Error(
+          `Missing required parameter(s): ${missing_params.join(", ")}`
+        );
+      }
+    
+      const { upload_id, ...optionalParams } = parameters.payload;
+    
+      try {
+        const response = await openai.post(`/uploads/{upload_id}/cancel`, {
+          body: { ...optionalParams },
+        });
+    
+        return response;
+      } catch (error) {
+        console.error('Upload error details:', error);
+        if (error.response) {
+          throw new Error(`Upload failed: ${error.response.status} - ${error.response.data?.error?.message || error.message}`);
+        }
+        throw error;
+      }
+    }
+    /* End Uploads */
 
     /* Begin Realtime */
     async createSession(parameters) {
