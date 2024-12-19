@@ -71,6 +71,8 @@ Node-RED OpenAI API Works with your favorite OpenAI API compatible servers, incl
 
 - [Baseten](https://www.baseten.co/)
 - [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/)
+- [gpt4all](https://github.com/nomic-ai/gpt4all)
+- [Google AI Studio](https://ai.google.dev/gemini-api/docs/openai#node.js)
 - [Groq](https://groq.com/)
 - [Hugging Face Inference API](https://huggingface.co/docs/api-inference/tasks/chat-completion)
 - [Jan](https://jan.ai/)
@@ -87,7 +89,6 @@ Node-RED OpenAI API Works with your favorite OpenAI API compatible servers, incl
 - [OpenRouter](https://openrouter.ai/)
 - [Titan ML](https://www.titanml.co/)
 - [Vllm](https://docs.vllm.ai/en/v0.6.0/index.html)
-- [gpt4all](https://github.com/nomic-ai/gpt4all)
 - and many more...
 
 ## Contribute
