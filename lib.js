@@ -1,3 +1,4 @@
+const { response } = require("express");
 const { json } = require("stream/consumers");
 
 let OpenaiApi = (function () {
@@ -640,20 +641,9 @@ let OpenaiApi = (function () {
       }
     
       const { upload_id, part_ids, ...optionalParams } = parameters.payload;
-    
-      try {
-        const response = await openai.post(`/uploads/{upload_id}/complete`, {
-          body: { part_ids, ...optionalParams },
-        });
-    
-        return response;
-      } catch (error) {
-        console.error('Upload error details:', error);
-        if (error.response) {
-          throw new Error(`Upload failed: ${error.response.status} - ${error.response.data?.error?.message || error.message}`);
-        }
-        throw error;
-      }
+      const response = await openai.uploads.complete(upload_id, {part_ids}, {...optionalParams});
+
+      return response;
     }
 
     async cancelUpload(parameters) {
@@ -675,20 +665,9 @@ let OpenaiApi = (function () {
       }
     
       const { upload_id, ...optionalParams } = parameters.payload;
+      const response = await openai.uploads.cancel(upload_id, {...optionalParams});
     
-      try {
-        const response = await openai.post(`/uploads/{upload_id}/cancel`, {
-          body: { ...optionalParams },
-        });
-    
-        return response;
-      } catch (error) {
-        console.error('Upload error details:', error);
-        if (error.response) {
-          throw new Error(`Upload failed: ${error.response.status} - ${error.response.data?.error?.message || error.message}`);
-        }
-        throw error;
-      }
+      return response;
     }
     /* End Uploads */
 
