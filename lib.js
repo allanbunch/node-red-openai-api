@@ -591,9 +591,9 @@ let OpenaiApi = (function () {
         filename,
         purpose,
         bytes,
-        mime_type,
-        ...optionalParams, // Include optional parameters if any
-      });
+        mime_type
+      }, 
+      {...optionalParams});
 
       return response;
     }
