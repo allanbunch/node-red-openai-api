@@ -112,7 +112,6 @@
             "getMessage": "retrieve message",
             "message_id": "message id",
             "modifyMessage": "modify message",
-            "createSession": "create session",
             "createUpload": "create upload",
             "addUploadPart": "add upload part",
             "completeUpload": "complete upload",

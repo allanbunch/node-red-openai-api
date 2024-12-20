@@ -115,7 +115,6 @@
             "createSession": "create session",
             "createUpload": "create upload",
             "addUploadPart": "add upload part",
-            "completeUpload": "complete upload",
             "cancelUpload": "cancel upload",
             "createThreadAndRun": "create thread and run",
             "listRuns": "list runs",

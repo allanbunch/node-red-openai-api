@@ -585,15 +585,18 @@ let OpenaiApi = (function () {
       }
 
       // Destructure and assign the payload to match SDK expectations
-      const { filename, purpose, bytes, mime_type, ...optionalParams } = parameters.payload;
+      const { filename, purpose, bytes, mime_type, ...optionalParams } =
+        parameters.payload;
 
-      const response = await openai.uploads.create({
-        filename,
-        purpose,
-        bytes,
-        mime_type
-      }, 
-      {...optionalParams});
+      const response = await openai.uploads.create(
+        {
+          filename,
+          purpose,
+          bytes,
+          mime_type,
+        },
+        { ...optionalParams }
+      );
 
       return response;
     }
@@ -602,9 +605,9 @@ let OpenaiApi = (function () {
       const clientParams = {
         ...this.clientParams,
       };
-    
+
       const openai = new OpenAI(clientParams);
-    
+
       // Validate required parameters
       const required_params = ["upload_id", "data"];
       const missing_params = required_params.filter(
@@ -615,20 +618,22 @@ let OpenaiApi = (function () {
           `Missing required parameter(s): ${missing_params.join(", ")}`
         );
       }
-    
+
       const { upload_id, data, ...optionalParams } = parameters.payload;
-      const response = await openai.uploads.parts.create(upload_id, data, {...optionalParams});
+      const response = await openai.uploads.parts.create(upload_id, data, {
+        ...optionalParams,
+      });
 
       return response;
     }
-    
+
     async completeUpload(parameters) {
       const clientParams = {
         ...this.clientParams,
       };
-    
+
       const openai = new OpenAI(clientParams);
-    
+
       // Validate required parameters
       const required_params = ["upload_id", "part_ids"];
       const missing_params = required_params.filter(
@@ -639,9 +644,13 @@ let OpenaiApi = (function () {
           `Missing required parameter(s): ${missing_params.join(", ")}`
         );
       }
-    
+
       const { upload_id, part_ids, ...optionalParams } = parameters.payload;
-      const response = await openai.uploads.complete(upload_id, {part_ids}, {...optionalParams});
+      const response = await openai.uploads.complete(
+        upload_id,
+        { part_ids },
+        { ...optionalParams }
+      );
 
       return response;
     }
@@ -650,9 +659,9 @@ let OpenaiApi = (function () {
       const clientParams = {
         ...this.clientParams,
       };
-    
+
       const openai = new OpenAI(clientParams);
-    
+
       // Validate required parameters
       const required_params = ["upload_id"];
       const missing_params = required_params.filter(
@@ -663,35 +672,15 @@ let OpenaiApi = (function () {
           `Missing required parameter(s): ${missing_params.join(", ")}`
         );
       }
-    
+
       const { upload_id, ...optionalParams } = parameters.payload;
-      const response = await openai.uploads.cancel(upload_id, {...optionalParams});
-    
-      return response;
-    }
-    /* End Uploads */
-
-    /* Begin Realtime */
-    async createSession(parameters) {
-      const openai = new OpenAI(this.clientParams);
-
-      // Destructure `model` and validate its presence
-      const { model, ...params } = parameters.payload || {};
-
-      if (!model) {
-        throw new Error(
-          "The 'model' parameter is required to create a Realtime session."
-        );
-      }
-
-      // Make the API call with validated parameters
-      const response = await openai.post("/realtime/sessions", {
-        body: { model, ...params },
+      const response = await openai.uploads.cancel(upload_id, {
+        ...optionalParams,
       });
 
       return response;
     }
-    /* End Realtime */
+    /* End Uploads */
 
     async createThreadAndRun(parameters) {
       const openai = new OpenAI(this.clientParams);
