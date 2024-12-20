@@ -584,10 +584,9 @@ let OpenaiApi = (function () {
       }
 
       // Destructure and assign the payload to match SDK expectations
-      const { filename, purpose, bytes, mime_type, ...optionalParams } =
-        parameters.payload;
+      const { filename, purpose, bytes, mime_type, ...optionalParams } = parameters.payload;
 
-      const response = await openai.uploads.parts({
+      const response = await openai.uploads.create({
         filename,
         purpose,
         bytes,
@@ -617,27 +616,9 @@ let OpenaiApi = (function () {
       }
     
       const { upload_id, data, ...optionalParams } = parameters.payload;
-    
-      // Create FormData with a single field matching the curl example
-      const formData = new FormData();
-      formData.append('data', data);
-    
-      try {
-        const response = await openai.post(`/uploads/${upload_id}/parts`, {
-          body: { data: formData, ...optionalParams },
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        });
-    
-        return response;
-      } catch (error) {
-        console.error('Upload error details:', error);
-        if (error.response) {
-          throw new Error(`Upload failed: ${error.response.status} - ${error.response.data?.error?.message || error.message}`);
-        }
-        throw error;
-      }
+      const response = await openai.uploads.parts.create(upload_id, data, {...optionalParams});
+
+      return response;
     }
     
     async completeUpload(parameters) {
