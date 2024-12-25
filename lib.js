@@ -1,6 +1,3 @@
-const { response } = require("express");
-const { json } = require("stream/consumers");
-
 let OpenaiApi = (function () {
   "use strict";
 
