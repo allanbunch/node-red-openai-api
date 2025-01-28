@@ -64,7 +64,7 @@ module.exports = function (RED) {
                 text: "node-red:common.status.error",
               });
               let errorMessage = error.message;
-              node.error(errorMessage, { payload: {} });
+              node.error(errorMessage, msg);
             });
         } else {
           console.error(`Function ${serviceName} does not exist on client.`);
