@@ -40,9 +40,10 @@ After installation, find your node in the **AI** palette category labeled "OpenA
 - **Configurable and Flexible**: Adapt to a wide range of project requirements, making it easy to integrate AI into your IoT solutions.
 - **Powerful Combinations**: Utilize Node-RED's diverse nodes to build complex, AI-driven IoT workflows with ease.
 
-## Release Notes (v1.7.1)
+## Release Notes (v1.7.2)
 
-- **Chores**: Cleaned up node JavaScript to improve stability and performance.
+- **Ehancement**: Returning request `msg` object with error responses.
+- **Chores**: Linting.
 
 ## What's New in Version 1.x
 
