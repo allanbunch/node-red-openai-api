@@ -18,7 +18,7 @@ module.exports = function (RED) {
         let client = new lib.OpenaiApi(
           clientApiKey,
           clientApiBase,
-          clientOrganization,
+          clientOrganization
         );
         let payload;
 
