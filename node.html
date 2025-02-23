@@ -1365,7 +1365,7 @@
             probability.
           </dd>
           <dt class="optional">
-            max_tokens
+            max_tokens [Deprecated]
             <a
               href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-max_tokens"
               target="_blank"
@@ -1375,8 +1375,24 @@
           </dt>
           <dd>
             The maximum number of tokens that can be generated in the chat
-            completion.
+            completion. This value is now deprecated in favor of max_completion_tokens, 
+            and is not compatible with o1 series models.
           </dd>
+          
+          <dt class="optional">
+            max_completion_tokens
+            <a
+              href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-max_completion_tokens"
+              target="_blank"
+              ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+            ></a>
+            <span class="property-type">integer</span>
+          </dt>
+          <dd>
+            An upper bound for the number of tokens that can be generated for a completion, 
+            including visible output tokens and reasoning tokens.
+          </dd>
+          
           <dt class="optional">
             n
             <a
@@ -1439,6 +1455,7 @@
             <span class="property-type">number</span>
           </dt>
           <dd>Number between -2.0 and 2.0.</dd>
+
           <dt class="optional">
             response_format
             <a
@@ -1449,6 +1466,7 @@
             <span class="property-type">object</span>
           </dt>
           <dd>An object specifying the format that the model must output.</dd>
+
           <dt class="optional">
             seed
             <a
@@ -1489,6 +1507,7 @@
           <dd>
             Up to 4 sequences where the API will stop generating further tokens.
           </dd>
+
           <dt class="optional">
             stream
             <a
@@ -1521,6 +1540,7 @@
             <span class="property-type">number</span>
           </dt>
           <dd>What sampling temperature to use, between 0 and 2.</dd>
+
           <dt class="optional">
             top_p
             <a
@@ -1535,6 +1555,7 @@
             where the model considers the results of the tokens with top_p
             probability mass.
           </dd>
+
           <dt class="optional">
             tools
             <a
@@ -1545,6 +1566,7 @@
             <span class="property-type">array</span>
           </dt>
           <dd>A list of tools the model may call.</dd>
+          
           <dt class="optional">
             tool_choice
             <a

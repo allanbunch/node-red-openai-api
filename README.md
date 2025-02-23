@@ -40,10 +40,9 @@ After installation, find your node in the **AI** palette category labeled "OpenA
 - **Configurable and Flexible**: Adapt to a wide range of project requirements, making it easy to integrate AI into your IoT solutions.
 - **Powerful Combinations**: Utilize Node-RED's diverse nodes to build complex, AI-driven IoT workflows with ease.
 
-## Release Notes (v1.85.1)
+## Release Notes (v1.85.4)
 
-- **Ehancement**: Upgraded the OpenAI API Library dependency from [v4.83.0](https://github.com/openai/openai-node/releases/tag/v4.83.0) to [v4.85.1](https://github.com/openai/openai-node/releases/tag/v4.85.1).
-- Project versioning now aligns with the OpenAI API Library's minor and patch version numbers for easier feature tracking and compatibility (e.g., x.85.1).
+- **Ehancement**: Upgraded the OpenAI API Library dependency from [v4.85.1](https://github.com/openai/openai-node/releases/tag/v4.85.1) to [v4.85.4](https://github.com/openai/openai-node/releases/tag/v4.85.4).
 
 ## What's New in Version 1.x
 

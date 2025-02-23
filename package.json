@@ -30,7 +30,7 @@
     "low-code"
   ],
   "dependencies": {
-    "openai": "~4.85.1"
+    "openai": "~4.85.4"
   },
   "author": "Allan Bunch",
   "license": "MIT",
