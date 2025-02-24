@@ -42,7 +42,8 @@ After installation, find your node in the **AI** palette category labeled "OpenA
 
 ## Release Notes (v1.85.4)
 
-- **Ehancement**: Upgraded the OpenAI API Library dependency from [v4.85.1](https://github.com/openai/openai-node/releases/tag/v4.85.1) to [v4.85.4](https://github.com/openai/openai-node/releases/tag/v4.85.4).
+- **Ehancement:** Upgraded the OpenAI API Library dependency from [v4.85.1](https://github.com/openai/openai-node/releases/tag/v4.85.1) to [v4.85.4](https://github.com/openai/openai-node/releases/tag/v4.85.4).
+- **Enhancement:** Implemented [Chat Completion storage methods](https://platform.openai.com/docs/api-reference/chat).
 
 ## What's New in Version 1.x
 
