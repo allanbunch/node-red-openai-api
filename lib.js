@@ -250,6 +250,49 @@ let OpenaiApi = (function () {
       }
     }
 
+    async getChatCompletion(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { completion_id, ...options } = parameters.payload;
+
+      const response = await openai.chat.completions.retrieve(completion_id, options);
+
+      return response;
+    }
+
+    async getChatMessages(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { completion_id, ...options } = parameters.payload;
+
+      const response = await openai.chat.completions.messages.list(completion_id, options);
+
+      return response.data;
+    }
+
+    async listChatCompletions(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.chat.completions.list(parameters.payload);
+
+      return response.data;
+    }
+
+    async updateChatCompletion(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { completion_id, ...body } = parameters.payload;
+
+      const response = await openai.chat.completions.update(completion_id, body);
+
+      return response;
+    }
+
+    async deleteChatCompletion(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { completion_id, ...options } = parameters.payload;
+
+      const response = await openai.chat.completions.del(completion_id, options);
+
+      return response;
+    }
+
     async createImage(parameters) {
       const openai = new OpenAI(this.clientParams);
       const response = await openai.images.generate(parameters.payload);
