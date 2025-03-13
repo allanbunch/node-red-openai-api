@@ -102,6 +102,7 @@
             "createModelResponse": "create model response",
             "getModelResponse": "retrieve model response",
             "deleteModelResponse": "delete model response",
+            "listInputItems": "list input items",
             "listAssistants": "list assistants",
             "order": "order",
             "before": "before",

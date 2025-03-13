@@ -538,6 +538,14 @@ let OpenaiApi = (function () {
       return response;
     }
 
+    async listInputItems(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { response_id, ...params } = parameters.payload;
+      const list = await openai.responses.inputItems.list(response_id, params);
+
+      return [...list.data];
+    }
+
     // <<< End Responses functions
 
     async createModeration(parameters) {
