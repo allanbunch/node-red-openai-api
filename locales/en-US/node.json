@@ -99,6 +99,7 @@
             "retrieveModel": "retrieve model",
             "deleteModel": "delete fine-tune model",
             "createModeration": "create moderation",
+            "createModelResponse": "create model response",
             "listAssistants": "list assistants",
             "order": "order",
             "before": "before",

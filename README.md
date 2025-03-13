@@ -40,10 +40,34 @@ After installation, find your node in the **AI** palette category labeled "OpenA
 - **Configurable and Flexible**: Adapt to a wide range of project requirements, making it easy to integrate AI into your IoT solutions.
 - **Powerful Combinations**: Utilize Node-RED's diverse nodes to build complex, AI-driven IoT workflows with ease.
 
-## Release Notes (v1.85.4)
+## Release Notes (v1.87.3)
 
-- **Ehancement:** Upgraded the OpenAI API Library dependency from [v4.85.1](https://github.com/openai/openai-node/releases/tag/v4.85.1) to [v4.85.4](https://github.com/openai/openai-node/releases/tag/v4.85.4).
-- **Enhancement:** Implemented [Chat Completion storage methods](https://platform.openai.com/docs/api-reference/chat).
+- **Ehancement:** Upgraded the OpenAI API Library dependency from [v4.85.4](https://github.com/openai/openai-node/releases/tag/v4.85.4) to [v4.87.3](https://github.com/openai/openai-node/releases/tag/v4.87.3).
+- **Features:** Implemented [Responses](https://platform.openai.com/docs/api-reference/responses) API capabilities.
+  - OpenAI's most advanced interface for generating model responses.
+  - Create stateful interactions with the model, using the output of previous responses as input and more.
+  - 🔥 Native agentic web search capabilities:
+
+  ```javascript
+  msg.payload = {
+    "model": "gpt-4o-mini",
+    "tools": [{ type: "web_search_preview" }],
+    "input": "What was a positive news story from today?"
+  }
+  ```
+
+  - 🔥 Native agentic computer use capabilities.
+  - 🔥 Reasoning model control properties:
+
+  ```javascript
+  msg.payload = {
+    "model": "o3-mini",
+    "input": "How much wood would a woodchuck chuck?",
+    "reasoning": {
+      "effort": "high"
+    }
+  }
+  ```
 
 ## What's New in Version 1.x
 

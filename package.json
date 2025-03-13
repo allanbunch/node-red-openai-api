@@ -1,6 +1,6 @@
 {
   "name": "@inductiv/node-red-openai-api",
-  "version": "1.85.4",
+  "version": "1.87.3",
   "description": "Enhance your Node-RED projects with advanced AI capabilities.",
   "main": "node.js",
   "engines": {
@@ -30,7 +30,7 @@
     "low-code"
   ],
   "dependencies": {
-    "openai": "~4.85.4"
+    "openai": "~4.87.3"
   },
   "author": "Allan Bunch",
   "license": "MIT",

@@ -254,7 +254,10 @@ let OpenaiApi = (function () {
       const openai = new OpenAI(this.clientParams);
       const { completion_id, ...options } = parameters.payload;
 
-      const response = await openai.chat.completions.retrieve(completion_id, options);
+      const response = await openai.chat.completions.retrieve(
+        completion_id,
+        options
+      );
 
       return response;
     }
@@ -263,7 +266,10 @@ let OpenaiApi = (function () {
       const openai = new OpenAI(this.clientParams);
       const { completion_id, ...options } = parameters.payload;
 
-      const response = await openai.chat.completions.messages.list(completion_id, options);
+      const response = await openai.chat.completions.messages.list(
+        completion_id,
+        options
+      );
 
       return response.data;
     }
@@ -279,7 +285,10 @@ let OpenaiApi = (function () {
       const openai = new OpenAI(this.clientParams);
       const { completion_id, ...body } = parameters.payload;
 
-      const response = await openai.chat.completions.update(completion_id, body);
+      const response = await openai.chat.completions.update(
+        completion_id,
+        body
+      );
 
       return response;
     }
@@ -288,7 +297,10 @@ let OpenaiApi = (function () {
       const openai = new OpenAI(this.clientParams);
       const { completion_id, ...options } = parameters.payload;
 
-      const response = await openai.chat.completions.del(completion_id, options);
+      const response = await openai.chat.completions.del(
+        completion_id,
+        options
+      );
 
       return response;
     }
@@ -482,6 +494,32 @@ let OpenaiApi = (function () {
 
       return response;
     }
+
+    // >>> Begin Responses functions
+    async createModelResponse(parameters) {
+      const { _node, ...params } = parameters;
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.responses.create(parameters.payload);
+
+      if (params.payload.stream) {
+        _node.status({
+          fill: "green",
+          shape: "dot",
+          text: "OpenaiApi.status.streaming",
+        });
+        for await (const chunk of response) {
+          if (typeof chunk === "object") {
+            const newMsg = { ...parameters.msg, payload: chunk };
+            _node.send(newMsg);
+          }
+        }
+        _node.status({});
+      } else {
+        return response;
+      }
+    }
+
+    // <<< End Responses functions
 
     async createModeration(parameters) {
       const openai = new OpenAI(this.clientParams);
