@@ -530,6 +530,14 @@ let OpenaiApi = (function () {
       return response;
     }
 
+    async deleteModelResponse(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { response_id, ...params } = parameters.payload;
+      const response = await openai.responses.del(response_id, params);
+
+      return response;
+    }
+
     // <<< End Responses functions
 
     async createModeration(parameters) {
