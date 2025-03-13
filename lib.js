@@ -519,6 +519,17 @@ let OpenaiApi = (function () {
       }
     }
 
+    async getModelResponse(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { response_id, ...params } = parameters.payload;
+      const response = await openai.responses.retrieve(
+        response_id,
+        params
+      );
+
+      return response;
+    }
+
     // <<< End Responses functions
 
     async createModeration(parameters) {
