@@ -949,16 +949,6 @@
         <h4>msg.payload Properties</h4>
 
         <dt>
-          model
-          <a
-            href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-model"
-            target="_blank"
-            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
-          ></a>
-          <span class="property-type">string</span>
-        </dt>
-        <dd>One of the available TTS models: tts-1 or tts-1-hd</dd>
-        <dt>
           input
           <a
             href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-input"
@@ -968,6 +958,18 @@
           <span class="property-type">string</span>
         </dt>
         <dd>The text to generate audio for.</dd>
+
+        <dt>
+          model
+          <a
+            href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-model"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string</span>
+        </dt>
+        <dd>One of the available TTS models: <code>tts-1</code>, <code>tts-1-hd</code> or <code>gpt-4o-mini-tts</code>.</dd>
+
         <dt>
           voice
           <a
@@ -978,9 +980,22 @@
           <span class="property-type">string</span>
         </dt>
         <dd>
-          The voice to use when generating the audio. Supported voices are alloy,
-          echo, fable, onyx, nova, and shimmer.
+          The voice to use when generating the audio. Supported voices are <code>alloy</code>, <code>ash</code>, <code>coral</code>, <code>echo</code>, <code>fable</code>, <code>onyx</code>, <code>nova</code>, <code>sage</code> and <code>shimmer</code>.
         </dd>
+
+        <dt class="optional">
+          instructions
+          <a
+            href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-instructions"
+            target="_blank"
+            ><i class="fa fa-external-link fa-sm" aria-hidden="true"></i
+          ></a>
+          <span class="property-type">string</span>
+        </dt>
+        <dd>
+          Control the voice of your generated audio with additional instructions. Does not work with <code>tts-1</code> or <code>tts-1-hd</code>.
+        </dd>
+
         <dt class="optional">
           response_format
           <a
@@ -993,6 +1008,7 @@
         <dd>
           The format to audio in. Supported formats are mp3, opus, aac, flac, wav, and pcm.
         </dd>
+
         <dt class="optional">
           speed
           <a

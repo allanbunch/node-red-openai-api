@@ -40,34 +40,13 @@ After installation, find your node in the **AI** palette category labeled "OpenA
 - **Configurable and Flexible**: Adapt to a wide range of project requirements, making it easy to integrate AI into your IoT solutions.
 - **Powerful Combinations**: Utilize Node-RED's diverse nodes to build complex, AI-driven IoT workflows with ease.
 
-## Release Notes (v1.87.3)
+## Release Notes (v1.89.0)
 
-- **Ehancement:** Upgraded the OpenAI API Library dependency from [v4.85.4](https://github.com/openai/openai-node/releases/tag/v4.85.4) to [v4.87.3](https://github.com/openai/openai-node/releases/tag/v4.87.3).
-- **Features:** Implemented [Responses](https://platform.openai.com/docs/api-reference/responses) API capabilities.
-  - OpenAI's most advanced interface for generating model responses.
-  - Create stateful interactions with the model, using the output of previous responses as input and more.
-  - 🔥 Native agentic web search capabilities:
-
-  ```javascript
-  msg.payload = {
-    "model": "gpt-4o-mini",
-    "tools": [{ type: "web_search_preview" }],
-    "input": "What was a positive news story from today?"
-  }
-  ```
-
-  - 🔥 Native agentic computer use capabilities.
-  - 🔥 Reasoning model control properties:
-
-  ```javascript
-  msg.payload = {
-    "model": "o3-mini",
-    "input": "How much wood would a woodchuck chuck?",
-    "reasoning": {
-      "effort": "high"
-    }
-  }
-  ```
+- **Ehancements:**
+  - Upgraded the OpenAI API Library dependency from [v4.87.3](https://github.com/openai/openai-node/releases/tag/v4.87.3) to [v4.89.0](https://github.com/openai/openai-node/releases/tag/v4.89.0)
+- **Features:**
+  - New audio helpers
+  - New API models for TTS, STT, + new audio features for Realtime
 
 ## What's New in Version 1.x
 
