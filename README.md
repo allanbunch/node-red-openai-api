@@ -52,6 +52,7 @@ After installation, find your node in the **AI** palette category labeled "OpenA
 - Added support for the new `container` endpoint.
 - Added support for the new `containerFiles` endpoint.
 - Added a simple MCP tool use example flow to the `examples` directory. See: [MCP Example](./examples/responses/mcp.json).
+- Refactored code to greatly improve maintainability and stability.
 
 ### Important Notice Regarding Compatibility
 
