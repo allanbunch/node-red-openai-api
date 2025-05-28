@@ -3,7 +3,7 @@ const OpenAI = require("openai").OpenAI;
 async function createVectorStoreFile(parameters) {
   const openai = new OpenAI(this.clientParams);
   const { vector_store_id, ...params } = parameters.payload;
-  const response = await openai.beta.vectorStores.files.create(
+  const response = await openai.vectorStores.files.create(
     vector_store_id,
     params
   );
@@ -16,10 +16,7 @@ async function listVectorStoreFiles(parameters) {
 
   const openai = new OpenAI(this.clientParams);
   const { vector_store_id, ...params } = parameters.payload;
-  const list = await openai.beta.vectorStores.files.list(
-    vector_store_id,
-    params
-  );
+  const list = await openai.vectorStores.files.list(vector_store_id, params);
 
   return [...list.data];
 }
@@ -29,10 +26,7 @@ async function retrieveVectorStoreFile(parameters) {
 
   const openai = new OpenAI(this.clientParams);
   const { vector_store_id, file_id } = parameters.payload;
-  const response = openai.beta.vectorStores.files.retrieve(
-    vector_store_id,
-    file_id
-  );
+  const response = openai.vectorStores.files.retrieve(vector_store_id, file_id);
 
   return response;
 }
@@ -42,7 +36,7 @@ async function deleteVectorStoreFile(parameters) {
 
   const openai = new OpenAI(this.clientParams);
   const { vector_store_id, file_id, ...params } = parameters.payload;
-  const response = openai.beta.vectorStores.files.del(
+  const response = openai.vectorStores.files.del(
     vector_store_id,
     file_id,
     params

@@ -16530,7 +16530,7 @@ var require_methods18 = __commonJS({
     async function createVectorStoreFileBatch(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { vector_store_id, ...params } = parameters.payload;
-      const response = await openai.beta.vectorStores.fileBatches.create(
+      const response = await openai.vectorStores.fileBatches.create(
         vector_store_id,
         params
       );
@@ -16539,7 +16539,7 @@ var require_methods18 = __commonJS({
     async function retrieveVectorStoreFileBatch(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { vector_store_id, batch_id, ...params } = parameters.payload;
-      const response = await openai.beta.vectorStores.fileBatches.retrieve(
+      const response = await openai.vectorStores.fileBatches.retrieve(
         vector_store_id,
         batch_id,
         params
@@ -16549,7 +16549,7 @@ var require_methods18 = __commonJS({
     async function cancelVectorStoreFileBatch(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { vector_store_id, batch_id, ...params } = parameters.payload;
-      const response = await openai.beta.vectorStores.fileBatches.retrieve(
+      const response = await openai.vectorStores.fileBatches.retrieve(
         vector_store_id,
         batch_id,
         params
@@ -16559,7 +16559,7 @@ var require_methods18 = __commonJS({
     async function listVectorStoreBatchFiles(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { vector_store_id, batch_id, ...params } = parameters.payload;
-      const list = await openai.beta.vectorStores.fileBatches.listFiles(
+      const list = await openai.vectorStores.fileBatches.listFiles(
         vector_store_id,
         batch_id,
         params
@@ -16579,7 +16579,7 @@ var require_methods18 = __commonJS({
         }
       });
       const fileStreams = files2.map((path) => fs.createReadStream(path));
-      const response = await openai.beta.vectorStores.fileBatches.uploadAndPoll(
+      const response = await openai.vectorStores.fileBatches.uploadAndPoll(
         vector_store_id,
         { files: fileStreams, fileIds: file_ids },
         params
@@ -16603,7 +16603,7 @@ var require_methods19 = __commonJS({
     async function createVectorStoreFile(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { vector_store_id, ...params } = parameters.payload;
-      const response = await openai.beta.vectorStores.files.create(
+      const response = await openai.vectorStores.files.create(
         vector_store_id,
         params
       );
@@ -16612,25 +16612,19 @@ var require_methods19 = __commonJS({
     async function listVectorStoreFiles(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { vector_store_id, ...params } = parameters.payload;
-      const list = await openai.beta.vectorStores.files.list(
-        vector_store_id,
-        params
-      );
+      const list = await openai.vectorStores.files.list(vector_store_id, params);
       return [...list.data];
     }
     async function retrieveVectorStoreFile(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { vector_store_id, file_id } = parameters.payload;
-      const response = openai.beta.vectorStores.files.retrieve(
-        vector_store_id,
-        file_id
-      );
+      const response = openai.vectorStores.files.retrieve(vector_store_id, file_id);
       return response;
     }
     async function deleteVectorStoreFile(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { vector_store_id, file_id, ...params } = parameters.payload;
-      const response = openai.beta.vectorStores.files.del(
+      const response = openai.vectorStores.files.del(
         vector_store_id,
         file_id,
         params
@@ -16652,37 +16646,31 @@ var require_methods20 = __commonJS({
     var OpenAI = require_openai().OpenAI;
     async function createVectorStore(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const response = await openai.beta.vectorStores.create(parameters.payload);
+      const response = await openai.vectorStores.create(parameters.payload);
       return response;
     }
     async function listVectorStores(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const list = await openai.beta.vectorStores.list(parameters.payload);
+      const list = await openai.vectorStores.list(parameters.payload);
       const vectorStores2 = [...list.data];
       return vectorStores2;
     }
     async function retrieveVectorStore(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { vector_store_id, ...params } = parameters.payload;
-      const response = await openai.beta.vectorStores.retrieve(
-        vector_store_id,
-        params
-      );
+      const response = await openai.vectorStores.retrieve(vector_store_id, params);
       return response;
     }
     async function modifyVectorStore(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { vector_store_id, ...params } = parameters.payload;
-      const response = await openai.beta.vectorStores.update(
-        vector_store_id,
-        params
-      );
+      const response = await openai.vectorStores.update(vector_store_id, params);
       return response;
     }
     async function deleteVectorStore(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { vector_store_id, ...params } = parameters.payload;
-      const response = await openai.beta.vectorStores.del(vector_store_id, params);
+      const response = await openai.vectorStores.del(vector_store_id, params);
       return response;
     }
     module2.exports = {

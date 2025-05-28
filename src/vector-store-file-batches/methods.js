@@ -4,7 +4,7 @@ const fs = require("fs");
 async function createVectorStoreFileBatch(parameters) {
   const openai = new OpenAI(this.clientParams);
   const { vector_store_id, ...params } = parameters.payload;
-  const response = await openai.beta.vectorStores.fileBatches.create(
+  const response = await openai.vectorStores.fileBatches.create(
     vector_store_id,
     params
   );
@@ -15,7 +15,7 @@ async function createVectorStoreFileBatch(parameters) {
 async function retrieveVectorStoreFileBatch(parameters) {
   const openai = new OpenAI(this.clientParams);
   const { vector_store_id, batch_id, ...params } = parameters.payload;
-  const response = await openai.beta.vectorStores.fileBatches.retrieve(
+  const response = await openai.vectorStores.fileBatches.retrieve(
     vector_store_id,
     batch_id,
     params
@@ -27,7 +27,7 @@ async function retrieveVectorStoreFileBatch(parameters) {
 async function cancelVectorStoreFileBatch(parameters) {
   const openai = new OpenAI(this.clientParams);
   const { vector_store_id, batch_id, ...params } = parameters.payload;
-  const response = await openai.beta.vectorStores.fileBatches.retrieve(
+  const response = await openai.vectorStores.fileBatches.retrieve(
     vector_store_id,
     batch_id,
     params
@@ -39,7 +39,7 @@ async function cancelVectorStoreFileBatch(parameters) {
 async function listVectorStoreBatchFiles(parameters) {
   const openai = new OpenAI(this.clientParams);
   const { vector_store_id, batch_id, ...params } = parameters.payload;
-  const list = await openai.beta.vectorStores.fileBatches.listFiles(
+  const list = await openai.vectorStores.fileBatches.listFiles(
     vector_store_id,
     batch_id,
     params
@@ -66,7 +66,7 @@ async function uploadAndPollVectorStoreFileBatch(parameters) {
 
   const fileStreams = files.map((path) => fs.createReadStream(path));
 
-  const response = await openai.beta.vectorStores.fileBatches.uploadAndPoll(
+  const response = await openai.vectorStores.fileBatches.uploadAndPoll(
     vector_store_id,
     { files: fileStreams, fileIds: file_ids },
     params
