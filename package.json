@@ -30,7 +30,9 @@
     "low-code"
   ],
   "scripts": {
-    "build": "gulp build-html",
+    "build-html": "gulp build-html",
+    "build-js": "esbuild src/index.js --bundle --outfile=lib.js --format=cjs",
+    "build": "npm run build-html && npm run build-js",
     "prepare": "npm run build"
   },
   "dependencies": {
@@ -43,6 +45,7 @@
     "url": "git+https://github.com/allanbunch/node-red-openai-api.git"
   },
   "devDependencies": {
+    "esbuild": "^0.25.5",
     "gulp": "^5.0.0",
     "gulp-file-include": "^2.3.0"
   }
