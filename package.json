@@ -30,9 +30,9 @@
     "low-code"
   ],
   "scripts": {
-    "build-html": "gulp build-html",
-    "build-js": "esbuild src/lib.js --bundle --outfile=lib.js --format=cjs --platform=node",
-    "build": "npm run build-html && npm run build-js",
+    "build:html": "gulp build-html",
+    "build:js": "esbuild src/lib.js --bundle --outfile=lib.js --format=cjs --platform=node",
+    "build": "npm run build:html && npm run build:js",
     "prepare": "npm run build"
   },
   "dependencies": {
