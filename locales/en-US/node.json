@@ -16,6 +16,15 @@
             "streaming": "streaming"
         },
         "parameters": {
+            "listContainers": "list containers",
+            "createContainer": "create container",
+            "retrieveContainer": "retrieve container",
+            "deleteContainer": "delete container",
+            "listContainerFiles": "list container files",
+            "addContainerFile": "add container file",
+            "retrieveContainerFile": "retrieve container file",
+            "deleteContainerFile": "delete container file",
+            "downloadContainerFileContent": "download container file content",
             "createVectorStoreFile": "create vector store file",
             "listVectorStoreFiles": "list vector store files",
             "retrieveVectorStoreFile": "retrieve vector store file",
