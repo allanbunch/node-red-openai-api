@@ -9,7 +9,7 @@ This library provides convenient access to the OpenAI Node API Library from Node
 </a>
 <br>
 
-Node-RED OpenAI API is a versatile and configurable Node-RED node designed for seamless integration with any OpenAI API compatible platform. This node empowers innovators and developers to effortlessly connect and orchestrate complex AI and IoT workflows, leveraging Node-RED's sophisticated ecosystem. Ideal for enhancing IoT operations with advanced AI capabilities, this node serves as your gateway to applying the latest AI technology in an IoT context, facilitating innovative applications across diverse environments.
+Node-RED OpenAI API is a versatile and configurable Node-RED node designed for seamless integration with any OpenAI API compatible platform. This node empowers innovators and developers to effortlessly connect and orchestrate complex AI and AIoT workflows, leveraging Node-RED's sophisticated ecosystem. Ideal for enhancing IoT operations with advanced AI capabilities, this node serves as your gateway to applying the latest AI technology in an IoT context, facilitating innovative applications across diverse environments.
 
 ## Installation
 
@@ -40,23 +40,18 @@ After installation, find your node in the **AI** palette category labeled "OpenA
 - **Configurable and Flexible**: Adapt to a wide range of project requirements, making it easy to integrate AI into your IoT solutions.
 - **Powerful Combinations**: Utilize Node-RED's diverse nodes to build complex, AI-driven IoT workflows with ease.
 
-## Release Notes (v1.89.0)
+## Release Notes (v1.103.0)
 
-- **Ehancements:**
-  - Upgraded the OpenAI API Library dependency from [v4.87.3](https://github.com/openai/openai-node/releases/tag/v4.87.3) to [v4.89.0](https://github.com/openai/openai-node/releases/tag/v4.89.0)
-- **Features:**
-  - New audio helpers
-  - New API models for TTS, STT, + new audio features for Realtime
+### Ehancements
 
-## What's New in Version 1.x
+- Upgraded the OpenAI API Library dependency from [v4.89.0](https://github.com/openai/openai-node/releases/tag/v4.89.0) to [v4.103.0](https://github.com/openai/openai-node/releases/tag/v4.103.0)
 
-Version 1.0 of the **node-red-openai-api** node brings significant enhancements and new possibilities, including:
+### Notable Features & Changes
 
-- **API Upgrade to OpenAI Assistants v2**: Transition to the new Assistants v2 API version with extended features. This upgrade leverages the updated OpenAI NodeJS package, which supports newer models and capabilities, enhancing AIoT applications.
-- **Response Object Parity**: Updated response objects to closely align with the OpenAI documented response object structures, ensuring that your integration can seamlessly handle newer data formats.
-- **New Functionalities**: Addition of new capabilities such as Batch requests and Vector Store features to enhance your projects.
-- **Updated Examples**: Updated [examples](./examples/) showcasing new API features and functionality.
-- **Bug Fixes**: Closed out a series of bugs improving overall usability and stability.
+- Full Model Context Protocol (MCP) tool support for the `responses` API.
+- Added support for the new `container` endpoint.
+- Added support for the new `containerFiles` endpoint.
+- Added a simple MCP tool use example flow to the `examples` directory. See: [MCP Example](./examples/responses/mcp.json).
 
 ### Important Notice Regarding Compatibility
 
@@ -114,7 +109,7 @@ I value community contributions that help enhance this Node-RED node and expand 
 
 ## Community and Support
 
-Engage with the Node-RED OpenAI API community to share your experiences, get support, and discuss your ideas. Whether you're using the node or contributing to its development, we're here to help and look forward to your feedback and contributions.
+Engage with the Node-RED OpenAI API community to share your experiences, get support, and discuss your ideas. Whether you're using the node or contributing to its development, I'm here to help and look forward to your feedback and contributions.
 
 - **Community Discussions**: For any questions, help with setting up, or to connect with other users and contributors, please visit our [Community Discussions](https://github.com/allanbunch/node-red-openai-api/discussions).
 - **Feedback and Issues**: If you encounter any issues or have suggestions, please [raise an issue](https://github.com/allanbunch/node-red-openai-api/issues) directly on GitHub.
