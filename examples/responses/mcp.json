@@ -1,0 +1,87 @@
+[
+    {
+        "id": "17cb2307d706499e",
+        "type": "tab",
+        "label": "MCP Example",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "4fd4d16e54babf47",
+        "type": "OpenAI API",
+        "z": "17cb2307d706499e",
+        "name": "MCP Request",
+        "property": "ai",
+        "propertyType": "msg",
+        "service": "6bf3be50f1f3a262",
+        "method": "createModelResponse",
+        "x": 520,
+        "y": 240,
+        "wires": [
+            [
+                "177b298ed2530a7c"
+            ]
+        ]
+    },
+    {
+        "id": "177b298ed2530a7c",
+        "type": "debug",
+        "z": "17cb2307d706499e",
+        "name": "MCP Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "a83a50a436ac4f39",
+        "type": "inject",
+        "z": "17cb2307d706499e",
+        "name": "Request Params",
+        "props": [
+            {
+                "p": "ai.model",
+                "v": "gpt-4o-mini",
+                "vt": "str"
+            },
+            {
+                "p": "ai.tools[0]",
+                "v": "{\"type\":\"mcp\",\"server_label\":\"deepwiki\",\"server_url\":\"https://mcp.deepwiki.com/mcp\",\"require_approval\":\"never\"}",
+                "vt": "json"
+            },
+            {
+                "p": "ai.input",
+                "v": "What transport protocols are supported in the 2025-03-26 version of the MCP spec?",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 320,
+        "y": 240,
+        "wires": [
+            [
+                "4fd4d16e54babf47"
+            ]
+        ]
+    },
+    {
+        "id": "6bf3be50f1f3a262",
+        "type": "Service Host",
+        "apiBase": "https://api.openai.com/v1",
+        "secureApiKeyHeaderOrQueryName": "Authorization",
+        "organizationId": "",
+        "name": "OpenAI Auth"
+    }
+]
