@@ -40,7 +40,11 @@ After installation, find your node in the **AI** palette category labeled "OpenA
 - **Configurable and Flexible**: Adapt to a wide range of project requirements, making it easy to integrate AI into your IoT solutions.
 - **Powerful Combinations**: Utilize Node-RED's diverse nodes to build complex, AI-driven IoT workflows with ease.
 
-## Release Notes (v1.103.0)
+## Release Notes (v1.103.0-patch.1)
+
+### Fixed Issues
+
+- Reaolves issue [#34](https://github.com/allanbunch/node-red-openai-api/issues/34)
 
 ### Ehancements
 
@@ -48,6 +52,7 @@ After installation, find your node in the **AI** palette category labeled "OpenA
 
 ### Notable Features & Changes
 
+- Added missing `delete` method to the `messages` API.
 - Full Model Context Protocol (MCP) tool support for the `responses` API.
 - Added support for the new `container` endpoint.
 - Added support for the new `containerFiles` endpoint.
