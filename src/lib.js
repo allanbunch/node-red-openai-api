@@ -10,6 +10,7 @@ const embeddings = require("./embeddings/methods.js");
 const files = require("./files/methods.js");
 const fine_tuning = require("./fine-tuning/methods.js");
 const images = require("./images/methods.js");
+const messages = require("./messages/methods.js");
 const models = require("./models/methods.js");
 const moderations = require("./moderations/methods.js");
 const responses = require("./responses/methods.js");
@@ -43,6 +44,7 @@ Object.assign(
   files,
   fine_tuning,
   images,
+  messages,
   models,
   moderations,
   responses,
