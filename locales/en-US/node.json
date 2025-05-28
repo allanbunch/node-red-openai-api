@@ -130,6 +130,7 @@
             "getMessage": "retrieve message",
             "message_id": "message id",
             "modifyMessage": "modify message",
+            "deleteMessage": "delete message",
             "createUpload": "create upload",
             "addUploadPart": "add upload part",
             "completeUpload": "complete upload",

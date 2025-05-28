@@ -40,9 +40,22 @@ async function modifyMessage(parameters) {
   return response;
 }
 
+async function deleteMessage(parameters) {
+  const openai = new OpenAI(this.clientParams);
+  const { thread_id, message_id, ...params } = parameters.payload;
+  const response = await openai.beta.threads.messages.del(
+    thread_id,
+    message_id,
+    params
+  );
+
+  return response;
+}
+
 module.exports = {
   listMessages,
   createMessage,
   getMessage,
   modifyMessage,
+  deleteMessage,
 };

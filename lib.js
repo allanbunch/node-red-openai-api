@@ -16184,11 +16184,22 @@ var require_methods12 = __commonJS({
       );
       return response;
     }
+    async function deleteMessage(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { thread_id, message_id, ...params } = parameters.payload;
+      const response = await openai.beta.threads.messages.del(
+        thread_id,
+        message_id,
+        params
+      );
+      return response;
+    }
     module2.exports = {
       listMessages,
       createMessage,
       getMessage,
-      modifyMessage
+      modifyMessage,
+      deleteMessage
     };
   }
 });
