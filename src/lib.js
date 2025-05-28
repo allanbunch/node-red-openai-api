@@ -4,6 +4,8 @@ const assistants = require("./assistants/methods.js");
 const audio = require("./audio/methods.js");
 const batch = require("./batch/methods.js");
 const chat = require("./chat/methods.js");
+const container_files = require("./container-files/methods.js");
+const containers = require("./containers/methods.js");
 const embeddings = require("./embeddings/methods.js");
 const files = require("./files/methods.js");
 const fine_tuning = require("./fine-tuning/methods.js");
@@ -35,6 +37,8 @@ Object.assign(
   audio,
   batch,
   chat,
+  container_files,
+  containers,
   embeddings,
   files,
   fine_tuning,
