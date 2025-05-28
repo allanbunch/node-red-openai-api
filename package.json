@@ -1,6 +1,6 @@
 {
   "name": "@inductiv/node-red-openai-api",
-  "version": "1.103.0",
+  "version": "1.103.0-patch.1",
   "description": "Enhance your Node-RED projects with advanced AI capabilities.",
   "main": "node.js",
   "engines": {
