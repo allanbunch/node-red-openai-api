@@ -1,0 +1,174 @@
+<section>
+    <details>
+        <summary style="font-weight: bold;">📟 Messages</summary>
+        <a href="https://platform.openai.com/docs/api-reference/messages" target="_blank">Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+        <h4 style="font-weight: bolder;"> ⋙ List Messages</h4>
+        <p>Returns a list of messages for a given thread.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                thread_id
+                <a href="https://platform.openai.com/docs/api-reference/messages/listMessages#messages-listmessages-thread_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the thread the messages belong to.</dd>
+            <dt class="optional">
+                limit
+                <a href="https://platform.openai.com/docs/api-reference/messages/listMessages#messages-listmessages-limit"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>
+                A limit on the number of objects to be returned. Limit can range between
+                1 and 100, and the default is 20.
+            </dd>
+            <dt class="optional">
+                order
+                <a href="https://platform.openai.com/docs/api-reference/messages/listMessages#messages-listmessages-order"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Sort order by the created_at timestamp of the objects.</dd>
+            <dt class="optional">
+                after
+                <a href="https://platform.openai.com/docs/api-reference/messages/listMessages#messages-listmessages-after"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>A cursor for use in pagination.</dd>
+            <dt class="optional">
+                before
+                <a href="https://platform.openai.com/docs/api-reference/messages/listMessages#messages-listmessages-before"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>A cursor for use in pagination.</dd>
+
+            <dt class="optional">
+                run_id
+                <a href="https://platform.openai.com/docs/api-reference/messages/listMessages#messages-listmessages-run_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Filter messages by the run ID that generated them.</dd>
+
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Message</h4>
+        <p>Create a message.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                thread_id
+                <a href="https://platform.openai.com/docs/api-reference/messages/createMessage#messages-createmessage-thread_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the thread to create a message for.</dd>
+            <dt>
+                role
+                <a href="https://platform.openai.com/docs/api-reference/messages/createMessage#messages-createmessage-role"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The role of the entity that is creating the message.</dd>
+            <dt>
+                content
+                <a href="https://platform.openai.com/docs/api-reference/messages/createMessage#messages-createmessage-content"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The content of the message.</dd>
+            <dt class="optional">
+                attachments
+                <a href="https://platform.openai.com/docs/api-reference/messages/createMessage#messages-createmessage-attachments"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">array</span>
+            </dt>
+            <dd>A list of files attached to the message, and the tools they should be added to.</dd>
+            <dt class="optional">
+                metadata
+                <a href="https://platform.openai.com/docs/api-reference/messages/createMessage#messages-createmessage-metadata"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Message</h4>
+        <p>Deletes a message.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                thread_id
+                <a href="https://platform.openai.com/docs/api-reference/messages/deleteMessage#messages-deletemessage-thread_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the thread to which this message belongs.</dd>
+            <dt>
+                message_id
+                <a href="https://platform.openai.com/docs/api-reference/messages/deleteMessage#messages-deletemessage-message_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the message to delete.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Message</h4>
+        <p>Retrieve a message.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                thread_id
+                <a href="https://platform.openai.com/docs/api-reference/messages/getMessage#messages-getmessage-thread_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the thread to which this message belongs.</dd>
+            <dt>
+                message_id
+                <a href="https://platform.openai.com/docs/api-reference/messages/getMessage#messages-getmessage-message_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the message to retrieve.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Message</h4>
+        <p>Modifies a message.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                thread_id
+                <a href="https://platform.openai.com/docs/api-reference/messages/modifyMessage#messages-modifymessage-thread_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the thread to which this message belongs.</dd>
+            <dt>
+                message_id
+                <a href="https://platform.openai.com/docs/api-reference/messages/modifyMessage#messages-modifymessage-message_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the message to modify.</dd>
+            <dt class="optional">
+                metadata
+                <a href="https://platform.openai.com/docs/api-reference/messages/modifyMessage#messages-modifymessage-metadata"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
+        </dl>
+
+
+    </details>
+</section>

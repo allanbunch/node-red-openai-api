@@ -1,0 +1,102 @@
+<section>
+    <details>
+        <summary style="font-weight: bold;">📁 Files</summary>
+        <a href="https://platform.openai.com/docs/api-reference/files" target="_blank">Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+        <h4 style="font-weight: bolder;"> ⋙ List Files</h4>
+        <p>Returns a list of files that belong to the user's organization.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt class="optional">
+                purpose
+                <a href="https://platform.openai.com/docs/api-reference/files/list#files-list-purpose"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Only return files with the given purpose.</dd>
+
+            <dt class="optional">
+                limit
+                <a href="https://platform.openai.com/docs/api-reference/files/list#files-list-limit" target="_blank"><i
+                        class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>A limit on the number of objects to be returned.</dd>
+
+            <dt class="optional">
+                order
+                <a href="https://platform.openai.com/docs/api-reference/files/list#files-list-order" target="_blank"><i
+                        class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Sort order by the created_at timestamp of the objects.</dd>
+
+            <dt class="optional">
+                after
+                <a href="https://platform.openai.com/docs/api-reference/files/list#files-list-after" target="_blank"><i
+                        class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>A cursor for use in pagination.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Upload File</h4>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                file
+                <a href="https://platform.openai.com/docs/api-reference/files/create#files-create-file"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">file</span>
+            </dt>
+            <dd>Absolute path to the file that's being uploaded.</dd>
+            <dt>
+                purpose
+                <a href="https://platform.openai.com/docs/api-reference/files/create#files-create-purpose"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The intended purpose of the uploaded file.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete File</h4>
+        <p>Delete a file.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>file_id <span class="property-type">string</span></dt>
+            <dd>The ID of the file to use for this request.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve File</h4>
+        <p>Returns information about a specific file.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                file_id
+                <a href="https://platform.openai.com/docs/api-reference/files/delete#files-delete-file_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the file to use for this request.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve File Content</h4>
+        <p>Returns the contents of the specified file.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                file_id
+                <a href="https://platform.openai.com/docs/api-reference/files/retrieve-contents#files-retrieve-contents-file_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the file to use for this request.</dd>
+        </dl>
+
+    </details>
+</section>

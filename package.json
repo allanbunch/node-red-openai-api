@@ -29,13 +29,21 @@
     "ai agent",
     "low-code"
   ],
+  "scripts": {
+    "build": "gulp build-html",
+    "prepare": "npm run build"
+  },
   "dependencies": {
-    "openai": "~4.89.0"
+    "openai": "^4.103.0"
   },
   "author": "Allan Bunch",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/allanbunch/node-red-openai-api.git"
+  },
+  "devDependencies": {
+    "gulp": "^5.0.0",
+    "gulp-file-include": "^2.3.0"
   }
 }

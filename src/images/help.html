@@ -1,0 +1,208 @@
+<section>
+    <details>
+        <summary style="font-weight: bold;">🖼️ Images</summary>
+        <a href="https://platform.openai.com/docs/api-reference/images" target="_blank">Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+        <h4 style="font-weight: bolder;"> ⋙ Create Image</h4>
+        <p>Creates an image given a prompt.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                prompt
+                <a href="https://platform.openai.com/docs/api-reference/images/create#images-create-prompt"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>A text description of the desired image(s).</dd>
+            <dt class="optional">
+                model
+                <a href="https://platform.openai.com/docs/api-reference/images/create#images-create-model"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The model to use for image generation.</dd>
+            <dt class="optional">
+                n
+                <a href="https://platform.openai.com/docs/api-reference/images/create#images-create-n"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>The number of images to generate.</dd>
+            <dt class="optional">
+                quality
+                <a href="https://platform.openai.com/docs/api-reference/images/create#images-create-quality"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The quality of the image that will be generated.</dd>
+            <dt class="optional">
+                response_format
+                <a href="https://platform.openai.com/docs/api-reference/images/create#images-create-response_format"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                The format in which the generated images are returned. Must be one of
+                url or b64_json.
+            </dd>
+            <dt class="optional">
+                size
+                <a href="https://platform.openai.com/docs/api-reference/images/create#images-create-size"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                The size of the generated images. Must be one of 256x256, 512x512, or
+                1024x1024 for dall-e-2. Must be one of 1024x1024, 1792x1024, or
+                1024x1792.
+            </dd>
+            <dt class="optional">
+                style
+                <a href="https://platform.openai.com/docs/api-reference/images/create#images-create-style"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                The style of the generated images. Must be one of vivid or natural.
+            </dd>
+            <dt class="optional">
+                user
+                <a href="https://platform.openai.com/docs/api-reference/images/create#images-create-user"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                A unique identifier representing your end-user, which can help OpenAI to
+                monitor and detect abuse.
+            </dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Image Edit</h4>
+        <p>
+            Creates an edited or extended image given an original image and a prompt.
+        </p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                image
+                <a href="https://platform.openai.com/docs/api-reference/images/createEdit#images-createedit-image"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The image to edit.</dd>
+            <dt>
+                prompt
+                <a href="https://platform.openai.com/docs/api-reference/images/createEdit#images-createedit-prompt"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>A text description of the desired image(s).</dd>
+            <dt class="optional">
+                mask
+                <a href="https://platform.openai.com/docs/api-reference/images/createEdit#images-createedit-mask"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                An additional image whose fully transparent areas (e.g. where alpha is
+                zero) indicate where image should be edited.
+            </dd>
+            <dt class="optional">
+                model
+                <a href="https://platform.openai.com/docs/api-reference/images/createEdit#images-createedit-model"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type"></span>
+            </dt>
+            <dd>The model to use for image generation.</dd>
+            <dt class="optional">
+                n
+                <a href="https://platform.openai.com/docs/api-reference/images/createEdit#images-createedit-n"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>The number of images to generate. Must be between 1 and 10.</dd>
+            <dt class="optional">
+                size
+                <a href="https://platform.openai.com/docs/api-reference/images/createEdit#images-createedit-size"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The size of the generated images.</dd>
+            <dt class="optional">
+                response_format
+                <a href="https://platform.openai.com/docs/api-reference/images/createEdit#images-createedit-response_format"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                The format in which the generated images are returned. Must be one of
+                url or b64_json.
+            </dd>
+            <dt class="optional">
+                user
+                <a href="https://platform.openai.com/docs/api-reference/images/createEdit#images-createedit-user"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                A unique identifier representing your end-user, which can help OpenAI to
+                monitor and detect abuse.
+            </dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Image Variation</h4>
+        <p>Creates a variation of a given image.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                image
+                <a href="https://platform.openai.com/docs/api-reference/images/createVariation#images-createvariation-image"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The image to use as the basis for the variation(s).</dd>
+            <dt>
+                model
+                <a href="https://platform.openai.com/docs/api-reference/images/createVariation#images-createvariation-model"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type"></span>
+            </dt>
+            <dd>The model to use for image generation.</dd>
+            <dt>
+                n
+                <a href="https://platform.openai.com/docs/api-reference/images/createVariation#images-createvariation-n"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>The number of images to generate.</dd>
+            <dt>
+                response_format
+                <a href="https://platform.openai.com/docs/api-reference/images/createVariation#images-createvariation-response_format"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The format in which the generated images are returned.</dd>
+            <dt>
+                size
+                <a href="https://platform.openai.com/docs/api-reference/images/createVariation#images-createvariation-size"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The size of the generated images.</dd>
+            <dt>
+                user
+                <a href="https://platform.openai.com/docs/api-reference/images/createVariation#images-createvariation-user"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                A unique identifier representing your end-user, which can help OpenAI to
+                monitor and detect abuse.
+            </dd>
+        </dl>
+
+    </details>
+</section>

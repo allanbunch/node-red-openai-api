@@ -1,0 +1,436 @@
+<section>
+    <details>
+        <summary style="font-weight: bold;">💬 Chat</summary>
+        <a href="https://platform.openai.com/docs/api-reference/chat" target="_blank">Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+        <h4 style="font-weight: bolder;"> ⋙ Create Chat Completion</h4>
+        <p>
+            Creates a model response for the given chat conversation.
+            <a href="https://platform.openai.com/docs/api-reference/chat/create" target="_blank">Full documentation.</a>
+        </p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                messages
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-messages"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">array</span>
+            </dt>
+            <dd>A list of messages comprising the conversation so far.</dd>
+            <dt>
+                model
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-model"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>ID of the model to use.</dd>
+
+            <dt class="optional">
+                store
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-store"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">boolean | null</span>
+            </dt>
+            <dd>Whether to store the output of this chat completion request.</dd>
+
+            <dt class="optional">
+                reasoning_effort
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-reasoning_effort"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Constrains effort on reasoning for reasoning models.</dd>
+
+            <dt class="optional">
+                metadata
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-metadata"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">object or null</span>
+            </dt>
+            <dd>Developer-defined tags and values used for filtering completions in the dashboard.</dd>
+
+            <dt class="optional">
+                frequency_penalty
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-frequency_penalty"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">number</span>
+            </dt>
+            <dd>Number between -2.0 and 2.0.</dd>
+            <dt class="optional">
+                logit_bias
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-logit_bias"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">object</span>
+            </dt>
+            <dd>
+                Modify the likelihood of specified tokens appearing in the completion.
+            </dd>
+            <dt class="optional">
+                logprobs
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-logprobs"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">boolean</span>
+            </dt>
+            <dd>Whether to return log probabilities of the output tokens or not.</dd>
+            <dt class="optional">
+                top_logprobs
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-top_logprobs"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>
+                An integer between 0 and 5 specifying the number of most likely tokens
+                to return at each token position, each with an associated log
+                probability.
+            </dd>
+            <dt class="optional">
+                max_tokens [Deprecated]
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-max_tokens"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>
+                The maximum number of tokens that can be generated in the chat
+                completion. This value is now deprecated in favor of max_completion_tokens,
+                and is not compatible with o1 series models.
+            </dd>
+
+            <dt class="optional">
+                max_completion_tokens
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-max_completion_tokens"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>
+                An upper bound for the number of tokens that can be generated for a completion,
+                including visible output tokens and reasoning tokens.
+            </dd>
+
+            <dt class="optional">
+                n
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-n" target="_blank"><i
+                        class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>
+                How many chat completion choices to generate for each input message.
+            </dd>
+
+            <dt class="optional">
+                modalities
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-modalities"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">array or null</span>
+            </dt>
+            <dd>
+                Output types that you would like the model to generate for this request.
+            </dd>
+
+            <dt class="optional">
+                prediction
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-prediction"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">object</span>
+            </dt>
+            <dd>
+                Configuration for a Predicted Output.
+            </dd>
+
+            <dt class="optional">
+                audio
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-audio"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">object or null</span>
+            </dt>
+            <dd>
+                Parameters for audio output.
+            </dd>
+
+            <dt class="optional">
+                presence_penalty
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-presence_penalty"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">number</span>
+            </dt>
+            <dd>Number between -2.0 and 2.0.</dd>
+
+            <dt class="optional">
+                response_format
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-response_format"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">object</span>
+            </dt>
+            <dd>An object specifying the format that the model must output.</dd>
+
+            <dt class="optional">
+                seed
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-seed" target="_blank"><i
+                        class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>
+                This feature is in Beta. If specified, the system will make a best
+                effort to sample deterministically, such that repeated requests with the
+                same seed and parameters should return the same result.
+            </dd>
+
+            <dt class="optional">
+                service_tier
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-service_tier"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string or null</span>
+            </dt>
+            <dd>
+                Specifies the latency tier to use for processing the request.
+            </dd>
+
+            <dt class="optional">
+                stop
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-stop" target="_blank"><i
+                        class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string | array</span>
+            </dt>
+            <dd>
+                Up to 4 sequences where the API will stop generating further tokens.
+            </dd>
+
+            <dt class="optional">
+                stream
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-stream"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">boolean</span>
+            </dt>
+            <dd>If set, partial message deltas will be sent, like in ChatGPT.</dd>
+
+            <dt class="optional">
+                stream_options
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-stream_options"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Options for streaming response. Only set this when you set ```stream: true```.</dd>
+
+            <dt class="optional">
+                temperature
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-temperature"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">number</span>
+            </dt>
+            <dd>What sampling temperature to use, between 0 and 2.</dd>
+
+            <dt class="optional">
+                top_p
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-top_p"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">number</span>
+            </dt>
+            <dd>
+                An alternative to sampling with temperature, called nucleus sampling,
+                where the model considers the results of the tokens with top_p
+                probability mass.
+            </dd>
+
+            <dt class="optional">
+                tools
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-tools"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">array</span>
+            </dt>
+            <dd>A list of tools the model may call.</dd>
+
+            <dt class="optional">
+                tool_choice
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-tool_choice"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string | object</span>
+            </dt>
+            <dd>Whether to enable parallel function calling during tool use.</dd>
+
+            <dt class="optional">
+                parallel_tool_calls
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-parallel_tool_calls"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string | object</span>
+            </dt>
+            <dd>Whether to enable parallel function calling during tool use.</dd>
+
+            <dt class="optional">
+                user
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-user" target="_blank"><i
+                        class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                A unique identifier representing your end-user, which can help OpenAI to
+                monitor and detect abuse.
+            </dd>
+
+        </dl>
+
+
+        <h4 style="font-weight: bolder;"> ⋙ Get Chat Completion</h4>
+        <p>
+            Get a stored chat completion.
+            <a href="https://platform.openai.com/docs/api-reference/chat/get" target="_blank">Full documentation.</a>
+        </p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                completion_id
+                <a href="https://platform.openai.com/docs/api-reference/chat/get#chat-get-completion_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the chat completion to retrieve.</dd>
+        </dl>
+
+        <!-- Begin Get Chat Messages -->
+        <h4 style="font-weight: bolder;"> ⋙ Get Chat Messages</h4>
+        <p>
+            Get the messages in a stored chat completion.
+            <a href="https://platform.openai.com/docs/api-reference/chat/getMessages" target="_blank">Full
+                documentation.</a>
+        </p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                completion_id
+                <a href="https://platform.openai.com/docs/api-reference/chat/getMessages#chat-getmessages-completion_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the chat completion to retrieve messages from.</dd>
+
+            <dt class="optional">
+                after
+                <a href="https://platform.openai.com/docs/api-reference/chat/getMessages#chat-getmessages-afterf"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Identifier for the last message from the previous pagination request.</dd>
+
+            <dt class="optional">
+                limit
+                <a href="https://platform.openai.com/docs/api-reference/chat/getMessages#chat-getmessages-limit"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Number of messages to retrieve.</dd>
+
+            <dt class="optional">
+                order
+                <a href="https://platform.openai.com/docs/api-reference/chat/getMessages#chat-getmessages-order"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Sort order for messages by timestamp.</dd>
+        </dl>
+        <!-- END Get Chat Messages -->
+
+        <!-- Begin List Chat Completions -->
+        <dl>
+            <h4 style="font-weight: bolder;"> ⋙ List Chat Completions</h4>
+            <p>
+                List stored chat completions.
+                <a href="https://platform.openai.com/docs/api-reference/chat/list" target="_blank">Full
+                    documentation.</a>
+            </p>
+            <dl class="message-properties">
+                <h4>msg.payload Properties</h4>
+
+                <dt class="optional">
+                    model
+                    <a href="https://platform.openai.com/docs/api-reference/chat/list#chat-list-model"
+                        target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                    <span class="property-type">string</span>
+                </dt>
+                <dd>The model used to generate the chat completions.</dd>
+
+                <dt class="optional">
+                    metadata
+                    <a href="https://platform.openai.com/docs/api-reference/chat/list#chat-list-metadata"
+                        target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                    <span class="property-type">object</span>
+                </dt>
+                <dd>A list of metadata keys to filter the chat completions by.</dd>
+
+                <dt class="optional">
+                    after
+                    <a href="https://platform.openai.com/docs/api-reference/chat/getMessages#chat-getmessages-limit"
+                        target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                    <span class="property-type">string</span>
+                </dt>
+                <dd>Identifier for the last chat completion from the previous pagination request.</dd>
+
+                <dt class="optional">
+                    limit
+                    <a href="https://platform.openai.com/docs/api-reference/chat/list#chat-list-limit"
+                        target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                    <span class="property-type">integer</span>
+                </dt>
+                <dd>Number of chat completions to retrieve.</dd>
+
+                <dt class="optional">
+                    order
+                    <a href="https://platform.openai.com/docs/api-reference/chat/list#chat-list-order"
+                        target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                    <span class="property-type">string</span>
+                </dt>
+                <dd>Sort order for chat completions by timestamp.</dd>
+            </dl>
+            <!-- END List Chat Completions -->
+
+            <!-- Begin Update Chat Completions -->
+            <dl>
+                <h4 style="font-weight: bolder;"> ⋙ Update Chat Completion</h4>
+                <p>
+                    Modify a stored chat completion.
+                    <a href="https://platform.openai.com/docs/api-reference/chat/update" target="_blank">Full
+                        documentation.</a>
+                </p>
+                <dl class="message-properties">
+                    <h4>msg.payload Properties</h4>
+
+                    <dt>
+                        completion_id
+                        <a href="https://platform.openai.com/docs/api-reference/chat/update#chat-update-completion_id"
+                            target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                        <span class="property-type">string</span>
+                    </dt>
+                    <dd>The ID of the chat completion to update.</dd>
+
+                    <dt>
+                        metadata
+                        <a href="https://platform.openai.com/docs/api-reference/chat/getMessages#chat-getmessages-limit"
+                            target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                        <span class="property-type">object</span>
+                    </dt>
+                    <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
+                </dl>
+                <!-- END Update Chat Completion -->
+
+                <!-- Begin Delete Chat Completion -->
+                <dl>
+                    <h4 style="font-weight: bolder;"> ⋙ Delete Chat Completion</h4>
+                    <p>
+                        Delete a stored chat completion.
+                        <a href="https://platform.openai.com/docs/api-reference/chat/delete" target="_blank">Full
+                            documentation.</a>
+                    </p>
+                    <dl class="message-properties">
+                        <h4>msg.payload Properties</h4>
+
+                        <dt>
+                            completion_id
+                            <a href="https://platform.openai.com/docs/api-reference/chat/delete#chat-delete-completion_id"
+                                target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                            <span class="property-type">string</span>
+                        </dt>
+                        <dd>The ID of the chat completion to delete.</dd>
+                    </dl>
+                    <!-- END Delete Chat Completion -->
+    </details>
+</section>

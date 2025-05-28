@@ -1,0 +1,187 @@
+<section>
+    <details>
+        <summary style="font-weight: bold;">🔧 Fine-tuning</summary>
+        <a href="https://platform.openai.com/docs/api-reference/fine-tuning" target="_blank">Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+        <h4 style="font-weight: bolder;"> ⋙ Create Fine-tuning Job</h4>
+        <p>
+            Creates a job that fine-tunes a specified model from a given dataset.
+            Response includes details of the enqueued job including job status and the
+            name of the fine-tuned models once complete.
+        </p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                model
+                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/create#fine-tuning-create-model"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The name of the model to fine-tune.</dd>
+            <dt>
+                training_file
+                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/create#fine-tuning-create-training_file"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of an uploaded file that contains training data.</dd>
+
+            <dt class="optional">
+                suffix
+                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/create#fine-tuning-create-suffix"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                A string of up to 18 characters that will be added to your fine-tuned
+                model name.
+            </dd>
+
+            <dt class="optional">
+                validation_file
+                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/create#fine-tuning-create-validation_file"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of an uploaded file that contains validation data.</dd>
+
+            <dt class="optional">
+                integrations
+                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/create#fine-tuning-create-integrations"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">array</span>
+            </dt>
+            <dd>A list of integrations to enable for your fine-tuning job.</dd>
+
+            <dt class="optional">
+                seed
+                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/create#fine-tuning-create-seed"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">array</span>
+            </dt>
+            <dd>The seed controls the reproducibility of the job.</dd>
+
+            <dt class="optional">
+                method
+                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/create#fine-tuning-create-method"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">object</span>
+            </dt>
+            <dd>The method used for fine-tuning.</dd>
+
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Fine-tuning Jobs</h4>
+        <p>List your organization's fine-tuning jobs</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt class="optional">
+                after
+                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/list#fine-tuning-list-after"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Identifier for the last job from the previous pagination request.</dd>
+            <dt class="optional">
+                limit
+                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/list#fine-tuning-list-limit"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Number of fine-tuning jobs to retrieve.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Fine-tuning Job</h4>
+        <p>Get info about a fine-tuning job.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                fine_tuning_job_id
+                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/retrieve#fine-tuning-retrieve-fine_tuning_job_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the fine-tuning job.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Fine-tuning Events</h4>
+        <p>Get status updates for a fine-tuning job.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                fine_tuning_job_id
+                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/list-events#fine-tuning-list-events-fine_tuning_job_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the fine-tuning job to get events for.</dd>
+            <dt class="optional">
+                after
+                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/list-events#fine-tuning-list-events-after"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                Identifier for the last event from the previous pagination request.
+            </dd>
+            <dt class="optional">
+                limit
+                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/list-events#fine-tuning-list-events-limit"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Number of events to retrieve.</dd>
+        </dl>
+
+        <!-- >>> Begin List Fine-tuning Checkpoints -->
+        <h4 style="font-weight: bolder;"> ⋙ List Fine-tuning Checkpoints</h4>
+        <p>List checkpoints for a fine-tuning job.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                fine_tuning_job_id
+                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/list-checkpoints#fine-tuning-list-checkpoints-fine_tuning_job_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the fine-tuning job to get checkpoints for.</dd>
+            <dt class="optional">
+                after
+                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/list-checkpoints#fine-tuning-list-checkpoints-after"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                Identifier for the last checkpoint ID from the previous pagination request.
+            </dd>
+            <dt class="optional">
+                limit
+                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/list-checkpoints#fine-tuning-list-checkpoints-limit"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Number of events to retrieve.</dd>
+        </dl>
+        <!-- <<< End List Fine-tuning Checkpoints -->
+
+        <h4 style="font-weight: bolder;"> ⋙ Cancel Fine-tuning Job</h4>
+        <p>Immediately cancel a fine-tune job.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                fine_tuning_job_id
+                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/cancel#fine-tuning-cancel-fine_tuning_job_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the fine-tuning job to cancel.</dd>
+        </dl>
+
+    </details>
+</section>

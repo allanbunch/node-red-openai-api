@@ -1,0 +1,353 @@
+<section>
+    <details>
+        <summary style="font-weight: bold;">🤖 Assistants</summary>
+        <a href="https://platform.openai.com/docs/api-reference/assistants" target="_blank">Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+        <h4 style="font-weight: bolder;"> ⋙ Create Assistant</h4>
+        <p>Create an assistant with a model and instructions.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                model
+                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-model"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>ID of the model to use.</dd>
+            <dt class="optional">
+                name
+                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-name"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The name of the assistant.</dd>
+            <dt class="optional">
+                description
+                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-description"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The description of the assistant.</dd>
+            <dt class="optional">
+                instructions
+                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-instructions"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The system instructions that the assistant uses.</dd>
+            <dt class="optional">
+                tools
+                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-tools"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">array</span>
+            </dt>
+            <dd>A list of tool enabled on the assistant.</dd>
+
+            <dt class="optional">
+                tool_resources
+                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-tool_resources"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">object</span>
+            </dt>
+            <dd>A set of resources that are used by the assistant's tools. </dd>
+
+            <dt class="optional">
+                metadata
+                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-metadata"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
+
+            <dt class="optional">
+                temperature
+                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-temperature"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">number</span>
+            </dt>
+            <dd>What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more
+                random, while lower values like 0.2 will make it more focused and deterministic.</dd>
+
+            <dt class="optional">
+                top_p
+                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-top_p"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">number</span>
+            </dt>
+            <dd>An alternative to sampling with temperature, called nucleus sampling, where the model considers the
+                results of the tokens with top_p probability mass.</dd>
+
+            <dt class="optional">
+                response_format
+                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-response_format"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Specifies the format that the model must output.</dd>
+
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Assistant</h4>
+        <p>Retrieves an assistant.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                assistant_id
+                <a href="https://platform.openai.com/docs/api-reference/assistants/getAssistant#assistants-getassistant-assistant_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the assistant to retrieve.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Assistant</h4>
+        <p>Modifies an assistant.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                assistant_id
+                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-assistant_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the assistant to retrieve.</dd>
+
+            <dt class="optional">
+                model
+                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-model"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>ID of the model to use.</dd>
+            <dt class="optional">
+                name
+                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-name"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The name of the assistant.</dd>
+            <dt class="optional">
+                description
+                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-description"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The description of the assistant.</dd>
+            <dt class="optional">
+                instructions
+                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-instructions"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The system instructions that the assistant uses.</dd>
+            <dt class="optional">
+                tools
+                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-tools"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">array</span>
+            </dt>
+            <dd>A list of tool enabled on the assistant.</dd>
+
+            <dt class="optional">
+                tool_resources
+                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-tool_resources"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">object</span>
+            </dt>
+            <dd>A set of resources that are used by the assistant's tools. </dd>
+
+            <dt class="optional">
+                metadata
+                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-metadata"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
+
+            <dt class="optional">
+                temperature
+                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-temperature"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">number</span>
+            </dt>
+            <dd>What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more
+                random, while lower values like 0.2 will make it more focused and deterministic.</dd>
+
+            <dt class="optional">
+                top_p
+                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-top_p"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">number</span>
+            </dt>
+            <dd>An alternative to sampling with temperature, called nucleus sampling, where the model considers the
+                results of the tokens with top_p probability mass.</dd>
+
+            <dt class="optional">
+                response_format
+                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-response_format"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Specifies the format that the model must output.</dd>
+
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Assistant</h4>
+        <p>Delete an assistant.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                assistant_id
+                <a href="https://platform.openai.com/docs/api-reference/assistants/deleteAssistant#assistants-deleteassistant-assistant_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the assistant to delete.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Assistants</h4>
+        <p>Returns a list of assistants.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                limit
+                <a href="https://platform.openai.com/docs/api-reference/assistants/listAssistants#assistants-listassistants-limit"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>A limit on the number of objects to be returned.</dd>
+            <dt class="optional">
+                order
+                <a href="https://platform.openai.com/docs/api-reference/assistants/listAssistants#assistants-listassistants-order"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Sort order by the created_at timestamp of the objects.</dd>
+            <dt class="optional">
+                after
+                <a href="https://platform.openai.com/docs/api-reference/assistants/listAssistants#assistants-listassistants-after"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>A cursor for use in pagination.</dd>
+            <dt class="optional">
+                before
+                <a href="https://platform.openai.com/docs/api-reference/assistants/listAssistants#assistants-listassistants-before"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>A cursor for use in pagination.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Assistant Files</h4>
+        <p>Returns a list of assistant files.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                assistant_id
+                <a href="https://platform.openai.com/docs/api-reference/assistants/listAssistantFiles#assistants-listassistantfiles-assistant_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the assistant the file belongs to.</dd>
+            <dt class="optional">
+                limit
+                <a href="https://platform.openai.com/docs/api-reference/assistants/listAssistantFiles#assistants-listassistantfiles-limit"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>A limit on the number of objects to be returned.</dd>
+            <dt class="optional">
+                order
+                <a href="https://platform.openai.com/docs/api-reference/assistants/listAssistantFiles#assistants-listassistantfiles-order"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Sort order by the created_at timestamp of the objects.</dd>
+            <dt class="optional">
+                after
+                <a href="https://platform.openai.com/docs/api-reference/assistants/listAssistantFiles#assistants-listassistantfiles-after"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>A cursor for use in pagination.</dd>
+            <dt class="optional">
+                before
+                <a href="https://platform.openai.com/docs/api-reference/assistants/listAssistantFiles#assistants-listassistantfiles-before"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>A cursor for use in pagination.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Assistant File</h4>
+        <p>Create an assistant file by attaching a file to an assistant.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                assistant_id
+                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistantFile#assistants-createassistantfile-assistant_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the assistant for which to create a File.</dd>
+            <dt>
+                file_id
+                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistantFile#assistants-createassistantfile-file_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                A File ID (with purpose="assistants") that the assistant should use.
+            </dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Assistant File</h4>
+        <p>Retrieves an AssistantFile.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                assistant_id
+                <a href="https://platform.openai.com/docs/api-reference/assistants/getAssistantFile#assistants-getassistantfile-assistant_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the assistant who the file belongs to.</dd>
+            <dt>
+                file_id
+                <a href="https://platform.openai.com/docs/api-reference/assistants/getAssistantFile#assistants-getassistantfile-file_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the file we're getting.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Assistant File</h4>
+        <p>Delete an assistant file.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                assistant_id
+                <a href="https://platform.openai.com/docs/api-reference/assistants/deleteAssistantFile#assistants-deleteassistantfile-assistant_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the assistant that the file belongs to.</dd>
+            <dt>
+                file_id
+                <a href="https://platform.openai.com/docs/api-reference/assistants/deleteAssistantFile#assistants-deleteassistantfile-file_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the file to delete.</dd>
+        </dl>
+    </details>
+</section>

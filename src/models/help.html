@@ -1,0 +1,47 @@
+<section>
+    <details>
+        <summary style="font-weight: bold;">🧠 Models</summary>
+        <a href="https://platform.openai.com/docs/api-reference/models" target="_blank">Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+        <h4 style="font-weight: bolder;"> ⋙ List Models</h4>
+        <p>
+            Lists the currently available models, and provides basic information about
+            each one such as the owner and availability.
+        </p>
+        <dl class="message-properties"></dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Model</h4>
+        <p>
+            Retrieves a model instance, providing basic information about the model
+            such as the owner and permissioning.
+        </p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                model
+                <a href="https://platform.openai.com/docs/api-reference/models/retrieve#models-retrieve-model"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the model to use for this request</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Fine-tuned Model</h4>
+        <p>
+            Delete a fine-tuned model. You must have the Owner role in your
+            organization to delete a model.
+        </p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                model
+                <a href="https://platform.openai.com/docs/api-reference/models/delete#models-delete-model"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The model to delete</dd>
+        </dl>
+    </details>
+</section>

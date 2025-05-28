@@ -1,0 +1,57 @@
+<section>
+    <details>
+        <summary style="font-weight: bold;">🔗 Embeddings</summary>
+        <a href="https://platform.openai.com/docs/api-reference/embeddings" target="_blank">Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+        <h4 style="font-weight: bolder;"> ⋙ Create Embeddings</h4>
+        <p>Creates an embedding vector representing the input text.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                input
+                <a href="https://platform.openai.com/docs/api-reference/embeddings/create#embeddings-create-input"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string | array</span>
+            </dt>
+            <dd>Input text to embed, encoded as a string or array of tokens.</dd>
+            <dt>
+                model
+                <a href="https://platform.openai.com/docs/api-reference/embeddings/create#embeddings-create-model"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>ID of the model to use.</dd>
+            <dt class="optional">
+                encoding_format
+                <a href="https://platform.openai.com/docs/api-reference/embeddings/create#embeddings-create-encoding_format"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                The format to return the embeddings in. Can be either float or base64.
+            </dd>
+            <dt class="optional">
+                dimensions
+                <a href="https://platform.openai.com/docs/api-reference/embeddings/create#embeddings-create-dimensions"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>
+                The number of dimensions the resulting output embeddings should have.
+                Only supported in text-embedding-3 and later models.
+            </dd>
+            <dt class="optional">
+                user
+                <a href="https://platform.openai.com/docs/api-reference/embeddings/create#embeddings-create-user"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                A unique identifier representing your end-user, which can help OpenAI to
+                monitor and detect abuse.
+            </dd>
+        </dl>
+
+    </details>
+</section>

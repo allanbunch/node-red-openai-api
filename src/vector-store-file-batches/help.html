@@ -1,0 +1,156 @@
+<section>
+    <details>
+        <summary style="font-weight: bold;">📥 Vector Store File Batches</summary>
+        <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches" target="_blank">Official
+            Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+        <h4 style="font-weight: bolder;"> ⋙ Create Vector Store File Batch</h4>
+        <p>Create a vector store file batch.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                vector_store_id
+                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/createBatch#vector-stores-file-batches-createbatch-vector_store_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store for which to create a File Batch.</dd>
+
+            <dt>
+                file_ids
+                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/createBatch#vector-stores-file-batches-createbatch-file_ids"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">array</span>
+            </dt>
+            <dd>A list of File IDs that the vector store should use. Useful for tools like file_search that can access
+                files.</dd>
+        </dl>
+
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Vector Store File Batch</h4>
+        <p>Retrieves a vector store file batch.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                vector_store_id
+                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/getBatch#vector-stores-file-batches-getbatch-vector_store_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store that the file batch belongs to.</dd>
+
+            <dt>
+                batch_id
+                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/getBatch#vector-stores-file-batches-getbatch-batch_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the file batch being retrieved.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Cancel Vector Store File Batch</h4>
+        <p>Cancel a vector store file batch.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                vector_store_id
+                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/cancelBatch#vector-stores-file-batches-cancelbatch-vector_store_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store that the file batch belongs to.</dd>
+
+            <dt>
+                batch_id
+                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/cancelBatch#vector-stores-file-batches-cancelbatch-batch_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the file batch to cancel.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Vector Store Batch Files</h4>
+        <p>Returns a list of vector store files in a batch.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                vector_store_id
+                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/listBatchFiles#vector-stores-file-batches-listbatchfiles-vector_store_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store that the files belong to.</dd>
+
+            <dt>
+                batch_id
+                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/listBatchFiles#vector-stores-file-batches-listbatchfiles-batch_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the file batch that the files belong to.</dd>
+
+            <dt class="optional">
+                limit
+                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/listBatchFiles#vector-stores-file-batches-listbatchfiles-limit"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is
+                20.</dd>
+
+            <dt class="optional">
+                order
+                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/listBatchFiles#vector-stores-file-batches-listbatchfiles-order"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending
+                order.</dd>
+
+            <dt class="optional">
+                after
+                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/listBatchFiles#vector-stores-file-batches-listbatchfiles-after"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>A cursor for use in pagination. after is an object ID that defines your place in the list.</dd>
+
+            <dt class="optional">
+                before
+                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/listBatchFiles#vector-stores-file-batches-listbatchfiles-before"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>A cursor for use in pagination. before is an object ID that defines your place in the list.</dd>
+
+            <dt class="optional">
+                filter
+                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/listBatchFiles#vector-stores-file-batches-listbatchfiles-filter"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Filter by file status. One of in_progress, completed, failed, cancelled.</dd>
+
+            <h4 style="font-weight: bolder;"> ⋙ Upload and Poll File Batch [undocumented]</h4>
+            <p>Uploads the given files concurrently and then creates a vector store file batch.</p>
+            <dl class="message-properties">
+                <h4>msg.payload Properties</h4>
+                <dt>
+                    vector_store_id
+                    <span class="property-type">string</span>
+                </dt>
+                <dd>The id of the vector store to which the files are being uploaded.</dd>
+                <dt>
+                    files
+                    <span class="property-type">array</span>
+                </dt>
+                <dd>A list of absolute file paths to the files that are being uploaded.</dd>
+                <dt class="optional">
+                    file_ids
+                    <span class="property-type">array</span>
+                </dt>
+                <dd>A list of previously uploaded file ids.</dd>
+            </dl>
+
+    </details>
+</section>

@@ -1,0 +1,193 @@
+<section>
+    <details>
+        <summary style="font-weight: bold;">🔉 Audio</summary>
+        <a href="https://platform.openai.com/docs/api-reference/audio" target="_blank">Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+        <h4 style="font-weight: bolder;"> ⋙ Create Speech</h4>
+        <p>Generates audio from the input text.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                input
+                <a href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-input"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The text to generate audio for.</dd>
+
+            <dt>
+                model
+                <a href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-model"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>One of the available TTS models: <code>tts-1</code>, <code>tts-1-hd</code> or
+                <code>gpt-4o-mini-tts</code>.</dd>
+
+            <dt>
+                voice
+                <a href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-voice"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                The voice to use when generating the audio. Supported voices are <code>alloy</code>, <code>ash</code>,
+                <code>coral</code>, <code>echo</code>, <code>fable</code>, <code>onyx</code>, <code>nova</code>,
+                <code>sage</code> and <code>shimmer</code>.
+            </dd>
+
+            <dt class="optional">
+                instructions
+                <a href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-instructions"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                Control the voice of your generated audio with additional instructions. Does not work with
+                <code>tts-1</code> or <code>tts-1-hd</code>.
+            </dd>
+
+            <dt class="optional">
+                response_format
+                <a href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-response_format"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                The format to audio in. Supported formats are mp3, opus, aac, flac, wav, and pcm.
+            </dd>
+
+            <dt class="optional">
+                speed
+                <a href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-speed"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">number</span>
+            </dt>
+            <dd>
+                The speed of the generated audio. Select a value from 0.25 to 4.0. 1.0
+                is the default.
+            </dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Transcription</h4>
+        <p>Transcribes audio into the input language.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                file
+                <a href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-file"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">file</span>
+            </dt>
+            <dd>
+                Absolute path to the file that's being transcribed, in one of these formats: flac, mp3, mp4, mpeg, mpga,
+                m4a, ogg, wav, or webm.
+            </dd>
+            <dt>
+                model
+                <a href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-model"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>ID of the model to use.</dd>
+            <dt class="optional">
+                language
+                <a href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-language"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The language of the input audio.</dd>
+            <dt class="optional">
+                prompt
+                <a href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-prompt"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                An optional text to guide the model's style or continue a previous audio
+                segment.
+            </dd>
+            <dt class="optional">
+                response_format
+                <a href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-response_format"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                The format of the transcript output, in one of these options: json,
+                text, srt, verbose_json, or vtt.
+            </dd>
+            <dt class="optional">
+                temperature
+                <a href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-temperature"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">number</span>
+            </dt>
+            <dd>The sampling temperature, between 0 and 1.</dd>
+
+            <dt class="optional">
+                timestamp_granularities
+                <a href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-timestamp_granularities"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">array</span>
+            </dt>
+            <dd>The timestamp granularities to populate for this transcription. <code>response_format</code> must be set
+                to <code>verbose_json</code> to use timestamp granularities. Either or both of these options are
+                supported: <code>word</code>, or <code>segment</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Translation</h4>
+        <p>Translates audio into English.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                file
+                <a href="https://platform.openai.com/docs/api-reference/audio/createTranslation#audio-createtranslation-file"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">file</span>
+            </dt>
+            <dd>
+                Absolute path to the file that's being translated, in one of these formats: flac, mp3, mp4, mpeg, mpga,
+                m4a, ogg, wav, or webm.
+            </dd>
+            <dt>
+                model
+                <a href="https://platform.openai.com/docs/api-reference/audio/createTranslation#audio-createtranslation-model"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type"></span>
+            </dt>
+            <dd>ID of the model to use.</dd>
+            <dt class="optional">
+                prompt
+                <a href="https://platform.openai.com/docs/api-reference/audio/createTranslation#audio-createtranslation-prompt"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                An optional text to guide the model's style or continue a previous audio
+                segment.
+            </dd>
+            <dt class="optional">
+                response_format
+                <a href="https://platform.openai.com/docs/api-reference/audio/createTranslation#audio-createtranslation-response_format"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                The format of the transcript output, in one of these options: json,
+                text, srt, verbose_json, or vtt.
+            </dd>
+            <dt class="optional">
+                temperature
+                <a href="https://platform.openai.com/docs/api-reference/audio/createTranslation#audio-createtranslation-temperature"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">number</span>
+            </dt>
+            <dd>The sampling temperature, between 0 and 1.</dd>
+        </dl>
+
+    </details>
+</section>
