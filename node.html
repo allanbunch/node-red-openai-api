@@ -4064,11 +4064,13 @@
       apiBase: { value: "https://api.openai.com/v1", required: true },
       secureApiKeyHeaderOrQueryName: { value: "Authorization" },
       organizationId: { value: "" },
+      organizationIdType: { type: "str"},
       secureApiKeyIsQuery: { value: false },
       name: { value: "" },
     },
     credentials: {
-      secureApiKeyValue: { type: "password" },
+      secureApiKeyValue: { value: "" },
+      secureApiKeyValueType: { type: "str" },
       temp: { type: "text" },
     },
     label: function () {
@@ -4080,12 +4082,36 @@
     oneditprepare: function () {
       $("#node-config-input-secureApiKeyIsQuery-label").hide();
       $("#node-config-input-secureApiKeyIsQuery").hide();
+
+      $('#node-config-input-organizationId').typedInput({
+        default: 'str',
+        types: ['str', 'env', 'cred'],
+      });
+
+      $('#node-config-input-secureApiKeyValue').typedInput({
+        default: 'str',
+        types: ['str', 'env', 'cred'],
+      });
+
+      $('#node-config-input-organizationId').typedInput('value', this.organizationId);
+      $('#node-config-input-organizationId').typedInput('type', this.organizationIdType);
+
+      $('#node-config-input-secureApiKeyValue').typedInput('value', this.secureApiKeyValue);
+      $('#node-config-input-secureApiKeyValue').typedInput('type', this.secureApiKeyValueType);
+
       var selected = $(
         "#node-config-input-secureApiKeyIsQuery option:selected",
       );
       if (!selected.val()) {
         $("#node-config-input-secureApiKeyIsQuery").val(false);
       };
+    },
+    oneditsave: function () {
+      this.organizationId = $('#node-config-input-organizationId').typedInput('value');
+      this.organizationIdType = $('#node-config-input-organizationId').typedInput('type');
+
+      this.secureApiKeyValue = $('#node-config-input-secureApiKeyValue').typedInput('value');
+      this.secureApiKeyValueType = $('#node-config-input-secureApiKeyValue').typedInput('type');
     },
   });
 </script>
@@ -4123,7 +4149,7 @@
       <span data-i18n="OpenaiApi.label.apiKey"></span
     ></label>
     <input
-      type="password"
+      type="text"
       id="node-config-input-secureApiKeyValue"
       placeholder=""
     />
