@@ -2479,7 +2479,13 @@
                     target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
-            <dd>An array of tools the model may call while generating a response.</dd>
+            <dd>
+                An array of tools the model may call while generating a response.
+                For Model Context Protocol (MCP) tools, each object in the array should follow <a
+                    href="https://platform.openai.com/docs/guides/tools-remote-mcp?lang=javascript&utm_source==%40inductiv%2Fnode-red-openai-api"
+                    target="_blank">this
+                    structure</a>.
+            </dd>
 
             <dt class="optional">
                 top_p
