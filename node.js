@@ -1,5 +1,5 @@
 "use strict";
-const lib = require("./lib.js");
+const OpenaiApi = require("./lib.js");
 
 module.exports = function (RED) {
   class OpenaiApiNode {
@@ -15,11 +15,12 @@ module.exports = function (RED) {
         let clientApiBase = node.service.apiBase;
         let clientOrganization = node.service.organizationId;
 
-        let client = new lib.OpenaiApi(
+        let client = new OpenaiApi(
           clientApiKey,
           clientApiBase,
           clientOrganization
         );
+
         let payload;
 
         const propertyType = node.config.propertyType || "msg";

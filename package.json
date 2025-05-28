@@ -31,7 +31,7 @@
   ],
   "scripts": {
     "build-html": "gulp build-html",
-    "build-js": "esbuild src/index.js --bundle --outfile=lib.js --format=cjs",
+    "build-js": "esbuild src/lib.js --bundle --outfile=lib.js --format=cjs --platform=node",
     "build": "npm run build-html && npm run build-js",
     "prepare": "npm run build"
   },

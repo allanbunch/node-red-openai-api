@@ -14,9 +14,9 @@ const responses = require("./responses/methods.js");
 const runs = require("./runs/methods.js");
 const threads = require("./threads/methods.js");
 const uploads = require("./uploads/methods.js");
+const vectorStoreFileBatches = require("./vector-store-file-batches/methods.js");
 const vectorStoreFiles = require("./vector-store-files/methods.js");
 const vectorStores = require("./vector-stores/methods.js");
-const vectorStoreFileBatches = require("./vector-store-file-batches/methods.js");
 
 class OpenaiApi {
   constructor(apiKey, baseURL, organization) {
@@ -45,9 +45,9 @@ Object.assign(
   runs,
   threads,
   uploads,
+  vectorStoreFileBatches,
   vectorStoreFiles,
-  vectorStores,
-  vectorStoreFileBatches
+  vectorStores
 );
 
 // Export the class
