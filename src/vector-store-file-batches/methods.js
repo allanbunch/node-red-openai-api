@@ -27,7 +27,7 @@ async function retrieveVectorStoreFileBatch(parameters) {
 async function cancelVectorStoreFileBatch(parameters) {
   const openai = new OpenAI(this.clientParams);
   const { vector_store_id, batch_id, ...params } = parameters.payload;
-  const response = await openai.vectorStores.fileBatches.retrieve(
+  const response = await openai.vectorStores.fileBatches.cancel(
     vector_store_id,
     batch_id,
     params
