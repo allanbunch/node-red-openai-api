@@ -26,7 +26,10 @@ async function retrieveVectorStoreFile(parameters) {
 
   const openai = new OpenAI(this.clientParams);
   const { vector_store_id, file_id } = parameters.payload;
-  const response = openai.vectorStores.files.retrieve(vector_store_id, file_id);
+  const response = await openai.vectorStores.files.retrieve(
+    vector_store_id,
+    file_id
+  );
 
   return response;
 }
@@ -36,7 +39,7 @@ async function deleteVectorStoreFile(parameters) {
 
   const openai = new OpenAI(this.clientParams);
   const { vector_store_id, file_id, ...params } = parameters.payload;
-  const response = openai.vectorStores.files.del(
+  const response = await openai.vectorStores.files.del(
     vector_store_id,
     file_id,
     params
