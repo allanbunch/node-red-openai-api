@@ -1,13 +1,13 @@
 {
   "name": "@inductiv/node-red-openai-api",
-  "version": "1.103.0-patch.1",
+  "version": "6.9.1",
   "description": "Enhance your Node-RED projects with advanced AI capabilities.",
   "main": "node.js",
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=18.0.0"
   },
   "node-red": {
-    "version": ">=1.3.7",
+    "version": ">=3.0.0",
     "nodes": {
       "openai": "node.js"
     }
@@ -36,7 +36,7 @@
     "prepare": "npm run build"
   },
   "dependencies": {
-    "openai": "^4.103.0"
+    "openai": "^6.9.1"
   },
   "author": "Allan Bunch",
   "license": "MIT",
@@ -45,8 +45,8 @@
     "url": "git+https://github.com/allanbunch/node-red-openai-api.git"
   },
   "devDependencies": {
-    "esbuild": "^0.25.5",
-    "gulp": "^5.0.0",
+    "esbuild": "^0.27.0",
+    "gulp": "^5.0.1",
     "gulp-file-include": "^2.3.0"
   }
 }

@@ -11,9 +11,28 @@ module.exports = function (RED) {
       node.config = config;
 
       node.on("input", function (msg) {
-        let clientApiKey = node.service.credentials.secureApiKeyValue || "";
-        let clientApiBase = node.service.apiBase;
-        let clientOrganization = node.service.organizationId;
+        if (!node.service) {
+          node.error("OpenAI service host is not configured", msg);
+          return;
+        }
+
+        let clientApiKey;
+        let clientApiBase;
+        let clientOrganization;
+
+        try {
+          clientApiKey =
+            node.service.evaluateTyped("secureApiKeyValue", msg, node) || "";
+          clientApiBase = node.service.evaluateTyped("apiBase", msg, node);
+          clientOrganization = node.service.evaluateTyped(
+            "organizationId",
+            msg,
+            node
+          );
+        } catch (err) {
+          node.error(err, msg);
+          return;
+        }
 
         let client = new OpenaiApi(
           clientApiKey,
@@ -79,17 +98,43 @@ module.exports = function (RED) {
     constructor(n) {
       RED.nodes.createNode(this, n);
 
-      this.secureApiKeyValue = n.secureApiKeyValue;
-      this.apiBase = n.apiBase;
-      this.secureApiKeyHeaderOrQueryName = n.secureApiKeyHeaderOrQueryName;
-      this.secureApiKeyIsQuery = n.secureApiKeyIsQuery;
-      this.organizationId = n.organizationId;
+      const creds = this.credentials || {};
+      this.typedConfig = {
+        apiBase: { value: n.apiBase, type: n.apiBaseType || "str" },
+        secureApiKeyHeaderOrQueryName: {
+          value: n.secureApiKeyHeaderOrQueryName,
+          type: n.secureApiKeyHeaderOrQueryNameType || "str",
+        },
+        secureApiKeyValue: {
+          value: creds.secureApiKeyValue,
+          type: creds.secureApiKeyValueType || "str",
+        },
+        organizationId: {
+          value: n.organizationId,
+          type: n.organizationIdType || "str",
+        },
+      };
+    }
+
+    // Helper to resolve property value at runtime
+    evaluateTyped(prop, msg, node) {
+      const entry = this.typedConfig[prop];
+      if (!entry) {
+        return undefined;
+      }
+      return RED.util.evaluateNodeProperty(
+        entry.value,
+        entry.type || "str",
+        node || this,
+        msg
+      );
     }
   }
 
   RED.nodes.registerType("Service Host", ServiceHostNode, {
     credentials: {
-      secureApiKeyValue: { type: "password" },
+      secureApiKeyValue: { type: "text" },
+      secureApiKeyValueType: { type: "text" },
       temp: { type: "text" },
     },
   });
