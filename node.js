@@ -16,23 +16,22 @@ module.exports = function (RED) {
           return;
         }
 
-        let clientApiKey;
-        let clientApiBase;
-        let clientOrganization;
-
-        try {
-          clientApiKey =
-            node.service.evaluateTyped("secureApiKeyValue", msg, node) || "";
-          clientApiBase = node.service.evaluateTyped("apiBase", msg, node);
-          clientOrganization = node.service.evaluateTyped(
-            "organizationId",
-            msg,
-            node
-          );
-        } catch (err) {
-          node.error(err, msg);
+        const clientApiKey = node.service.evaluateTyped(
+          "secureApiKeyValue",
+          msg,
+          node
+        );
+        if (!clientApiKey) {
+          node.error("OpenAI API key is not configured", msg);
           return;
         }
+
+        const clientApiBase = node.service.evaluateTyped("apiBase", msg, node);
+        const clientOrganization = node.service.evaluateTyped(
+          "organizationId",
+          msg,
+          node
+        );
 
         let client = new OpenaiApi(
           clientApiKey,
@@ -98,7 +97,11 @@ module.exports = function (RED) {
     constructor(n) {
       RED.nodes.createNode(this, n);
 
-      const creds = this.credentials || {};
+      this.apiBase = n.apiBase;
+      this.secureApiKeyHeaderOrQueryName = n.secureApiKeyHeaderOrQueryName;
+      this.secureApiKeyIsQuery = n.secureApiKeyIsQuery;
+      this.organizationId = n.organizationId;
+
       this.typedConfig = {
         apiBase: { value: n.apiBase, type: n.apiBaseType || "str" },
         secureApiKeyHeaderOrQueryName: {
@@ -106,8 +109,8 @@ module.exports = function (RED) {
           type: n.secureApiKeyHeaderOrQueryNameType || "str",
         },
         secureApiKeyValue: {
-          value: creds.secureApiKeyValue,
-          type: creds.secureApiKeyValueType || "str",
+          value: (this.credentials || {}).secureApiKeyValue,
+          type: n.secureApiKeyValueType || "str",
         },
         organizationId: {
           value: n.organizationId,
@@ -133,8 +136,7 @@ module.exports = function (RED) {
 
   RED.nodes.registerType("Service Host", ServiceHostNode, {
     credentials: {
-      secureApiKeyValue: { type: "text" },
-      secureApiKeyValueType: { type: "text" },
+      secureApiKeyValue: { type: "password" },
       temp: { type: "text" },
     },
   });

@@ -138,17 +138,18 @@
   RED.nodes.registerType("Service Host", {
     category: "config",
     defaults: {
-      apiBase: { value: "" },
+      apiBase: { value: "https://api.openai.com/v1", required: true },
       apiBaseType: { value: "str" },
-      secureApiKeyHeaderOrQueryName: { value: "" },
+      secureApiKeyHeaderOrQueryName: { value: "Authorization" },
       secureApiKeyHeaderOrQueryNameType: { value: "str" },
       organizationId: { value: "" },
       organizationIdType: { value: "str" },
+      secureApiKeyIsQuery: { value: false },
+      secureApiKeyValueType: { value: "str" },
       name: { value: "" },
     },
     credentials: {
-      secureApiKeyValue: { type: "text" },
-      secureApiKeyValueType: { type: "text" },
+      secureApiKeyValue: { type: "password" },
       temp: { type: "text" },
     },
     label: function () {
@@ -158,16 +159,25 @@
       return this.name ? "node_label_italic" : "";
     },
     oneditprepare: function () {
+      $("#node-config-input-secureApiKeyIsQuery-label").hide();
+      $("#node-config-input-secureApiKeyIsQuery").hide();
+      var selected = $(
+        "#node-config-input-secureApiKeyIsQuery option:selected",
+      );
+      if (!selected.val()) {
+        $("#node-config-input-secureApiKeyIsQuery").val(false);
+      }
+
       [
         { input: "#node-config-input-apiBase", type: "#node-config-input-apiBaseType" },
         { input: "#node-config-input-secureApiKeyHeaderOrQueryName", type: "#node-config-input-secureApiKeyHeaderOrQueryNameType" },
-        { input: "#node-config-input-organizationId", type: "#node-config-input-organizationIdType" },
-        { input: "#node-config-input-secureApiKeyValue", type: "#node-config-input-secureApiKeyValueType" }
-      ].forEach(function(field) {
+        { input: "#node-config-input-secureApiKeyValue", type: "#node-config-input-secureApiKeyValueType" },
+        { input: "#node-config-input-organizationId", type: "#node-config-input-organizationIdType" }
+      ].forEach(function (field) {
         $(field.input).typedInput({
           default: "str",
           types: ["str", "env", "msg", "flow", "global"],
-          typeField: field.type
+          typeField: field.type,
         });
       });
     },
@@ -180,7 +190,11 @@
       <i class="fa fa-list"></i>
       <span data-i18n="OpenaiApi.label.apiBase"></span>
     </label>
-    <input type="text" id="node-config-input-apiBase" />
+    <input
+      type="text"
+      id="node-config-input-apiBase"
+      placeholder="https://api.openai.com/v1"
+    />
     <input type="hidden" id="node-config-input-apiBaseType" />
   </div>
   <div class="form-row">
@@ -196,7 +210,11 @@
       <i class="fa fa-lock"></i>
       <span data-i18n="OpenaiApi.label.apiKey"></span>
     </label>
-    <input type="text" id="node-config-input-secureApiKeyValue" />
+    <input
+      type="password"
+      id="node-config-input-secureApiKeyValue"
+      placeholder=""
+    />
     <input type="hidden" id="node-config-input-secureApiKeyValueType" />
   </div>
   <div class="form-row">
@@ -206,6 +224,18 @@
     </label>
     <input type="text" id="node-config-input-organizationId" />
     <input type="hidden" id="node-config-input-organizationIdType" />
+  </div>
+  <div class="form-row">
+    <label
+      id="node-config-input-secureApiKeyIsQuery-label"
+      for="node-config-input-secureApiKeyIsQuery"
+      ><i class="fa fa-dot-circle-o"></i>
+      <span data-i18n="OpenaiApi.label.isQuery"></span
+    ></label>
+    <select id="node-config-input-secureApiKeyIsQuery">
+      <option value="true">true</option>
+      <option value="false">false</option>
+    </select>
   </div>
 
   <div class="form-row">

@@ -29,28 +29,20 @@ npm i @inductiv/node-red-openai-api
 ## Usage
 
 
-### Configuration Priority & Environment Variable Fallback
+### Configuration & Environment Variables
 
-When configuring Service Host properties and API keys, the node uses the following priority:
+Service Host fields support Node-RED typed inputs (`string`, `env`, `msg`, `flow`, `global`).
 
-1. **Node Configuration / Credentials**: Values set directly in the node or its config node (including credentials) take priority.
-2. **Environment Variables**: If a property or credential is not set, the node will fallback to environment variables. These can be set in your system or via Node-RED's `User Settings -> Environment` panel.
+- **API Key**: Use `string` for a masked credential value, or select **env/msg/flow/global** and provide the reference name.
+- **Other fields** (API base URL, organization ID, header name): use the same typed input selector as needed.
 
-Supported environment variables:
+This works with both OS env vars and Node-RED's `User Settings -> Environment` panel.
 
-- `OPENAI_API_KEY` (API key)
-- `OPENAI_API_BASE` (API base URL)
-- `OPENAI_ORGANIZATION_ID` (Organization ID)
-- `OPENAI_API_KEY_HEADER_OR_QUERY_NAME` (API key header/query name)
-- `OPENAI_API_KEY_IS_QUERY` (API key as query param, set to "true" or "false")
-
-**Tip:** For secure deployments, set sensitive values (like API keys) using Node-RED credentials or environment variables, not in plain node config.
-
-**Fallback logic:** If a config/credential value is missing, the node will automatically use the corresponding environment variable if available.
+**Tip:** For secure deployments, keep API keys in credentials or environment variables, not in plain node config.
 
 After installation, find your node in the **AI** palette category labeled "OpenAI API". Here's how you can start integrating AI into your IoT projects:
 
-1. Configure the node with your AI platform's API key (if required), or set the `OPENAI_API_KEY` environment variable.
+1. Configure the node with your AI platform's API key (if required), or select **env** for the API key and use `OPENAI_API_KEY`.
 2. Send [OpenAI documented](https://platform.openai.com/docs/api-reference/) API service configuration paramaters to the node using the default `msg.payload` property, or confiure your desired incoming object property reference on the node itself.
 3. Explore the [examples](./examples/) directory for sample implementations.
 
