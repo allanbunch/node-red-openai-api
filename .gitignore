@@ -1,6 +1,8 @@
 ### dotenv ###
 .env
 
+AGENTS.md
+
 ### Git ###
 # Created by git for backups. To disable backups in Git:
 # $ git config --global mergetool.keepBackup false
@@ -424,8 +426,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-
-test/
 
 package-lock.json
 
