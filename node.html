@@ -4102,7 +4102,12 @@
         typeField: "#node-config-input-secureApiKeyValueType",
       });
 
-      if (apiKeyType.val() !== "cred") {
+      if (apiKeyType.val() === "str") {
+        apiKeyInput.typedInput("type", "cred");
+        apiKeyType.val("cred");
+      }
+
+      if (apiKeyType.val() !== "cred" && apiKeyRef.val()) {
         apiKeyInput.val(apiKeyRef.val());
       }
 
@@ -4119,13 +4124,19 @@
       });
     },
     oneditsave: function () {
-      const apiKeyType = $("#node-config-input-secureApiKeyValueType").val();
       const apiKeyInput = $("#node-config-input-secureApiKeyValue");
+      const apiKeyType = $("#node-config-input-secureApiKeyValueType");
       const apiKeyRef = $("#node-config-input-secureApiKeyValueRef");
+      const selectedType = apiKeyInput.typedInput("type");
 
-      if (apiKeyType !== "cred") {
-        apiKeyRef.val(apiKeyInput.val());
-        apiKeyInput.val("");
+      apiKeyType.val(selectedType);
+
+      if (selectedType !== "cred") {
+        const inputValue = apiKeyInput.val();
+        if (inputValue && inputValue !== "__PWRD__") {
+          apiKeyRef.val(inputValue);
+          apiKeyInput.val("");
+        }
       } else {
         apiKeyRef.val("");
       }

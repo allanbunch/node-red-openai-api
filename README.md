@@ -31,9 +31,9 @@ npm i @inductiv/node-red-openai-api
 
 ### Configuration & Environment Variables
 
-Service Host fields support Node-RED typed inputs (`string`, `env`, `msg`, `flow`, `global`).
+Service Host fields support Node-RED typed inputs (`cred`, `env`, `msg`, `flow`, `global`).
 
-- **API Key**: Use `string` for a masked credential value, or select **env/msg/flow/global** and provide the reference name.
+- **API Key**: Use `cred` for a masked credential value, or select **env/msg/flow/global** and provide the reference name.
 - **Other fields** (API base URL, organization ID, header name): use the same typed input selector as needed.
 
 This works with both OS env vars and Node-RED's `User Settings -> Environment` panel.

@@ -1,6 +1,26 @@
 "use strict";
 const OpenaiApi = require("./lib.js");
 
+function resolveApiKeyType(config, credentials) {
+  return config.secureApiKeyValueType || credentials.secureApiKeyValueType || "cred";
+}
+
+function resolveApiKeyValue(config, credentials, apiKeyType) {
+  if (apiKeyType === "cred") {
+    return credentials.secureApiKeyValue;
+  }
+
+  const hasApiKeyRef = Object.prototype.hasOwnProperty.call(
+    config,
+    "secureApiKeyValueRef"
+  );
+  if (hasApiKeyRef) {
+    return config.secureApiKeyValueRef;
+  }
+
+  return credentials.secureApiKeyValue;
+}
+
 module.exports = function (RED) {
   class OpenaiApiNode {
     constructor(config) {
@@ -16,78 +36,77 @@ module.exports = function (RED) {
           return;
         }
 
-        const clientApiKey = node.service.evaluateTyped(
-          "secureApiKeyValue",
-          msg,
-          node
-        );
-        if (!clientApiKey) {
-          node.error("OpenAI API key is not configured", msg);
-          return;
-        }
+        Promise.all([
+          node.service.evaluateTypedAsync("secureApiKeyValue", msg, node),
+          node.service.evaluateTypedAsync("apiBase", msg, node),
+          node.service.evaluateTypedAsync("organizationId", msg, node),
+        ])
+          .then(([clientApiKey, clientApiBase, clientOrganization]) => {
+            if (!clientApiKey) {
+              node.error("OpenAI API key is not configured", msg);
+              return;
+            }
 
-        const clientApiBase = node.service.evaluateTyped("apiBase", msg, node);
-        const clientOrganization = node.service.evaluateTyped(
-          "organizationId",
-          msg,
-          node
-        );
+            let client = new OpenaiApi(
+              clientApiKey,
+              clientApiBase,
+              clientOrganization
+            );
 
-        let client = new OpenaiApi(
-          clientApiKey,
-          clientApiBase,
-          clientOrganization
-        );
+            let payload;
 
-        let payload;
+            const propertyType = node.config.propertyType || "msg";
+            const propertyPath = node.config.property || "payload";
 
-        const propertyType = node.config.propertyType || "msg";
-        const propertyPath = node.config.property || "payload";
+            if (propertyType === "msg") {
+              payload = RED.util.getMessageProperty(msg, propertyPath);
+            } else {
+              // For flow and global contexts
+              payload = node.context()[propertyType].get(propertyPath);
+            }
 
-        if (propertyType === "msg") {
-          payload = RED.util.getMessageProperty(msg, propertyPath);
-        } else {
-          // For flow and global contexts
-          payload = node.context()[propertyType].get(propertyPath);
-        }
+            const serviceName = node.config.method; // Set the service name to call.
 
-        const serviceName = node.config.method; // Set the service name to call.
+            let serviceParametersObject = {
+              _node: node,
+              payload: payload,
+              msg: msg,
+            };
 
-        let serviceParametersObject = {
-          _node: node,
-          payload: payload,
-          msg: msg,
-        };
-
-        // Dynamically call the function based on the service name
-        if (typeof client[serviceName] === "function") {
-          node.status({
-            fill: "blue",
-            shape: "dot",
-            text: "OpenaiApi.status.requesting",
-          });
-
-          client[serviceName](serviceParametersObject)
-            .then((payload) => {
-              if (payload !== undefined) {
-                // Update `msg.payload` with the payload from the API response, then send resonse to client.
-                msg.payload = payload;
-                node.send(msg);
-                node.status({});
-              }
-            })
-            .catch(function (error) {
+            // Dynamically call the function based on the service name
+            if (typeof client[serviceName] === "function") {
               node.status({
-                fill: "red",
-                shape: "ring",
-                text: "node-red:common.status.error",
+                fill: "blue",
+                shape: "dot",
+                text: "OpenaiApi.status.requesting",
               });
-              let errorMessage = error.message;
-              node.error(errorMessage, msg);
-            });
-        } else {
-          console.error(`Function ${serviceName} does not exist on client.`);
-        }
+
+              client[serviceName](serviceParametersObject)
+                .then((payload) => {
+                  if (payload !== undefined) {
+                    // Update `msg.payload` with the payload from the API response, then send resonse to client.
+                    msg.payload = payload;
+                    node.send(msg);
+                    node.status({});
+                  }
+                })
+                .catch(function (error) {
+                  node.status({
+                    fill: "red",
+                    shape: "ring",
+                    text: "node-red:common.status.error",
+                  });
+                  let errorMessage = error.message;
+                  node.error(errorMessage, msg);
+                });
+            } else {
+              console.error(`Function ${serviceName} does not exist on client.`);
+            }
+          })
+          .catch((error) => {
+            const errorMessage = error instanceof Error ? error.message : error;
+            node.error(errorMessage, msg);
+          });
       });
     }
   }
@@ -102,12 +121,9 @@ module.exports = function (RED) {
       this.secureApiKeyIsQuery = n.secureApiKeyIsQuery;
       this.organizationId = n.organizationId;
 
-      const apiKeyType = n.secureApiKeyValueType || "cred";
       const creds = this.credentials || {};
-      const apiKeyValue =
-        apiKeyType === "cred"
-          ? creds.secureApiKeyValue
-          : n.secureApiKeyValueRef;
+      const apiKeyType = resolveApiKeyType(n, creds);
+      const apiKeyValue = resolveApiKeyValue(n, creds, apiKeyType);
 
       this.typedConfig = {
         apiBase: { value: n.apiBase, type: n.apiBaseType || "str" },
@@ -137,6 +153,40 @@ module.exports = function (RED) {
         entry.type || "str",
         node || this,
         msg
+      );
+    }
+
+    evaluateTypedAsync(prop, msg, node) {
+      const entry = this.typedConfig[prop];
+      if (!entry) {
+        return Promise.resolve(undefined);
+      }
+
+      if (entry.type === "flow" || entry.type === "global") {
+        return new Promise((resolve, reject) => {
+          RED.util.evaluateNodeProperty(
+            entry.value,
+            entry.type || "str",
+            node || this,
+            msg,
+            (error, value) => {
+              if (error) {
+                reject(error);
+                return;
+              }
+              resolve(value);
+            }
+          );
+        });
+      }
+
+      return Promise.resolve(
+        RED.util.evaluateNodeProperty(
+          entry.value,
+          entry.type || "str",
+          node || this,
+          msg
+        )
       );
     }
   }

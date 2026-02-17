@@ -1,6 +1,6 @@
 {
   "name": "@inductiv/node-red-openai-api",
-  "version": "6.9.1",
+  "version": "6.22.0",
   "description": "Enhance your Node-RED projects with advanced AI capabilities.",
   "main": "node.js",
   "engines": {
@@ -33,10 +33,11 @@
     "build:html": "gulp build-html",
     "build:js": "esbuild src/lib.js --bundle --outfile=lib.js --format=cjs --platform=node",
     "build": "npm run build:html && npm run build:js",
+    "test": "node --test test/service-host-node.test.js",
     "prepare": "npm run build"
   },
   "dependencies": {
-    "openai": "^6.9.1"
+    "openai": "^6.22.0"
   },
   "author": "Allan Bunch",
   "license": "MIT",
