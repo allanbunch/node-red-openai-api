@@ -2,7 +2,7 @@
 
 const nodeModule = require("../node.js");
 
-describe("Service Host typed API key", () => {
+describe("Service Host API key typed values", () => {
   let ServiceHostNode;
   let RED;
 
@@ -32,13 +32,14 @@ describe("Service Host typed API key", () => {
     nodeModule(RED);
   });
 
-  it("uses credential value when type is string", () => {
+  it("uses credential value when API key type is cred", () => {
     const node = new ServiceHostNode({
       apiBase: "https://api.openai.com/v1",
       apiBaseType: "str",
       secureApiKeyHeaderOrQueryName: "Authorization",
       secureApiKeyHeaderOrQueryNameType: "str",
-      secureApiKeyValueType: "str",
+      secureApiKeyValueType: "cred",
+      secureApiKeyValueRef: "",
       organizationId: "",
       organizationIdType: "str",
       secureApiKeyIsQuery: false,
@@ -56,17 +57,18 @@ describe("Service Host typed API key", () => {
     );
   });
 
-  it("resolves env reference when type is env", () => {
+  it("uses reference value when API key type is env", () => {
     const node = new ServiceHostNode({
       apiBase: "https://api.openai.com/v1",
       apiBaseType: "str",
       secureApiKeyHeaderOrQueryName: "Authorization",
       secureApiKeyHeaderOrQueryNameType: "str",
       secureApiKeyValueType: "env",
+      secureApiKeyValueRef: "OPENAI_API_KEY",
       organizationId: "",
       organizationIdType: "str",
       secureApiKeyIsQuery: false,
-      credentials: { secureApiKeyValue: "OPENAI_API_KEY" },
+      credentials: { secureApiKeyValue: "sk-ignored" },
     });
 
     const result = node.evaluateTyped("secureApiKeyValue", {}, node);

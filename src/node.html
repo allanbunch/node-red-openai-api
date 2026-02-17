@@ -145,7 +145,8 @@
       organizationId: { value: "" },
       organizationIdType: { value: "str" },
       secureApiKeyIsQuery: { value: false },
-      secureApiKeyValueType: { value: "str" },
+      secureApiKeyValueType: { value: "cred" },
+      secureApiKeyValueRef: { value: "" },
       name: { value: "" },
     },
     credentials: {
@@ -168,10 +169,23 @@
         $("#node-config-input-secureApiKeyIsQuery").val(false);
       }
 
+      const apiKeyInput = $("#node-config-input-secureApiKeyValue");
+      const apiKeyType = $("#node-config-input-secureApiKeyValueType");
+      const apiKeyRef = $("#node-config-input-secureApiKeyValueRef");
+
+      apiKeyInput.typedInput({
+        default: "cred",
+        types: ["cred", "env", "msg", "flow", "global"],
+        typeField: "#node-config-input-secureApiKeyValueType",
+      });
+
+      if (apiKeyType.val() !== "cred") {
+        apiKeyInput.val(apiKeyRef.val());
+      }
+
       [
         { input: "#node-config-input-apiBase", type: "#node-config-input-apiBaseType" },
         { input: "#node-config-input-secureApiKeyHeaderOrQueryName", type: "#node-config-input-secureApiKeyHeaderOrQueryNameType" },
-        { input: "#node-config-input-secureApiKeyValue", type: "#node-config-input-secureApiKeyValueType" },
         { input: "#node-config-input-organizationId", type: "#node-config-input-organizationIdType" }
       ].forEach(function (field) {
         $(field.input).typedInput({
@@ -180,6 +194,18 @@
           typeField: field.type,
         });
       });
+    },
+    oneditsave: function () {
+      const apiKeyType = $("#node-config-input-secureApiKeyValueType").val();
+      const apiKeyInput = $("#node-config-input-secureApiKeyValue");
+      const apiKeyRef = $("#node-config-input-secureApiKeyValueRef");
+
+      if (apiKeyType !== "cred") {
+        apiKeyRef.val(apiKeyInput.val());
+        apiKeyInput.val("");
+      } else {
+        apiKeyRef.val("");
+      }
     },
   });
 </script>
@@ -216,6 +242,7 @@
       placeholder=""
     />
     <input type="hidden" id="node-config-input-secureApiKeyValueType" />
+    <input type="hidden" id="node-config-input-secureApiKeyValueRef" />
   </div>
   <div class="form-row">
     <label id="node-config-input-organizationId-label" for="node-config-input-organizationId">

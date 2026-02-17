@@ -102,6 +102,13 @@ module.exports = function (RED) {
       this.secureApiKeyIsQuery = n.secureApiKeyIsQuery;
       this.organizationId = n.organizationId;
 
+      const apiKeyType = n.secureApiKeyValueType || "cred";
+      const creds = this.credentials || {};
+      const apiKeyValue =
+        apiKeyType === "cred"
+          ? creds.secureApiKeyValue
+          : n.secureApiKeyValueRef;
+
       this.typedConfig = {
         apiBase: { value: n.apiBase, type: n.apiBaseType || "str" },
         secureApiKeyHeaderOrQueryName: {
@@ -109,8 +116,8 @@ module.exports = function (RED) {
           type: n.secureApiKeyHeaderOrQueryNameType || "str",
         },
         secureApiKeyValue: {
-          value: (this.credentials || {}).secureApiKeyValue,
-          type: n.secureApiKeyValueType || "str",
+          value: apiKeyValue,
+          type: apiKeyType,
         },
         organizationId: {
           value: n.organizationId,
