@@ -173,11 +173,38 @@
       const apiKeyType = $("#node-config-input-secureApiKeyValueType");
       const apiKeyRef = $("#node-config-input-secureApiKeyValueRef");
 
+      // Preserve existing credential value before initializing typedInput
+      const existingCredValue = apiKeyInput.val();
+
       apiKeyInput.typedInput({
         default: "cred",
         types: ["cred", "env", "msg", "flow", "global"],
         typeField: "#node-config-input-secureApiKeyValueType",
       });
+
+      // Restore credential value if it was populated by Node-RED
+      if (apiKeyType.val() === "cred" && existingCredValue) {
+        apiKeyInput.typedInput("value", existingCredValue);
+      }
+
+      let previousApiKeyType = apiKeyInput.typedInput("type");
+      const syncApiKeyInputValue = function () {
+        const selectedType = apiKeyInput.typedInput("type");
+        const currentValue = apiKeyInput.typedInput("value");
+
+        if (selectedType !== "cred" && currentValue === "__PWRD__") {
+          apiKeyInput.typedInput("value", apiKeyRef.val() || "");
+        }
+
+        // Prevent moving a non-credential reference value into credentials.
+        if (selectedType === "cred" && previousApiKeyType !== "cred") {
+          if (currentValue === apiKeyRef.val()) {
+            apiKeyInput.typedInput("value", "");
+          }
+        }
+
+        previousApiKeyType = selectedType;
+      };
 
       if (apiKeyType.val() === "str") {
         apiKeyInput.typedInput("type", "cred");
@@ -185,8 +212,12 @@
       }
 
       if (apiKeyType.val() !== "cred" && apiKeyRef.val()) {
-        apiKeyInput.val(apiKeyRef.val());
+        apiKeyInput.typedInput("value", apiKeyRef.val());
       }
+      syncApiKeyInputValue();
+      apiKeyInput.on("change", function () {
+        syncApiKeyInputValue();
+      });
 
       [
         { input: "#node-config-input-apiBase", type: "#node-config-input-apiBaseType" },
@@ -209,10 +240,10 @@
       apiKeyType.val(selectedType);
 
       if (selectedType !== "cred") {
-        const inputValue = apiKeyInput.val();
+        const inputValue = apiKeyInput.typedInput("value");
         if (inputValue && inputValue !== "__PWRD__") {
           apiKeyRef.val(inputValue);
-          apiKeyInput.val("");
+          apiKeyInput.typedInput("value", "");
         }
       } else {
         apiKeyRef.val("");
@@ -247,11 +278,7 @@
       <i class="fa fa-lock"></i>
       <span data-i18n="OpenaiApi.label.apiKey"></span>
     </label>
-    <input
-      type="password"
-      id="node-config-input-secureApiKeyValue"
-      placeholder=""
-    />
+    <input type="text" id="node-config-input-secureApiKeyValue" placeholder="" />
     <input type="hidden" id="node-config-input-secureApiKeyValueType" />
     <input type="hidden" id="node-config-input-secureApiKeyValueRef" />
   </div>

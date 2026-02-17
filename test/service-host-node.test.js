@@ -111,6 +111,23 @@ test("supports legacy non-cred nodes that stored env reference in credentials", 
   assert.equal(calls[0].type, "env");
 });
 
+test("falls back to credential value when non-cred reference is empty", () => {
+  const calls = [];
+  const ServiceHostNode = createServiceHostNode(createEvaluateNodeProperty(calls));
+  const node = new ServiceHostNode({
+    secureApiKeyValueType: "env",
+    secureApiKeyValueRef: "",
+    credentials: { secureApiKeyValue: "OPENAI_API_KEY" },
+  });
+
+  const result = node.evaluateTyped("secureApiKeyValue", {}, node);
+
+  assert.equal(result, "resolved:env:OPENAI_API_KEY");
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].value, "OPENAI_API_KEY");
+  assert.equal(calls[0].type, "env");
+});
+
 test("supports legacy typed value stored only in credentials type field", () => {
   const calls = [];
   const ServiceHostNode = createServiceHostNode(createEvaluateNodeProperty(calls));

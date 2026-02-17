@@ -10,12 +10,13 @@ function resolveApiKeyValue(config, credentials, apiKeyType) {
     return credentials.secureApiKeyValue;
   }
 
-  const hasApiKeyRef = Object.prototype.hasOwnProperty.call(
-    config,
-    "secureApiKeyValueRef"
-  );
-  if (hasApiKeyRef) {
-    return config.secureApiKeyValueRef;
+  const apiKeyRef = config.secureApiKeyValueRef;
+  if (typeof apiKeyRef === "string" && apiKeyRef.trim() !== "") {
+    return apiKeyRef;
+  }
+
+  if (apiKeyRef !== undefined && apiKeyRef !== null && apiKeyRef !== "") {
+    return apiKeyRef;
   }
 
   return credentials.secureApiKeyValue;
