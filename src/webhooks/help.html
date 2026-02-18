@@ -1,0 +1,61 @@
+<section>
+    <details>
+        <summary style="font-weight: bold;">🪝 Webhooks</summary>
+        <a href="https://developers.openai.com/api/reference/typescript/resources/webhooks/" target="_blank">Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+
+        <h4 style="font-weight: bolder;"> ⋙ Unwrap Webhook Event</h4>
+        <p>Validate signature and parse the webhook payload into an event object.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                payload
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Raw webhook request body string.</dd>
+            <dt>
+                headers
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Request headers containing webhook signature fields.</dd>
+            <dt class="optional">
+                secret
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Webhook secret. If omitted, SDK-level webhook secret is used.</dd>
+            <dt class="optional">
+                tolerance
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum webhook age in seconds. Default is <code>300</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Verify Webhook Signature</h4>
+        <p>Validate a webhook signature without parsing the event body.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                payload
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Raw webhook request body string.</dd>
+            <dt>
+                headers
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Request headers containing webhook signature fields.</dd>
+            <dt class="optional">
+                secret
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Webhook secret. If omitted, SDK-level webhook secret is used.</dd>
+            <dt class="optional">
+                tolerance
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum webhook age in seconds. Default is <code>300</code>.</dd>
+        </dl>
+
+        <p>The verify method returns <code>{ verified: true }</code> on success.</p>
+    </details>
+</section>
