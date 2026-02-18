@@ -102,8 +102,8 @@ The method dropdown includes operations across:
 - Models
 - Moderations
 - Responses
-- Skills
 - Runs
+- Skills
 - Threads
 - Uploads
 - Vector Store File Batches
