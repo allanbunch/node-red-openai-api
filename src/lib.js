@@ -15,6 +15,7 @@ const messages = require("./messages/methods.js");
 const models = require("./models/methods.js");
 const moderations = require("./moderations/methods.js");
 const responses = require("./responses/methods.js");
+const skills = require("./skills/methods.js");
 const runs = require("./runs/methods.js");
 const threads = require("./threads/methods.js");
 const uploads = require("./uploads/methods.js");
@@ -88,6 +89,7 @@ Object.assign(
   models,
   moderations,
   responses,
+  skills,
   runs,
   threads,
   uploads,

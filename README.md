@@ -102,6 +102,7 @@ The method dropdown includes operations across:
 - Models
 - Moderations
 - Responses
+- Skills
 - Runs
 - Threads
 - Uploads
@@ -122,6 +123,11 @@ See the in-editor node help for method-specific payload fields and links to offi
   - create/retrieve/list/delete conversation items
 - Added Containers and Container Files support.
 - Added MCP tool use example flow at `examples/responses/mcp.json`.
+- Added Skills API support:
+  - list/create/retrieve/modify/delete skills
+  - retrieve skill content
+  - list/create/retrieve/delete skill versions
+  - retrieve skill version content
 - Service Host auth routing now applies `Auth Header` configuration at request time.
 
 ## Examples

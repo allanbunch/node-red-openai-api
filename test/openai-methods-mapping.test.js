@@ -365,7 +365,191 @@ test("conversation methods map to OpenAI SDK conversations endpoints", async () 
   assert.equal(calls.some((entry) => entry.method === "conversations.items.delete"), true);
 });
 
-test("OpenaiApi prototype exposes new responses and conversations methods", () => {
+test("skills methods map to OpenAI SDK skills endpoints", async () => {
+  const calls = [];
+
+  class FakeOpenAI {
+    constructor(clientParams) {
+      calls.push({ method: "ctor", clientParams });
+      this.skills = {
+        create: async (body) => {
+          calls.push({ method: "skills.create", body });
+          return { id: "skill_new" };
+        },
+        retrieve: async (skillId, options) => {
+          calls.push({ method: "skills.retrieve", skillId, options });
+          return { id: skillId };
+        },
+        update: async (skillId, body) => {
+          calls.push({ method: "skills.update", skillId, body });
+          return { id: skillId, updated: true };
+        },
+        delete: async (skillId, options) => {
+          calls.push({ method: "skills.delete", skillId, options });
+          return { id: skillId, deleted: true };
+        },
+        list: async (options) => {
+          calls.push({ method: "skills.list", options });
+          return { data: [{ id: "skill_1" }, { id: "skill_2" }] };
+        },
+        content: {
+          retrieve: async (skillId, options) => {
+            calls.push({ method: "skills.content.retrieve", skillId, options });
+            return { id: skillId, object: "skill.content" };
+          },
+        },
+        versions: {
+          create: async (skillId, body) => {
+            calls.push({ method: "skills.versions.create", skillId, body });
+            return { id: "skill_version_new", skill_id: skillId };
+          },
+          retrieve: async (version, options) => {
+            calls.push({ method: "skills.versions.retrieve", version, options });
+            return { id: "skill_version_1", version };
+          },
+          list: async (skillId, options) => {
+            calls.push({ method: "skills.versions.list", skillId, options });
+            return { data: [{ id: "sv_1" }, { id: "sv_2" }] };
+          },
+          delete: async (version, options) => {
+            calls.push({ method: "skills.versions.delete", version, options });
+            return { deleted: true, version };
+          },
+          content: {
+            retrieve: async (version, options) => {
+              calls.push({ method: "skills.versions.content.retrieve", version, options });
+              return { object: "skill.version.content", version };
+            },
+          },
+        },
+      };
+    }
+  }
+
+  await withMockedOpenAI(FakeOpenAI, async () => {
+    const modulePath = require.resolve("../src/skills/methods.js");
+    delete require.cache[modulePath];
+    const skillMethods = require("../src/skills/methods.js");
+
+    const clientContext = { clientParams: { apiKey: "sk-test" } };
+
+    const listed = await skillMethods.listSkills.call(clientContext, {
+      payload: { order: "desc", limit: 2 },
+    });
+    assert.deepEqual(listed, [{ id: "skill_1" }, { id: "skill_2" }]);
+
+    const created = await skillMethods.createSkill.call(clientContext, {
+      payload: { files: ["./skill.zip"] },
+    });
+    assert.deepEqual(created, { id: "skill_new" });
+
+    const fetched = await skillMethods.getSkill.call(clientContext, {
+      payload: { skill_id: "skill_1" },
+    });
+    assert.deepEqual(fetched, { id: "skill_1" });
+
+    const updated = await skillMethods.modifySkill.call(clientContext, {
+      payload: { skill_id: "skill_1", default_version: "2" },
+    });
+    assert.deepEqual(updated, { id: "skill_1", updated: true });
+
+    const deleted = await skillMethods.deleteSkill.call(clientContext, {
+      payload: { skill_id: "skill_1" },
+    });
+    assert.deepEqual(deleted, { id: "skill_1", deleted: true });
+
+    const content = await skillMethods.getSkillContent.call(clientContext, {
+      payload: { skill_id: "skill_1" },
+    });
+    assert.deepEqual(content, { id: "skill_1", object: "skill.content" });
+
+    const listedVersions = await skillMethods.listSkillVersions.call(clientContext, {
+      payload: { skill_id: "skill_1", order: "asc" },
+    });
+    assert.deepEqual(listedVersions, [{ id: "sv_1" }, { id: "sv_2" }]);
+
+    const createdVersion = await skillMethods.createSkillVersion.call(clientContext, {
+      payload: { skill_id: "skill_1", default: true, files: ["./v2.zip"] },
+    });
+    assert.deepEqual(createdVersion, { id: "skill_version_new", skill_id: "skill_1" });
+
+    const fetchedVersion = await skillMethods.getSkillVersion.call(clientContext, {
+      payload: { skill_id: "skill_1", version: "2" },
+    });
+    assert.deepEqual(fetchedVersion, { id: "skill_version_1", version: "2" });
+
+    const deletedVersion = await skillMethods.deleteSkillVersion.call(clientContext, {
+      payload: { skill_id: "skill_1", version: "2" },
+    });
+    assert.deepEqual(deletedVersion, { deleted: true, version: "2" });
+
+    const versionContent = await skillMethods.getSkillVersionContent.call(clientContext, {
+      payload: { skill_id: "skill_1", version: "2" },
+    });
+    assert.deepEqual(versionContent, { object: "skill.version.content", version: "2" });
+
+    delete require.cache[modulePath];
+  });
+
+  const skillCalls = calls.filter((entry) => entry.method !== "ctor");
+  assert.deepEqual(skillCalls, [
+    {
+      method: "skills.list",
+      options: { order: "desc", limit: 2 },
+    },
+    {
+      method: "skills.create",
+      body: { files: ["./skill.zip"] },
+    },
+    {
+      method: "skills.retrieve",
+      skillId: "skill_1",
+      options: {},
+    },
+    {
+      method: "skills.update",
+      skillId: "skill_1",
+      body: { default_version: "2" },
+    },
+    {
+      method: "skills.delete",
+      skillId: "skill_1",
+      options: {},
+    },
+    {
+      method: "skills.content.retrieve",
+      skillId: "skill_1",
+      options: {},
+    },
+    {
+      method: "skills.versions.list",
+      skillId: "skill_1",
+      options: { order: "asc" },
+    },
+    {
+      method: "skills.versions.create",
+      skillId: "skill_1",
+      body: { default: true, files: ["./v2.zip"] },
+    },
+    {
+      method: "skills.versions.retrieve",
+      version: "2",
+      options: { skill_id: "skill_1" },
+    },
+    {
+      method: "skills.versions.delete",
+      version: "2",
+      options: { skill_id: "skill_1" },
+    },
+    {
+      method: "skills.versions.content.retrieve",
+      version: "2",
+      options: { skill_id: "skill_1" },
+    },
+  ]);
+});
+
+test("OpenaiApi prototype exposes new responses, conversations, and skills methods", () => {
   const OpenaiApi = require("../src/lib.js");
   const client = new OpenaiApi("sk-test", "https://api.openai.com/v1", null);
 
@@ -374,9 +558,11 @@ test("OpenaiApi prototype exposes new responses and conversations methods", () =
   assert.equal(typeof client.countInputTokens, "function");
   assert.equal(typeof client.createConversation, "function");
   assert.equal(typeof client.listConversationItems, "function");
+  assert.equal(typeof client.listSkills, "function");
+  assert.equal(typeof client.getSkillVersionContent, "function");
 });
 
-test("editor templates and locale expose new responses and conversations methods", () => {
+test("editor templates and locale expose new responses, conversations, and skills methods", () => {
   const responsesTemplate = fs.readFileSync(
     path.join(__dirname, "..", "src", "responses", "template.html"),
     "utf8"
@@ -385,12 +571,20 @@ test("editor templates and locale expose new responses and conversations methods
     path.join(__dirname, "..", "src", "conversations", "template.html"),
     "utf8"
   );
+  const skillsTemplate = fs.readFileSync(
+    path.join(__dirname, "..", "src", "skills", "template.html"),
+    "utf8"
+  );
   const nodeTemplate = fs.readFileSync(
     path.join(__dirname, "..", "src", "node.html"),
     "utf8"
   );
   const responsesHelp = fs.readFileSync(
     path.join(__dirname, "..", "src", "responses", "help.html"),
+    "utf8"
+  );
+  const skillsHelp = fs.readFileSync(
+    path.join(__dirname, "..", "src", "skills", "help.html"),
     "utf8"
   );
   const locale = JSON.parse(
@@ -402,10 +596,16 @@ test("editor templates and locale expose new responses and conversations methods
   assert.match(responsesTemplate, /value="countInputTokens"/);
   assert.match(conversationsTemplate, /value="createConversation"/);
   assert.match(conversationsTemplate, /value="listConversationItems"/);
+  assert.match(skillsTemplate, /value="listSkills"/);
+  assert.match(skillsTemplate, /value="getSkillVersionContent"/);
   assert.match(nodeTemplate, /@@include\('\.\/conversations\/template\.html'\)/);
   assert.match(nodeTemplate, /@@include\('\.\/conversations\/help\.html'\)/);
+  assert.match(nodeTemplate, /@@include\('\.\/skills\/template\.html'\)/);
+  assert.match(nodeTemplate, /@@include\('\.\/skills\/help\.html'\)/);
   assert.match(responsesHelp, /⋙ Count Input Tokens/);
   assert.match(responsesHelp, /Default is <code>desc<\/code>/);
+  assert.match(skillsHelp, /⋙ Create Skill/);
+  assert.match(skillsHelp, /⋙ List Skill Versions/);
 
   assert.equal(
     locale.OpenaiApi.parameters.cancelModelResponse,
@@ -418,5 +618,13 @@ test("editor templates and locale expose new responses and conversations methods
   assert.equal(
     locale.OpenaiApi.parameters.createConversation,
     "create conversation"
+  );
+  assert.equal(
+    locale.OpenaiApi.parameters.listSkills,
+    "list skills"
+  );
+  assert.equal(
+    locale.OpenaiApi.parameters.getSkillVersion,
+    "retrieve skill version"
   );
 });
