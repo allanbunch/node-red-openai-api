@@ -49,7 +49,7 @@
         "props": [
             {
                 "p": "ai.model",
-                "v": "gpt-4o-mini",
+                "v": "gpt-5-nano",
                 "vt": "str"
             },
             {

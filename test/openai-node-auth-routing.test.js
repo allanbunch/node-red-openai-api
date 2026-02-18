@@ -43,7 +43,7 @@ function createNodeHarness() {
         node.error = (error, msg) => {
           node.errorMessages.push({ error, msg });
         };
-        node.status = () => {};
+        node.status = () => { };
         node.context = () => ({
           flow: { get: () => undefined },
           global: { get: () => undefined },
@@ -113,7 +113,7 @@ async function runAuthRoutingCase(serviceConfig) {
     propertyType: "msg",
   });
 
-  apiNode.emit("input", { payload: { model: "gpt-4o-mini" } });
+  apiNode.emit("input", { payload: { model: "gpt-5-nano" } });
 
   // Allow Promise-based input handler to resolve and send.
   await new Promise((resolve) => setImmediate(resolve));

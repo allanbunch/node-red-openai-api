@@ -30,20 +30,20 @@ var require_tslib = __commonJS({
         throw new TypeError("Cannot read private member from an object whose class did not declare it");
       return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
     }
-    var __createBinding = Object.create ? function(o, m, k, k2) {
+    var __createBinding = Object.create ? function (o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
       var desc = Object.getOwnPropertyDescriptor(m, k);
       if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
         desc = {
           enumerable: true,
-          get: function() {
+          get: function () {
             return m[k];
           }
         };
       }
       Object.defineProperty(o, k2, desc);
-    } : function(o, m, k, k2) {
+    } : function (o, m, k, k2) {
       if (k2 === void 0)
         k2 = k;
       o[k2] = m[k];
@@ -54,14 +54,14 @@ var require_tslib = __commonJS({
         if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p))
           __createBinding(o, m, p);
     }
-    var __setModuleDefault = Object.create ? function(o, v) {
+    var __setModuleDefault = Object.create ? function (o, v) {
       Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
+    } : function (o, v) {
       o["default"] = v;
     };
     exports2.__setModuleDefault = __setModuleDefault;
-    var ownKeys = function(o) {
-      ownKeys = Object.getOwnPropertyNames || function(o2) {
+    var ownKeys = function (o) {
+      ownKeys = Object.getOwnPropertyNames || function (o2) {
         var ar = [];
         for (var k in o2)
           if (Object.prototype.hasOwnProperty.call(o2, k))
@@ -91,7 +91,7 @@ var require_uuid = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.uuid4 = void 0;
-    var uuid4 = function() {
+    var uuid4 = function () {
       const { crypto: crypto2 } = globalThis;
       if (crypto2?.randomUUID) {
         exports2.uuid4 = crypto2.randomUUID.bind(crypto2);
@@ -114,8 +114,8 @@ var require_errors = __commonJS({
     exports2.isAbortError = isAbortError;
     function isAbortError(err) {
       return typeof err === "object" && err !== null && // Spec-compliant fetch implementations
-      ("name" in err && err.name === "AbortError" || // Expo fetch
-      "message" in err && String(err.message).includes("FetchRequestCanceledException"));
+        ("name" in err && err.name === "AbortError" || // Expo fetch
+          "message" in err && String(err.message).includes("FetchRequestCanceledException"));
     }
     var castToError = (err) => {
       if (err instanceof Error)
@@ -748,7 +748,7 @@ var require_utils = __commonJS({
         mergeTarget = array_to_object(target, options);
       }
       if ((0, values_1.isArray)(target) && (0, values_1.isArray)(source)) {
-        source.forEach(function(item, i) {
+        source.forEach(function (item, i) {
           if ((0, exports2.has)(target, i)) {
             const targetItem = target[i];
             if (targetItem && typeof targetItem === "object" && item && typeof item === "object") {
@@ -762,7 +762,7 @@ var require_utils = __commonJS({
         });
         return target;
       }
-      return Object.keys(source).reduce(function(acc, key) {
+      return Object.keys(source).reduce(function (acc, key) {
         const value = source[key];
         if ((0, exports2.has)(acc, key)) {
           acc[key] = merge(acc[key], value, options);
@@ -773,7 +773,7 @@ var require_utils = __commonJS({
       }, mergeTarget);
     }
     function assign_single_source(target, source) {
-      return Object.keys(source).reduce(function(acc, key) {
+      return Object.keys(source).reduce(function (acc, key) {
         acc[key] = source[key];
         return acc;
       }, target);
@@ -801,7 +801,7 @@ var require_utils = __commonJS({
         string = String(str);
       }
       if (charset === "iso-8859-1") {
-        return escape(string).replace(/%u[0-9a-f]{4}/gi, function($0) {
+        return escape(string).replace(/%u[0-9a-f]{4}/gi, function ($0) {
           return "%26%23" + parseInt($0.slice(2), 16) + "%3B";
         });
       }
@@ -812,13 +812,13 @@ var require_utils = __commonJS({
         for (let i = 0; i < segment.length; ++i) {
           let c = segment.charCodeAt(i);
           if (c === 45 || // -
-          c === 46 || // .
-          c === 95 || // _
-          c === 126 || // ~
-          c >= 48 && c <= 57 || // 0-9
-          c >= 65 && c <= 90 || // a-z
-          c >= 97 && c <= 122 || // A-Z
-          format === formats_1.RFC1738 && (c === 40 || c === 41)) {
+            c === 46 || // .
+            c === 95 || // _
+            c === 126 || // ~
+            c >= 48 && c <= 57 || // 0-9
+            c >= 65 && c <= 90 || // a-z
+            c >= 97 && c <= 122 || // A-Z
+            format === formats_1.RFC1738 && (c === 40 || c === 41)) {
             arr[arr.length] = segment.charAt(i);
             continue;
           }
@@ -908,7 +908,7 @@ var require_stringify = __commonJS({
         return String(prefix);
       }
     };
-    var push_to_array = function(arr, value_or_array) {
+    var push_to_array = function (arr, value_or_array) {
       Array.prototype.push.apply(arr, (0, values_1.isArray)(value_or_array) ? value_or_array : [value_or_array]);
     };
     var toISOString;
@@ -962,7 +962,7 @@ var require_stringify = __commonJS({
       } else if (obj instanceof Date) {
         obj = serializeDate?.(obj);
       } else if (generateArrayPrefix === "comma" && (0, values_1.isArray)(obj)) {
-        obj = (0, utils_1.maybe_map)(obj, function(value) {
+        obj = (0, utils_1.maybe_map)(obj, function (value) {
           if (value instanceof Date) {
             return serializeDate?.(value);
           }
@@ -1190,9 +1190,11 @@ var require_qs = __commonJS({
     };
     exports2.formats = formats;
     var stringify_1 = require_stringify();
-    Object.defineProperty(exports2, "stringify", { enumerable: true, get: function() {
-      return stringify_1.stringify;
-    } });
+    Object.defineProperty(exports2, "stringify", {
+      enumerable: true, get: function () {
+        return stringify_1.stringify;
+      }
+    });
   }
 });
 
@@ -2103,7 +2105,7 @@ var require_to_file = __commonJS({
     async function getBytes(value) {
       let parts = [];
       if (typeof value === "string" || ArrayBuffer.isView(value) || // includes Uint8Array, Buffer, etc.
-      value instanceof ArrayBuffer) {
+        value instanceof ArrayBuffer) {
         parts.push(value);
       } else if (isBlobLike(value)) {
         parts.push(value instanceof Blob ? value : await value.arrayBuffer());
@@ -2133,9 +2135,11 @@ var require_uploads2 = __commonJS({
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.toFile = void 0;
     var to_file_1 = require_to_file();
-    Object.defineProperty(exports2, "toFile", { enumerable: true, get: function() {
-      return to_file_1.toFile;
-    } });
+    Object.defineProperty(exports2, "toFile", {
+      enumerable: true, get: function () {
+        return to_file_1.toFile;
+      }
+    });
   }
 });
 
@@ -2178,7 +2182,7 @@ var require_path = __commonJS({
         const value = params[index];
         let encoded = (postPath ? encodeURIComponent : pathEncoder)("" + value);
         if (index !== params.length && (value == null || typeof value === "object" && // handle values from other realms
-        value.toString === Object.getPrototypeOf(Object.getPrototypeOf(value.hasOwnProperty ?? EMPTY) ?? EMPTY)?.toString)) {
+          value.toString === Object.getPrototypeOf(Object.getPrototypeOf(value.hasOwnProperty ?? EMPTY) ?? EMPTY)?.toString)) {
           encoded = value + "";
           invalidSegments.push({
             start: previousValue.length + currentValue.length,
@@ -3848,21 +3852,29 @@ var require_completions = __commonJS({
     };
     exports2.Completions = Completions;
     var ChatCompletionStreamingRunner_2 = require_ChatCompletionStreamingRunner();
-    Object.defineProperty(exports2, "ChatCompletionStreamingRunner", { enumerable: true, get: function() {
-      return ChatCompletionStreamingRunner_2.ChatCompletionStreamingRunner;
-    } });
+    Object.defineProperty(exports2, "ChatCompletionStreamingRunner", {
+      enumerable: true, get: function () {
+        return ChatCompletionStreamingRunner_2.ChatCompletionStreamingRunner;
+      }
+    });
     var RunnableFunction_1 = require_RunnableFunction();
-    Object.defineProperty(exports2, "ParsingToolFunction", { enumerable: true, get: function() {
-      return RunnableFunction_1.ParsingToolFunction;
-    } });
+    Object.defineProperty(exports2, "ParsingToolFunction", {
+      enumerable: true, get: function () {
+        return RunnableFunction_1.ParsingToolFunction;
+      }
+    });
     var ChatCompletionStream_2 = require_ChatCompletionStream();
-    Object.defineProperty(exports2, "ChatCompletionStream", { enumerable: true, get: function() {
-      return ChatCompletionStream_2.ChatCompletionStream;
-    } });
+    Object.defineProperty(exports2, "ChatCompletionStream", {
+      enumerable: true, get: function () {
+        return ChatCompletionStream_2.ChatCompletionStream;
+      }
+    });
     var ChatCompletionRunner_2 = require_ChatCompletionRunner();
-    Object.defineProperty(exports2, "ChatCompletionRunner", { enumerable: true, get: function() {
-      return ChatCompletionRunner_2.ChatCompletionRunner;
-    } });
+    Object.defineProperty(exports2, "ChatCompletionRunner", {
+      enumerable: true, get: function () {
+        return ChatCompletionRunner_2.ChatCompletionRunner;
+      }
+    });
     Completions.Messages = messages_1.Messages;
   }
 });
@@ -3896,14 +3908,18 @@ var require_completions2 = __commonJS({
     exports2.Messages = exports2.Completions = void 0;
     var tslib_1 = require_tslib();
     var completions_1 = require_completions();
-    Object.defineProperty(exports2, "Completions", { enumerable: true, get: function() {
-      return completions_1.Completions;
-    } });
+    Object.defineProperty(exports2, "Completions", {
+      enumerable: true, get: function () {
+        return completions_1.Completions;
+      }
+    });
     tslib_1.__exportStar(require_completions(), exports2);
     var messages_1 = require_messages();
-    Object.defineProperty(exports2, "Messages", { enumerable: true, get: function() {
-      return messages_1.Messages;
-    } });
+    Object.defineProperty(exports2, "Messages", {
+      enumerable: true, get: function () {
+        return messages_1.Messages;
+      }
+    });
   }
 });
 
@@ -3914,13 +3930,17 @@ var require_chat2 = __commonJS({
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.Completions = exports2.Chat = void 0;
     var chat_1 = require_chat();
-    Object.defineProperty(exports2, "Chat", { enumerable: true, get: function() {
-      return chat_1.Chat;
-    } });
+    Object.defineProperty(exports2, "Chat", {
+      enumerable: true, get: function () {
+        return chat_1.Chat;
+      }
+    });
     var index_1 = require_completions2();
-    Object.defineProperty(exports2, "Completions", { enumerable: true, get: function() {
-      return index_1.Completions;
-    } });
+    Object.defineProperty(exports2, "Completions", {
+      enumerable: true, get: function () {
+        return index_1.Completions;
+      }
+    });
   }
 });
 
@@ -6337,7 +6357,7 @@ var require_jobs = __commonJS({
        * @example
        * ```ts
        * const fineTuningJob = await client.fineTuning.jobs.create({
-       *   model: 'gpt-4o-mini',
+       *   model: 'gpt-5-nano',
        *   training_file: 'file-abc123',
        * });
        * ```
@@ -8156,89 +8176,131 @@ var require_resources = __commonJS({
     tslib_1.__exportStar(require_chat2(), exports2);
     tslib_1.__exportStar(require_shared(), exports2);
     var audio_1 = require_audio();
-    Object.defineProperty(exports2, "Audio", { enumerable: true, get: function() {
-      return audio_1.Audio;
-    } });
+    Object.defineProperty(exports2, "Audio", {
+      enumerable: true, get: function () {
+        return audio_1.Audio;
+      }
+    });
     var batches_1 = require_batches();
-    Object.defineProperty(exports2, "Batches", { enumerable: true, get: function() {
-      return batches_1.Batches;
-    } });
+    Object.defineProperty(exports2, "Batches", {
+      enumerable: true, get: function () {
+        return batches_1.Batches;
+      }
+    });
     var beta_1 = require_beta();
-    Object.defineProperty(exports2, "Beta", { enumerable: true, get: function() {
-      return beta_1.Beta;
-    } });
+    Object.defineProperty(exports2, "Beta", {
+      enumerable: true, get: function () {
+        return beta_1.Beta;
+      }
+    });
     var completions_1 = require_completions3();
-    Object.defineProperty(exports2, "Completions", { enumerable: true, get: function() {
-      return completions_1.Completions;
-    } });
+    Object.defineProperty(exports2, "Completions", {
+      enumerable: true, get: function () {
+        return completions_1.Completions;
+      }
+    });
     var containers_1 = require_containers();
-    Object.defineProperty(exports2, "Containers", { enumerable: true, get: function() {
-      return containers_1.Containers;
-    } });
+    Object.defineProperty(exports2, "Containers", {
+      enumerable: true, get: function () {
+        return containers_1.Containers;
+      }
+    });
     var conversations_1 = require_conversations();
-    Object.defineProperty(exports2, "Conversations", { enumerable: true, get: function() {
-      return conversations_1.Conversations;
-    } });
+    Object.defineProperty(exports2, "Conversations", {
+      enumerable: true, get: function () {
+        return conversations_1.Conversations;
+      }
+    });
     var embeddings_1 = require_embeddings();
-    Object.defineProperty(exports2, "Embeddings", { enumerable: true, get: function() {
-      return embeddings_1.Embeddings;
-    } });
+    Object.defineProperty(exports2, "Embeddings", {
+      enumerable: true, get: function () {
+        return embeddings_1.Embeddings;
+      }
+    });
     var evals_1 = require_evals();
-    Object.defineProperty(exports2, "Evals", { enumerable: true, get: function() {
-      return evals_1.Evals;
-    } });
+    Object.defineProperty(exports2, "Evals", {
+      enumerable: true, get: function () {
+        return evals_1.Evals;
+      }
+    });
     var files_1 = require_files2();
-    Object.defineProperty(exports2, "Files", { enumerable: true, get: function() {
-      return files_1.Files;
-    } });
+    Object.defineProperty(exports2, "Files", {
+      enumerable: true, get: function () {
+        return files_1.Files;
+      }
+    });
     var fine_tuning_1 = require_fine_tuning();
-    Object.defineProperty(exports2, "FineTuning", { enumerable: true, get: function() {
-      return fine_tuning_1.FineTuning;
-    } });
+    Object.defineProperty(exports2, "FineTuning", {
+      enumerable: true, get: function () {
+        return fine_tuning_1.FineTuning;
+      }
+    });
     var graders_1 = require_graders2();
-    Object.defineProperty(exports2, "Graders", { enumerable: true, get: function() {
-      return graders_1.Graders;
-    } });
+    Object.defineProperty(exports2, "Graders", {
+      enumerable: true, get: function () {
+        return graders_1.Graders;
+      }
+    });
     var images_1 = require_images();
-    Object.defineProperty(exports2, "Images", { enumerable: true, get: function() {
-      return images_1.Images;
-    } });
+    Object.defineProperty(exports2, "Images", {
+      enumerable: true, get: function () {
+        return images_1.Images;
+      }
+    });
     var models_1 = require_models();
-    Object.defineProperty(exports2, "Models", { enumerable: true, get: function() {
-      return models_1.Models;
-    } });
+    Object.defineProperty(exports2, "Models", {
+      enumerable: true, get: function () {
+        return models_1.Models;
+      }
+    });
     var moderations_1 = require_moderations();
-    Object.defineProperty(exports2, "Moderations", { enumerable: true, get: function() {
-      return moderations_1.Moderations;
-    } });
+    Object.defineProperty(exports2, "Moderations", {
+      enumerable: true, get: function () {
+        return moderations_1.Moderations;
+      }
+    });
     var realtime_1 = require_realtime2();
-    Object.defineProperty(exports2, "Realtime", { enumerable: true, get: function() {
-      return realtime_1.Realtime;
-    } });
+    Object.defineProperty(exports2, "Realtime", {
+      enumerable: true, get: function () {
+        return realtime_1.Realtime;
+      }
+    });
     var responses_1 = require_responses();
-    Object.defineProperty(exports2, "Responses", { enumerable: true, get: function() {
-      return responses_1.Responses;
-    } });
+    Object.defineProperty(exports2, "Responses", {
+      enumerable: true, get: function () {
+        return responses_1.Responses;
+      }
+    });
     var skills_1 = require_skills();
-    Object.defineProperty(exports2, "Skills", { enumerable: true, get: function() {
-      return skills_1.Skills;
-    } });
+    Object.defineProperty(exports2, "Skills", {
+      enumerable: true, get: function () {
+        return skills_1.Skills;
+      }
+    });
     var uploads_1 = require_uploads3();
-    Object.defineProperty(exports2, "Uploads", { enumerable: true, get: function() {
-      return uploads_1.Uploads;
-    } });
+    Object.defineProperty(exports2, "Uploads", {
+      enumerable: true, get: function () {
+        return uploads_1.Uploads;
+      }
+    });
     var vector_stores_1 = require_vector_stores();
-    Object.defineProperty(exports2, "VectorStores", { enumerable: true, get: function() {
-      return vector_stores_1.VectorStores;
-    } });
+    Object.defineProperty(exports2, "VectorStores", {
+      enumerable: true, get: function () {
+        return vector_stores_1.VectorStores;
+      }
+    });
     var videos_1 = require_videos();
-    Object.defineProperty(exports2, "Videos", { enumerable: true, get: function() {
-      return videos_1.Videos;
-    } });
+    Object.defineProperty(exports2, "Videos", {
+      enumerable: true, get: function () {
+        return videos_1.Videos;
+      }
+    });
     var webhooks_1 = require_webhooks3();
-    Object.defineProperty(exports2, "Webhooks", { enumerable: true, get: function() {
-      return webhooks_1.Webhooks;
-    } });
+    Object.defineProperty(exports2, "Webhooks", {
+      enumerable: true, get: function () {
+        return webhooks_1.Webhooks;
+      }
+    });
   }
 });
 
@@ -8876,78 +8938,118 @@ var require_azure = __commonJS({
 var require_openai = __commonJS({
   "node_modules/openai/index.js"(exports2, module2) {
     "use strict";
-    exports2 = module2.exports = function(...args) {
+    exports2 = module2.exports = function (...args) {
       return new exports2.default(...args);
     };
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.AzureOpenAI = exports2.InvalidWebhookSignatureError = exports2.UnprocessableEntityError = exports2.PermissionDeniedError = exports2.InternalServerError = exports2.AuthenticationError = exports2.BadRequestError = exports2.RateLimitError = exports2.ConflictError = exports2.NotFoundError = exports2.APIUserAbortError = exports2.APIConnectionTimeoutError = exports2.APIConnectionError = exports2.APIError = exports2.OpenAIError = exports2.PagePromise = exports2.OpenAI = exports2.APIPromise = exports2.toFile = exports2.default = void 0;
     var client_1 = require_client();
-    Object.defineProperty(exports2, "default", { enumerable: true, get: function() {
-      return client_1.OpenAI;
-    } });
+    Object.defineProperty(exports2, "default", {
+      enumerable: true, get: function () {
+        return client_1.OpenAI;
+      }
+    });
     var uploads_1 = require_uploads2();
-    Object.defineProperty(exports2, "toFile", { enumerable: true, get: function() {
-      return uploads_1.toFile;
-    } });
+    Object.defineProperty(exports2, "toFile", {
+      enumerable: true, get: function () {
+        return uploads_1.toFile;
+      }
+    });
     var api_promise_1 = require_api_promise();
-    Object.defineProperty(exports2, "APIPromise", { enumerable: true, get: function() {
-      return api_promise_1.APIPromise;
-    } });
+    Object.defineProperty(exports2, "APIPromise", {
+      enumerable: true, get: function () {
+        return api_promise_1.APIPromise;
+      }
+    });
     var client_2 = require_client();
-    Object.defineProperty(exports2, "OpenAI", { enumerable: true, get: function() {
-      return client_2.OpenAI;
-    } });
+    Object.defineProperty(exports2, "OpenAI", {
+      enumerable: true, get: function () {
+        return client_2.OpenAI;
+      }
+    });
     var pagination_1 = require_pagination();
-    Object.defineProperty(exports2, "PagePromise", { enumerable: true, get: function() {
-      return pagination_1.PagePromise;
-    } });
+    Object.defineProperty(exports2, "PagePromise", {
+      enumerable: true, get: function () {
+        return pagination_1.PagePromise;
+      }
+    });
     var error_1 = require_error();
-    Object.defineProperty(exports2, "OpenAIError", { enumerable: true, get: function() {
-      return error_1.OpenAIError;
-    } });
-    Object.defineProperty(exports2, "APIError", { enumerable: true, get: function() {
-      return error_1.APIError;
-    } });
-    Object.defineProperty(exports2, "APIConnectionError", { enumerable: true, get: function() {
-      return error_1.APIConnectionError;
-    } });
-    Object.defineProperty(exports2, "APIConnectionTimeoutError", { enumerable: true, get: function() {
-      return error_1.APIConnectionTimeoutError;
-    } });
-    Object.defineProperty(exports2, "APIUserAbortError", { enumerable: true, get: function() {
-      return error_1.APIUserAbortError;
-    } });
-    Object.defineProperty(exports2, "NotFoundError", { enumerable: true, get: function() {
-      return error_1.NotFoundError;
-    } });
-    Object.defineProperty(exports2, "ConflictError", { enumerable: true, get: function() {
-      return error_1.ConflictError;
-    } });
-    Object.defineProperty(exports2, "RateLimitError", { enumerable: true, get: function() {
-      return error_1.RateLimitError;
-    } });
-    Object.defineProperty(exports2, "BadRequestError", { enumerable: true, get: function() {
-      return error_1.BadRequestError;
-    } });
-    Object.defineProperty(exports2, "AuthenticationError", { enumerable: true, get: function() {
-      return error_1.AuthenticationError;
-    } });
-    Object.defineProperty(exports2, "InternalServerError", { enumerable: true, get: function() {
-      return error_1.InternalServerError;
-    } });
-    Object.defineProperty(exports2, "PermissionDeniedError", { enumerable: true, get: function() {
-      return error_1.PermissionDeniedError;
-    } });
-    Object.defineProperty(exports2, "UnprocessableEntityError", { enumerable: true, get: function() {
-      return error_1.UnprocessableEntityError;
-    } });
-    Object.defineProperty(exports2, "InvalidWebhookSignatureError", { enumerable: true, get: function() {
-      return error_1.InvalidWebhookSignatureError;
-    } });
+    Object.defineProperty(exports2, "OpenAIError", {
+      enumerable: true, get: function () {
+        return error_1.OpenAIError;
+      }
+    });
+    Object.defineProperty(exports2, "APIError", {
+      enumerable: true, get: function () {
+        return error_1.APIError;
+      }
+    });
+    Object.defineProperty(exports2, "APIConnectionError", {
+      enumerable: true, get: function () {
+        return error_1.APIConnectionError;
+      }
+    });
+    Object.defineProperty(exports2, "APIConnectionTimeoutError", {
+      enumerable: true, get: function () {
+        return error_1.APIConnectionTimeoutError;
+      }
+    });
+    Object.defineProperty(exports2, "APIUserAbortError", {
+      enumerable: true, get: function () {
+        return error_1.APIUserAbortError;
+      }
+    });
+    Object.defineProperty(exports2, "NotFoundError", {
+      enumerable: true, get: function () {
+        return error_1.NotFoundError;
+      }
+    });
+    Object.defineProperty(exports2, "ConflictError", {
+      enumerable: true, get: function () {
+        return error_1.ConflictError;
+      }
+    });
+    Object.defineProperty(exports2, "RateLimitError", {
+      enumerable: true, get: function () {
+        return error_1.RateLimitError;
+      }
+    });
+    Object.defineProperty(exports2, "BadRequestError", {
+      enumerable: true, get: function () {
+        return error_1.BadRequestError;
+      }
+    });
+    Object.defineProperty(exports2, "AuthenticationError", {
+      enumerable: true, get: function () {
+        return error_1.AuthenticationError;
+      }
+    });
+    Object.defineProperty(exports2, "InternalServerError", {
+      enumerable: true, get: function () {
+        return error_1.InternalServerError;
+      }
+    });
+    Object.defineProperty(exports2, "PermissionDeniedError", {
+      enumerable: true, get: function () {
+        return error_1.PermissionDeniedError;
+      }
+    });
+    Object.defineProperty(exports2, "UnprocessableEntityError", {
+      enumerable: true, get: function () {
+        return error_1.UnprocessableEntityError;
+      }
+    });
+    Object.defineProperty(exports2, "InvalidWebhookSignatureError", {
+      enumerable: true, get: function () {
+        return error_1.InvalidWebhookSignatureError;
+      }
+    });
     var azure_1 = require_azure();
-    Object.defineProperty(exports2, "AzureOpenAI", { enumerable: true, get: function() {
-      return azure_1.AzureOpenAI;
-    } });
+    Object.defineProperty(exports2, "AzureOpenAI", {
+      enumerable: true, get: function () {
+        return azure_1.AzureOpenAI;
+      }
+    });
   }
 });
 
