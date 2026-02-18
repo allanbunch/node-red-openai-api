@@ -1,23 +1,27 @@
 const OpenAI = require("openai").OpenAI;
 
+async function streamResponse(parameters, response) {
+  const { _node, msg } = parameters;
+  _node.status({
+    fill: "green",
+    shape: "dot",
+    text: "OpenaiApi.status.streaming",
+  });
+  for await (const chunk of response) {
+    if (typeof chunk === "object") {
+      const newMsg = { ...msg, payload: chunk };
+      _node.send(newMsg);
+    }
+  }
+  _node.status({});
+}
+
 async function createModelResponse(parameters) {
-  const { _node, ...params } = parameters;
   const openai = new OpenAI(this.clientParams);
   const response = await openai.responses.create(parameters.payload);
 
-  if (params.payload.stream) {
-    _node.status({
-      fill: "green",
-      shape: "dot",
-      text: "OpenaiApi.status.streaming",
-    });
-    for await (const chunk of response) {
-      if (typeof chunk === "object") {
-        const newMsg = { ...parameters.msg, payload: chunk };
-        _node.send(newMsg);
-      }
-    }
-    _node.status({});
+  if (parameters.payload.stream) {
+    await streamResponse(parameters, response);
   } else {
     return response;
   }
@@ -28,13 +32,17 @@ async function getModelResponse(parameters) {
   const { response_id, ...params } = parameters.payload;
   const response = await openai.responses.retrieve(response_id, params);
 
-  return response;
+  if (params.stream) {
+    await streamResponse(parameters, response);
+  } else {
+    return response;
+  }
 }
 
 async function deleteModelResponse(parameters) {
   const openai = new OpenAI(this.clientParams);
   const { response_id, ...params } = parameters.payload;
-  const response = await openai.responses.del(response_id, params);
+  const response = await openai.responses.delete(response_id, params);
 
   return response;
 }
@@ -62,6 +70,13 @@ async function listInputItems(parameters) {
   return [...list.data];
 }
 
+async function countInputTokens(parameters) {
+  const openai = new OpenAI(this.clientParams);
+  const response = await openai.responses.inputTokens.count(parameters.payload);
+
+  return response;
+}
+
 module.exports = {
   createModelResponse,
   getModelResponse,
@@ -69,4 +84,5 @@ module.exports = {
   cancelModelResponse,
   compactModelResponse,
   listInputItems,
+  countInputTokens,
 };

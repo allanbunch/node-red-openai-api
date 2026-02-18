@@ -122,6 +122,7 @@
             "cancelModelResponse": "cancel model response",
             "compactModelResponse": "compact model response",
             "listInputItems": "list input items",
+            "countInputTokens": "count input tokens",
             "listAssistants": "list assistants",
             "order": "order",
             "before": "before",

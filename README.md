@@ -116,6 +116,7 @@ See the in-editor node help for method-specific payload fields and links to offi
 - OpenAI Node SDK upgraded from `4.103.0` to `6.22.0`.
 - Added `responses.cancel`.
 - Added `responses.compact`.
+- Added `responses.input_tokens` counting support.
 - Added Conversations API support:
   - create/retrieve/modify/delete conversation
   - create/retrieve/list/delete conversation items

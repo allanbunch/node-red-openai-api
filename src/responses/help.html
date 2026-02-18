@@ -25,6 +25,30 @@
             <dd>Model ID used to generate the response.</dd>
 
             <dt class="optional">
+                background
+                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-background"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">boolean</span>
+            </dt>
+            <dd>Whether to run the model response in the background.</dd>
+
+            <dt class="optional">
+                context_management
+                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-context_management"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Context management settings, including compaction behavior.</dd>
+
+            <dt class="optional">
+                conversation
+                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-conversation"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string | object</span>
+            </dt>
+            <dd>Conversation context to prepend for this response.</dd>
+
+            <dt class="optional">
                 include
                 <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-include"
                     target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
@@ -73,12 +97,52 @@
             <dd>The unique ID of the previous response to the model.</dd>
 
             <dt class="optional">
+                prompt
+                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-prompt"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Reference to a reusable prompt template and variables.</dd>
+
+            <dt class="optional">
+                prompt_cache_key
+                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-prompt_cache_key"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Stable key used to improve prompt cache hit rates.</dd>
+
+            <dt class="optional">
+                prompt_cache_retention
+                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-prompt_cache_retention"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Prompt cache retention policy, such as <code>in-memory</code> or <code>24h</code>.</dd>
+
+            <dt class="optional">
                 reasoning
                 <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-reasoning"
                     target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>o-series models only. See official docs for option properties.</dd>
+
+            <dt class="optional">
+                safety_identifier
+                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-safety_identifier"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Stable end-user identifier used for abuse detection and safety controls.</dd>
+
+            <dt class="optional">
+                service_tier
+                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-service_tier"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Service tier selection, for example <code>default</code>, <code>flex</code>, or <code>priority</code>.</dd>
 
             <dt class="optional">
                 store
@@ -96,6 +160,14 @@
             </dt>
             <dd>If set to true, the model response data will be streamed to the client as it is generated using
                 server-sent events.</dd>
+
+            <dt class="optional">
+                stream_options
+                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-stream_options"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Streaming options such as obfuscation behavior for event payloads.</dd>
 
             <dt class="optional">
                 temperature
@@ -157,7 +229,7 @@
                     target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
-            <dd>A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse.</dd>
+            <dd>Deprecated. Prefer <code>safety_identifier</code> and <code>prompt_cache_key</code>.</dd>
 
         </dl>
 
@@ -173,6 +245,38 @@
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the response to retrieve.</dd>
+
+            <dt class="optional">
+                include
+                <a href="https://platform.openai.com/docs/api-reference/responses/get#responses-get-include"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Additional output fields to include in the response.</dd>
+
+            <dt class="optional">
+                include_obfuscation
+                <a href="https://platform.openai.com/docs/api-reference/responses/get#responses-get-include_obfuscation"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">boolean</span>
+            </dt>
+            <dd>Enable obfuscation payloads in streaming events.</dd>
+
+            <dt class="optional">
+                starting_after
+                <a href="https://platform.openai.com/docs/api-reference/responses/get#responses-get-starting_after"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Event sequence number after which to begin a streamed retrieval.</dd>
+
+            <dt class="optional">
+                stream
+                <a href="https://platform.openai.com/docs/api-reference/responses/get#responses-get-stream"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">boolean</span>
+            </dt>
+            <dd>When true, retrieve the response as a stream of events.</dd>
         </dl>
 
         <h4 style="font-weight: bolder;"> ⋙ Delete Model Response</h4>
@@ -209,20 +313,36 @@
             <h4>msg.payload Properties</h4>
 
             <dt>
-                conversation
-                <a href="https://platform.openai.com/docs/api-reference/responses/compact#responses-compact-conversation"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
-                <span class="property-type">array</span>
-            </dt>
-            <dd>Conversation items to compact.</dd>
-
-            <dt class="optional">
                 model
                 <a href="https://platform.openai.com/docs/api-reference/responses/compact#responses-compact-model"
                     target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
-            <dd>Optional model used during compaction.</dd>
+            <dd>Model ID used for compaction.</dd>
+
+            <dt class="optional">
+                input
+                <a href="https://platform.openai.com/docs/api-reference/responses/compact#responses-compact-input"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string | array</span>
+            </dt>
+            <dd>Optional input items used for compaction.</dd>
+
+            <dt class="optional">
+                instructions
+                <a href="https://platform.openai.com/docs/api-reference/responses/compact#responses-compact-instructions"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Optional system or developer instructions for compaction.</dd>
+
+            <dt class="optional">
+                previous_response_id
+                <a href="https://platform.openai.com/docs/api-reference/responses/compact#responses-compact-previous_response_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Optional previous response id to continue compaction context.</dd>
         </dl>
 
         <h4 style="font-weight: bolder;"> ⋙ List Input Items</h4>
@@ -268,7 +388,111 @@
                     target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
-            <dd>The order to return the input items in. Default is <code>asc</code>.</dd>
+            <dd>The order to return the input items in. Default is <code>desc</code>.</dd>
+
+            <dt class="optional">
+                include
+                <a href="https://platform.openai.com/docs/api-reference/responses/input-items#responses-input-items-include"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Additional fields to include on the returned input items.</dd>
+
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Count Input Tokens</h4>
+        <p>Counts input tokens before creating a model response.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt class="optional">
+                model
+                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-model"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Model ID to use for token counting.</dd>
+
+            <dt class="optional">
+                input
+                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-input"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string | array</span>
+            </dt>
+            <dd>Input items to count.</dd>
+
+            <dt class="optional">
+                conversation
+                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-conversation"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string | object</span>
+            </dt>
+            <dd>Conversation context to include in counting.</dd>
+
+            <dt class="optional">
+                instructions
+                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-instructions"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>System or developer instructions to include in counting.</dd>
+
+            <dt class="optional">
+                previous_response_id
+                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-previous_response_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Previous response ID used to continue conversation context.</dd>
+
+            <dt class="optional">
+                parallel_tool_calls
+                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-parallel_tool_calls"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">boolean</span>
+            </dt>
+            <dd>Whether tool calls may run in parallel for the modeled request.</dd>
+
+            <dt class="optional">
+                reasoning
+                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-reasoning"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Reasoning model configuration used for token accounting.</dd>
+
+            <dt class="optional">
+                text
+                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-text"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Text output configuration used when estimating token usage.</dd>
+
+            <dt class="optional">
+                tool_choice
+                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-tool_choice"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string | object</span>
+            </dt>
+            <dd>Tool selection mode used for token counting.</dd>
+
+            <dt class="optional">
+                tools
+                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-tools"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Tool definitions used for token counting.</dd>
+
+            <dt class="optional">
+                truncation
+                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-truncation"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Truncation strategy for token counting context.
+            </dd>
 
         </dl>
 
