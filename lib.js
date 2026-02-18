@@ -9313,8 +9313,115 @@ var require_methods9 = __commonJS({
   }
 });
 
-// src/files/methods.js
+// src/evals/methods.js
 var require_methods10 = __commonJS({
+  "src/evals/methods.js"(exports2, module2) {
+    var OpenAI = require_openai().OpenAI;
+    async function createEval(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.evals.create(parameters.payload);
+      return response;
+    }
+    async function getEval(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { eval_id, ...params } = parameters.payload;
+      const response = await openai.evals.retrieve(eval_id, params);
+      return response;
+    }
+    async function modifyEval(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { eval_id, ...body } = parameters.payload;
+      const response = await openai.evals.update(eval_id, body);
+      return response;
+    }
+    async function deleteEval(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { eval_id, ...params } = parameters.payload;
+      const response = await openai.evals.delete(eval_id, params);
+      return response;
+    }
+    async function listEvals(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const list = await openai.evals.list(parameters.payload);
+      return [...list.data];
+    }
+    async function createEvalRun(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { eval_id, ...body } = parameters.payload;
+      const response = await openai.evals.runs.create(eval_id, body);
+      return response;
+    }
+    async function getEvalRun(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { eval_id, run_id, ...params } = parameters.payload;
+      const response = await openai.evals.runs.retrieve(run_id, {
+        eval_id,
+        ...params
+      });
+      return response;
+    }
+    async function listEvalRuns(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { eval_id, ...params } = parameters.payload;
+      const list = await openai.evals.runs.list(eval_id, params);
+      return [...list.data];
+    }
+    async function deleteEvalRun(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { eval_id, run_id, ...params } = parameters.payload;
+      const response = await openai.evals.runs.delete(run_id, {
+        eval_id,
+        ...params
+      });
+      return response;
+    }
+    async function cancelEvalRun(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { eval_id, run_id, ...params } = parameters.payload;
+      const response = await openai.evals.runs.cancel(run_id, {
+        eval_id,
+        ...params
+      });
+      return response;
+    }
+    async function getEvalRunOutputItem(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { eval_id, run_id, output_item_id, ...params } = parameters.payload;
+      const response = await openai.evals.runs.outputItems.retrieve(output_item_id, {
+        eval_id,
+        run_id,
+        ...params
+      });
+      return response;
+    }
+    async function listEvalRunOutputItems(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { eval_id, run_id, ...params } = parameters.payload;
+      const list = await openai.evals.runs.outputItems.list(run_id, {
+        eval_id,
+        ...params
+      });
+      return [...list.data];
+    }
+    module2.exports = {
+      createEval,
+      getEval,
+      modifyEval,
+      deleteEval,
+      listEvals,
+      createEvalRun,
+      getEvalRun,
+      listEvalRuns,
+      deleteEvalRun,
+      cancelEvalRun,
+      getEvalRunOutputItem,
+      listEvalRunOutputItems
+    };
+  }
+});
+
+// src/files/methods.js
+var require_methods11 = __commonJS({
   "src/files/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     var fs = require("fs");
@@ -9359,7 +9466,7 @@ var require_methods10 = __commonJS({
 });
 
 // src/fine-tuning/methods.js
-var require_methods11 = __commonJS({
+var require_methods12 = __commonJS({
   "src/fine-tuning/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createFineTuningJob(parameters) {
@@ -9420,7 +9527,7 @@ var require_methods11 = __commonJS({
 });
 
 // src/images/methods.js
-var require_methods12 = __commonJS({
+var require_methods13 = __commonJS({
   "src/images/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     var fs = require("fs");
@@ -9455,7 +9562,7 @@ var require_methods12 = __commonJS({
 });
 
 // src/messages/methods.js
-var require_methods13 = __commonJS({
+var require_methods14 = __commonJS({
   "src/messages/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function listMessages(parameters) {
@@ -9511,7 +9618,7 @@ var require_methods13 = __commonJS({
 });
 
 // src/models/methods.js
-var require_methods14 = __commonJS({
+var require_methods15 = __commonJS({
   "src/models/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function listModels(parameters) {
@@ -9540,7 +9647,7 @@ var require_methods14 = __commonJS({
 });
 
 // src/moderations/methods.js
-var require_methods15 = __commonJS({
+var require_methods16 = __commonJS({
   "src/moderations/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createModeration(parameters) {
@@ -9554,8 +9661,53 @@ var require_methods15 = __commonJS({
   }
 });
 
+// src/realtime/methods.js
+var require_methods17 = __commonJS({
+  "src/realtime/methods.js"(exports2, module2) {
+    var OpenAI = require_openai().OpenAI;
+    async function createRealtimeClientSecret(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.realtime.clientSecrets.create(
+        parameters.payload
+      );
+      return response;
+    }
+    async function acceptRealtimeCall(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { call_id, ...body } = parameters.payload;
+      await openai.realtime.calls.accept(call_id, body);
+      return { call_id, status: "accepted" };
+    }
+    async function hangupRealtimeCall(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { call_id, ...params } = parameters.payload;
+      await openai.realtime.calls.hangup(call_id, params);
+      return { call_id, status: "hung_up" };
+    }
+    async function referRealtimeCall(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { call_id, ...body } = parameters.payload;
+      await openai.realtime.calls.refer(call_id, body);
+      return { call_id, status: "referred" };
+    }
+    async function rejectRealtimeCall(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { call_id, ...body } = parameters.payload;
+      await openai.realtime.calls.reject(call_id, body);
+      return { call_id, status: "rejected" };
+    }
+    module2.exports = {
+      createRealtimeClientSecret,
+      acceptRealtimeCall,
+      hangupRealtimeCall,
+      referRealtimeCall,
+      rejectRealtimeCall
+    };
+  }
+});
+
 // src/responses/methods.js
-var require_methods16 = __commonJS({
+var require_methods18 = __commonJS({
   "src/responses/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function streamResponse(parameters, response) {
@@ -9632,101 +9784,8 @@ var require_methods16 = __commonJS({
   }
 });
 
-// src/skills/methods.js
-var require_methods17 = __commonJS({
-  "src/skills/methods.js"(exports2, module2) {
-    var OpenAI = require_openai().OpenAI;
-    async function createSkill(parameters) {
-      const openai = new OpenAI(this.clientParams);
-      const response = await openai.skills.create(parameters.payload);
-      return response;
-    }
-    async function getSkill(parameters) {
-      const openai = new OpenAI(this.clientParams);
-      const { skill_id, ...params } = parameters.payload;
-      const response = await openai.skills.retrieve(skill_id, params);
-      return response;
-    }
-    async function modifySkill(parameters) {
-      const openai = new OpenAI(this.clientParams);
-      const { skill_id, ...body } = parameters.payload;
-      const response = await openai.skills.update(skill_id, body);
-      return response;
-    }
-    async function deleteSkill(parameters) {
-      const openai = new OpenAI(this.clientParams);
-      const { skill_id, ...params } = parameters.payload;
-      const response = await openai.skills.delete(skill_id, params);
-      return response;
-    }
-    async function listSkills(parameters) {
-      const openai = new OpenAI(this.clientParams);
-      const list = await openai.skills.list(parameters.payload);
-      return [...list.data];
-    }
-    async function getSkillContent(parameters) {
-      const openai = new OpenAI(this.clientParams);
-      const { skill_id, ...params } = parameters.payload;
-      const response = await openai.skills.content.retrieve(skill_id, params);
-      return response;
-    }
-    async function createSkillVersion(parameters) {
-      const openai = new OpenAI(this.clientParams);
-      const { skill_id, ...body } = parameters.payload;
-      const response = await openai.skills.versions.create(skill_id, body);
-      return response;
-    }
-    async function getSkillVersion(parameters) {
-      const openai = new OpenAI(this.clientParams);
-      const { skill_id, version, ...params } = parameters.payload;
-      const response = await openai.skills.versions.retrieve(version, {
-        skill_id,
-        ...params
-      });
-      return response;
-    }
-    async function listSkillVersions(parameters) {
-      const openai = new OpenAI(this.clientParams);
-      const { skill_id, ...params } = parameters.payload;
-      const list = await openai.skills.versions.list(skill_id, params);
-      return [...list.data];
-    }
-    async function deleteSkillVersion(parameters) {
-      const openai = new OpenAI(this.clientParams);
-      const { skill_id, version, ...params } = parameters.payload;
-      const response = await openai.skills.versions.delete(version, {
-        skill_id,
-        ...params
-      });
-      return response;
-    }
-    async function getSkillVersionContent(parameters) {
-      const openai = new OpenAI(this.clientParams);
-      const { skill_id, version, ...params } = parameters.payload;
-      const response = await openai.skills.versions.content.retrieve(version, {
-        skill_id,
-        ...params
-      });
-      return response;
-    }
-    module2.exports = {
-      createSkill,
-      getSkill,
-      modifySkill,
-      deleteSkill,
-      listSkills,
-      getSkillContent,
-      createSkillVersion,
-      getSkillVersion,
-      listSkillVersions,
-      deleteSkillVersion,
-      getSkillVersionContent
-    };
-  }
-});
-
 // src/runs/methods.js
-var require_methods18 = __commonJS({
+var require_methods19 = __commonJS({
   "src/runs/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createThreadAndRun(parameters) {
@@ -9869,8 +9928,101 @@ var require_methods18 = __commonJS({
   }
 });
 
+// src/skills/methods.js
+var require_methods20 = __commonJS({
+  "src/skills/methods.js"(exports2, module2) {
+    var OpenAI = require_openai().OpenAI;
+    async function createSkill(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.skills.create(parameters.payload);
+      return response;
+    }
+    async function getSkill(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { skill_id, ...params } = parameters.payload;
+      const response = await openai.skills.retrieve(skill_id, params);
+      return response;
+    }
+    async function modifySkill(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { skill_id, ...body } = parameters.payload;
+      const response = await openai.skills.update(skill_id, body);
+      return response;
+    }
+    async function deleteSkill(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { skill_id, ...params } = parameters.payload;
+      const response = await openai.skills.delete(skill_id, params);
+      return response;
+    }
+    async function listSkills(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const list = await openai.skills.list(parameters.payload);
+      return [...list.data];
+    }
+    async function getSkillContent(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { skill_id, ...params } = parameters.payload;
+      const response = await openai.skills.content.retrieve(skill_id, params);
+      return response;
+    }
+    async function createSkillVersion(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { skill_id, ...body } = parameters.payload;
+      const response = await openai.skills.versions.create(skill_id, body);
+      return response;
+    }
+    async function getSkillVersion(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { skill_id, version, ...params } = parameters.payload;
+      const response = await openai.skills.versions.retrieve(version, {
+        skill_id,
+        ...params
+      });
+      return response;
+    }
+    async function listSkillVersions(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { skill_id, ...params } = parameters.payload;
+      const list = await openai.skills.versions.list(skill_id, params);
+      return [...list.data];
+    }
+    async function deleteSkillVersion(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { skill_id, version, ...params } = parameters.payload;
+      const response = await openai.skills.versions.delete(version, {
+        skill_id,
+        ...params
+      });
+      return response;
+    }
+    async function getSkillVersionContent(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { skill_id, version, ...params } = parameters.payload;
+      const response = await openai.skills.versions.content.retrieve(version, {
+        skill_id,
+        ...params
+      });
+      return response;
+    }
+    module2.exports = {
+      createSkill,
+      getSkill,
+      modifySkill,
+      deleteSkill,
+      listSkills,
+      getSkillContent,
+      createSkillVersion,
+      getSkillVersion,
+      listSkillVersions,
+      deleteSkillVersion,
+      getSkillVersionContent
+    };
+  }
+});
+
 // src/threads/methods.js
-var require_methods19 = __commonJS({
+var require_methods21 = __commonJS({
   "src/threads/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createThread(parameters) {
@@ -9906,7 +10058,7 @@ var require_methods19 = __commonJS({
 });
 
 // src/uploads/methods.js
-var require_methods20 = __commonJS({
+var require_methods22 = __commonJS({
   "src/uploads/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createUpload(parameters) {
@@ -10004,7 +10156,7 @@ var require_methods20 = __commonJS({
 });
 
 // src/vector-store-file-batches/methods.js
-var require_methods21 = __commonJS({
+var require_methods23 = __commonJS({
   "src/vector-store-file-batches/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     var fs = require("fs");
@@ -10078,7 +10230,7 @@ var require_methods21 = __commonJS({
 });
 
 // src/vector-store-files/methods.js
-var require_methods22 = __commonJS({
+var require_methods24 = __commonJS({
   "src/vector-store-files/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createVectorStoreFile(parameters) {
@@ -10125,7 +10277,7 @@ var require_methods22 = __commonJS({
 });
 
 // src/vector-stores/methods.js
-var require_methods23 = __commonJS({
+var require_methods25 = __commonJS({
   "src/vector-stores/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createVectorStore(parameters) {
@@ -10167,6 +10319,98 @@ var require_methods23 = __commonJS({
   }
 });
 
+// src/videos/methods.js
+var require_methods26 = __commonJS({
+  "src/videos/methods.js"(exports2, module2) {
+    var OpenAI = require_openai().OpenAI;
+    async function createVideo(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.videos.create(parameters.payload);
+      return response;
+    }
+    async function getVideo(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { video_id, ...params } = parameters.payload;
+      const response = await openai.videos.retrieve(video_id, params);
+      return response;
+    }
+    async function listVideos(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const list = await openai.videos.list(parameters.payload);
+      return [...list.data];
+    }
+    async function deleteVideo(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { video_id, ...params } = parameters.payload;
+      const response = await openai.videos.delete(video_id, params);
+      return response;
+    }
+    async function downloadVideoContent(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { video_id, ...params } = parameters.payload;
+      const response = await openai.videos.downloadContent(video_id, params);
+      return response;
+    }
+    async function remixVideo(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { video_id, ...body } = parameters.payload;
+      const response = await openai.videos.remix(video_id, body);
+      return response;
+    }
+    module2.exports = {
+      createVideo,
+      getVideo,
+      listVideos,
+      deleteVideo,
+      downloadVideoContent,
+      remixVideo
+    };
+  }
+});
+
+// src/webhooks/methods.js
+var require_methods27 = __commonJS({
+  "src/webhooks/methods.js"(exports2, module2) {
+    var OpenAI = require_openai().OpenAI;
+    async function unwrapWebhookEvent(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const {
+        payload: webhookPayload,
+        headers,
+        secret,
+        tolerance
+      } = parameters.payload;
+      const response = await openai.webhooks.unwrap(
+        webhookPayload,
+        headers,
+        secret,
+        tolerance
+      );
+      return response;
+    }
+    async function verifyWebhookSignature(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const {
+        payload: webhookPayload,
+        headers,
+        secret,
+        tolerance
+      } = parameters.payload;
+      await openai.webhooks.verifySignature(
+        webhookPayload,
+        headers,
+        secret,
+        tolerance
+      );
+      return { verified: true };
+    }
+    module2.exports = {
+      unwrapWebhookEvent,
+      verifyWebhookSignature
+    };
+  }
+});
+
 // src/lib.js
 var assistants = require_methods2();
 var audio = require_methods3();
@@ -10176,20 +10420,24 @@ var container_files = require_methods6();
 var containers = require_methods7();
 var conversations = require_methods8();
 var embeddings = require_methods9();
-var files = require_methods10();
-var fine_tuning = require_methods11();
-var images = require_methods12();
-var messages = require_methods13();
-var models = require_methods14();
-var moderations = require_methods15();
-var responses = require_methods16();
-var skills = require_methods17();
-var runs = require_methods18();
-var threads = require_methods19();
-var uploads = require_methods20();
-var vectorStoreFileBatches = require_methods21();
-var vectorStoreFiles = require_methods22();
-var vectorStores = require_methods23();
+var evals = require_methods10();
+var files = require_methods11();
+var fine_tuning = require_methods12();
+var images = require_methods13();
+var messages = require_methods14();
+var models = require_methods15();
+var moderations = require_methods16();
+var realtime = require_methods17();
+var responses = require_methods18();
+var runs = require_methods19();
+var skills = require_methods20();
+var threads = require_methods21();
+var uploads = require_methods22();
+var vectorStoreFileBatches = require_methods23();
+var vectorStoreFiles = require_methods24();
+var vectorStores = require_methods25();
+var videos = require_methods26();
+var webhooks = require_methods27();
 function normalizeHeaderOrQueryName(headerOrQueryName) {
   if (typeof headerOrQueryName !== "string") {
     return "Authorization";
@@ -10241,17 +10489,21 @@ Object.assign(
   containers,
   conversations,
   embeddings,
+  evals,
   files,
   fine_tuning,
   images,
   messages,
   models,
   moderations,
+  realtime,
   responses,
-  skills,
   runs,
+  skills,
   threads,
   uploads,
+  videos,
+  webhooks,
   vectorStoreFileBatches,
   vectorStoreFiles,
   vectorStores

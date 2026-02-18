@@ -549,7 +549,524 @@ test("skills methods map to OpenAI SDK skills endpoints", async () => {
   ]);
 });
 
-test("OpenaiApi prototype exposes new responses, conversations, and skills methods", () => {
+test("evals methods map to OpenAI SDK evals endpoints", async () => {
+  const calls = [];
+
+  class FakeOpenAI {
+    constructor(clientParams) {
+      calls.push({ method: "ctor", clientParams });
+      this.evals = {
+        create: async (body) => {
+          calls.push({ method: "evals.create", body });
+          return { id: "eval_new" };
+        },
+        retrieve: async (evalId, options) => {
+          calls.push({ method: "evals.retrieve", evalId, options });
+          return { id: evalId };
+        },
+        update: async (evalId, body) => {
+          calls.push({ method: "evals.update", evalId, body });
+          return { id: evalId, updated: true };
+        },
+        delete: async (evalId, options) => {
+          calls.push({ method: "evals.delete", evalId, options });
+          return { id: evalId, deleted: true };
+        },
+        list: async (options) => {
+          calls.push({ method: "evals.list", options });
+          return { data: [{ id: "eval_1" }, { id: "eval_2" }] };
+        },
+        runs: {
+          create: async (evalId, body) => {
+            calls.push({ method: "evals.runs.create", evalId, body });
+            return { id: "run_new", eval_id: evalId };
+          },
+          retrieve: async (runId, options) => {
+            calls.push({ method: "evals.runs.retrieve", runId, options });
+            return { id: runId };
+          },
+          list: async (evalId, options) => {
+            calls.push({ method: "evals.runs.list", evalId, options });
+            return { data: [{ id: "run_1" }, { id: "run_2" }] };
+          },
+          delete: async (runId, options) => {
+            calls.push({ method: "evals.runs.delete", runId, options });
+            return { id: runId, deleted: true };
+          },
+          cancel: async (runId, options) => {
+            calls.push({ method: "evals.runs.cancel", runId, options });
+            return { id: runId, status: "cancelled" };
+          },
+          outputItems: {
+            retrieve: async (outputItemId, options) => {
+              calls.push({
+                method: "evals.runs.outputItems.retrieve",
+                outputItemId,
+                options,
+              });
+              return { id: outputItemId };
+            },
+            list: async (runId, options) => {
+              calls.push({ method: "evals.runs.outputItems.list", runId, options });
+              return { data: [{ id: "out_1" }, { id: "out_2" }] };
+            },
+          },
+        },
+      };
+    }
+  }
+
+  await withMockedOpenAI(FakeOpenAI, async () => {
+    const modulePath = require.resolve("../src/evals/methods.js");
+    delete require.cache[modulePath];
+    const evalMethods = require("../src/evals/methods.js");
+
+    const clientContext = { clientParams: { apiKey: "sk-test" } };
+
+    const listedEvals = await evalMethods.listEvals.call(clientContext, {
+      payload: { order: "desc", limit: 2 },
+    });
+    assert.deepEqual(listedEvals, [{ id: "eval_1" }, { id: "eval_2" }]);
+
+    const createdEval = await evalMethods.createEval.call(clientContext, {
+      payload: {
+        name: "Support quality eval",
+        data_source_config: { type: "custom", schema: { type: "object" } },
+        testing_criteria: [],
+      },
+    });
+    assert.deepEqual(createdEval, { id: "eval_new" });
+
+    const fetchedEval = await evalMethods.getEval.call(clientContext, {
+      payload: { eval_id: "eval_1" },
+    });
+    assert.deepEqual(fetchedEval, { id: "eval_1" });
+
+    const updatedEval = await evalMethods.modifyEval.call(clientContext, {
+      payload: { eval_id: "eval_1", name: "Updated eval" },
+    });
+    assert.deepEqual(updatedEval, { id: "eval_1", updated: true });
+
+    const deletedEval = await evalMethods.deleteEval.call(clientContext, {
+      payload: { eval_id: "eval_1" },
+    });
+    assert.deepEqual(deletedEval, { id: "eval_1", deleted: true });
+
+    const listedRuns = await evalMethods.listEvalRuns.call(clientContext, {
+      payload: { eval_id: "eval_1", limit: 2 },
+    });
+    assert.deepEqual(listedRuns, [{ id: "run_1" }, { id: "run_2" }]);
+
+    const createdRun = await evalMethods.createEvalRun.call(clientContext, {
+      payload: {
+        eval_id: "eval_1",
+        data_source: {
+          type: "jsonl",
+          source: { type: "file_id", id: "file_1" },
+        },
+      },
+    });
+    assert.deepEqual(createdRun, { id: "run_new", eval_id: "eval_1" });
+
+    const fetchedRun = await evalMethods.getEvalRun.call(clientContext, {
+      payload: { eval_id: "eval_1", run_id: "run_1" },
+    });
+    assert.deepEqual(fetchedRun, { id: "run_1" });
+
+    const cancelledRun = await evalMethods.cancelEvalRun.call(clientContext, {
+      payload: { eval_id: "eval_1", run_id: "run_1" },
+    });
+    assert.deepEqual(cancelledRun, { id: "run_1", status: "cancelled" });
+
+    const deletedRun = await evalMethods.deleteEvalRun.call(clientContext, {
+      payload: { eval_id: "eval_1", run_id: "run_1" },
+    });
+    assert.deepEqual(deletedRun, { id: "run_1", deleted: true });
+
+    const listedOutputItems = await evalMethods.listEvalRunOutputItems.call(clientContext, {
+      payload: { eval_id: "eval_1", run_id: "run_1", limit: 1 },
+    });
+    assert.deepEqual(listedOutputItems, [{ id: "out_1" }, { id: "out_2" }]);
+
+    const fetchedOutputItem = await evalMethods.getEvalRunOutputItem.call(clientContext, {
+      payload: { eval_id: "eval_1", run_id: "run_1", output_item_id: "out_1" },
+    });
+    assert.deepEqual(fetchedOutputItem, { id: "out_1" });
+
+    delete require.cache[modulePath];
+  });
+
+  const evalCalls = calls.filter((entry) => entry.method !== "ctor");
+  assert.deepEqual(evalCalls, [
+    {
+      method: "evals.list",
+      options: { order: "desc", limit: 2 },
+    },
+    {
+      method: "evals.create",
+      body: {
+        name: "Support quality eval",
+        data_source_config: { type: "custom", schema: { type: "object" } },
+        testing_criteria: [],
+      },
+    },
+    {
+      method: "evals.retrieve",
+      evalId: "eval_1",
+      options: {},
+    },
+    {
+      method: "evals.update",
+      evalId: "eval_1",
+      body: { name: "Updated eval" },
+    },
+    {
+      method: "evals.delete",
+      evalId: "eval_1",
+      options: {},
+    },
+    {
+      method: "evals.runs.list",
+      evalId: "eval_1",
+      options: { limit: 2 },
+    },
+    {
+      method: "evals.runs.create",
+      evalId: "eval_1",
+      body: {
+        data_source: {
+          type: "jsonl",
+          source: { type: "file_id", id: "file_1" },
+        },
+      },
+    },
+    {
+      method: "evals.runs.retrieve",
+      runId: "run_1",
+      options: { eval_id: "eval_1" },
+    },
+    {
+      method: "evals.runs.cancel",
+      runId: "run_1",
+      options: { eval_id: "eval_1" },
+    },
+    {
+      method: "evals.runs.delete",
+      runId: "run_1",
+      options: { eval_id: "eval_1" },
+    },
+    {
+      method: "evals.runs.outputItems.list",
+      runId: "run_1",
+      options: { eval_id: "eval_1", limit: 1 },
+    },
+    {
+      method: "evals.runs.outputItems.retrieve",
+      outputItemId: "out_1",
+      options: { eval_id: "eval_1", run_id: "run_1" },
+    },
+  ]);
+});
+
+test("videos methods map to OpenAI SDK videos endpoints", async () => {
+  const calls = [];
+
+  class FakeOpenAI {
+    constructor(clientParams) {
+      calls.push({ method: "ctor", clientParams });
+      this.videos = {
+        create: async (body) => {
+          calls.push({ method: "videos.create", body });
+          return { id: "video_new" };
+        },
+        retrieve: async (videoId, options) => {
+          calls.push({ method: "videos.retrieve", videoId, options });
+          return { id: videoId };
+        },
+        list: async (options) => {
+          calls.push({ method: "videos.list", options });
+          return { data: [{ id: "video_1" }, { id: "video_2" }] };
+        },
+        delete: async (videoId, options) => {
+          calls.push({ method: "videos.delete", videoId, options });
+          return { id: videoId, deleted: true };
+        },
+        downloadContent: async (videoId, query) => {
+          calls.push({ method: "videos.downloadContent", videoId, query });
+          return { binary: true };
+        },
+        remix: async (videoId, body) => {
+          calls.push({ method: "videos.remix", videoId, body });
+          return { id: "video_remix" };
+        },
+      };
+    }
+  }
+
+  await withMockedOpenAI(FakeOpenAI, async () => {
+    const modulePath = require.resolve("../src/videos/methods.js");
+    delete require.cache[modulePath];
+    const videoMethods = require("../src/videos/methods.js");
+
+    const clientContext = { clientParams: { apiKey: "sk-test" } };
+
+    const listedVideos = await videoMethods.listVideos.call(clientContext, {
+      payload: { order: "desc", limit: 1 },
+    });
+    assert.deepEqual(listedVideos, [{ id: "video_1" }, { id: "video_2" }]);
+
+    const createdVideo = await videoMethods.createVideo.call(clientContext, {
+      payload: { prompt: "A sunrise over mountains", model: "sora-2" },
+    });
+    assert.deepEqual(createdVideo, { id: "video_new" });
+
+    const fetchedVideo = await videoMethods.getVideo.call(clientContext, {
+      payload: { video_id: "video_1" },
+    });
+    assert.deepEqual(fetchedVideo, { id: "video_1" });
+
+    const deletedVideo = await videoMethods.deleteVideo.call(clientContext, {
+      payload: { video_id: "video_1" },
+    });
+    assert.deepEqual(deletedVideo, { id: "video_1", deleted: true });
+
+    const downloaded = await videoMethods.downloadVideoContent.call(clientContext, {
+      payload: { video_id: "video_1", variant: "thumbnail" },
+    });
+    assert.deepEqual(downloaded, { binary: true });
+
+    const remixed = await videoMethods.remixVideo.call(clientContext, {
+      payload: { video_id: "video_1", prompt: "Make it cinematic" },
+    });
+    assert.deepEqual(remixed, { id: "video_remix" });
+
+    delete require.cache[modulePath];
+  });
+
+  const videoCalls = calls.filter((entry) => entry.method !== "ctor");
+  assert.deepEqual(videoCalls, [
+    {
+      method: "videos.list",
+      options: { order: "desc", limit: 1 },
+    },
+    {
+      method: "videos.create",
+      body: { prompt: "A sunrise over mountains", model: "sora-2" },
+    },
+    {
+      method: "videos.retrieve",
+      videoId: "video_1",
+      options: {},
+    },
+    {
+      method: "videos.delete",
+      videoId: "video_1",
+      options: {},
+    },
+    {
+      method: "videos.downloadContent",
+      videoId: "video_1",
+      query: { variant: "thumbnail" },
+    },
+    {
+      method: "videos.remix",
+      videoId: "video_1",
+      body: { prompt: "Make it cinematic" },
+    },
+  ]);
+});
+
+test("realtime methods map to OpenAI SDK realtime endpoints", async () => {
+  const calls = [];
+
+  class FakeOpenAI {
+    constructor(clientParams) {
+      calls.push({ method: "ctor", clientParams });
+      this.realtime = {
+        clientSecrets: {
+          create: async (body) => {
+            calls.push({ method: "realtime.clientSecrets.create", body });
+            return { client_secret: { value: "rt_secret_1", expires_at: 123 } };
+          },
+        },
+        calls: {
+          accept: async (callId, body) => {
+            calls.push({ method: "realtime.calls.accept", callId, body });
+          },
+          hangup: async (callId, options) => {
+            calls.push({ method: "realtime.calls.hangup", callId, options });
+          },
+          refer: async (callId, body) => {
+            calls.push({ method: "realtime.calls.refer", callId, body });
+          },
+          reject: async (callId, body) => {
+            calls.push({ method: "realtime.calls.reject", callId, body });
+          },
+        },
+      };
+    }
+  }
+
+  await withMockedOpenAI(FakeOpenAI, async () => {
+    const modulePath = require.resolve("../src/realtime/methods.js");
+    delete require.cache[modulePath];
+    const realtimeMethods = require("../src/realtime/methods.js");
+
+    const clientContext = { clientParams: { apiKey: "sk-test" } };
+
+    const secret = await realtimeMethods.createRealtimeClientSecret.call(clientContext, {
+      payload: { model: "gpt-realtime" },
+    });
+    assert.deepEqual(secret, { client_secret: { value: "rt_secret_1", expires_at: 123 } });
+
+    const accepted = await realtimeMethods.acceptRealtimeCall.call(clientContext, {
+      payload: { call_id: "call_1", type: "realtime", model: "gpt-realtime" },
+    });
+    assert.deepEqual(accepted, { call_id: "call_1", status: "accepted" });
+
+    const hungUp = await realtimeMethods.hangupRealtimeCall.call(clientContext, {
+      payload: { call_id: "call_1" },
+    });
+    assert.deepEqual(hungUp, { call_id: "call_1", status: "hung_up" });
+
+    const referred = await realtimeMethods.referRealtimeCall.call(clientContext, {
+      payload: { call_id: "call_1", target_uri: "tel:+14155550123" },
+    });
+    assert.deepEqual(referred, { call_id: "call_1", status: "referred" });
+
+    const rejected = await realtimeMethods.rejectRealtimeCall.call(clientContext, {
+      payload: { call_id: "call_2", status_code: 486 },
+    });
+    assert.deepEqual(rejected, { call_id: "call_2", status: "rejected" });
+
+    delete require.cache[modulePath];
+  });
+
+  const realtimeCalls = calls.filter((entry) => entry.method !== "ctor");
+  assert.deepEqual(realtimeCalls, [
+    {
+      method: "realtime.clientSecrets.create",
+      body: { model: "gpt-realtime" },
+    },
+    {
+      method: "realtime.calls.accept",
+      callId: "call_1",
+      body: { type: "realtime", model: "gpt-realtime" },
+    },
+    {
+      method: "realtime.calls.hangup",
+      callId: "call_1",
+      options: {},
+    },
+    {
+      method: "realtime.calls.refer",
+      callId: "call_1",
+      body: { target_uri: "tel:+14155550123" },
+    },
+    {
+      method: "realtime.calls.reject",
+      callId: "call_2",
+      body: { status_code: 486 },
+    },
+  ]);
+});
+
+test("webhooks methods map to OpenAI SDK webhooks utilities", async () => {
+  const calls = [];
+
+  class FakeOpenAI {
+    constructor(clientParams) {
+      calls.push({ method: "ctor", clientParams });
+      this.webhooks = {
+        unwrap: async (payload, headers, secret, tolerance) => {
+          calls.push({
+            method: "webhooks.unwrap",
+            payload,
+            headers,
+            secret,
+            tolerance,
+          });
+          return { id: "evt_1", type: "response.completed" };
+        },
+        verifySignature: async (payload, headers, secret, tolerance) => {
+          calls.push({
+            method: "webhooks.verifySignature",
+            payload,
+            headers,
+            secret,
+            tolerance,
+          });
+        },
+      };
+    }
+  }
+
+  await withMockedOpenAI(FakeOpenAI, async () => {
+    const modulePath = require.resolve("../src/webhooks/methods.js");
+    delete require.cache[modulePath];
+    const webhookMethods = require("../src/webhooks/methods.js");
+
+    const clientContext = { clientParams: { apiKey: "sk-test" } };
+
+    const event = await webhookMethods.unwrapWebhookEvent.call(clientContext, {
+      payload: {
+        payload: "{\"id\":\"evt_1\"}",
+        headers: {
+          "webhook-id": "wh_1",
+          "webhook-signature": "v1,abc",
+          "webhook-timestamp": "123",
+        },
+        secret: "whsec_test",
+        tolerance: 30,
+      },
+    });
+    assert.deepEqual(event, { id: "evt_1", type: "response.completed" });
+
+    const verified = await webhookMethods.verifyWebhookSignature.call(clientContext, {
+      payload: {
+        payload: "{\"id\":\"evt_1\"}",
+        headers: {
+          "webhook-id": "wh_1",
+          "webhook-signature": "v1,abc",
+          "webhook-timestamp": "123",
+        },
+        secret: "whsec_test",
+        tolerance: 30,
+      },
+    });
+    assert.deepEqual(verified, { verified: true });
+
+    delete require.cache[modulePath];
+  });
+
+  const webhookCalls = calls.filter((entry) => entry.method !== "ctor");
+  assert.deepEqual(webhookCalls, [
+    {
+      method: "webhooks.unwrap",
+      payload: "{\"id\":\"evt_1\"}",
+      headers: {
+        "webhook-id": "wh_1",
+        "webhook-signature": "v1,abc",
+        "webhook-timestamp": "123",
+      },
+      secret: "whsec_test",
+      tolerance: 30,
+    },
+    {
+      method: "webhooks.verifySignature",
+      payload: "{\"id\":\"evt_1\"}",
+      headers: {
+        "webhook-id": "wh_1",
+        "webhook-signature": "v1,abc",
+        "webhook-timestamp": "123",
+      },
+      secret: "whsec_test",
+      tolerance: 30,
+    },
+  ]);
+});
+
+test("OpenaiApi prototype exposes latest methods", () => {
   const OpenaiApi = require("../src/lib.js");
   const client = new OpenaiApi("sk-test", "https://api.openai.com/v1", null);
 
@@ -558,11 +1075,16 @@ test("OpenaiApi prototype exposes new responses, conversations, and skills metho
   assert.equal(typeof client.countInputTokens, "function");
   assert.equal(typeof client.createConversation, "function");
   assert.equal(typeof client.listConversationItems, "function");
+  assert.equal(typeof client.createEval, "function");
+  assert.equal(typeof client.listEvalRunOutputItems, "function");
+  assert.equal(typeof client.createRealtimeClientSecret, "function");
   assert.equal(typeof client.listSkills, "function");
   assert.equal(typeof client.getSkillVersionContent, "function");
+  assert.equal(typeof client.createVideo, "function");
+  assert.equal(typeof client.verifyWebhookSignature, "function");
 });
 
-test("editor templates and locale expose new responses, conversations, and skills methods", () => {
+test("editor templates and locale expose latest methods", () => {
   const responsesTemplate = fs.readFileSync(
     path.join(__dirname, "..", "src", "responses", "template.html"),
     "utf8"
@@ -573,6 +1095,22 @@ test("editor templates and locale expose new responses, conversations, and skill
   );
   const skillsTemplate = fs.readFileSync(
     path.join(__dirname, "..", "src", "skills", "template.html"),
+    "utf8"
+  );
+  const evalsTemplate = fs.readFileSync(
+    path.join(__dirname, "..", "src", "evals", "template.html"),
+    "utf8"
+  );
+  const realtimeTemplate = fs.readFileSync(
+    path.join(__dirname, "..", "src", "realtime", "template.html"),
+    "utf8"
+  );
+  const videosTemplate = fs.readFileSync(
+    path.join(__dirname, "..", "src", "videos", "template.html"),
+    "utf8"
+  );
+  const webhooksTemplate = fs.readFileSync(
+    path.join(__dirname, "..", "src", "webhooks", "template.html"),
     "utf8"
   );
   const nodeTemplate = fs.readFileSync(
@@ -587,6 +1125,22 @@ test("editor templates and locale expose new responses, conversations, and skill
     path.join(__dirname, "..", "src", "skills", "help.html"),
     "utf8"
   );
+  const evalsHelp = fs.readFileSync(
+    path.join(__dirname, "..", "src", "evals", "help.html"),
+    "utf8"
+  );
+  const realtimeHelp = fs.readFileSync(
+    path.join(__dirname, "..", "src", "realtime", "help.html"),
+    "utf8"
+  );
+  const videosHelp = fs.readFileSync(
+    path.join(__dirname, "..", "src", "videos", "help.html"),
+    "utf8"
+  );
+  const webhooksHelp = fs.readFileSync(
+    path.join(__dirname, "..", "src", "webhooks", "help.html"),
+    "utf8"
+  );
   const locale = JSON.parse(
     fs.readFileSync(path.join(__dirname, "..", "locales", "en-US", "node.json"), "utf8")
   );
@@ -598,14 +1152,34 @@ test("editor templates and locale expose new responses, conversations, and skill
   assert.match(conversationsTemplate, /value="listConversationItems"/);
   assert.match(skillsTemplate, /value="listSkills"/);
   assert.match(skillsTemplate, /value="getSkillVersionContent"/);
+  assert.match(evalsTemplate, /value="createEval"/);
+  assert.match(evalsTemplate, /value="listEvalRunOutputItems"/);
+  assert.match(realtimeTemplate, /value="createRealtimeClientSecret"/);
+  assert.match(realtimeTemplate, /value="rejectRealtimeCall"/);
+  assert.match(videosTemplate, /value="downloadVideoContent"/);
+  assert.match(webhooksTemplate, /value="verifyWebhookSignature"/);
   assert.match(nodeTemplate, /@@include\('\.\/conversations\/template\.html'\)/);
   assert.match(nodeTemplate, /@@include\('\.\/conversations\/help\.html'\)/);
+  assert.match(nodeTemplate, /@@include\('\.\/evals\/template\.html'\)/);
+  assert.match(nodeTemplate, /@@include\('\.\/evals\/help\.html'\)/);
+  assert.match(nodeTemplate, /@@include\('\.\/realtime\/template\.html'\)/);
+  assert.match(nodeTemplate, /@@include\('\.\/realtime\/help\.html'\)/);
   assert.match(nodeTemplate, /@@include\('\.\/skills\/template\.html'\)/);
   assert.match(nodeTemplate, /@@include\('\.\/skills\/help\.html'\)/);
+  assert.match(nodeTemplate, /@@include\('\.\/videos\/template\.html'\)/);
+  assert.match(nodeTemplate, /@@include\('\.\/videos\/help\.html'\)/);
+  assert.match(nodeTemplate, /@@include\('\.\/webhooks\/template\.html'\)/);
+  assert.match(nodeTemplate, /@@include\('\.\/webhooks\/help\.html'\)/);
   assert.match(responsesHelp, /⋙ Count Input Tokens/);
   assert.match(responsesHelp, /Default is <code>desc<\/code>/);
+  assert.match(evalsHelp, /⋙ Create Eval/);
+  assert.match(evalsHelp, /⋙ List Eval Run Output Items/);
+  assert.match(realtimeHelp, /⋙ Create Realtime Client Secret/);
+  assert.match(realtimeHelp, /⋙ Reject Realtime Call/);
   assert.match(skillsHelp, /⋙ Create Skill/);
   assert.match(skillsHelp, /⋙ List Skill Versions/);
+  assert.match(videosHelp, /⋙ Download Video Content/);
+  assert.match(webhooksHelp, /⋙ Verify Webhook Signature/);
 
   assert.equal(
     locale.OpenaiApi.parameters.cancelModelResponse,
@@ -626,5 +1200,21 @@ test("editor templates and locale expose new responses, conversations, and skill
   assert.equal(
     locale.OpenaiApi.parameters.getSkillVersion,
     "retrieve skill version"
+  );
+  assert.equal(
+    locale.OpenaiApi.parameters.createEvalRun,
+    "create eval run"
+  );
+  assert.equal(
+    locale.OpenaiApi.parameters.acceptRealtimeCall,
+    "accept realtime call"
+  );
+  assert.equal(
+    locale.OpenaiApi.parameters.downloadVideoContent,
+    "download video content"
+  );
+  assert.equal(
+    locale.OpenaiApi.parameters.verifyWebhookSignature,
+    "verify webhook signature"
   );
 });

@@ -209,6 +209,21 @@
           data-i18n="OpenaiApi.parameters.createEmbedding"
         ></option>
       </optgroup>
+        <optgroup style="font-style: normal;" label="📊 Evals">
+    <option value="listEvals" data-i18n="OpenaiApi.parameters.listEvals"></option>
+    <option value="createEval" data-i18n="OpenaiApi.parameters.createEval"></option>
+    <option value="getEval" data-i18n="OpenaiApi.parameters.getEval"></option>
+    <option value="modifyEval" data-i18n="OpenaiApi.parameters.modifyEval"></option>
+    <option value="deleteEval" data-i18n="OpenaiApi.parameters.deleteEval"></option>
+    <option value="listEvalRuns" data-i18n="OpenaiApi.parameters.listEvalRuns"></option>
+    <option value="createEvalRun" data-i18n="OpenaiApi.parameters.createEvalRun"></option>
+    <option value="getEvalRun" data-i18n="OpenaiApi.parameters.getEvalRun"></option>
+    <option value="cancelEvalRun" data-i18n="OpenaiApi.parameters.cancelEvalRun"></option>
+    <option value="deleteEvalRun" data-i18n="OpenaiApi.parameters.deleteEvalRun"></option>
+    <option value="listEvalRunOutputItems" data-i18n="OpenaiApi.parameters.listEvalRunOutputItems"></option>
+    <option value="getEvalRunOutputItem" data-i18n="OpenaiApi.parameters.getEvalRunOutputItem"></option>
+</optgroup>
+
               <optgroup style="font-style: normal;" label="📁 Files">
         <option
           value="listFiles"
@@ -298,6 +313,14 @@
           data-i18n="OpenaiApi.parameters.createModeration"
         ></option>
       </optgroup>
+        <optgroup style="font-style: normal;" label="📞 Realtime">
+    <option value="createRealtimeClientSecret" data-i18n="OpenaiApi.parameters.createRealtimeClientSecret"></option>
+    <option value="acceptRealtimeCall" data-i18n="OpenaiApi.parameters.acceptRealtimeCall"></option>
+    <option value="hangupRealtimeCall" data-i18n="OpenaiApi.parameters.hangupRealtimeCall"></option>
+    <option value="referRealtimeCall" data-i18n="OpenaiApi.parameters.referRealtimeCall"></option>
+    <option value="rejectRealtimeCall" data-i18n="OpenaiApi.parameters.rejectRealtimeCall"></option>
+</optgroup>
+
               <optgroup style="font-style: normal;" label="🗨️ Responses">
         <option
           value="createModelResponse"
@@ -424,6 +447,20 @@
     data-i18n="OpenaiApi.parameters.cancelUpload"
   ></option>
       </optgroup>
+        <optgroup style="font-style: normal;" label="🎬 Videos">
+    <option value="listVideos" data-i18n="OpenaiApi.parameters.listVideos"></option>
+    <option value="createVideo" data-i18n="OpenaiApi.parameters.createVideo"></option>
+    <option value="getVideo" data-i18n="OpenaiApi.parameters.getVideo"></option>
+    <option value="deleteVideo" data-i18n="OpenaiApi.parameters.deleteVideo"></option>
+    <option value="downloadVideoContent" data-i18n="OpenaiApi.parameters.downloadVideoContent"></option>
+    <option value="remixVideo" data-i18n="OpenaiApi.parameters.remixVideo"></option>
+</optgroup>
+
+        <optgroup style="font-style: normal;" label="🪝 Webhooks">
+    <option value="unwrapWebhookEvent" data-i18n="OpenaiApi.parameters.unwrapWebhookEvent"></option>
+    <option value="verifyWebhookSignature" data-i18n="OpenaiApi.parameters.verifyWebhookSignature"></option>
+</optgroup>
+
         <optgroup style="font-style: normal;" label="🔢 Vector Stores">
   <option value="createVectorStore" data-i18n="OpenaiApi.parameters.createVectorStore"></option>
   <option value="listVectorStores" data-i18n="OpenaiApi.parameters.listVectorStores"></option>
@@ -1750,6 +1787,256 @@
 </section>
   <section>
     <details>
+        <summary style="font-weight: bold;">📊 Evals</summary>
+        <a href="https://developers.openai.com/api/reference/typescript/resources/evals/" target="_blank">Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Evals</h4>
+        <p>List evaluations for a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for items after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of evals to return.</dd>
+            <dt class="optional">
+                order
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Sort order by creation time. Use <code>asc</code> or <code>desc</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Eval</h4>
+        <p>Create an eval definition with data source config and testing criteria.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                name
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval name.</dd>
+            <dt>
+                data_source_config
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Data source config schema used by eval runs.</dd>
+            <dt>
+                testing_criteria
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Grader criteria used to score results.</dd>
+            <dt class="optional">
+                metadata
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional metadata key-value pairs.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Eval</h4>
+        <p>Retrieve an eval by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                eval_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Eval</h4>
+        <p>Update mutable eval fields.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                eval_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval id.</dd>
+            <dt class="optional">
+                name
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Updated eval name.</dd>
+            <dt class="optional">
+                metadata
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Updated metadata.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Eval</h4>
+        <p>Delete an eval by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                eval_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Eval Runs</h4>
+        <p>List runs for an eval.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                eval_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval id.</dd>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for items after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of runs to return.</dd>
+            <dt class="optional">
+                order
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Sort order by creation time. Use <code>asc</code> or <code>desc</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Eval Run</h4>
+        <p>Create a run for an eval.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                eval_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval id.</dd>
+            <dt>
+                data_source
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Run data source config.</dd>
+            <dt class="optional">
+                model
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Model used for the run when applicable.</dd>
+            <dt class="optional">
+                metadata
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional run metadata.</dd>
+            <dt class="optional">
+                name
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Optional run name.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Eval Run</h4>
+        <p>Retrieve a run by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                eval_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval id.</dd>
+            <dt>
+                run_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The run id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Cancel Eval Run</h4>
+        <p>Cancel an in-progress eval run.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                eval_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval id.</dd>
+            <dt>
+                run_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The run id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Eval Run</h4>
+        <p>Delete an eval run.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                eval_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval id.</dd>
+            <dt>
+                run_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The run id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Eval Run Output Items</h4>
+        <p>List output items for a run.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                eval_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval id.</dd>
+            <dt>
+                run_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The run id.</dd>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for items after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of items to return.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Eval Run Output Item</h4>
+        <p>Retrieve one run output item by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                eval_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval id.</dd>
+            <dt>
+                run_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The run id.</dd>
+            <dt>
+                output_item_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The output item id.</dd>
+        </dl>
+    </details>
+</section>
+
+  <section>
+    <details>
         <summary style="font-weight: bold;">📁 Files</summary>
         <a href="https://developers.openai.com/api/reference/typescript/resources/files/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
@@ -2378,6 +2665,136 @@
 
     </details>
 </section>
+  <section>
+    <details>
+        <summary style="font-weight: bold;">📞 Realtime</summary>
+        <a href="https://developers.openai.com/api/reference/typescript/resources/realtime/" target="_blank">Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Realtime Client Secret</h4>
+        <p>Create an ephemeral client secret for browser/mobile realtime sessions.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                model
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Realtime model id.</dd>
+            <dt class="optional">
+                instructions
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Default system instructions for the session.</dd>
+            <dt class="optional">
+                output_modalities
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Output modalities such as <code>text</code> or <code>audio</code>.</dd>
+            <dt class="optional">
+                audio
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Input/output audio config for the session.</dd>
+            <dt class="optional">
+                tools
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Tools available to the realtime model.</dd>
+            <dt class="optional">
+                tool_choice
+                <span class="property-type">string | object</span>
+            </dt>
+            <dd>How tools are selected.</dd>
+            <dt class="optional">
+                tracing
+                <span class="property-type">string | object | null</span>
+            </dt>
+            <dd>Trace configuration for the realtime session.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Accept Realtime Call</h4>
+        <p>Accept an incoming SIP call and attach it to a realtime session.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                call_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The incoming call id.</dd>
+            <dt>
+                type
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Must be <code>realtime</code>.</dd>
+            <dt class="optional">
+                model
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Realtime model id for the accepted call.</dd>
+            <dt class="optional">
+                instructions
+                <span class="property-type">string</span>
+            </dt>
+            <dd>System instructions for the call session.</dd>
+            <dt class="optional">
+                tools
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Tools available in the call session.</dd>
+            <dt class="optional">
+                tool_choice
+                <span class="property-type">string | object</span>
+            </dt>
+            <dd>Tool selection strategy.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Hangup Realtime Call</h4>
+        <p>Hang up an active realtime call.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                call_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The call id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Refer Realtime Call</h4>
+        <p>Transfer an active call using SIP REFER.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                call_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The call id.</dd>
+            <dt>
+                target_uri
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Transfer target URI, for example <code>tel:+14155550123</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Reject Realtime Call</h4>
+        <p>Reject an incoming call.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                call_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The call id.</dd>
+            <dt class="optional">
+                status_code
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Optional SIP status code. Default is <code>603</code>.</dd>
+        </dl>
+
+        <p>Call operations return a small confirmation object in <code>msg.payload</code> when successful.</p>
+    </details>
+</section>
+
   <section>
     <details>
         <summary style="font-weight: bold;">🗨️ Responses</summary>
@@ -3564,6 +3981,182 @@
 
     </details>
 </section>
+  <section>
+    <details>
+        <summary style="font-weight: bold;">🎬 Videos</summary>
+        <a href="https://developers.openai.com/api/reference/typescript/resources/videos/" target="_blank">Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Videos</h4>
+        <p>List generated videos.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for items after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of videos to return.</dd>
+            <dt class="optional">
+                order
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Sort order by creation time. Use <code>asc</code> or <code>desc</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Video</h4>
+        <p>Create a new video generation job.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                prompt
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Prompt describing the video output.</dd>
+            <dt class="optional">
+                input_reference
+                <span class="property-type">file</span>
+            </dt>
+            <dd>Optional reference image upload.</dd>
+            <dt class="optional">
+                model
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Video model id.</dd>
+            <dt class="optional">
+                seconds
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Clip length in seconds.</dd>
+            <dt class="optional">
+                size
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Video resolution.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Video</h4>
+        <p>Retrieve one video job by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                video_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The video id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Video</h4>
+        <p>Delete one video job by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                video_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The video id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Download Video Content</h4>
+        <p>Download rendered video content or related assets.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                video_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The video id.</dd>
+            <dt class="optional">
+                variant
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Asset variant: <code>video</code>, <code>thumbnail</code>, or <code>spritesheet</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Remix Video</h4>
+        <p>Create a remix from an existing video id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                video_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The source video id.</dd>
+            <dt>
+                prompt
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Prompt describing remix changes.</dd>
+        </dl>
+    </details>
+</section>
+
+  <section>
+    <details>
+        <summary style="font-weight: bold;">🪝 Webhooks</summary>
+        <a href="https://developers.openai.com/api/reference/typescript/resources/webhooks/" target="_blank">Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+
+        <h4 style="font-weight: bolder;"> ⋙ Unwrap Webhook Event</h4>
+        <p>Validate signature and parse the webhook payload into an event object.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                payload
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Raw webhook request body string.</dd>
+            <dt>
+                headers
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Request headers containing webhook signature fields.</dd>
+            <dt class="optional">
+                secret
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Webhook secret. If omitted, SDK-level webhook secret is used.</dd>
+            <dt class="optional">
+                tolerance
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum webhook age in seconds. Default is <code>300</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Verify Webhook Signature</h4>
+        <p>Validate a webhook signature without parsing the event body.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                payload
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Raw webhook request body string.</dd>
+            <dt>
+                headers
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Request headers containing webhook signature fields.</dd>
+            <dt class="optional">
+                secret
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Webhook secret. If omitted, SDK-level webhook secret is used.</dd>
+            <dt class="optional">
+                tolerance
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum webhook age in seconds. Default is <code>300</code>.</dd>
+        </dl>
+
+        <p>The verify method returns <code>{ verified: true }</code> on success.</p>
+    </details>
+</section>
+
   <section>
     <details>
         <summary style="font-weight: bold;">🗃️ Vector Stores</summary>

@@ -8,20 +8,24 @@ const container_files = require("./container-files/methods.js");
 const containers = require("./containers/methods.js");
 const conversations = require("./conversations/methods.js");
 const embeddings = require("./embeddings/methods.js");
+const evals = require("./evals/methods.js");
 const files = require("./files/methods.js");
 const fine_tuning = require("./fine-tuning/methods.js");
 const images = require("./images/methods.js");
 const messages = require("./messages/methods.js");
 const models = require("./models/methods.js");
 const moderations = require("./moderations/methods.js");
+const realtime = require("./realtime/methods.js");
 const responses = require("./responses/methods.js");
-const skills = require("./skills/methods.js");
 const runs = require("./runs/methods.js");
+const skills = require("./skills/methods.js");
 const threads = require("./threads/methods.js");
 const uploads = require("./uploads/methods.js");
 const vectorStoreFileBatches = require("./vector-store-file-batches/methods.js");
 const vectorStoreFiles = require("./vector-store-files/methods.js");
 const vectorStores = require("./vector-stores/methods.js");
+const videos = require("./videos/methods.js");
+const webhooks = require("./webhooks/methods.js");
 
 function normalizeHeaderOrQueryName(headerOrQueryName) {
   if (typeof headerOrQueryName !== "string") {
@@ -82,17 +86,21 @@ Object.assign(
   containers,
   conversations,
   embeddings,
+  evals,
   files,
   fine_tuning,
   images,
   messages,
   models,
   moderations,
+  realtime,
   responses,
-  skills,
   runs,
+  skills,
   threads,
   uploads,
+  videos,
+  webhooks,
   vectorStoreFileBatches,
   vectorStoreFiles,
   vectorStores
