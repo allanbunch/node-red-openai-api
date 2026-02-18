@@ -1,0 +1,129 @@
+<section>
+    <details>
+        <summary style="font-weight: bold;">📞 Realtime</summary>
+        <a href="https://developers.openai.com/api/reference/typescript/resources/realtime/" target="_blank">Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Realtime Client Secret</h4>
+        <p>Create an ephemeral client secret for browser/mobile realtime sessions.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                model
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Realtime model id.</dd>
+            <dt class="optional">
+                instructions
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Default system instructions for the session.</dd>
+            <dt class="optional">
+                output_modalities
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Output modalities such as <code>text</code> or <code>audio</code>.</dd>
+            <dt class="optional">
+                audio
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Input/output audio config for the session.</dd>
+            <dt class="optional">
+                tools
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Tools available to the realtime model.</dd>
+            <dt class="optional">
+                tool_choice
+                <span class="property-type">string | object</span>
+            </dt>
+            <dd>How tools are selected.</dd>
+            <dt class="optional">
+                tracing
+                <span class="property-type">string | object | null</span>
+            </dt>
+            <dd>Trace configuration for the realtime session.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Accept Realtime Call</h4>
+        <p>Accept an incoming SIP call and attach it to a realtime session.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                call_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The incoming call id.</dd>
+            <dt>
+                type
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Must be <code>realtime</code>.</dd>
+            <dt class="optional">
+                model
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Realtime model id for the accepted call.</dd>
+            <dt class="optional">
+                instructions
+                <span class="property-type">string</span>
+            </dt>
+            <dd>System instructions for the call session.</dd>
+            <dt class="optional">
+                tools
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Tools available in the call session.</dd>
+            <dt class="optional">
+                tool_choice
+                <span class="property-type">string | object</span>
+            </dt>
+            <dd>Tool selection strategy.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Hangup Realtime Call</h4>
+        <p>Hang up an active realtime call.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                call_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The call id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Refer Realtime Call</h4>
+        <p>Transfer an active call using SIP REFER.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                call_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The call id.</dd>
+            <dt>
+                target_uri
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Transfer target URI, for example <code>tel:+14155550123</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Reject Realtime Call</h4>
+        <p>Reject an incoming call.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                call_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The call id.</dd>
+            <dt class="optional">
+                status_code
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Optional SIP status code. Default is <code>603</code>.</dd>
+        </dl>
+
+        <p>Call operations return a small confirmation object in <code>msg.payload</code> when successful.</p>
+    </details>
+</section>
