@@ -95,12 +95,14 @@ The method dropdown includes operations across:
 - Containers
 - Conversations
 - Embeddings
+- Evals
 - Files
 - Fine-tuning
 - Images
 - Messages
 - Models
 - Moderations
+- Realtime
 - Responses
 - Runs
 - Skills
@@ -109,6 +111,10 @@ The method dropdown includes operations across:
 - Vector Store File Batches
 - Vector Store Files
 - Vector Stores
+- Videos
+- Webhooks
+
+`Graders` are supported through Evals payloads (`testing_criteria`) in the same way the official SDK models them.
 
 See the in-editor node help for method-specific payload fields and links to official API docs.
 
@@ -128,6 +134,20 @@ See the in-editor node help for method-specific payload fields and links to offi
   - retrieve skill content
   - list/create/retrieve/delete skill versions
   - retrieve skill version content
+- Added Evals API support:
+  - list/create/retrieve/modify/delete evals
+  - list/create/retrieve/cancel/delete eval runs
+  - list/retrieve eval run output items
+- Added Realtime API support:
+  - create client secret
+  - accept/hangup/refer/reject SIP calls
+- Added Videos API support:
+  - list/create/retrieve/delete videos
+  - download video content
+  - remix videos
+- Added Webhooks utility support:
+  - unwrap signed webhook payloads
+  - verify webhook signatures
 - Service Host auth routing now applies `Auth Header` configuration at request time.
 
 ## Examples
