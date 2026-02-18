@@ -1,7 +1,7 @@
 <section>
     <details>
         <summary style="font-weight: bold;">🗄️ Container Files</summary>
-        <a href="https://platform.openai.com/docs/api-reference/container-files" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/containers/files/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
 
         <h4 style="font-weight: bolder;"> ⋙ Create Container File</h4>
@@ -11,24 +11,18 @@
 
             <dt>
                 container_id
-                <a href="https://platform.openai.com/docs/api-reference/container-files/createContainerFile#container-files-createcontainerfile-container_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the container to hold the file.</dd>
 
             <dt class="optional">
                 file
-                <a href="https://platform.openai.com/docs/api-reference/container-files/createContainerFile#container-files-createcontainerfile-file"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">file</span>
             </dt>
             <dd>The File object (not file name) to be uploaded.</dd>
 
             <dt class="optional">
                 file_id
-                <a href="https://platform.openai.com/docs/api-reference/container-files/createContainerFile#container-files-createcontainerfile-file_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Name of the file to create.</dd>
@@ -41,32 +35,24 @@
 
             <dt>
                 container_id
-                <a href="https://platform.openai.com/docs/api-reference/container-files/listContainerFiles#container-files-listcontainerfiles-container_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the desired container.</dd>
 
             <dt class="optional">
                 after
-                <a href="https://platform.openai.com/docs/api-reference/container-files/listContainerFiles#container-files-listcontainerfiles-after"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination. `after` is an object ID that defines your place in the list.</dd>
 
             <dt class="optional">
                 limit
-                <a href="https://platform.openai.com/docs/api-reference/container-files/listContainerFiles#container-files-listcontainerfiles-limit"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>A limit on the number of objects to be returned.</dd>
 
             <dt class="optional">
                 order
-                <a href="https://platform.openai.com/docs/api-reference/container-files/listContainerFiles#container-files-listcontainerfiles-order"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Sort order by the created_at timestamp of the objects.</dd>
@@ -79,16 +65,12 @@
 
             <dt>
                 container_id
-                <a href="https://platform.openai.com/docs/api-reference/container-files/retrieveContainerFile#container-files-retrievecontainerfile-container_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the desired container.</dd>
 
             <dt>
                 file_id
-                <a href="https://platform.openai.com/docs/api-reference/container-files/retrieveContainerFile#container-files-retrievecontainerfile-container_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the file to retrieve.</dd>
@@ -101,16 +83,12 @@
 
             <dt>
                 container_id
-                <a href="https://platform.openai.com/docs/api-reference/container-files/retrieveContainerFileContent#container-files-retrievecontainerfilecontent-container_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the desired container.</dd>
 
             <dt>
                 file_id
-                <a href="https://platform.openai.com/docs/api-reference/container-files/retrieveContainerFileContent#container-files-retrievecontainerfilecontent-file_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the desired file.</dd>
@@ -124,16 +102,12 @@
 
             <dt>
                 container_id
-                <a href="https://platform.openai.com/docs/api-reference/container-files/deleteContainerFile#container-files-deletecontainerfile-container_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the desired container.</dd>
 
             <dt>
                 file_id
-                <a href="https://platform.openai.com/docs/api-reference/container-files/deleteContainerFile#container-files-deletecontainerfile-file_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the file to delete.</dd>

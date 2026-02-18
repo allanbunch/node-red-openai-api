@@ -1,7 +1,7 @@
 <section>
     <details>
         <summary style="font-weight: bold;">🫙 Containers</summary>
-        <a href="https://platform.openai.com/docs/api-reference/containers" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/containers/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
 
         <h4 style="font-weight: bolder;"> ⋙ Create Container</h4>
@@ -11,24 +11,18 @@
 
             <dt>
                 name
-                <a href="https://platform.openai.com/docs/api-reference/containers/createContainers#containers-createcontainers-name"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Name of the container to create.</dd>
 
             <dt class="optional">
                 expires_after
-                <a href="https://platform.openai.com/docs/api-reference/containers/createContainers#containers-createcontainers-expires_after"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>Container expiration time in seconds relative to the 'anchor' time.</dd>
 
             <dt class="optional">
                 file_ids
-                <a href="https://platform.openai.com/docs/api-reference/containers/createContainers#containers-createcontainers-file_ids"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>IDs of files to copy to the container.</dd>
@@ -47,24 +41,18 @@
 
             <dt class="optional">
                 after
-                <a href="https://platform.openai.com/docs/api-reference/containers/listContainers#containers-listcontainers-after"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination. after is an object ID that defines your place in the list.</dd>
 
             <dt class="optional">
                 limit
-                <a href="https://platform.openai.com/docs/api-reference/containers/listContainers#containers-listcontainers-limit"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>A limit on the number of objects to be returned.</dd>
 
             <dt class="optional">
                 order
-                <a href="https://platform.openai.com/docs/api-reference/containers/listContainers#containers-listcontainers-order"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Sort order by the created_at timestamp of the objects.</dd>
@@ -77,8 +65,6 @@
 
             <dt>
                 container_id
-                <a href="https://platform.openai.com/docs/api-reference/containers/retrieveContainer#containers-retrievecontainer-container_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the container to retrieve.</dd>
@@ -91,8 +77,6 @@
 
             <dt>
                 container_id
-                <a href="https://platform.openai.com/docs/api-reference/containers/deleteContainer#containers-deletecontainer-container_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the container to delete.</dd>

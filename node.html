@@ -478,7 +478,7 @@
 <script type="text/html" data-help-name="OpenAI API">
   <p>
     OpenAI Platform Services API. Please see the
-    <a href="https://platform.openai.com/docs/api-reference" target="_blank"
+    <a href="https://developers.openai.com/api/reference" target="_blank"
       >OpenAI API Reference</a
     >
     for more details.
@@ -488,7 +488,7 @@
   <section>
     <details>
         <summary style="font-weight: bold;">🤖 Assistants</summary>
-        <a href="https://platform.openai.com/docs/api-reference/assistants" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/beta/assistants/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
         <h4 style="font-weight: bolder;"> ⋙ Create Assistant</h4>
         <p>Create an assistant with a model and instructions.</p>
@@ -497,60 +497,44 @@
 
             <dt>
                 model
-                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>ID of the model to use.</dd>
             <dt class="optional">
                 name
-                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-name"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The name of the assistant.</dd>
             <dt class="optional">
                 description
-                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-description"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The description of the assistant.</dd>
             <dt class="optional">
                 instructions
-                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-instructions"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The system instructions that the assistant uses.</dd>
             <dt class="optional">
                 tools
-                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-tools"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>A list of tool enabled on the assistant.</dd>
 
             <dt class="optional">
                 tool_resources
-                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-tool_resources"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>A set of resources that are used by the assistant's tools. </dd>
 
             <dt class="optional">
                 metadata
-                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-metadata"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
 
             <dt class="optional">
                 temperature
-                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-temperature"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">number</span>
             </dt>
             <dd>What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more
@@ -558,8 +542,6 @@
 
             <dt class="optional">
                 top_p
-                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-top_p"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">number</span>
             </dt>
             <dd>An alternative to sampling with temperature, called nucleus sampling, where the model considers the
@@ -567,8 +549,6 @@
 
             <dt class="optional">
                 response_format
-                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistant#assistants-createassistant-response_format"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Specifies the format that the model must output.</dd>
@@ -582,8 +562,6 @@
 
             <dt>
                 assistant_id
-                <a href="https://platform.openai.com/docs/api-reference/assistants/getAssistant#assistants-getassistant-assistant_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the assistant to retrieve.</dd>
@@ -596,68 +574,50 @@
 
             <dt>
                 assistant_id
-                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-assistant_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the assistant to retrieve.</dd>
 
             <dt class="optional">
                 model
-                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>ID of the model to use.</dd>
             <dt class="optional">
                 name
-                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-name"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The name of the assistant.</dd>
             <dt class="optional">
                 description
-                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-description"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The description of the assistant.</dd>
             <dt class="optional">
                 instructions
-                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-instructions"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The system instructions that the assistant uses.</dd>
             <dt class="optional">
                 tools
-                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-tools"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>A list of tool enabled on the assistant.</dd>
 
             <dt class="optional">
                 tool_resources
-                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-tool_resources"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>A set of resources that are used by the assistant's tools. </dd>
 
             <dt class="optional">
                 metadata
-                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-metadata"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
 
             <dt class="optional">
                 temperature
-                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-temperature"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">number</span>
             </dt>
             <dd>What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more
@@ -665,8 +625,6 @@
 
             <dt class="optional">
                 top_p
-                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-top_p"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">number</span>
             </dt>
             <dd>An alternative to sampling with temperature, called nucleus sampling, where the model considers the
@@ -674,8 +632,6 @@
 
             <dt class="optional">
                 response_format
-                <a href="https://platform.openai.com/docs/api-reference/assistants/modifyAssistant#assistants-modifyassistant-response_format"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Specifies the format that the model must output.</dd>
@@ -689,8 +645,6 @@
 
             <dt>
                 assistant_id
-                <a href="https://platform.openai.com/docs/api-reference/assistants/deleteAssistant#assistants-deleteassistant-assistant_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the assistant to delete.</dd>
@@ -702,29 +656,21 @@
             <h4>msg.payload Properties</h4>
             <dt class="optional">
                 limit
-                <a href="https://platform.openai.com/docs/api-reference/assistants/listAssistants#assistants-listassistants-limit"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>A limit on the number of objects to be returned.</dd>
             <dt class="optional">
                 order
-                <a href="https://platform.openai.com/docs/api-reference/assistants/listAssistants#assistants-listassistants-order"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Sort order by the created_at timestamp of the objects.</dd>
             <dt class="optional">
                 after
-                <a href="https://platform.openai.com/docs/api-reference/assistants/listAssistants#assistants-listassistants-after"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination.</dd>
             <dt class="optional">
                 before
-                <a href="https://platform.openai.com/docs/api-reference/assistants/listAssistants#assistants-listassistants-before"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination.</dd>
@@ -737,36 +683,26 @@
 
             <dt>
                 assistant_id
-                <a href="https://platform.openai.com/docs/api-reference/assistants/listAssistantFiles#assistants-listassistantfiles-assistant_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the assistant the file belongs to.</dd>
             <dt class="optional">
                 limit
-                <a href="https://platform.openai.com/docs/api-reference/assistants/listAssistantFiles#assistants-listassistantfiles-limit"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>A limit on the number of objects to be returned.</dd>
             <dt class="optional">
                 order
-                <a href="https://platform.openai.com/docs/api-reference/assistants/listAssistantFiles#assistants-listassistantfiles-order"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Sort order by the created_at timestamp of the objects.</dd>
             <dt class="optional">
                 after
-                <a href="https://platform.openai.com/docs/api-reference/assistants/listAssistantFiles#assistants-listassistantfiles-after"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination.</dd>
             <dt class="optional">
                 before
-                <a href="https://platform.openai.com/docs/api-reference/assistants/listAssistantFiles#assistants-listassistantfiles-before"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination.</dd>
@@ -779,15 +715,11 @@
 
             <dt>
                 assistant_id
-                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistantFile#assistants-createassistantfile-assistant_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the assistant for which to create a File.</dd>
             <dt>
                 file_id
-                <a href="https://platform.openai.com/docs/api-reference/assistants/createAssistantFile#assistants-createassistantfile-file_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -802,15 +734,11 @@
 
             <dt>
                 assistant_id
-                <a href="https://platform.openai.com/docs/api-reference/assistants/getAssistantFile#assistants-getassistantfile-assistant_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the assistant who the file belongs to.</dd>
             <dt>
                 file_id
-                <a href="https://platform.openai.com/docs/api-reference/assistants/getAssistantFile#assistants-getassistantfile-file_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the file we're getting.</dd>
@@ -823,15 +751,11 @@
 
             <dt>
                 assistant_id
-                <a href="https://platform.openai.com/docs/api-reference/assistants/deleteAssistantFile#assistants-deleteassistantfile-assistant_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the assistant that the file belongs to.</dd>
             <dt>
                 file_id
-                <a href="https://platform.openai.com/docs/api-reference/assistants/deleteAssistantFile#assistants-deleteassistantfile-file_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the file to delete.</dd>
@@ -841,7 +765,7 @@
   <section>
     <details>
         <summary style="font-weight: bold;">🔉 Audio</summary>
-        <a href="https://platform.openai.com/docs/api-reference/audio" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/audio/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
         <h4 style="font-weight: bolder;"> ⋙ Create Speech</h4>
         <p>Generates audio from the input text.</p>
@@ -850,16 +774,12 @@
 
             <dt>
                 input
-                <a href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-input"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The text to generate audio for.</dd>
 
             <dt>
                 model
-                <a href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>One of the available TTS models: <code>tts-1</code>, <code>tts-1-hd</code> or
@@ -867,8 +787,6 @@
 
             <dt>
                 voice
-                <a href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-voice"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -879,8 +797,6 @@
 
             <dt class="optional">
                 instructions
-                <a href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-instructions"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -890,8 +806,6 @@
 
             <dt class="optional">
                 response_format
-                <a href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-response_format"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -900,8 +814,6 @@
 
             <dt class="optional">
                 speed
-                <a href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-speed"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">number</span>
             </dt>
             <dd>
@@ -917,8 +829,6 @@
 
             <dt>
                 file
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-file"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">file</span>
             </dt>
             <dd>
@@ -927,22 +837,16 @@
             </dd>
             <dt>
                 model
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>ID of the model to use.</dd>
             <dt class="optional">
                 language
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-language"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The language of the input audio.</dd>
             <dt class="optional">
                 prompt
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-prompt"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -951,8 +855,6 @@
             </dd>
             <dt class="optional">
                 response_format
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-response_format"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -961,16 +863,12 @@
             </dd>
             <dt class="optional">
                 temperature
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-temperature"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">number</span>
             </dt>
             <dd>The sampling temperature, between 0 and 1.</dd>
 
             <dt class="optional">
                 timestamp_granularities
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-timestamp_granularities"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>The timestamp granularities to populate for this transcription. <code>response_format</code> must be set
@@ -985,8 +883,6 @@
 
             <dt>
                 file
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranslation#audio-createtranslation-file"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">file</span>
             </dt>
             <dd>
@@ -995,15 +891,11 @@
             </dd>
             <dt>
                 model
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranslation#audio-createtranslation-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type"></span>
             </dt>
             <dd>ID of the model to use.</dd>
             <dt class="optional">
                 prompt
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranslation#audio-createtranslation-prompt"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -1012,8 +904,6 @@
             </dd>
             <dt class="optional">
                 response_format
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranslation#audio-createtranslation-response_format"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -1022,8 +912,6 @@
             </dd>
             <dt class="optional">
                 temperature
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranslation#audio-createtranslation-temperature"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">number</span>
             </dt>
             <dd>The sampling temperature, between 0 and 1.</dd>
@@ -1034,7 +922,7 @@
   <section>
     <details>
         <summary style="font-weight: bold;">📦 Batch</summary>
-        <a href="https://platform.openai.com/docs/api-reference/batch" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/batches/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
         <h4 style="font-weight: bolder;"> ⋙ Create Batch</h4>
         <p>Creates and executes a batch from an uploaded file of requests.</p>
@@ -1043,23 +931,17 @@
 
             <dt>
                 input_file_id
-                <a href="https://platform.openai.com/docs/api-reference/batch/create#batch-create-input_file_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of an uploaded file that contains requests for the new batch.</dd>
             <dt>
                 endpoint
-                <a href="https://platform.openai.com/docs/api-reference/batch/create#batch-create-endpoint"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The endpoint to be used for all requests in the batch. Currently only /v1/chat/completions is supported.
             </dd>
             <dt>
                 completion_window
-                <a href="https://platform.openai.com/docs/api-reference/batch/create#batch-create-completion_window"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -1067,8 +949,6 @@
             </dd>
             <dt class="optional">
                 metadata
-                <a href="https://platform.openai.com/docs/api-reference/batch/create#batch-create-metadata"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -1083,8 +963,6 @@
 
             <dt>
                 batch_id
-                <a href="https://platform.openai.com/docs/api-reference/batch/retrieve#batch-retrieve-batch_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the batch to retrieve.</dd>
@@ -1096,8 +974,6 @@
             <h4>msg.payload Properties</h4>
             <dt>
                 batch_id
-                <a href="https://platform.openai.com/docs/api-reference/batch/cancel#batch-cancel-batch_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the batch to cancel.</dd>
@@ -1109,16 +985,14 @@
             <h4>msg.payload Properties</h4>
             <dt class="optional">
                 after
-                <a href="https://platform.openai.com/docs/api-reference/batch/list#batch-list-after" target="_blank"><i
-                        class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination. after is an object ID that defines your place in the list.</dd>
 
             <dt class="optional">
                 limit
-                <a href="https://platform.openai.com/docs/api-reference/batch/list#batch-list-limit" target="_blank"><i
-                        class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                
                 <span class="property-type">integer</span>
             </dt>
             <dd>A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is
@@ -1131,66 +1005,52 @@
   <section>
     <details>
         <summary style="font-weight: bold;">💬 Chat</summary>
-        <a href="https://platform.openai.com/docs/api-reference/chat" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/chat/completions/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
         <h4 style="font-weight: bolder;"> ⋙ Create Chat Completion</h4>
         <p>
             Creates a model response for the given chat conversation.
-            <a href="https://platform.openai.com/docs/api-reference/chat/create" target="_blank">Full documentation.</a>
+            <a href="https://developers.openai.com/api/reference/typescript/resources/chat/completions/" target="_blank">Full documentation.</a>
         </p>
         <dl class="message-properties">
             <h4>msg.payload Properties</h4>
 
             <dt>
                 messages
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-messages"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>A list of messages comprising the conversation so far.</dd>
             <dt>
                 model
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>ID of the model to use.</dd>
 
             <dt class="optional">
                 store
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-store"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">boolean | null</span>
             </dt>
             <dd>Whether to store the output of this chat completion request.</dd>
 
             <dt class="optional">
                 reasoning_effort
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-reasoning_effort"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Constrains effort on reasoning for reasoning models.</dd>
 
             <dt class="optional">
                 metadata
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-metadata"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object or null</span>
             </dt>
             <dd>Developer-defined tags and values used for filtering completions in the dashboard.</dd>
 
             <dt class="optional">
                 frequency_penalty
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-frequency_penalty"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">number</span>
             </dt>
             <dd>Number between -2.0 and 2.0.</dd>
             <dt class="optional">
                 logit_bias
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-logit_bias"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>
@@ -1198,15 +1058,11 @@
             </dd>
             <dt class="optional">
                 logprobs
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-logprobs"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">boolean</span>
             </dt>
             <dd>Whether to return log probabilities of the output tokens or not.</dd>
             <dt class="optional">
                 top_logprobs
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-top_logprobs"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>
@@ -1216,8 +1072,6 @@
             </dd>
             <dt class="optional">
                 max_tokens [Deprecated]
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-max_tokens"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>
@@ -1228,8 +1082,6 @@
 
             <dt class="optional">
                 max_completion_tokens
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-max_completion_tokens"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>
@@ -1239,8 +1091,7 @@
 
             <dt class="optional">
                 n
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-n" target="_blank"><i
-                        class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                
                 <span class="property-type">integer</span>
             </dt>
             <dd>
@@ -1249,8 +1100,6 @@
 
             <dt class="optional">
                 modalities
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-modalities"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array or null</span>
             </dt>
             <dd>
@@ -1259,8 +1108,6 @@
 
             <dt class="optional">
                 prediction
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-prediction"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>
@@ -1269,8 +1116,6 @@
 
             <dt class="optional">
                 audio
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-audio"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object or null</span>
             </dt>
             <dd>
@@ -1279,24 +1124,19 @@
 
             <dt class="optional">
                 presence_penalty
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-presence_penalty"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">number</span>
             </dt>
             <dd>Number between -2.0 and 2.0.</dd>
 
             <dt class="optional">
                 response_format
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-response_format"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>An object specifying the format that the model must output.</dd>
 
             <dt class="optional">
                 seed
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-seed" target="_blank"><i
-                        class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                
                 <span class="property-type">integer</span>
             </dt>
             <dd>
@@ -1307,8 +1147,6 @@
 
             <dt class="optional">
                 service_tier
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-service_tier"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string or null</span>
             </dt>
             <dd>
@@ -1317,8 +1155,7 @@
 
             <dt class="optional">
                 stop
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-stop" target="_blank"><i
-                        class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                
                 <span class="property-type">string | array</span>
             </dt>
             <dd>
@@ -1327,32 +1164,24 @@
 
             <dt class="optional">
                 stream
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-stream"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">boolean</span>
             </dt>
             <dd>If set, partial message deltas will be sent, like in ChatGPT.</dd>
 
             <dt class="optional">
                 stream_options
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-stream_options"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>Options for streaming response. Only set this when you set ```stream: true```.</dd>
 
             <dt class="optional">
                 temperature
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-temperature"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">number</span>
             </dt>
             <dd>What sampling temperature to use, between 0 and 2.</dd>
 
             <dt class="optional">
                 top_p
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-top_p"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">number</span>
             </dt>
             <dd>
@@ -1363,32 +1192,25 @@
 
             <dt class="optional">
                 tools
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-tools"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>A list of tools the model may call.</dd>
 
             <dt class="optional">
                 tool_choice
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-tool_choice"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string | object</span>
             </dt>
             <dd>Whether to enable parallel function calling during tool use.</dd>
 
             <dt class="optional">
                 parallel_tool_calls
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-parallel_tool_calls"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string | object</span>
             </dt>
             <dd>Whether to enable parallel function calling during tool use.</dd>
 
             <dt class="optional">
                 user
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat-create-user" target="_blank"><i
-                        class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -1402,15 +1224,13 @@
         <h4 style="font-weight: bolder;"> ⋙ Get Chat Completion</h4>
         <p>
             Get a stored chat completion.
-            <a href="https://platform.openai.com/docs/api-reference/chat/get" target="_blank">Full documentation.</a>
+            <a href="https://developers.openai.com/api/reference/typescript/resources/chat/completions/" target="_blank">Full documentation.</a>
         </p>
         <dl class="message-properties">
             <h4>msg.payload Properties</h4>
 
             <dt>
                 completion_id
-                <a href="https://platform.openai.com/docs/api-reference/chat/get#chat-get-completion_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the chat completion to retrieve.</dd>
@@ -1420,7 +1240,7 @@
         <h4 style="font-weight: bolder;"> ⋙ Get Chat Messages</h4>
         <p>
             Get the messages in a stored chat completion.
-            <a href="https://platform.openai.com/docs/api-reference/chat/getMessages" target="_blank">Full
+            <a href="https://developers.openai.com/api/reference/typescript/resources/chat/completions/" target="_blank">Full
                 documentation.</a>
         </p>
         <dl class="message-properties">
@@ -1428,32 +1248,24 @@
 
             <dt>
                 completion_id
-                <a href="https://platform.openai.com/docs/api-reference/chat/getMessages#chat-getmessages-completion_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the chat completion to retrieve messages from.</dd>
 
             <dt class="optional">
                 after
-                <a href="https://platform.openai.com/docs/api-reference/chat/getMessages#chat-getmessages-afterf"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Identifier for the last message from the previous pagination request.</dd>
 
             <dt class="optional">
                 limit
-                <a href="https://platform.openai.com/docs/api-reference/chat/getMessages#chat-getmessages-limit"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>Number of messages to retrieve.</dd>
 
             <dt class="optional">
                 order
-                <a href="https://platform.openai.com/docs/api-reference/chat/getMessages#chat-getmessages-order"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Sort order for messages by timestamp.</dd>
@@ -1465,7 +1277,7 @@
             <h4 style="font-weight: bolder;"> ⋙ List Chat Completions</h4>
             <p>
                 List stored chat completions.
-                <a href="https://platform.openai.com/docs/api-reference/chat/list" target="_blank">Full
+                <a href="https://developers.openai.com/api/reference/typescript/resources/chat/completions/" target="_blank">Full
                     documentation.</a>
             </p>
             <dl class="message-properties">
@@ -1473,40 +1285,30 @@
 
                 <dt class="optional">
                     model
-                    <a href="https://platform.openai.com/docs/api-reference/chat/list#chat-list-model"
-                        target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                     <span class="property-type">string</span>
                 </dt>
                 <dd>The model used to generate the chat completions.</dd>
 
                 <dt class="optional">
                     metadata
-                    <a href="https://platform.openai.com/docs/api-reference/chat/list#chat-list-metadata"
-                        target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                     <span class="property-type">object</span>
                 </dt>
                 <dd>A list of metadata keys to filter the chat completions by.</dd>
 
                 <dt class="optional">
                     after
-                    <a href="https://platform.openai.com/docs/api-reference/chat/getMessages#chat-getmessages-limit"
-                        target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                     <span class="property-type">string</span>
                 </dt>
                 <dd>Identifier for the last chat completion from the previous pagination request.</dd>
 
                 <dt class="optional">
                     limit
-                    <a href="https://platform.openai.com/docs/api-reference/chat/list#chat-list-limit"
-                        target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                     <span class="property-type">integer</span>
                 </dt>
                 <dd>Number of chat completions to retrieve.</dd>
 
                 <dt class="optional">
                     order
-                    <a href="https://platform.openai.com/docs/api-reference/chat/list#chat-list-order"
-                        target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                     <span class="property-type">string</span>
                 </dt>
                 <dd>Sort order for chat completions by timestamp.</dd>
@@ -1518,7 +1320,7 @@
                 <h4 style="font-weight: bolder;"> ⋙ Update Chat Completion</h4>
                 <p>
                     Modify a stored chat completion.
-                    <a href="https://platform.openai.com/docs/api-reference/chat/update" target="_blank">Full
+                    <a href="https://developers.openai.com/api/reference/typescript/resources/chat/completions/" target="_blank">Full
                         documentation.</a>
                 </p>
                 <dl class="message-properties">
@@ -1526,16 +1328,12 @@
 
                     <dt>
                         completion_id
-                        <a href="https://platform.openai.com/docs/api-reference/chat/update#chat-update-completion_id"
-                            target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                         <span class="property-type">string</span>
                     </dt>
                     <dd>The ID of the chat completion to update.</dd>
 
                     <dt>
                         metadata
-                        <a href="https://platform.openai.com/docs/api-reference/chat/getMessages#chat-getmessages-limit"
-                            target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                         <span class="property-type">object</span>
                     </dt>
                     <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
@@ -1547,7 +1345,7 @@
                     <h4 style="font-weight: bolder;"> ⋙ Delete Chat Completion</h4>
                     <p>
                         Delete a stored chat completion.
-                        <a href="https://platform.openai.com/docs/api-reference/chat/delete" target="_blank">Full
+                        <a href="https://developers.openai.com/api/reference/typescript/resources/chat/completions/" target="_blank">Full
                             documentation.</a>
                     </p>
                     <dl class="message-properties">
@@ -1555,8 +1353,6 @@
 
                         <dt>
                             completion_id
-                            <a href="https://platform.openai.com/docs/api-reference/chat/delete#chat-delete-completion_id"
-                                target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                             <span class="property-type">string</span>
                         </dt>
                         <dd>The ID of the chat completion to delete.</dd>
@@ -1567,7 +1363,7 @@
   <section>
     <details>
         <summary style="font-weight: bold;">🗄️ Container Files</summary>
-        <a href="https://platform.openai.com/docs/api-reference/container-files" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/containers/files/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
 
         <h4 style="font-weight: bolder;"> ⋙ Create Container File</h4>
@@ -1577,24 +1373,18 @@
 
             <dt>
                 container_id
-                <a href="https://platform.openai.com/docs/api-reference/container-files/createContainerFile#container-files-createcontainerfile-container_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the container to hold the file.</dd>
 
             <dt class="optional">
                 file
-                <a href="https://platform.openai.com/docs/api-reference/container-files/createContainerFile#container-files-createcontainerfile-file"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">file</span>
             </dt>
             <dd>The File object (not file name) to be uploaded.</dd>
 
             <dt class="optional">
                 file_id
-                <a href="https://platform.openai.com/docs/api-reference/container-files/createContainerFile#container-files-createcontainerfile-file_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Name of the file to create.</dd>
@@ -1607,32 +1397,24 @@
 
             <dt>
                 container_id
-                <a href="https://platform.openai.com/docs/api-reference/container-files/listContainerFiles#container-files-listcontainerfiles-container_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the desired container.</dd>
 
             <dt class="optional">
                 after
-                <a href="https://platform.openai.com/docs/api-reference/container-files/listContainerFiles#container-files-listcontainerfiles-after"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination. `after` is an object ID that defines your place in the list.</dd>
 
             <dt class="optional">
                 limit
-                <a href="https://platform.openai.com/docs/api-reference/container-files/listContainerFiles#container-files-listcontainerfiles-limit"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>A limit on the number of objects to be returned.</dd>
 
             <dt class="optional">
                 order
-                <a href="https://platform.openai.com/docs/api-reference/container-files/listContainerFiles#container-files-listcontainerfiles-order"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Sort order by the created_at timestamp of the objects.</dd>
@@ -1645,16 +1427,12 @@
 
             <dt>
                 container_id
-                <a href="https://platform.openai.com/docs/api-reference/container-files/retrieveContainerFile#container-files-retrievecontainerfile-container_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the desired container.</dd>
 
             <dt>
                 file_id
-                <a href="https://platform.openai.com/docs/api-reference/container-files/retrieveContainerFile#container-files-retrievecontainerfile-container_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the file to retrieve.</dd>
@@ -1667,16 +1445,12 @@
 
             <dt>
                 container_id
-                <a href="https://platform.openai.com/docs/api-reference/container-files/retrieveContainerFileContent#container-files-retrievecontainerfilecontent-container_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the desired container.</dd>
 
             <dt>
                 file_id
-                <a href="https://platform.openai.com/docs/api-reference/container-files/retrieveContainerFileContent#container-files-retrievecontainerfilecontent-file_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the desired file.</dd>
@@ -1690,16 +1464,12 @@
 
             <dt>
                 container_id
-                <a href="https://platform.openai.com/docs/api-reference/container-files/deleteContainerFile#container-files-deletecontainerfile-container_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the desired container.</dd>
 
             <dt>
                 file_id
-                <a href="https://platform.openai.com/docs/api-reference/container-files/deleteContainerFile#container-files-deletecontainerfile-file_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the file to delete.</dd>
@@ -1711,7 +1481,7 @@
   <section>
     <details>
         <summary style="font-weight: bold;">🫙 Containers</summary>
-        <a href="https://platform.openai.com/docs/api-reference/containers" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/containers/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
 
         <h4 style="font-weight: bolder;"> ⋙ Create Container</h4>
@@ -1721,24 +1491,18 @@
 
             <dt>
                 name
-                <a href="https://platform.openai.com/docs/api-reference/containers/createContainers#containers-createcontainers-name"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Name of the container to create.</dd>
 
             <dt class="optional">
                 expires_after
-                <a href="https://platform.openai.com/docs/api-reference/containers/createContainers#containers-createcontainers-expires_after"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>Container expiration time in seconds relative to the 'anchor' time.</dd>
 
             <dt class="optional">
                 file_ids
-                <a href="https://platform.openai.com/docs/api-reference/containers/createContainers#containers-createcontainers-file_ids"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>IDs of files to copy to the container.</dd>
@@ -1757,24 +1521,18 @@
 
             <dt class="optional">
                 after
-                <a href="https://platform.openai.com/docs/api-reference/containers/listContainers#containers-listcontainers-after"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination. after is an object ID that defines your place in the list.</dd>
 
             <dt class="optional">
                 limit
-                <a href="https://platform.openai.com/docs/api-reference/containers/listContainers#containers-listcontainers-limit"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>A limit on the number of objects to be returned.</dd>
 
             <dt class="optional">
                 order
-                <a href="https://platform.openai.com/docs/api-reference/containers/listContainers#containers-listcontainers-order"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Sort order by the created_at timestamp of the objects.</dd>
@@ -1787,8 +1545,6 @@
 
             <dt>
                 container_id
-                <a href="https://platform.openai.com/docs/api-reference/containers/retrieveContainer#containers-retrievecontainer-container_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the container to retrieve.</dd>
@@ -1801,8 +1557,6 @@
 
             <dt>
                 container_id
-                <a href="https://platform.openai.com/docs/api-reference/containers/deleteContainer#containers-deletecontainer-container_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the container to delete.</dd>
@@ -1814,7 +1568,7 @@
   <section>
     <details>
         <summary style="font-weight: bold;">💬 Conversations</summary>
-        <a href="https://platform.openai.com/docs/api-reference/conversations" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/conversations/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
 
         <h4 style="font-weight: bolder;"> ⋙ Create Conversation</h4>
@@ -1950,7 +1704,7 @@
   <section>
     <details>
         <summary style="font-weight: bold;">🔗 Embeddings</summary>
-        <a href="https://platform.openai.com/docs/api-reference/embeddings" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/embeddings/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
         <h4 style="font-weight: bolder;"> ⋙ Create Embeddings</h4>
         <p>Creates an embedding vector representing the input text.</p>
@@ -1959,22 +1713,16 @@
 
             <dt>
                 input
-                <a href="https://platform.openai.com/docs/api-reference/embeddings/create#embeddings-create-input"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string | array</span>
             </dt>
             <dd>Input text to embed, encoded as a string or array of tokens.</dd>
             <dt>
                 model
-                <a href="https://platform.openai.com/docs/api-reference/embeddings/create#embeddings-create-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>ID of the model to use.</dd>
             <dt class="optional">
                 encoding_format
-                <a href="https://platform.openai.com/docs/api-reference/embeddings/create#embeddings-create-encoding_format"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -1982,8 +1730,6 @@
             </dd>
             <dt class="optional">
                 dimensions
-                <a href="https://platform.openai.com/docs/api-reference/embeddings/create#embeddings-create-dimensions"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>
@@ -1992,8 +1738,6 @@
             </dd>
             <dt class="optional">
                 user
-                <a href="https://platform.openai.com/docs/api-reference/embeddings/create#embeddings-create-user"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -2007,7 +1751,7 @@
   <section>
     <details>
         <summary style="font-weight: bold;">📁 Files</summary>
-        <a href="https://platform.openai.com/docs/api-reference/files" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/files/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
         <h4 style="font-weight: bolder;"> ⋙ List Files</h4>
         <p>Returns a list of files that belong to the user's organization.</p>
@@ -2016,32 +1760,27 @@
 
             <dt class="optional">
                 purpose
-                <a href="https://platform.openai.com/docs/api-reference/files/list#files-list-purpose"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Only return files with the given purpose.</dd>
 
             <dt class="optional">
                 limit
-                <a href="https://platform.openai.com/docs/api-reference/files/list#files-list-limit" target="_blank"><i
-                        class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                
                 <span class="property-type">integer</span>
             </dt>
             <dd>A limit on the number of objects to be returned.</dd>
 
             <dt class="optional">
                 order
-                <a href="https://platform.openai.com/docs/api-reference/files/list#files-list-order" target="_blank"><i
-                        class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                
                 <span class="property-type">string</span>
             </dt>
             <dd>Sort order by the created_at timestamp of the objects.</dd>
 
             <dt class="optional">
                 after
-                <a href="https://platform.openai.com/docs/api-reference/files/list#files-list-after" target="_blank"><i
-                        class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination.</dd>
@@ -2053,15 +1792,11 @@
 
             <dt>
                 file
-                <a href="https://platform.openai.com/docs/api-reference/files/create#files-create-file"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">file</span>
             </dt>
             <dd>Absolute path to the file that's being uploaded.</dd>
             <dt>
                 purpose
-                <a href="https://platform.openai.com/docs/api-reference/files/create#files-create-purpose"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The intended purpose of the uploaded file.</dd>
@@ -2083,8 +1818,6 @@
 
             <dt>
                 file_id
-                <a href="https://platform.openai.com/docs/api-reference/files/delete#files-delete-file_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the file to use for this request.</dd>
@@ -2097,8 +1830,6 @@
 
             <dt>
                 file_id
-                <a href="https://platform.openai.com/docs/api-reference/files/retrieve-contents#files-retrieve-contents-file_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the file to use for this request.</dd>
@@ -2109,7 +1840,7 @@
   <section>
     <details>
         <summary style="font-weight: bold;">🔧 Fine-tuning</summary>
-        <a href="https://platform.openai.com/docs/api-reference/fine-tuning" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/fine_tuning/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
         <h4 style="font-weight: bolder;"> ⋙ Create Fine-tuning Job</h4>
         <p>
@@ -2122,23 +1853,17 @@
 
             <dt>
                 model
-                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/create#fine-tuning-create-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The name of the model to fine-tune.</dd>
             <dt>
                 training_file
-                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/create#fine-tuning-create-training_file"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of an uploaded file that contains training data.</dd>
 
             <dt class="optional">
                 suffix
-                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/create#fine-tuning-create-suffix"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -2148,32 +1873,24 @@
 
             <dt class="optional">
                 validation_file
-                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/create#fine-tuning-create-validation_file"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of an uploaded file that contains validation data.</dd>
 
             <dt class="optional">
                 integrations
-                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/create#fine-tuning-create-integrations"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>A list of integrations to enable for your fine-tuning job.</dd>
 
             <dt class="optional">
                 seed
-                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/create#fine-tuning-create-seed"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>The seed controls the reproducibility of the job.</dd>
 
             <dt class="optional">
                 method
-                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/create#fine-tuning-create-method"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>The method used for fine-tuning.</dd>
@@ -2187,15 +1904,11 @@
 
             <dt class="optional">
                 after
-                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/list#fine-tuning-list-after"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Identifier for the last job from the previous pagination request.</dd>
             <dt class="optional">
                 limit
-                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/list#fine-tuning-list-limit"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>Number of fine-tuning jobs to retrieve.</dd>
@@ -2208,8 +1921,6 @@
 
             <dt>
                 fine_tuning_job_id
-                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/retrieve#fine-tuning-retrieve-fine_tuning_job_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the fine-tuning job.</dd>
@@ -2222,15 +1933,11 @@
 
             <dt>
                 fine_tuning_job_id
-                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/list-events#fine-tuning-list-events-fine_tuning_job_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the fine-tuning job to get events for.</dd>
             <dt class="optional">
                 after
-                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/list-events#fine-tuning-list-events-after"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -2238,8 +1945,6 @@
             </dd>
             <dt class="optional">
                 limit
-                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/list-events#fine-tuning-list-events-limit"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>Number of events to retrieve.</dd>
@@ -2253,15 +1958,11 @@
 
             <dt>
                 fine_tuning_job_id
-                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/list-checkpoints#fine-tuning-list-checkpoints-fine_tuning_job_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the fine-tuning job to get checkpoints for.</dd>
             <dt class="optional">
                 after
-                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/list-checkpoints#fine-tuning-list-checkpoints-after"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -2269,8 +1970,6 @@
             </dd>
             <dt class="optional">
                 limit
-                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/list-checkpoints#fine-tuning-list-checkpoints-limit"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>Number of events to retrieve.</dd>
@@ -2284,8 +1983,6 @@
 
             <dt>
                 fine_tuning_job_id
-                <a href="https://platform.openai.com/docs/api-reference/fine-tuning/cancel#fine-tuning-cancel-fine_tuning_job_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the fine-tuning job to cancel.</dd>
@@ -2296,7 +1993,7 @@
   <section>
     <details>
         <summary style="font-weight: bold;">🖼️ Images</summary>
-        <a href="https://platform.openai.com/docs/api-reference/images" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/images/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
         <h4 style="font-weight: bolder;"> ⋙ Create Image</h4>
         <p>Creates an image given a prompt.</p>
@@ -2305,36 +2002,26 @@
 
             <dt>
                 prompt
-                <a href="https://platform.openai.com/docs/api-reference/images/create#images-create-prompt"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A text description of the desired image(s).</dd>
             <dt class="optional">
                 model
-                <a href="https://platform.openai.com/docs/api-reference/images/create#images-create-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The model to use for image generation.</dd>
             <dt class="optional">
                 n
-                <a href="https://platform.openai.com/docs/api-reference/images/create#images-create-n"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>The number of images to generate.</dd>
             <dt class="optional">
                 quality
-                <a href="https://platform.openai.com/docs/api-reference/images/create#images-create-quality"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The quality of the image that will be generated.</dd>
             <dt class="optional">
                 response_format
-                <a href="https://platform.openai.com/docs/api-reference/images/create#images-create-response_format"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -2343,8 +2030,6 @@
             </dd>
             <dt class="optional">
                 size
-                <a href="https://platform.openai.com/docs/api-reference/images/create#images-create-size"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -2354,8 +2039,6 @@
             </dd>
             <dt class="optional">
                 style
-                <a href="https://platform.openai.com/docs/api-reference/images/create#images-create-style"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -2363,8 +2046,6 @@
             </dd>
             <dt class="optional">
                 user
-                <a href="https://platform.openai.com/docs/api-reference/images/create#images-create-user"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -2382,22 +2063,16 @@
 
             <dt>
                 image
-                <a href="https://platform.openai.com/docs/api-reference/images/createEdit#images-createedit-image"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The image to edit.</dd>
             <dt>
                 prompt
-                <a href="https://platform.openai.com/docs/api-reference/images/createEdit#images-createedit-prompt"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A text description of the desired image(s).</dd>
             <dt class="optional">
                 mask
-                <a href="https://platform.openai.com/docs/api-reference/images/createEdit#images-createedit-mask"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -2406,29 +2081,21 @@
             </dd>
             <dt class="optional">
                 model
-                <a href="https://platform.openai.com/docs/api-reference/images/createEdit#images-createedit-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type"></span>
             </dt>
             <dd>The model to use for image generation.</dd>
             <dt class="optional">
                 n
-                <a href="https://platform.openai.com/docs/api-reference/images/createEdit#images-createedit-n"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>The number of images to generate. Must be between 1 and 10.</dd>
             <dt class="optional">
                 size
-                <a href="https://platform.openai.com/docs/api-reference/images/createEdit#images-createedit-size"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The size of the generated images.</dd>
             <dt class="optional">
                 response_format
-                <a href="https://platform.openai.com/docs/api-reference/images/createEdit#images-createedit-response_format"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -2437,8 +2104,6 @@
             </dd>
             <dt class="optional">
                 user
-                <a href="https://platform.openai.com/docs/api-reference/images/createEdit#images-createedit-user"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -2454,43 +2119,31 @@
 
             <dt>
                 image
-                <a href="https://platform.openai.com/docs/api-reference/images/createVariation#images-createvariation-image"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The image to use as the basis for the variation(s).</dd>
             <dt>
                 model
-                <a href="https://platform.openai.com/docs/api-reference/images/createVariation#images-createvariation-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type"></span>
             </dt>
             <dd>The model to use for image generation.</dd>
             <dt>
                 n
-                <a href="https://platform.openai.com/docs/api-reference/images/createVariation#images-createvariation-n"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>The number of images to generate.</dd>
             <dt>
                 response_format
-                <a href="https://platform.openai.com/docs/api-reference/images/createVariation#images-createvariation-response_format"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The format in which the generated images are returned.</dd>
             <dt>
                 size
-                <a href="https://platform.openai.com/docs/api-reference/images/createVariation#images-createvariation-size"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The size of the generated images.</dd>
             <dt>
                 user
-                <a href="https://platform.openai.com/docs/api-reference/images/createVariation#images-createvariation-user"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -2504,7 +2157,7 @@
   <section>
     <details>
         <summary style="font-weight: bold;">📟 Messages</summary>
-        <a href="https://platform.openai.com/docs/api-reference/messages" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/beta/threads/messages/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
         <h4 style="font-weight: bolder;"> ⋙ List Messages</h4>
         <p>Returns a list of messages for a given thread.</p>
@@ -2513,15 +2166,11 @@
 
             <dt>
                 thread_id
-                <a href="https://platform.openai.com/docs/api-reference/messages/listMessages#messages-listmessages-thread_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the thread the messages belong to.</dd>
             <dt class="optional">
                 limit
-                <a href="https://platform.openai.com/docs/api-reference/messages/listMessages#messages-listmessages-limit"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>
@@ -2530,30 +2179,22 @@
             </dd>
             <dt class="optional">
                 order
-                <a href="https://platform.openai.com/docs/api-reference/messages/listMessages#messages-listmessages-order"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Sort order by the created_at timestamp of the objects.</dd>
             <dt class="optional">
                 after
-                <a href="https://platform.openai.com/docs/api-reference/messages/listMessages#messages-listmessages-after"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination.</dd>
             <dt class="optional">
                 before
-                <a href="https://platform.openai.com/docs/api-reference/messages/listMessages#messages-listmessages-before"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination.</dd>
 
             <dt class="optional">
                 run_id
-                <a href="https://platform.openai.com/docs/api-reference/messages/listMessages#messages-listmessages-run_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Filter messages by the run ID that generated them.</dd>
@@ -2567,36 +2208,26 @@
 
             <dt>
                 thread_id
-                <a href="https://platform.openai.com/docs/api-reference/messages/createMessage#messages-createmessage-thread_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the thread to create a message for.</dd>
             <dt>
                 role
-                <a href="https://platform.openai.com/docs/api-reference/messages/createMessage#messages-createmessage-role"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The role of the entity that is creating the message.</dd>
             <dt>
                 content
-                <a href="https://platform.openai.com/docs/api-reference/messages/createMessage#messages-createmessage-content"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The content of the message.</dd>
             <dt class="optional">
                 attachments
-                <a href="https://platform.openai.com/docs/api-reference/messages/createMessage#messages-createmessage-attachments"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>A list of files attached to the message, and the tools they should be added to.</dd>
             <dt class="optional">
                 metadata
-                <a href="https://platform.openai.com/docs/api-reference/messages/createMessage#messages-createmessage-metadata"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
@@ -2609,15 +2240,11 @@
 
             <dt>
                 thread_id
-                <a href="https://platform.openai.com/docs/api-reference/messages/deleteMessage#messages-deletemessage-thread_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the thread to which this message belongs.</dd>
             <dt>
                 message_id
-                <a href="https://platform.openai.com/docs/api-reference/messages/deleteMessage#messages-deletemessage-message_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the message to delete.</dd>
@@ -2630,15 +2257,11 @@
 
             <dt>
                 thread_id
-                <a href="https://platform.openai.com/docs/api-reference/messages/getMessage#messages-getmessage-thread_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the thread to which this message belongs.</dd>
             <dt>
                 message_id
-                <a href="https://platform.openai.com/docs/api-reference/messages/getMessage#messages-getmessage-message_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the message to retrieve.</dd>
@@ -2651,16 +2274,12 @@
 
             <dt>
                 thread_id
-                <a href="https://platform.openai.com/docs/api-reference/messages/deleteMessage#messages-deletemessage-thread_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the thread to which this message belongs.</dd>
 
             <dt>
                 message_id
-                <a href="https://platform.openai.com/docs/api-reference/messages/deleteMessage#messages-deletemessage-message_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the thread to which this message belongs.</dd>
@@ -2673,22 +2292,16 @@
 
             <dt>
                 thread_id
-                <a href="https://platform.openai.com/docs/api-reference/messages/modifyMessage#messages-modifymessage-thread_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the thread to which this message belongs.</dd>
             <dt>
                 message_id
-                <a href="https://platform.openai.com/docs/api-reference/messages/modifyMessage#messages-modifymessage-message_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the message to modify.</dd>
             <dt class="optional">
                 metadata
-                <a href="https://platform.openai.com/docs/api-reference/messages/modifyMessage#messages-modifymessage-metadata"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
@@ -2698,7 +2311,7 @@
   <section>
     <details>
         <summary style="font-weight: bold;">🧠 Models</summary>
-        <a href="https://platform.openai.com/docs/api-reference/models" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/models/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
         <h4 style="font-weight: bolder;"> ⋙ List Models</h4>
         <p>
@@ -2717,8 +2330,6 @@
 
             <dt>
                 model
-                <a href="https://platform.openai.com/docs/api-reference/models/retrieve#models-retrieve-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the model to use for this request</dd>
@@ -2734,8 +2345,6 @@
 
             <dt>
                 model
-                <a href="https://platform.openai.com/docs/api-reference/models/delete#models-delete-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The model to delete</dd>
@@ -2745,7 +2354,7 @@
   <section>
     <details>
         <summary style="font-weight: bold;">✅ Moderations</summary>
-        <a href="https://platform.openai.com/docs/api-reference/moderations" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/moderations/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
         <h4 style="font-weight: bolder;"> ⋙ Create Moderation</h4>
         <p>Classifies if text violates OpenAI's Content Policy</p>
@@ -2754,15 +2363,11 @@
 
             <dt>
                 input
-                <a href="https://platform.openai.com/docs/api-reference/moderations/create#moderations-create-input"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string | array</span>
             </dt>
             <dd>The input text to classify</dd>
             <dt class="optional">
                 model
-                <a href="https://platform.openai.com/docs/api-reference/moderations/create#moderations-create-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -2776,7 +2381,7 @@
   <section>
     <details>
         <summary style="font-weight: bold;">🗨️ Responses</summary>
-        <a href="https://platform.openai.com/docs/api-reference/responses" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/responses/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
         <h4 style="font-weight: bolder;"> ⋙ Create Model Response</h4>
         <p>Creates a model response.</p>
@@ -2785,152 +2390,114 @@
 
             <dt>
                 input
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-input"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string | array</span>
             </dt>
             <dd>Text, image, or file inputs to the model, used to generate a response.</dd>
 
             <dt>
                 model
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Model ID used to generate the response.</dd>
 
             <dt class="optional">
                 background
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-background"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">boolean</span>
             </dt>
             <dd>Whether to run the model response in the background.</dd>
 
             <dt class="optional">
                 context_management
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-context_management"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>Context management settings, including compaction behavior.</dd>
 
             <dt class="optional">
                 conversation
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-conversation"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string | object</span>
             </dt>
             <dd>Conversation context to prepend for this response.</dd>
 
             <dt class="optional">
                 include
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-include"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>Specify additional output data to include in the model response.</dd>
 
             <dt class="optional">
                 instructions
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-instructions"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Inserts a system (or developer) message as the first item in the model's context.</dd>
 
             <dt class="optional">
                 max_output_tokens
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-max_output_tokens"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>An upper bound for the number of tokens that can be generated for a response.</dd>
 
             <dt class="optional">
                 metadata
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-metadata"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
 
             <dt class="optional">
                 parallel_tool_calls
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-parallel_tool_calls"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">boolean</span>
             </dt>
             <dd>Whether to allow the model to run tool calls in parallel.</dd>
 
             <dt class="optional">
                 previous_response_id
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-previous_response_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The unique ID of the previous response to the model.</dd>
 
             <dt class="optional">
                 prompt
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-prompt"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>Reference to a reusable prompt template and variables.</dd>
 
             <dt class="optional">
                 prompt_cache_key
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-prompt_cache_key"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Stable key used to improve prompt cache hit rates.</dd>
 
             <dt class="optional">
                 prompt_cache_retention
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-prompt_cache_retention"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Prompt cache retention policy, such as <code>in-memory</code> or <code>24h</code>.</dd>
 
             <dt class="optional">
                 reasoning
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-reasoning"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>o-series models only. See official docs for option properties.</dd>
 
             <dt class="optional">
                 safety_identifier
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-safety_identifier"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Stable end-user identifier used for abuse detection and safety controls.</dd>
 
             <dt class="optional">
                 service_tier
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-service_tier"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Service tier selection, for example <code>default</code>, <code>flex</code>, or <code>priority</code>.</dd>
 
             <dt class="optional">
                 store
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-store"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">boolean</span>
             </dt>
             <dd>Whether to store the generated model response for later retrieval via API.</dd>
 
             <dt class="optional">
                 stream
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-stream"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">boolean</span>
             </dt>
             <dd>If set to true, the model response data will be streamed to the client as it is generated using
@@ -2938,40 +2505,30 @@
 
             <dt class="optional">
                 stream_options
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-stream_options"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>Streaming options such as obfuscation behavior for event payloads.</dd>
 
             <dt class="optional">
                 temperature
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-temperature"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">number</span>
             </dt>
             <dd>What sampling temperature to use, between 0 and 2.</dd>
 
             <dt class="optional">
                 text
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-text"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>Configuration options for a text response from the model.</dd>
 
             <dt class="optional">
                 tool_choice
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-tool_choice"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string or object</span>
             </dt>
             <dd>How the model should select which tool (or tools) to use when generating a response.</dd>
 
             <dt class="optional">
                 tools
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-tools"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>
@@ -2984,24 +2541,18 @@
 
             <dt class="optional">
                 top_p
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-top_p"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">number</span>
             </dt>
             <dd>An alternative to sampling with temperature, called nucleus sampling.</dd>
 
             <dt class="optional">
                 truncation
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-truncation"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The truncation strategy to use for the model response.</dd>
 
             <dt class="optional">
                 user
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-user"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Deprecated. Prefer <code>safety_identifier</code> and <code>prompt_cache_key</code>.</dd>
@@ -3015,40 +2566,30 @@
 
             <dt>
                 response_id
-                <a href="https://platform.openai.com/docs/api-reference/responses/get#responses-get-response_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the response to retrieve.</dd>
 
             <dt class="optional">
                 include
-                <a href="https://platform.openai.com/docs/api-reference/responses/get#responses-get-include"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>Additional output fields to include in the response.</dd>
 
             <dt class="optional">
                 include_obfuscation
-                <a href="https://platform.openai.com/docs/api-reference/responses/get#responses-get-include_obfuscation"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">boolean</span>
             </dt>
             <dd>Enable obfuscation payloads in streaming events.</dd>
 
             <dt class="optional">
                 starting_after
-                <a href="https://platform.openai.com/docs/api-reference/responses/get#responses-get-starting_after"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>Event sequence number after which to begin a streamed retrieval.</dd>
 
             <dt class="optional">
                 stream
-                <a href="https://platform.openai.com/docs/api-reference/responses/get#responses-get-stream"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">boolean</span>
             </dt>
             <dd>When true, retrieve the response as a stream of events.</dd>
@@ -3061,8 +2602,6 @@
 
             <dt>
                 response_id
-                <a href="https://platform.openai.com/docs/api-reference/responses/delete#responses-delete-response_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the response to delete.</dd>
@@ -3075,8 +2614,6 @@
 
             <dt>
                 response_id
-                <a href="https://platform.openai.com/docs/api-reference/responses/cancel#responses-cancel-response_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the response to cancel.</dd>
@@ -3089,32 +2626,24 @@
 
             <dt>
                 model
-                <a href="https://platform.openai.com/docs/api-reference/responses/compact#responses-compact-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Model ID used for compaction.</dd>
 
             <dt class="optional">
                 input
-                <a href="https://platform.openai.com/docs/api-reference/responses/compact#responses-compact-input"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string | array</span>
             </dt>
             <dd>Optional input items used for compaction.</dd>
 
             <dt class="optional">
                 instructions
-                <a href="https://platform.openai.com/docs/api-reference/responses/compact#responses-compact-instructions"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Optional system or developer instructions for compaction.</dd>
 
             <dt class="optional">
                 previous_response_id
-                <a href="https://platform.openai.com/docs/api-reference/responses/compact#responses-compact-previous_response_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Optional previous response id to continue compaction context.</dd>
@@ -3127,48 +2656,36 @@
 
             <dt>
                 response_id
-                <a href="https://platform.openai.com/docs/api-reference/responses/input-items#responses-input-items-response_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the response to retrieve input items for.</dd>
 
             <dt class="optional">
                 after
-                <a href="https://platform.openai.com/docs/api-reference/responses/input-items#responses-input-items-after"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>An item ID to list items after, used in pagination.</dd>
 
             <dt class="optional">
                 before
-                <a href="https://platform.openai.com/docs/api-reference/responses/input-items#responses-input-items-before"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>An item ID to list items before, used in pagination.</dd>
 
             <dt class="optional">
                 limit
-                <a href="https://platform.openai.com/docs/api-reference/responses/input-items#responses-input-items-limit"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>A limit on the number of objects to be returned.</dd>
 
             <dt class="optional">
                 order
-                <a href="https://platform.openai.com/docs/api-reference/responses/input-items#responses-input-items-order"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The order to return the input items in. Default is <code>desc</code>.</dd>
 
             <dt class="optional">
                 include
-                <a href="https://platform.openai.com/docs/api-reference/responses/input-items#responses-input-items-include"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>Additional fields to include on the returned input items.</dd>
@@ -3182,88 +2699,66 @@
 
             <dt class="optional">
                 model
-                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Model ID to use for token counting.</dd>
 
             <dt class="optional">
                 input
-                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-input"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string | array</span>
             </dt>
             <dd>Input items to count.</dd>
 
             <dt class="optional">
                 conversation
-                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-conversation"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string | object</span>
             </dt>
             <dd>Conversation context to include in counting.</dd>
 
             <dt class="optional">
                 instructions
-                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-instructions"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>System or developer instructions to include in counting.</dd>
 
             <dt class="optional">
                 previous_response_id
-                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-previous_response_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Previous response ID used to continue conversation context.</dd>
 
             <dt class="optional">
                 parallel_tool_calls
-                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-parallel_tool_calls"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">boolean</span>
             </dt>
             <dd>Whether tool calls may run in parallel for the modeled request.</dd>
 
             <dt class="optional">
                 reasoning
-                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-reasoning"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>Reasoning model configuration used for token accounting.</dd>
 
             <dt class="optional">
                 text
-                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-text"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>Text output configuration used when estimating token usage.</dd>
 
             <dt class="optional">
                 tool_choice
-                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-tool_choice"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string | object</span>
             </dt>
             <dd>Tool selection mode used for token counting.</dd>
 
             <dt class="optional">
                 tools
-                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-tools"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>Tool definitions used for token counting.</dd>
 
             <dt class="optional">
                 truncation
-                <a href="https://platform.openai.com/docs/api-reference/responses/input-tokens#responses-input-tokens-truncation"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Truncation strategy for token counting context.
@@ -3277,7 +2772,7 @@
   <section>
     <details>
         <summary style="font-weight: bold;">🔄 Runs</summary>
-        <a href="https://platform.openai.com/docs/api-reference/runs" target="_blank">Official Documentation</a>
+        <a href="https://developers.openai.com/api/reference/typescript/resources/beta/threads/runs/" target="_blank">Official Documentation</a>
         <h4 style="font-weight: bolder;"> ⋙ Create Thread and Run</h4>
         <p>Create a thread and run it in one request.</p>
         <dl class="message-properties">
@@ -3285,46 +2780,34 @@
 
             <dt>
                 assistant_id
-                <a href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-assistant_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the assistant to use to execute this run.</dd>
             <dt class="optional">
                 thread
-                <a href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-thread"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>A thread object to create with the run.</dd>
 
             <dt class="optional">
                 model
-                <a href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the Model to be used to execute this run.</dd>
             <dt class="optional">
                 instructions
-                <a href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-instructions"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Override the default system message of the assistant.</dd>
 
             <dt class="optional">
                 tools
-                <a href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-tools"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>Override the tools the assistant can use for this run.</dd>
 
             <dt class="optional">
                 tool_resources
-                <a href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-tool_resources"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object or null</span>
             </dt>
             <dd>A set of resources that are used by the assistant's tools.</dd>
@@ -3332,24 +2815,18 @@
 
             <dt class="optional">
                 metadata
-                <a href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-metadata"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
 
             <dt class="optional">
                 temperature
-                <a href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-temperature"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">number</span>
             </dt>
             <dd>What sampling temperature to use, between 0 and 2.</dd>
 
             <dt class="optional">
                 top_p
-                <a href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-top_p"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">number or null</span>
             </dt>
             <dd>An alternative to sampling with temperature.</dd>
@@ -3357,8 +2834,6 @@
 
             <dt class="optional">
                 stream
-                <a href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-stream"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">boolean</span>
             </dt>
             <dd>If <code>true</code>, returns a stream of events that happen during the Run as server-sent events,
@@ -3366,24 +2841,18 @@
 
             <dt class="optional">
                 max_prompt_tokens
-                <a href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-max_prompt_tokens"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>The maximum number of prompt tokens that may be used over the course of the run.</dd>
 
             <dt class="optional">
                 max_completion_tokens
-                <a href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-max_completion_tokens"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>The maximum number of completion tokens that may be used over the course of the run.</dd>
 
             <dt class="optional">
                 truncation_strategy
-                <a href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-truncation_strategy"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             <dd>
                 <strong><code>@property {string} type</code></strong> - The truncation strategy to use for the thread.
@@ -3399,8 +2868,6 @@
 
             <dt class="optional">
                 tool_choice
-                <a href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-tool_choice"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string | object</span>
             </dt>
             <dd>Controls which (if any) tool is called by the model. <code>none</code> means the model will not call any
@@ -3410,16 +2877,12 @@
 
             <dt class="optional">
                 parallel_tool_calls
-                <a href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-parallel_tool_calls"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">boolean</span>
             </dt>
             <dd>Whether to enable parallel function calling during tool use.</dd>
 
             <dt class="optional">
                 response_format
-                <a href="https://platform.openai.com/docs/api-reference/runs/createThreadAndRun#runs-createthreadandrun-response_format"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string | object</span>
             </dt>
             <dd>Specifies the format that the model must output.</dd>
@@ -3433,36 +2896,26 @@
 
             <dt>
                 thread_id
-                <a href="https://platform.openai.com/docs/api-reference/runs/listRuns#runs-listruns-thread_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the thread the run belongs to.</dd>
             <dt class="optional">
                 limit
-                <a href="https://platform.openai.com/docs/api-reference/runs/listRuns#runs-listruns-limit"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>A limit on the number of objects to be returned.</dd>
             <dt class="optional">
                 order
-                <a href="https://platform.openai.com/docs/api-reference/runs/listRuns#runs-listruns-order"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Sort order by the created_at timestamp of the objects.</dd>
             <dt class="optional">
                 after
-                <a href="https://platform.openai.com/docs/api-reference/runs/listRuns#runs-listruns-after"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination.</dd>
             <dt class="optional">
                 before
-                <a href="https://platform.openai.com/docs/api-reference/runs/listRuns#runs-listruns-before"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination.</dd>
@@ -3475,38 +2928,28 @@
 
             <dt>
                 thread_id
-                <a href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-thread_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the thread to run.</dd>
 
             <dt>
                 include
-                <a href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-include"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>A list of additional fields to include in the response.</dd>
 
             <dt>
                 assistant_id
-                <a href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-assistant_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the assistant to use to execute this run.</dd>
             <dt class="optional">
                 model
-                <a href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the Model to be used to execute this run.</dd>
             <dt class="optional">
                 instructions
-                <a href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-instructions"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -3516,8 +2959,6 @@
 
             <dt class="optional">
                 additional_instructions
-                <a href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-additional_instructions"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -3527,8 +2968,6 @@
 
             <dt class="optional">
                 additional_messages
-                <a href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-additional_messages"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>
@@ -3537,31 +2976,23 @@
 
             <dt class="optional">
                 tools
-                <a href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-tools"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>Override the tools the assistant can use for this run.</dd>
             <dt class="optional">
                 metadata
-                <a href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-metadata"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
 
             <dt class="optional">
                 temperature
-                <a href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-temperature"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">number</span>
             </dt>
             <dd>What sampling temperature to use, between 0 and 2.</dd>
 
             <dt class="optional">
                 top_p
-                <a href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-top_p"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">number</span>
             </dt>
             <dd>An alternative to sampling with temperature, called nucleus sampling, where the model considers the
@@ -3569,8 +3000,6 @@
 
             <dt class="optional">
                 stream
-                <a href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-stream"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">boolean</span>
             </dt>
             <dd>If true, returns a stream of events that happen during the Run as server-sent events, terminating when
@@ -3578,48 +3007,36 @@
 
             <dt class="optional">
                 max_prompt_tokens
-                <a href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-max_prompt_tokens"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>The maximum number of prompt tokens that may be used over the course of the run.</dd>
 
             <dt class="optional">
                 max_completion_tokens
-                <a href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-max_completion_tokens"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>The maximum number of completion tokens that may be used over the course of the run.</dd>
 
             <dt class="optional">
                 truncation_strategy
-                <a href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-truncation_strategy"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>Controls for how a thread will be truncated prior to the run.</dd>
 
             <dt class="optional">
                 tool_choice
-                <a href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-tool_choice"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string or object</span>
             </dt>
             <dd>Controls for how a thread will be truncated prior to the run.</dd>
 
             <dt class="optional">
                 parallel_tool_calls
-                <a href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-parallel_tool_calls"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">boolean</span>
             </dt>
             <dd>Whether to enable parallel function calling during tool use.</dd>
 
             <dt class="optional">
                 response_format
-                <a href="https://platform.openai.com/docs/api-reference/runs/createRun#runs-createrun-response_format"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string or object</span>
             </dt>
             <dd>Specifies the format that the model must output.</dd>
@@ -3632,15 +3049,11 @@
             <h4>msg.payload Properties</h4>
 
             <dt>thread_id
-                <a href="https://platform.openai.com/docs/api-reference/runs/getRun#runs-getrun-thread_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the thread that was run.</dd>
 
             <dt>run_id
-                <a href="https://platform.openai.com/docs/api-reference/runs/getRun#runs-getrun-run_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the run to retrieve.</dd>
@@ -3653,22 +3066,16 @@
 
             <dt>
                 thread_id
-                <a href="https://platform.openai.com/docs/api-reference/runs/getRun#runs-getrun-thread_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the thread that was run.</dd>
             <dt>
                 run_id
-                <a href="https://platform.openai.com/docs/api-reference/runs/getRun#runs-getrun-run_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the run to modify.</dd>
             <dt class="optional">
                 metadata
-                <a href="https://platform.openai.com/docs/api-reference/runs/modifyRun#runs-modifyrun-metadata"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
@@ -3686,31 +3093,23 @@
 
             <dt>
                 thread_id
-                <a href="https://platform.openai.com/docs/api-reference/runs/submitToolOutputs#runs-submittooloutputs-thread_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the thread to which this run belongs.</dd>
             <dt>
                 run_id
-                <a href="https://platform.openai.com/docs/api-reference/runs/submitToolOutputs#runs-submittooloutputs-run_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the run that requires the tool output submission.</dd>
 
             <dt>
                 tool_outputs
-                <a href="https://platform.openai.com/docs/api-reference/runs/submitToolOutputs#runs-submittooloutputs-tool_outputs"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>A list of tools for which the outputs are being submitted.</dd>
 
             <dt class="optional">
                 stream
-                <a href="https://platform.openai.com/docs/api-reference/runs/submitToolOutputs#runs-submittooloutputs-stream"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">boolean</span>
             </dt>
             <dd>If true, returns a stream of events that happen during the Run as server-sent events, terminating when
@@ -3725,15 +3124,11 @@
 
             <dt>
                 thread_id
-                <a href="https://platform.openai.com/docs/api-reference/runs/cancelRun#runs-cancelrun-thread_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the thread to which this run belongs.</dd>
             <dt>
                 run_id
-                <a href="https://platform.openai.com/docs/api-reference/runs/cancelRun#runs-cancelrun-run_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the run to cancel.</dd>
@@ -3746,52 +3141,38 @@
 
             <dt>
                 thread_id
-                <a href="https://platform.openai.com/docs/api-reference/runs/listRunSteps#runs-listrunsteps-thread_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the thread the run and run steps belong to.</dd>
             <dt>
                 run_id
-                <a href="https://platform.openai.com/docs/api-reference/runs/listRunSteps#runs-listrunsteps-run_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the run the run steps belong to.</dd>
             <dt class="optional">
                 limit
-                <a href="https://platform.openai.com/docs/api-reference/runs/listRunSteps#runs-listrunsteps-limit"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>A limit on the number of objects to be returned.</dd>
             <dt class="optional">
                 order
-                <a href="https://platform.openai.com/docs/api-reference/runs/listRunSteps#runs-listrunsteps-order"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Sort order by the created_at timestamp of the objects.</dd>
             <dt class="optional">
                 after
-                <a href="https://platform.openai.com/docs/api-reference/runs/listRunSteps#runs-listrunsteps-after"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination.</dd>
 
             <dt class="optional">
                 before
-                <a href="https://platform.openai.com/docs/api-reference/runs/listRunSteps#runs-listrunsteps-before"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination.</dd>
 
             <dt class="optional">
                 include
-                <a href="https://platform.openai.com/docs/api-reference/run-steps/listRunSteps#run-steps-listrunsteps-include"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>A list of additional fields to include in the response.</dd>
@@ -3804,31 +3185,23 @@
 
             <dt>
                 thread_id
-                <a href="https://platform.openai.com/docs/api-reference/runs/getRunStep#runs-getrunstep-thread_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the thread to which the run and run step belongs.</dd>
             <dt>
                 run_id
-                <a href="https://platform.openai.com/docs/api-reference/runs/getRunStep#runs-getrunstep-run_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the run to which the run step belongs.</dd>
 
             <dt>
                 step_id
-                <a href="https://platform.openai.com/docs/api-reference/runs/getRunStep#runs-getrunstep-step_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the run step to retrieve.</dd>
 
             <dt>
                 include
-                <a href="https://platform.openai.com/docs/api-reference/run-steps/getRunStep#run-steps-getrunstep-include"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>A list of additional fields to include in the response.</dd>
@@ -3840,7 +3213,7 @@
   <section>
     <details>
         <summary style="font-weight: bold;">🧩 Skills</summary>
-        <a href="https://developers.openai.com/api/reference/resources/skills/" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/skills/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
 
         <h4 style="font-weight: bolder;"> ⋙ List Skills</h4>
@@ -4024,7 +3397,7 @@
   <section>
     <details>
         <summary style="font-weight: bold;">🧵 Threads</summary>
-        <a href="https://platform.openai.com/docs/api-reference/threads" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/beta/threads/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
         <h4 style="font-weight: bolder;"> ⋙ Create Thread</h4>
         <p>Create a thread.</p>
@@ -4033,24 +3406,18 @@
 
             <dt class="optional">
                 messages
-                <a href="https://platform.openai.com/docs/api-reference/threads/createThread#threads-createthread-messages"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>A list of messages to start the thread with.</dd>
 
             <dt class="optional">
                 tool_resources
-                <a href="https://platform.openai.com/docs/api-reference/threads/createThread#threads-createthread-tool_resources"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>A set of resources that are made available to the assistant's tools in this thread.</dd>
 
             <dt class="optional">
                 metadata
-                <a href="https://platform.openai.com/docs/api-reference/threads/createThread#threads-createthread-metadata"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
@@ -4063,8 +3430,6 @@
 
             <dt>
                 thread_id
-                <a href="https://platform.openai.com/docs/api-reference/threads/getThread#threads-getthread-thread_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the thread to retrieve.</dd>
@@ -4077,8 +3442,6 @@
 
             <dt>
                 thread_id
-                <a href="https://platform.openai.com/docs/api-reference/threads/modifyThread#threads-modifythread-thread_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -4086,8 +3449,6 @@
             </dd>
             <dt class="optional">
                 metadata
-                <a href="https://platform.openai.com/docs/api-reference/threads/modifyThread#threads-modifythread-metadata"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
@@ -4100,8 +3461,6 @@
 
             <dt>
                 thread_id
-                <a href="https://platform.openai.com/docs/api-reference/threads/deleteThread#threads-deletethread-thread_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the thread to delete.</dd>
@@ -4112,7 +3471,7 @@
   <section>
     <details>
         <summary style="font-weight: bold;">☁️ Uploads</summary>
-        <a href="https://platform.openai.com/docs/api-reference/uploads" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/uploads/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
         <h4 style="font-weight: bolder;"> ⋙ Create Upload</h4>
         <p>Creates an intermediate Upload object that you can add Parts to. </p>
@@ -4121,32 +3480,24 @@
 
             <dt>
                 filename
-                <a href="https://platform.openai.com/docs/api-reference/uploads/create#uploads-create-filename"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The name of the file to upload.</dd>
 
             <dt>
                 purpose
-                <a href="https://platform.openai.com/docs/api-reference/uploads/create#uploads-create-purpose"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The intended purpose of the uploaded file.</dd>
 
             <dt>
                 bytes
-                <a href="https://platform.openai.com/docs/api-reference/uploads/create#uploads-create-bytes"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>The number of bytes in the file you are uploading.</dd>
 
             <dt>
                 mime_type
-                <a href="https://platform.openai.com/docs/api-reference/uploads/create#uploads-create-mime_type"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>This must fall within the supported MIME types for your file purpose.</dd>
@@ -4160,16 +3511,12 @@
 
             <dt>
                 upload_id
-                <a href="https://platform.openai.com/docs/api-reference/uploads/add-part#uploads-add-part-upload_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the Upload.</dd>
 
             <dt>
                 data
-                <a href="https://platform.openai.com/docs/api-reference/uploads/add-part#uploads-add-part-data"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">file</span>
             </dt>
             <dd>The chunk of bytes for this Part.</dd>
@@ -4183,8 +3530,6 @@
 
             <dt>
                 upload_id
-                <a href="https://platform.openai.com/docs/api-reference/uploads/complete#uploads-complete-upload_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -4193,16 +3538,12 @@
 
             <dt>
                 part_ids
-                <a href="https://platform.openai.com/docs/api-reference/uploads/complete#uploads-complete-part_ids"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>The ordered list of Part IDs.</dd>
 
             <dt>
                 md5
-                <a href="https://platform.openai.com/docs/api-reference/uploads/complete#uploads-complete-md5"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The optional md5 checksum for the file contents.</dd>
@@ -4216,8 +3557,6 @@
 
             <dt>
                 upload_id
-                <a href="https://platform.openai.com/docs/api-reference/uploads/cancel#uploads-cancel-upload_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the Upload.</dd>
@@ -4228,7 +3567,7 @@
   <section>
     <details>
         <summary style="font-weight: bold;">🗃️ Vector Stores</summary>
-        <a href="https://platform.openai.com/docs/api-reference/vector-stores" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/vector_stores/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
         <h4 style="font-weight: bolder;"> ⋙ Create Vector Store</h4>
         <p>Create a vector store.</p>
@@ -4236,8 +3575,7 @@
             <h4>msg.payload Properties</h4>
             <dt class="optional">
                 file_ids
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores/create" target="_blank"><i
-                        class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                
                 <span class="property-type">array</span>
             </dt>
             <dd>A list of File IDs that the vector store should use. Useful for tools like file_search that can access
@@ -4245,32 +3583,24 @@
 
             <dt class="optional">
                 name
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores/create#vector-stores-create-name"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The name of the vector store.</dd>
 
             <dt class="optional">
                 expires_after
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores/create#vector-stores-create-expires_after"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>The expiration policy for a vector store.</dd>
 
             <dt class="optional">
                 chunking_strategy
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores/create#vector-stores-create-chunking_strategy"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>The chunking strategy used to chunk the file(s).</dd>
 
             <dt class="optional">
                 metadata
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores/create#vector-stores-create-metadata"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional
@@ -4285,8 +3615,6 @@
 
             <dt class="optional">
                 limit
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores/list#vector-stores-list-limit"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is
@@ -4294,8 +3622,6 @@
 
             <dt class="optional">
                 order
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores/list#vector-stores-list-order"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending
@@ -4303,16 +3629,12 @@
 
             <dt class="optional">
                 after
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores/list#vector-stores-list-after"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination. after is an object ID that defines your place in the list.</dd>
 
             <dt class="optional">
                 before
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores/list#vector-stores-list-before"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination. before is an object ID that defines your place in the list.</dd>
@@ -4325,8 +3647,6 @@
 
             <dt>
                 vector_store_id
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores/retrieve#vector-stores-retrieve-vector_store_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the vector store to retrieve.</dd>
@@ -4339,32 +3659,24 @@
 
             <dt>
                 vector_store_id
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores/modify#vector-stores-modify-vector_store_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the vector store to modify.</dd>
 
             <dt class="optional">
                 name
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores/modify#vector-stores-modify-name"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The name of the vector store.</dd>
 
             <dt class="optional">
                 expires_after
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores/modify#vector-stores-modify-expires_after"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>The expiration policy for a vector store.</dd>
 
             <dt class="optional">
                 metadata
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores/modify#vector-stores-modify-metadata"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">object</span>
             </dt>
             <dd>Set of 16 key-value pairs that can be attached to an object.</dd>
@@ -4377,8 +3689,6 @@
 
                 <dt>
                     vector_store_id
-                    <a href="https://platform.openai.com/docs/api-reference/vector-stores/delete#vector-stores-delete-vector_store_id"
-                        target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                     <span class="property-type">string</span>
                 </dt>
                 <dd>The ID of the vector store to delete.</dd>
@@ -4390,7 +3700,7 @@
   <section>
     <details>
         <summary style="font-weight: bold;">📑 Vector Store Files</summary>
-        <a href="https://platform.openai.com/docs/api-reference/vector-stores-files" target="_blank">Official
+        <a href="https://developers.openai.com/api/reference/typescript/resources/vector_stores/files/" target="_blank">Official
             Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
 
@@ -4400,16 +3710,12 @@
             <h4>msg.payload Properties</h4>
             <dt>
                 vector_store_id
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-files/createFile#vector-stores-files-createfile-vector_store_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the vector store for which to create a File.</dd>
 
             <dt>
                 file_id
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-files/createFile#vector-stores-files-createfile-file_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A File ID that the vector store should use. Useful for tools like file_search that can access files.
@@ -4423,16 +3729,12 @@
             <h4>msg.payload Properties</h4>
             <dt>
                 vector_store_id
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-files/listFiles#vector-stores-files-listfiles-vector_store_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the vector store that the files belong to.</dd>
 
             <dt class="optional">
                 limit
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-files/listFiles#vector-stores-files-listfiles-limit"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is
@@ -4440,8 +3742,6 @@
 
             <dt class="optional">
                 order
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-files/listFiles#vector-stores-files-listfiles-order"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending
@@ -4449,24 +3749,18 @@
 
             <dt class="optional">
                 before
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-files/listFiles#vector-stores-files-listfiles-before"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination. before is an object ID that defines your place in the list.</dd>
 
             <dt class="optional">
                 after
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-files/listFiles#vector-stores-files-listfiles-after"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination. after is an object ID that defines your place in the list.</dd>
 
             <dt class="optional">
                 filter
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-files/listFiles#vector-stores-files-listfiles-filter"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Filter by file status. One of in_progress, completed, failed, cancelled.</dd>
@@ -4479,16 +3773,12 @@
             <h4>msg.payload Properties</h4>
             <dt>
                 vector_store_id
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-files/getFile#vector-stores-files-getfile-vector_store_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the vector store that the file belongs to.</dd>
 
             <dt>
                 file_id
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-files/getFile#vector-stores-files-getfile-file_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the file being retrieved.</dd>
@@ -4501,16 +3791,12 @@
             <h4>msg.payload Properties</h4>
             <dt>
                 vector_store_id
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-files/deleteFile#vector-stores-files-deletefile-vector_store_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the vector store that the file belongs to.</dd>
 
             <dt>
                 file_id
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-files/deleteFile#vector-stores-files-deletefile-file_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the file to remove from the vector store.</dd>
@@ -4523,7 +3809,7 @@
   <section>
     <details>
         <summary style="font-weight: bold;">📥 Vector Store File Batches</summary>
-        <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches" target="_blank">Official
+        <a href="https://developers.openai.com/api/reference/typescript/resources/vector_stores/file_batches/" target="_blank">Official
             Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
         <h4 style="font-weight: bolder;"> ⋙ Create Vector Store File Batch</h4>
@@ -4532,16 +3818,12 @@
             <h4>msg.payload Properties</h4>
             <dt>
                 vector_store_id
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/createBatch#vector-stores-file-batches-createbatch-vector_store_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the vector store for which to create a File Batch.</dd>
 
             <dt>
                 file_ids
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/createBatch#vector-stores-file-batches-createbatch-file_ids"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>A list of File IDs that the vector store should use. Useful for tools like file_search that can access
@@ -4555,16 +3837,12 @@
             <h4>msg.payload Properties</h4>
             <dt>
                 vector_store_id
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/getBatch#vector-stores-file-batches-getbatch-vector_store_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the vector store that the file batch belongs to.</dd>
 
             <dt>
                 batch_id
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/getBatch#vector-stores-file-batches-getbatch-batch_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the file batch being retrieved.</dd>
@@ -4576,16 +3854,12 @@
             <h4>msg.payload Properties</h4>
             <dt>
                 vector_store_id
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/cancelBatch#vector-stores-file-batches-cancelbatch-vector_store_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the vector store that the file batch belongs to.</dd>
 
             <dt>
                 batch_id
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/cancelBatch#vector-stores-file-batches-cancelbatch-batch_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the file batch to cancel.</dd>
@@ -4597,24 +3871,18 @@
             <h4>msg.payload Properties</h4>
             <dt>
                 vector_store_id
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/listBatchFiles#vector-stores-file-batches-listbatchfiles-vector_store_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the vector store that the files belong to.</dd>
 
             <dt>
                 batch_id
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/listBatchFiles#vector-stores-file-batches-listbatchfiles-batch_id"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the file batch that the files belong to.</dd>
 
             <dt class="optional">
                 limit
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/listBatchFiles#vector-stores-file-batches-listbatchfiles-limit"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">integer</span>
             </dt>
             <dd>A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is
@@ -4622,8 +3890,6 @@
 
             <dt class="optional">
                 order
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/listBatchFiles#vector-stores-file-batches-listbatchfiles-order"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending
@@ -4631,24 +3897,18 @@
 
             <dt class="optional">
                 after
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/listBatchFiles#vector-stores-file-batches-listbatchfiles-after"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination. after is an object ID that defines your place in the list.</dd>
 
             <dt class="optional">
                 before
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/listBatchFiles#vector-stores-file-batches-listbatchfiles-before"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>A cursor for use in pagination. before is an object ID that defines your place in the list.</dd>
 
             <dt class="optional">
                 filter
-                <a href="https://platform.openai.com/docs/api-reference/vector-stores-file-batches/listBatchFiles#vector-stores-file-batches-listbatchfiles-filter"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>Filter by file status. One of in_progress, completed, failed, cancelled.</dd>

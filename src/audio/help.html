@@ -1,7 +1,7 @@
 <section>
     <details>
         <summary style="font-weight: bold;">🔉 Audio</summary>
-        <a href="https://platform.openai.com/docs/api-reference/audio" target="_blank">Official Documentation
+        <a href="https://developers.openai.com/api/reference/typescript/resources/audio/" target="_blank">Official Documentation
             <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
         <h4 style="font-weight: bolder;"> ⋙ Create Speech</h4>
         <p>Generates audio from the input text.</p>
@@ -10,16 +10,12 @@
 
             <dt>
                 input
-                <a href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-input"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The text to generate audio for.</dd>
 
             <dt>
                 model
-                <a href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>One of the available TTS models: <code>tts-1</code>, <code>tts-1-hd</code> or
@@ -27,8 +23,6 @@
 
             <dt>
                 voice
-                <a href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-voice"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -39,8 +33,6 @@
 
             <dt class="optional">
                 instructions
-                <a href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-instructions"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -50,8 +42,6 @@
 
             <dt class="optional">
                 response_format
-                <a href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-response_format"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -60,8 +50,6 @@
 
             <dt class="optional">
                 speed
-                <a href="https://platform.openai.com/docs/api-reference/audio/createSpeech#audio-createspeech-speed"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">number</span>
             </dt>
             <dd>
@@ -77,8 +65,6 @@
 
             <dt>
                 file
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-file"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">file</span>
             </dt>
             <dd>
@@ -87,22 +73,16 @@
             </dd>
             <dt>
                 model
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>ID of the model to use.</dd>
             <dt class="optional">
                 language
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-language"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>The language of the input audio.</dd>
             <dt class="optional">
                 prompt
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-prompt"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -111,8 +91,6 @@
             </dd>
             <dt class="optional">
                 response_format
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-response_format"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -121,16 +99,12 @@
             </dd>
             <dt class="optional">
                 temperature
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-temperature"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">number</span>
             </dt>
             <dd>The sampling temperature, between 0 and 1.</dd>
 
             <dt class="optional">
                 timestamp_granularities
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranscription#audio-createtranscription-timestamp_granularities"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">array</span>
             </dt>
             <dd>The timestamp granularities to populate for this transcription. <code>response_format</code> must be set
@@ -145,8 +119,6 @@
 
             <dt>
                 file
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranslation#audio-createtranslation-file"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">file</span>
             </dt>
             <dd>
@@ -155,15 +127,11 @@
             </dd>
             <dt>
                 model
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranslation#audio-createtranslation-model"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type"></span>
             </dt>
             <dd>ID of the model to use.</dd>
             <dt class="optional">
                 prompt
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranslation#audio-createtranslation-prompt"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -172,8 +140,6 @@
             </dd>
             <dt class="optional">
                 response_format
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranslation#audio-createtranslation-response_format"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">string</span>
             </dt>
             <dd>
@@ -182,8 +148,6 @@
             </dd>
             <dt class="optional">
                 temperature
-                <a href="https://platform.openai.com/docs/api-reference/audio/createTranslation#audio-createtranslation-temperature"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
                 <span class="property-type">number</span>
             </dt>
             <dd>The sampling temperature, between 0 and 1.</dd>
