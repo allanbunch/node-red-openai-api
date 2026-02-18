@@ -44,14 +44,14 @@ npm i @inductiv/node-red-openai-api
 4. Set `API Key`:
    - `cred` type for a masked credential value, or
    - `env/msg/flow/global` and provide a reference name.
-5. Back in the `OpenAI API` node, select your method (for example `createModelResponse`).
+5. Back in the `OpenAI API` node, select your method (for example `create model response`).
 6. Send request params in `msg.payload` (or change the input property on the node).
 
-Example `msg.payload` for `createModelResponse`:
+Example `msg.payload` for `create model response`:
 
 ```json
 {
-  "model": "gpt-4.1-mini",
+  "model": "gpt-5-nano",
   "input": "Write a one-line status summary."
 }
 ```
@@ -68,7 +68,7 @@ Node output is written to `msg.payload`.
 
 ### Auth Header
 
-- Default behavior is `Authorization`.
+- Default value is `Authorization`.
 - You can override it for OpenAI-compatible providers that use a different header name.
 
 ### Organization ID
