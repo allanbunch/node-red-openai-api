@@ -1,0 +1,249 @@
+<section>
+    <details>
+        <summary style="font-weight: bold;">📊 Evals</summary>
+        <a href="https://developers.openai.com/api/reference/typescript/resources/evals/" target="_blank">Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Evals</h4>
+        <p>List evaluations for a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for items after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of evals to return.</dd>
+            <dt class="optional">
+                order
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Sort order by creation time. Use <code>asc</code> or <code>desc</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Eval</h4>
+        <p>Create an eval definition with data source config and testing criteria.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                name
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval name.</dd>
+            <dt>
+                data_source_config
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Data source config schema used by eval runs.</dd>
+            <dt>
+                testing_criteria
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Grader criteria used to score results.</dd>
+            <dt class="optional">
+                metadata
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional metadata key-value pairs.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Eval</h4>
+        <p>Retrieve an eval by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                eval_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Eval</h4>
+        <p>Update mutable eval fields.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                eval_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval id.</dd>
+            <dt class="optional">
+                name
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Updated eval name.</dd>
+            <dt class="optional">
+                metadata
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Updated metadata.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Eval</h4>
+        <p>Delete an eval by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                eval_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Eval Runs</h4>
+        <p>List runs for an eval.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                eval_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval id.</dd>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for items after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of runs to return.</dd>
+            <dt class="optional">
+                order
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Sort order by creation time. Use <code>asc</code> or <code>desc</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Eval Run</h4>
+        <p>Create a run for an eval.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                eval_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval id.</dd>
+            <dt>
+                data_source
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Run data source config.</dd>
+            <dt class="optional">
+                model
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Model used for the run when applicable.</dd>
+            <dt class="optional">
+                metadata
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional run metadata.</dd>
+            <dt class="optional">
+                name
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Optional run name.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Eval Run</h4>
+        <p>Retrieve a run by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                eval_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval id.</dd>
+            <dt>
+                run_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The run id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Cancel Eval Run</h4>
+        <p>Cancel an in-progress eval run.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                eval_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval id.</dd>
+            <dt>
+                run_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The run id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Eval Run</h4>
+        <p>Delete an eval run.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                eval_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval id.</dd>
+            <dt>
+                run_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The run id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Eval Run Output Items</h4>
+        <p>List output items for a run.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                eval_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval id.</dd>
+            <dt>
+                run_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The run id.</dd>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for items after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of items to return.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Eval Run Output Item</h4>
+        <p>Retrieve one run output item by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                eval_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The eval id.</dd>
+            <dt>
+                run_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The run id.</dd>
+            <dt>
+                output_item_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The output item id.</dd>
+        </dl>
+    </details>
+</section>
