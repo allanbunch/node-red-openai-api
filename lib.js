@@ -406,7 +406,7 @@ var require_version = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.VERSION = void 0;
-    exports2.VERSION = "6.9.1";
+    exports2.VERSION = "6.22.0";
   }
 });
 
@@ -1707,6 +1707,10 @@ var require_parse = __commonJS({
         const mediaType = contentType?.split(";")[0]?.trim();
         const isJSON = mediaType?.includes("application/json") || mediaType?.endsWith("+json");
         if (isJSON) {
+          const contentLength = response.headers.get("content-length");
+          if (contentLength === "0") {
+            return void 0;
+          }
           const json = await response.json();
           return addRequestID(json, response);
         }
@@ -4166,12 +4170,7 @@ var require_assistants = __commonJS({
       /**
        * Create an assistant with a model and instructions.
        *
-       * @example
-       * ```ts
-       * const assistant = await client.beta.assistants.create({
-       *   model: 'gpt-4o',
-       * });
-       * ```
+       * @deprecated
        */
       create(body, options) {
         return this._client.post("/assistants", {
@@ -4183,12 +4182,7 @@ var require_assistants = __commonJS({
       /**
        * Retrieves an assistant.
        *
-       * @example
-       * ```ts
-       * const assistant = await client.beta.assistants.retrieve(
-       *   'assistant_id',
-       * );
-       * ```
+       * @deprecated
        */
       retrieve(assistantID, options) {
         return this._client.get((0, path_1.path)`/assistants/${assistantID}`, {
@@ -4199,12 +4193,7 @@ var require_assistants = __commonJS({
       /**
        * Modifies an assistant.
        *
-       * @example
-       * ```ts
-       * const assistant = await client.beta.assistants.update(
-       *   'assistant_id',
-       * );
-       * ```
+       * @deprecated
        */
       update(assistantID, body, options) {
         return this._client.post((0, path_1.path)`/assistants/${assistantID}`, {
@@ -4216,13 +4205,7 @@ var require_assistants = __commonJS({
       /**
        * Returns a list of assistants.
        *
-       * @example
-       * ```ts
-       * // Automatically fetches more pages as needed.
-       * for await (const assistant of client.beta.assistants.list()) {
-       *   // ...
-       * }
-       * ```
+       * @deprecated
        */
       list(query = {}, options) {
         return this._client.getAPIList("/assistants", pagination_1.CursorPage, {
@@ -4234,11 +4217,7 @@ var require_assistants = __commonJS({
       /**
        * Delete an assistant.
        *
-       * @example
-       * ```ts
-       * const assistantDeleted =
-       *   await client.beta.assistants.delete('assistant_id');
-       * ```
+       * @deprecated
        */
       delete(assistantID, options) {
         return this._client.delete((0, path_1.path)`/assistants/${assistantID}`, {
@@ -5645,7 +5624,7 @@ var require_files = __commonJS({
        * a JSON request with a file ID.
        */
       create(containerID, body, options) {
-        return this._client.post((0, path_1.path)`/containers/${containerID}/files`, (0, uploads_1.multipartFormRequestOptions)({ body, ...options }, this._client));
+        return this._client.post((0, path_1.path)`/containers/${containerID}/files`, (0, uploads_1.maybeMultipartFormRequestOptions)({ body, ...options }, this._client));
       }
       /**
        * Retrieve Container File
@@ -6039,8 +6018,8 @@ var require_files2 = __commonJS({
     var Files = class extends resource_1.APIResource {
       /**
        * Upload a file that can be used across various endpoints. Individual files can be
-       * up to 512 MB, and the size of all files uploaded by one organization can be up
-       * to 1 TB.
+       * up to 512 MB, and each project can store up to 2.5 TB of files in total. There
+       * is no organization-wide storage limit.
        *
        * - The Assistants API supports files up to 2 million tokens and of specific file
        *   types. See the
@@ -7324,10 +7303,185 @@ var require_responses = __commonJS({
       cancel(responseID, options) {
         return this._client.post((0, path_1.path)`/responses/${responseID}/cancel`, options);
       }
+      /**
+       * Compact conversation
+       *
+       * @example
+       * ```ts
+       * const compactedResponse = await client.responses.compact({
+       *   model: 'gpt-5.2',
+       * });
+       * ```
+       */
+      compact(body, options) {
+        return this._client.post("/responses/compact", { body, ...options });
+      }
     };
     exports2.Responses = Responses;
     Responses.InputItems = input_items_1.InputItems;
     Responses.InputTokens = input_tokens_1.InputTokens;
+  }
+});
+
+// node_modules/openai/resources/skills/content.js
+var require_content2 = __commonJS({
+  "node_modules/openai/resources/skills/content.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.Content = void 0;
+    var resource_1 = require_resource();
+    var headers_1 = require_headers();
+    var path_1 = require_path();
+    var Content = class extends resource_1.APIResource {
+      /**
+       * Get Skill Content
+       */
+      retrieve(skillID, options) {
+        return this._client.get((0, path_1.path)`/skills/${skillID}/content`, {
+          ...options,
+          headers: (0, headers_1.buildHeaders)([{ Accept: "application/binary" }, options?.headers]),
+          __binaryResponse: true
+        });
+      }
+    };
+    exports2.Content = Content;
+  }
+});
+
+// node_modules/openai/resources/skills/versions/content.js
+var require_content3 = __commonJS({
+  "node_modules/openai/resources/skills/versions/content.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.Content = void 0;
+    var resource_1 = require_resource();
+    var headers_1 = require_headers();
+    var path_1 = require_path();
+    var Content = class extends resource_1.APIResource {
+      /**
+       * Get Skill Version Content
+       */
+      retrieve(version, params, options) {
+        const { skill_id } = params;
+        return this._client.get((0, path_1.path)`/skills/${skill_id}/versions/${version}/content`, {
+          ...options,
+          headers: (0, headers_1.buildHeaders)([{ Accept: "application/binary" }, options?.headers]),
+          __binaryResponse: true
+        });
+      }
+    };
+    exports2.Content = Content;
+  }
+});
+
+// node_modules/openai/resources/skills/versions/versions.js
+var require_versions = __commonJS({
+  "node_modules/openai/resources/skills/versions/versions.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.Versions = void 0;
+    var tslib_1 = require_tslib();
+    var resource_1 = require_resource();
+    var ContentAPI = tslib_1.__importStar(require_content3());
+    var content_1 = require_content3();
+    var pagination_1 = require_pagination();
+    var uploads_1 = require_uploads();
+    var path_1 = require_path();
+    var Versions = class extends resource_1.APIResource {
+      constructor() {
+        super(...arguments);
+        this.content = new ContentAPI.Content(this._client);
+      }
+      /**
+       * Create Skill Version
+       */
+      create(skillID, body = {}, options) {
+        return this._client.post((0, path_1.path)`/skills/${skillID}/versions`, (0, uploads_1.maybeMultipartFormRequestOptions)({ body, ...options }, this._client));
+      }
+      /**
+       * Get Skill Version
+       */
+      retrieve(version, params, options) {
+        const { skill_id } = params;
+        return this._client.get((0, path_1.path)`/skills/${skill_id}/versions/${version}`, options);
+      }
+      /**
+       * List Skill Versions
+       */
+      list(skillID, query = {}, options) {
+        return this._client.getAPIList((0, path_1.path)`/skills/${skillID}/versions`, pagination_1.CursorPage, {
+          query,
+          ...options
+        });
+      }
+      /**
+       * Delete Skill Version
+       */
+      delete(version, params, options) {
+        const { skill_id } = params;
+        return this._client.delete((0, path_1.path)`/skills/${skill_id}/versions/${version}`, options);
+      }
+    };
+    exports2.Versions = Versions;
+    Versions.Content = content_1.Content;
+  }
+});
+
+// node_modules/openai/resources/skills/skills.js
+var require_skills = __commonJS({
+  "node_modules/openai/resources/skills/skills.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.Skills = void 0;
+    var tslib_1 = require_tslib();
+    var resource_1 = require_resource();
+    var ContentAPI = tslib_1.__importStar(require_content2());
+    var content_1 = require_content2();
+    var VersionsAPI = tslib_1.__importStar(require_versions());
+    var versions_1 = require_versions();
+    var pagination_1 = require_pagination();
+    var uploads_1 = require_uploads();
+    var path_1 = require_path();
+    var Skills = class extends resource_1.APIResource {
+      constructor() {
+        super(...arguments);
+        this.content = new ContentAPI.Content(this._client);
+        this.versions = new VersionsAPI.Versions(this._client);
+      }
+      /**
+       * Create Skill
+       */
+      create(body = {}, options) {
+        return this._client.post("/skills", (0, uploads_1.maybeMultipartFormRequestOptions)({ body, ...options }, this._client));
+      }
+      /**
+       * Get Skill
+       */
+      retrieve(skillID, options) {
+        return this._client.get((0, path_1.path)`/skills/${skillID}`, options);
+      }
+      /**
+       * Update Skill Default Version
+       */
+      update(skillID, body, options) {
+        return this._client.post((0, path_1.path)`/skills/${skillID}`, { body, ...options });
+      }
+      /**
+       * List Skills
+       */
+      list(query = {}, options) {
+        return this._client.getAPIList("/skills", pagination_1.CursorPage, { query, ...options });
+      }
+      /**
+       * Delete Skill
+       */
+      delete(skillID, options) {
+        return this._client.delete((0, path_1.path)`/skills/${skillID}`, options);
+      }
+    };
+    exports2.Skills = Skills;
+    Skills.Content = content_1.Content;
+    Skills.Versions = versions_1.Versions;
   }
 });
 
@@ -7881,9 +8035,9 @@ var require_videos = __commonJS({
   }
 });
 
-// node_modules/openai/resources/webhooks.js
+// node_modules/openai/resources/webhooks/webhooks.js
 var require_webhooks = __commonJS({
-  "node_modules/openai/resources/webhooks.js"(exports2) {
+  "node_modules/openai/resources/webhooks/webhooks.js"(exports2) {
     "use strict";
     var _Webhooks_instances;
     var _Webhooks_validateSecret;
@@ -7972,12 +8126,32 @@ var require_webhooks = __commonJS({
   }
 });
 
+// node_modules/openai/resources/webhooks/index.js
+var require_webhooks2 = __commonJS({
+  "node_modules/openai/resources/webhooks/index.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    var tslib_1 = require_tslib();
+    tslib_1.__exportStar(require_webhooks(), exports2);
+  }
+});
+
+// node_modules/openai/resources/webhooks.js
+var require_webhooks3 = __commonJS({
+  "node_modules/openai/resources/webhooks.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    var tslib_1 = require_tslib();
+    tslib_1.__exportStar(require_webhooks2(), exports2);
+  }
+});
+
 // node_modules/openai/resources/index.js
 var require_resources = __commonJS({
   "node_modules/openai/resources/index.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.Webhooks = exports2.Videos = exports2.VectorStores = exports2.Uploads = exports2.Responses = exports2.Realtime = exports2.Moderations = exports2.Models = exports2.Images = exports2.Graders = exports2.FineTuning = exports2.Files = exports2.Evals = exports2.Embeddings = exports2.Conversations = exports2.Containers = exports2.Completions = exports2.Beta = exports2.Batches = exports2.Audio = void 0;
+    exports2.Webhooks = exports2.Videos = exports2.VectorStores = exports2.Uploads = exports2.Skills = exports2.Responses = exports2.Realtime = exports2.Moderations = exports2.Models = exports2.Images = exports2.Graders = exports2.FineTuning = exports2.Files = exports2.Evals = exports2.Embeddings = exports2.Conversations = exports2.Containers = exports2.Completions = exports2.Beta = exports2.Batches = exports2.Audio = void 0;
     var tslib_1 = require_tslib();
     tslib_1.__exportStar(require_chat2(), exports2);
     tslib_1.__exportStar(require_shared(), exports2);
@@ -8045,6 +8219,10 @@ var require_resources = __commonJS({
     Object.defineProperty(exports2, "Responses", { enumerable: true, get: function() {
       return responses_1.Responses;
     } });
+    var skills_1 = require_skills();
+    Object.defineProperty(exports2, "Skills", { enumerable: true, get: function() {
+      return skills_1.Skills;
+    } });
     var uploads_1 = require_uploads3();
     Object.defineProperty(exports2, "Uploads", { enumerable: true, get: function() {
       return uploads_1.Uploads;
@@ -8057,7 +8235,7 @@ var require_resources = __commonJS({
     Object.defineProperty(exports2, "Videos", { enumerable: true, get: function() {
       return videos_1.Videos;
     } });
-    var webhooks_1 = require_webhooks();
+    var webhooks_1 = require_webhooks3();
     Object.defineProperty(exports2, "Webhooks", { enumerable: true, get: function() {
       return webhooks_1.Webhooks;
     } });
@@ -8097,7 +8275,6 @@ var require_client = __commonJS({
     var models_1 = require_models();
     var moderations_1 = require_moderations();
     var videos_1 = require_videos();
-    var webhooks_1 = require_webhooks();
     var audio_1 = require_audio();
     var beta_1 = require_beta();
     var chat_1 = require_chat();
@@ -8108,8 +8285,10 @@ var require_client = __commonJS({
     var graders_1 = require_graders2();
     var realtime_1 = require_realtime2();
     var responses_1 = require_responses();
+    var skills_1 = require_skills();
     var uploads_1 = require_uploads3();
     var vector_stores_1 = require_vector_stores();
+    var webhooks_1 = require_webhooks();
     var detect_platform_2 = require_detect_platform();
     var headers_1 = require_headers();
     var env_1 = require_env();
@@ -8155,6 +8334,7 @@ var require_client = __commonJS({
         this.conversations = new API.Conversations(this);
         this.evals = new API.Evals(this);
         this.containers = new API.Containers(this);
+        this.skills = new API.Skills(this);
         this.videos = new API.Videos(this);
         if (apiKey === void 0) {
           throw new Errors.OpenAIError("Missing credentials. Please pass an `apiKey`, or set the `OPENAI_API_KEY` environment variable.");
@@ -8398,7 +8578,7 @@ var require_client = __commonJS({
         return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
       }
       getAPIList(path, Page, opts) {
-        return this.requestAPIList(Page, { method: "get", path, ...opts });
+        return this.requestAPIList(Page, opts && "then" in opts ? opts.then((opts2) => ({ method: "get", path, ...opts2 })) : { method: "get", path, ...opts });
       }
       requestAPIList(Page, options) {
         const request = this.makeRequest(options, null, void 0);
@@ -8406,9 +8586,10 @@ var require_client = __commonJS({
       }
       async fetchWithTimeout(url, init, ms, controller) {
         const { signal, method, ...options } = init || {};
+        const abort = this._makeAbort(controller);
         if (signal)
-          signal.addEventListener("abort", () => controller.abort());
-        const timeout = setTimeout(() => controller.abort(), ms);
+          signal.addEventListener("abort", abort, { once: true });
+        const timeout = setTimeout(abort, ms);
         const isReadableBody = globalThis.ReadableStream && options.body instanceof globalThis.ReadableStream || typeof options.body === "object" && options.body !== null && Symbol.asyncIterator in options.body;
         const fetchOptions = {
           signal: controller.signal,
@@ -8520,6 +8701,9 @@ var require_client = __commonJS({
         this.validateHeaders(headers);
         return headers.values;
       }
+      _makeAbort(controller) {
+        return () => controller.abort();
+      }
       buildBody({ options: { body, headers: rawHeaders } }) {
         if (!body) {
           return { bodyHeaders: void 0, body: void 0 };
@@ -8583,6 +8767,7 @@ var require_client = __commonJS({
     OpenAI.Conversations = conversations_1.Conversations;
     OpenAI.Evals = evals_1.Evals;
     OpenAI.Containers = containers_1.Containers;
+    OpenAI.Skills = skills_1.Skills;
     OpenAI.Videos = videos_1.Videos;
   }
 });
