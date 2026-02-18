@@ -120,6 +120,7 @@ See the in-editor node help for method-specific payload fields and links to offi
 
 ## Recent Additions
 
+- Added environment variable support for service host configuration values.
 - OpenAI Node SDK upgraded from `4.103.0` to `6.22.0`.
 - Added `responses.cancel`.
 - Added `responses.compact`.
