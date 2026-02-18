@@ -1,0 +1,113 @@
+<section>
+    <details>
+        <summary style="font-weight: bold;">🎬 Videos</summary>
+        <a href="https://developers.openai.com/api/reference/typescript/resources/videos/" target="_blank">Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Videos</h4>
+        <p>List generated videos.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for items after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of videos to return.</dd>
+            <dt class="optional">
+                order
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Sort order by creation time. Use <code>asc</code> or <code>desc</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Video</h4>
+        <p>Create a new video generation job.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                prompt
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Prompt describing the video output.</dd>
+            <dt class="optional">
+                input_reference
+                <span class="property-type">file</span>
+            </dt>
+            <dd>Optional reference image upload.</dd>
+            <dt class="optional">
+                model
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Video model id.</dd>
+            <dt class="optional">
+                seconds
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Clip length in seconds.</dd>
+            <dt class="optional">
+                size
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Video resolution.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Video</h4>
+        <p>Retrieve one video job by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                video_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The video id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Video</h4>
+        <p>Delete one video job by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                video_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The video id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Download Video Content</h4>
+        <p>Download rendered video content or related assets.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                video_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The video id.</dd>
+            <dt class="optional">
+                variant
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Asset variant: <code>video</code>, <code>thumbnail</code>, or <code>spritesheet</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Remix Video</h4>
+        <p>Create a remix from an existing video id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                video_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The source video id.</dd>
+            <dt>
+                prompt
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Prompt describing remix changes.</dd>
+        </dl>
+    </details>
+</section>
