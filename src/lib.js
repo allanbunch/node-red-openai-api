@@ -6,6 +6,7 @@ const batch = require("./batch/methods.js");
 const chat = require("./chat/methods.js");
 const container_files = require("./container-files/methods.js");
 const containers = require("./containers/methods.js");
+const conversations = require("./conversations/methods.js");
 const embeddings = require("./embeddings/methods.js");
 const files = require("./files/methods.js");
 const fine_tuning = require("./fine-tuning/methods.js");
@@ -78,6 +79,7 @@ Object.assign(
   chat,
   container_files,
   containers,
+  conversations,
   embeddings,
   files,
   fine_tuning,

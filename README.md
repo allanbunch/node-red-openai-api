@@ -1,144 +1,167 @@
 # @inductiv/node-red-openai-api
 
-![NPM Version](https://img.shields.io/npm/v/%40inductiv%2Fnode-red-openai-api) ![GitHub Release Date](https://img.shields.io/github/release-date/allanbunch/node-red-openai-api) ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/allanbunch/node-red-openai-api) ![GitHub Repo stars](https://img.shields.io/github/stars/allanbunch/node-red-openai-api)
+![NPM Version](https://img.shields.io/npm/v/%40inductiv%2Fnode-red-openai-api)
+![GitHub Issues](https://img.shields.io/github/issues/allanbunch/node-red-openai-api)
+![GitHub Stars](https://img.shields.io/github/stars/allanbunch/node-red-openai-api)
 
-This library provides convenient access to the OpenAI Node API Library from Node-RED.
+Node-RED node for calling the OpenAI API (and OpenAI-compatible APIs) through a single configurable node.
 
-<a href="https://github.com/allanbunch/node-red-openai-api">
-  <img width="265" alt="node-red-openai-api-node" src="https://github.com/allanbunch/node-red-openai-api/assets/4503640/ee954c8e-fbf4-4812-a38a-f047cecd1982">
-</a>
-<br>
+This package currently targets `openai` Node SDK `^6.22.0`.
 
-Node-RED OpenAI API is a versatile and configurable Node-RED node designed for seamless integration with any OpenAI API compatible platform. This node empowers innovators and developers to effortlessly connect and orchestrate complex AI and AIoT workflows, leveraging Node-RED's sophisticated ecosystem. Ideal for enhancing IoT operations with advanced AI capabilities, this node serves as your gateway to applying the latest AI technology in an IoT context, facilitating innovative applications across diverse environments.
+## What You Get
 
-## Installation
+- One `OpenAI API` node with method selection across major API families.
+- One `Service Host` config node for base URL, auth, and org settings.
+- Typed input support for key config fields: `str`, `env`, `msg`, `flow`, `global` (plus `cred` for API key).
+- Backward compatibility handling for older API key storage patterns.
+- Built-in examples for common flows.
 
-### Via Node-RED Palette Manager
+## Requirements
+
+- Node.js `>=18.0.0`
+- Node-RED `>=3.0.0`
+
+## Install
+
+### Node-RED Palette Manager
 
 ```text
 @inductiv/node-red-openai-api
 ```
 
-### Via NPM
+### npm
 
 ```bash
-cd $HOME/.node-red # or the location of your Node-RED configuration directory.
+cd $HOME/.node-red
 npm i @inductiv/node-red-openai-api
 ```
 
-## Usage
+## Quick Start
 
+1. Drop an `OpenAI API` node onto your flow.
+2. In the node editor, use the `Service Host` field to either select an existing config node or create one with the `+` button.
+3. In that `Service Host` config, set `API Base` (default: `https://api.openai.com/v1`).
+4. Set `API Key`:
+   - `cred` type for a masked credential value, or
+   - `env/msg/flow/global` and provide a reference name.
+5. Back in the `OpenAI API` node, select your method (for example `createModelResponse`).
+6. Send request params in `msg.payload` (or change the input property on the node).
 
-### Configuration & Environment Variables
+Example `msg.payload` for `createModelResponse`:
 
-Service Host fields support Node-RED typed inputs (`cred`, `env`, `msg`, `flow`, `global`).
+```json
+{
+  "model": "gpt-4.1-mini",
+  "input": "Write a one-line status summary."
+}
+```
 
-- **API Key**: Use `cred` for a masked credential value, or select **env/msg/flow/global** and provide the reference name.
-- **Auth Header**: Defaults to `Authorization`. Override it for OpenAI-compatible services that expect a different API key header.
-- **isQuery**: When enabled, the API key is sent as a query parameter using the Auth Header value as the parameter name.
-- **Other fields** (API base URL, organization ID): use the same typed input selector as needed.
+Node output is written to `msg.payload`.
 
-This works with both OS env vars and Node-RED's `User Settings -> Environment` panel.
+## Service Host Configuration
 
-**Tip:** For secure deployments, keep API keys in credentials or environment variables, not in plain node config.
+### API Key
 
-After installation, find your node in the **AI** palette category labeled "OpenAI API". Here's how you can start integrating AI into your IoT projects:
+- `cred` keeps the value in Node-RED credentials (masked in the editor).
+- `env/msg/flow/global` treats the field as a reference, not a literal key.
+- Existing flows with older key storage formats are still handled.
 
-1. Configure the node with your AI platform's API key (if required), or select **env** for the API key and use `OPENAI_API_KEY`.
-2. Send [OpenAI documented](https://platform.openai.com/docs/api-reference/) API service configuration paramaters to the node using the default `msg.payload` property, or confiure your desired incoming object property reference on the node itself.
-3. Explore the [examples](./examples/) directory for sample implementations.
+### Auth Header
 
-## Core Features
+- Default behavior is `Authorization`.
+- You can override it for OpenAI-compatible providers that use a different header name.
 
-- **Seamless Integration**: Connect directly with OpenAI API compatible services without the hassle of complex coding or setup. Ideal for rapid prototyping and deployment in IoT contexts.
-- **Configurable and Flexible**: Adapt to a wide range of project requirements, making it easy to integrate AI into your IoT solutions.
-- **Powerful Combinations**: Utilize Node-RED's diverse nodes to build complex, AI-driven IoT workflows with ease.
+### Organization ID
 
-## Release Notes (v1.103.0-patch.1)
+- Optional.
+- Supports typed input (`str/env/msg/flow/global`) like other service fields.
 
-### Fixed Issues
+### Environment Variables
 
-- Reaolves issue [#34](https://github.com/allanbunch/node-red-openai-api/issues/34)
+You can source values from:
 
-### Ehancements
+- OS-level environment variables.
+- Node-RED editor environment variables (`User Settings -> Environment`).
 
-- Upgraded the OpenAI API Library dependency from [v4.103.0](https://github.com/openai/openai-node/releases/tag/v4.103.0) to [v6.22.0](https://github.com/openai/openai-node/releases/tag/v6.22.0)
+## Supported API Families
 
-### Notable Features & Changes
+The method dropdown includes operations across:
 
-- Added missing `delete` method to the `messages` API.
-- Full Model Context Protocol (MCP) tool support for the `responses` API.
-- Added support for the new `container` endpoint.
-- Added support for the new `containerFiles` endpoint.
-- Added a simple MCP tool use example flow to the `examples` directory. See: [MCP Example](./examples/responses/mcp.json).
-- Refactored code to greatly improve maintainability and stability.
+- Assistants
+- Audio
+- Batch
+- Chat Completions
+- Container Files
+- Containers
+- Conversations
+- Embeddings
+- Files
+- Fine-tuning
+- Images
+- Messages
+- Models
+- Moderations
+- Responses
+- Runs
+- Threads
+- Uploads
+- Vector Store File Batches
+- Vector Store Files
+- Vector Stores
 
-### Important Notice Regarding Compatibility
+See the in-editor node help for method-specific payload fields and links to official API docs.
 
-- **Backward Incompatible Changes**: Please be aware that v1.0 includes breaking changes that may affect existing implementations (v0.x.x instllations) due to the updated OpenAI NodeJS package:
-  - The API call structure and parameters have been refined to align with the latest OpenAI specifications.
-  - Some functions and settings from previous versions may no longer be compatible with this update.
-  - List responses now exist at the top level of the `msg.payload` object; previously `msg.payload.data`.
+## Recent Additions
 
-I recommend reviewing existing flows and testing them with this new version in a development environment before updating to ensure a smooth transition. This will help you take full advantage of the enhanced features while managing any necessary adjustments in your existing applications.
+- OpenAI Node SDK upgraded from `4.103.0` to `6.22.0`.
+- Added `responses.cancel`.
+- Added `responses.compact`.
+- Added Conversations API support:
+  - create/retrieve/modify/delete conversation
+  - create/retrieve/list/delete conversation items
+- Added Containers and Container Files support.
+- Added MCP tool use example flow at `examples/responses/mcp.json`.
+- Service Host auth routing now applies `Auth Header` configuration at request time.
 
-## OpenAI API Compatible Servers
+## Examples
 
-Node-RED OpenAI API Works with your favorite OpenAI API compatible servers, including:
+Import-ready example flows are available in `examples/`:
 
-- [Baseten](https://www.baseten.co/)
-- [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/)
-- [gpt4all](https://github.com/nomic-ai/gpt4all)
-- [Google AI Studio](https://ai.google.dev/gemini-api/docs/openai#node.js)
-- [Groq](https://groq.com/)
-- [Hugging Face Inference API](https://huggingface.co/docs/api-inference/tasks/chat-completion)
-- [Jan](https://jan.ai/)
-- [Lightning AI](https://lightning.ai/)
-- [LiteLLM](https://www.litellm.ai/)
-- [llama.cpp](https://github.com/ggerganov/llama.cpp?tab=readme-ov-file)
-- [llamafile](https://github.com/Mozilla-Ocho/llamafile)
-- [LlamaIndex](https://www.llamaindex.ai/)
-- [LM Studio](https://lmstudio.ai/)
-- [LMDeploy](https://github.com/InternLM/lmdeploy)
-- [LocalAI](https://localai.io/)
-- [Mistral AI](https://mistral.ai/)
-- [Ollama](https://ollama.com/)
-- [OpenRouter](https://openrouter.ai/)
-- [Titan ML](https://www.titanml.co/)
-- [Vllm](https://docs.vllm.ai/en/v0.6.0/index.html)
-- and many more...
+- `examples/assistants.json`
+- `examples/audio.json`
+- `examples/chat.json`
+- `examples/embeddings.json`
+- `examples/files.json`
+- `examples/fine-tuning.json`
+- `examples/images.json`
+- `examples/messages.json`
+- `examples/models.json`
+- `examples/moderations.json`
+- `examples/runs.json`
+- `examples/threads.json`
+- `examples/responses/mcp.json`
 
-## Contribute
+## Development
 
-I value community contributions that help enhance this Node-RED node and expand its capabilities in AIoT applications. Whether you're fixing bugs, adding new features, or improving documentation, your help is welcome!
+```bash
+npm install
+npm run build
+npm test
+```
 
-### How to Contribute
+Build output files are generated from `src/`:
 
-1. **Fork the Repository**: Start by forking the [repository](https://github.com/allanbunch/node-red-openai-api) to your GitHub account.
-2. **Clone Your Fork**: Clone your fork to your local machine for development.
-3. **Create a Feature Branch**: Create a branch in your forked repository where you can make your changes.
-4. **Commit Your Changes**: Make your changes in your feature branch and commit them with clear, descriptive messages.
-5. **Push to Your Fork**: Push your changes to your fork on GitHub.
-6. **Submit a Pull Request**: Go to the original repository and submit a pull request from your feature branch. Please provide a clear description of the changes and reference any related issues.
+- `node.html` (from `src/node.html`)
+- `lib.js` (from `src/lib.js`)
 
-### Guidelines
+## Contributing
 
-- Ensure your code adheres to or enhances the project's style and quality standards.
-- Include unit tests for new features to confirm they work as expected.
-- Update documentation to reflect any changes or additions made.
+PRs are welcome. Please include:
 
-## Community and Support
-
-Engage with the Node-RED OpenAI API community to share your experiences, get support, and discuss your ideas. Whether you're using the node or contributing to its development, I'm here to help and look forward to your feedback and contributions.
-
-- **Community Discussions**: For any questions, help with setting up, or to connect with other users and contributors, please visit our [Community Discussions](https://github.com/allanbunch/node-red-openai-api/discussions).
-- **Feedback and Issues**: If you encounter any issues or have suggestions, please [raise an issue](https://github.com/allanbunch/node-red-openai-api/issues) directly on GitHub.
-- **Contributing**: Your contributions are invaluable to us. See the [How to Contribute](#contribute) section for more details on how to get involved.
-
-Thank you for being part of our innovative community!
+- clear scope and rationale,
+- tests for behavior changes,
+- doc updates when user-facing behavior changes.
 
 ## License
 
-This project is licensed under the [MIT License](./LICENSE).
-
-Thank you for being part of the Node-RED community!
+[MIT](./LICENSE)

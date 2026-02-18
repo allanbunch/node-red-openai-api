@@ -39,6 +39,21 @@ async function deleteModelResponse(parameters) {
   return response;
 }
 
+async function cancelModelResponse(parameters) {
+  const openai = new OpenAI(this.clientParams);
+  const { response_id, ...params } = parameters.payload;
+  const response = await openai.responses.cancel(response_id, params);
+
+  return response;
+}
+
+async function compactModelResponse(parameters) {
+  const openai = new OpenAI(this.clientParams);
+  const response = await openai.responses.compact(parameters.payload);
+
+  return response;
+}
+
 async function listInputItems(parameters) {
   const openai = new OpenAI(this.clientParams);
   const { response_id, ...params } = parameters.payload;
@@ -51,5 +66,7 @@ module.exports = {
   createModelResponse,
   getModelResponse,
   deleteModelResponse,
+  cancelModelResponse,
+  compactModelResponse,
   listInputItems,
 };

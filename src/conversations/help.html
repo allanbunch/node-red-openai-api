@@ -1,0 +1,135 @@
+<section>
+    <details>
+        <summary style="font-weight: bold;">💬 Conversations</summary>
+        <a href="https://platform.openai.com/docs/api-reference/conversations" target="_blank">Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Conversation</h4>
+        <p>Create a new conversation.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                items
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Optional initial conversation items.</dd>
+            <dt class="optional">
+                metadata
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional key-value metadata for the conversation.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Conversation</h4>
+        <p>Retrieve a conversation by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                conversation_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The conversation id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Conversation</h4>
+        <p>Update a conversation by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                conversation_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The conversation id.</dd>
+            <dt class="optional">
+                metadata
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Metadata to set on the conversation.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Conversation</h4>
+        <p>Delete a conversation by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                conversation_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The conversation id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Conversation Item</h4>
+        <p>Add an item to a conversation.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                conversation_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The conversation id.</dd>
+            <dt>
+                item
+                <span class="property-type">object</span>
+            </dt>
+            <dd>The item payload to append.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Conversation Item</h4>
+        <p>Retrieve a single conversation item by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                conversation_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The conversation id.</dd>
+            <dt>
+                item_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The item id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Conversation Items</h4>
+        <p>List items for a conversation.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                conversation_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The conversation id.</dd>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor to return items after this item id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of items to return.</dd>
+            <dt class="optional">
+                order
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Sort order, typically <code>asc</code> or <code>desc</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Conversation Item</h4>
+        <p>Delete a single conversation item by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                conversation_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The conversation id.</dd>
+            <dt>
+                item_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The item id.</dd>
+        </dl>
+    </details>
+</section>

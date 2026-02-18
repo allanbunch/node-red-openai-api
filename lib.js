@@ -9228,8 +9228,78 @@ var require_methods7 = __commonJS({
   }
 });
 
-// src/embeddings/methods.js
+// src/conversations/methods.js
 var require_methods8 = __commonJS({
+  "src/conversations/methods.js"(exports2, module2) {
+    var OpenAI = require_openai().OpenAI;
+    async function createConversation(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.conversations.create(parameters.payload);
+      return response;
+    }
+    async function getConversation(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { conversation_id, ...params } = parameters.payload;
+      const response = await openai.conversations.retrieve(conversation_id, params);
+      return response;
+    }
+    async function modifyConversation(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { conversation_id, ...body } = parameters.payload;
+      const response = await openai.conversations.update(conversation_id, body);
+      return response;
+    }
+    async function deleteConversation(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { conversation_id, ...params } = parameters.payload;
+      const response = await openai.conversations.delete(conversation_id, params);
+      return response;
+    }
+    async function createConversationItem(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { conversation_id, ...body } = parameters.payload;
+      const response = await openai.conversations.items.create(conversation_id, body);
+      return response;
+    }
+    async function getConversationItem(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { conversation_id, item_id, ...params } = parameters.payload;
+      const response = await openai.conversations.items.retrieve(item_id, {
+        conversation_id,
+        ...params
+      });
+      return response;
+    }
+    async function listConversationItems(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { conversation_id, ...params } = parameters.payload;
+      const list = await openai.conversations.items.list(conversation_id, params);
+      return [...list.data];
+    }
+    async function deleteConversationItem(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { conversation_id, item_id, ...params } = parameters.payload;
+      const response = await openai.conversations.items.delete(item_id, {
+        conversation_id,
+        ...params
+      });
+      return response;
+    }
+    module2.exports = {
+      createConversation,
+      getConversation,
+      modifyConversation,
+      deleteConversation,
+      createConversationItem,
+      getConversationItem,
+      listConversationItems,
+      deleteConversationItem
+    };
+  }
+});
+
+// src/embeddings/methods.js
+var require_methods9 = __commonJS({
   "src/embeddings/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createEmbedding(parameters) {
@@ -9244,7 +9314,7 @@ var require_methods8 = __commonJS({
 });
 
 // src/files/methods.js
-var require_methods9 = __commonJS({
+var require_methods10 = __commonJS({
   "src/files/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     var fs = require("fs");
@@ -9289,7 +9359,7 @@ var require_methods9 = __commonJS({
 });
 
 // src/fine-tuning/methods.js
-var require_methods10 = __commonJS({
+var require_methods11 = __commonJS({
   "src/fine-tuning/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createFineTuningJob(parameters) {
@@ -9350,7 +9420,7 @@ var require_methods10 = __commonJS({
 });
 
 // src/images/methods.js
-var require_methods11 = __commonJS({
+var require_methods12 = __commonJS({
   "src/images/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     var fs = require("fs");
@@ -9385,7 +9455,7 @@ var require_methods11 = __commonJS({
 });
 
 // src/messages/methods.js
-var require_methods12 = __commonJS({
+var require_methods13 = __commonJS({
   "src/messages/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function listMessages(parameters) {
@@ -9441,7 +9511,7 @@ var require_methods12 = __commonJS({
 });
 
 // src/models/methods.js
-var require_methods13 = __commonJS({
+var require_methods14 = __commonJS({
   "src/models/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function listModels(parameters) {
@@ -9470,7 +9540,7 @@ var require_methods13 = __commonJS({
 });
 
 // src/moderations/methods.js
-var require_methods14 = __commonJS({
+var require_methods15 = __commonJS({
   "src/moderations/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createModeration(parameters) {
@@ -9485,7 +9555,7 @@ var require_methods14 = __commonJS({
 });
 
 // src/responses/methods.js
-var require_methods15 = __commonJS({
+var require_methods16 = __commonJS({
   "src/responses/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createModelResponse(parameters) {
@@ -9521,6 +9591,17 @@ var require_methods15 = __commonJS({
       const response = await openai.responses.del(response_id, params);
       return response;
     }
+    async function cancelModelResponse(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { response_id, ...params } = parameters.payload;
+      const response = await openai.responses.cancel(response_id, params);
+      return response;
+    }
+    async function compactModelResponse(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.responses.compact(parameters.payload);
+      return response;
+    }
     async function listInputItems(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { response_id, ...params } = parameters.payload;
@@ -9531,13 +9612,15 @@ var require_methods15 = __commonJS({
       createModelResponse,
       getModelResponse,
       deleteModelResponse,
+      cancelModelResponse,
+      compactModelResponse,
       listInputItems
     };
   }
 });
 
 // src/runs/methods.js
-var require_methods16 = __commonJS({
+var require_methods17 = __commonJS({
   "src/runs/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createThreadAndRun(parameters) {
@@ -9681,7 +9764,7 @@ var require_methods16 = __commonJS({
 });
 
 // src/threads/methods.js
-var require_methods17 = __commonJS({
+var require_methods18 = __commonJS({
   "src/threads/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createThread(parameters) {
@@ -9717,7 +9800,7 @@ var require_methods17 = __commonJS({
 });
 
 // src/uploads/methods.js
-var require_methods18 = __commonJS({
+var require_methods19 = __commonJS({
   "src/uploads/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createUpload(parameters) {
@@ -9815,7 +9898,7 @@ var require_methods18 = __commonJS({
 });
 
 // src/vector-store-file-batches/methods.js
-var require_methods19 = __commonJS({
+var require_methods20 = __commonJS({
   "src/vector-store-file-batches/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     var fs = require("fs");
@@ -9889,7 +9972,7 @@ var require_methods19 = __commonJS({
 });
 
 // src/vector-store-files/methods.js
-var require_methods20 = __commonJS({
+var require_methods21 = __commonJS({
   "src/vector-store-files/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createVectorStoreFile(parameters) {
@@ -9936,7 +10019,7 @@ var require_methods20 = __commonJS({
 });
 
 // src/vector-stores/methods.js
-var require_methods21 = __commonJS({
+var require_methods22 = __commonJS({
   "src/vector-stores/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createVectorStore(parameters) {
@@ -9985,20 +10068,21 @@ var batch = require_methods4();
 var chat = require_methods5();
 var container_files = require_methods6();
 var containers = require_methods7();
-var embeddings = require_methods8();
-var files = require_methods9();
-var fine_tuning = require_methods10();
-var images = require_methods11();
-var messages = require_methods12();
-var models = require_methods13();
-var moderations = require_methods14();
-var responses = require_methods15();
-var runs = require_methods16();
-var threads = require_methods17();
-var uploads = require_methods18();
-var vectorStoreFileBatches = require_methods19();
-var vectorStoreFiles = require_methods20();
-var vectorStores = require_methods21();
+var conversations = require_methods8();
+var embeddings = require_methods9();
+var files = require_methods10();
+var fine_tuning = require_methods11();
+var images = require_methods12();
+var messages = require_methods13();
+var models = require_methods14();
+var moderations = require_methods15();
+var responses = require_methods16();
+var runs = require_methods17();
+var threads = require_methods18();
+var uploads = require_methods19();
+var vectorStoreFileBatches = require_methods20();
+var vectorStoreFiles = require_methods21();
+var vectorStores = require_methods22();
 function normalizeHeaderOrQueryName(headerOrQueryName) {
   if (typeof headerOrQueryName !== "string") {
     return "Authorization";
@@ -10048,6 +10132,7 @@ Object.assign(
   chat,
   container_files,
   containers,
+  conversations,
   embeddings,
   files,
   fine_tuning,

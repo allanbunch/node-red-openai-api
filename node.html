@@ -192,6 +192,17 @@
     <option value="retrieveContainer" data-i18n="OpenaiApi.parameters.retrieveContainer"></option>
     <option value="deleteContainer" data-i18n="OpenaiApi.parameters.deleteContainer"></option>
 </optgroup>
+        <optgroup style="font-style: normal;" label="💬 Conversations">
+    <option value="createConversation" data-i18n="OpenaiApi.parameters.createConversation"></option>
+    <option value="getConversation" data-i18n="OpenaiApi.parameters.getConversation"></option>
+    <option value="modifyConversation" data-i18n="OpenaiApi.parameters.modifyConversation"></option>
+    <option value="deleteConversation" data-i18n="OpenaiApi.parameters.deleteConversation"></option>
+    <option value="createConversationItem" data-i18n="OpenaiApi.parameters.createConversationItem"></option>
+    <option value="getConversationItem" data-i18n="OpenaiApi.parameters.getConversationItem"></option>
+    <option value="listConversationItems" data-i18n="OpenaiApi.parameters.listConversationItems"></option>
+    <option value="deleteConversationItem" data-i18n="OpenaiApi.parameters.deleteConversationItem"></option>
+</optgroup>
+
               <optgroup style="font-style: normal;" label="🔗 Embeddings">
         <option
           value="createEmbedding"
@@ -304,11 +315,22 @@
         ></option>
 
         <option
+        value="cancelModelResponse"
+        data-i18n="OpenaiApi.parameters.cancelModelResponse"
+        ></option>
+
+        <option
+        value="compactModelResponse"
+        data-i18n="OpenaiApi.parameters.compactModelResponse"
+        ></option>
+
+        <option
         value="listInputItems"
         data-i18n="OpenaiApi.parameters.listInputItems"
         ></option>
 
       </optgroup>
+
               <optgroup style="font-style: normal;" label="🔄 Runs (Beta)">
         <option
           value="createThreadAndRun"
@@ -1701,6 +1723,12 @@
                 <span class="property-type">array</span>
             </dt>
             <dd>IDs of files to copy to the container.</dd>
+
+            <dt class="optional">
+                network_policy
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Network policy settings for the container, such as allowlist mode and allowed domains.</dd>
         </dl>
 
         <h4 style="font-weight: bolder;"> ⋙ List Containers</h4>
@@ -1763,6 +1791,143 @@
 
     </details>
 </section>
+
+  <section>
+    <details>
+        <summary style="font-weight: bold;">💬 Conversations</summary>
+        <a href="https://platform.openai.com/docs/api-reference/conversations" target="_blank">Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Conversation</h4>
+        <p>Create a new conversation.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                items
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Optional initial conversation items.</dd>
+            <dt class="optional">
+                metadata
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional key-value metadata for the conversation.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Conversation</h4>
+        <p>Retrieve a conversation by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                conversation_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The conversation id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Conversation</h4>
+        <p>Update a conversation by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                conversation_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The conversation id.</dd>
+            <dt class="optional">
+                metadata
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Metadata to set on the conversation.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Conversation</h4>
+        <p>Delete a conversation by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                conversation_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The conversation id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Conversation Item</h4>
+        <p>Add an item to a conversation.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                conversation_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The conversation id.</dd>
+            <dt>
+                item
+                <span class="property-type">object</span>
+            </dt>
+            <dd>The item payload to append.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Conversation Item</h4>
+        <p>Retrieve a single conversation item by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                conversation_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The conversation id.</dd>
+            <dt>
+                item_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The item id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Conversation Items</h4>
+        <p>List items for a conversation.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                conversation_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The conversation id.</dd>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor to return items after this item id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of items to return.</dd>
+            <dt class="optional">
+                order
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Sort order, typically <code>asc</code> or <code>desc</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Conversation Item</h4>
+        <p>Delete a single conversation item by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                conversation_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The conversation id.</dd>
+            <dt>
+                item_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The item id.</dd>
+        </dl>
+    </details>
+</section>
+
   <section>
     <details>
         <summary style="font-weight: bold;">🔗 Embeddings</summary>
@@ -2656,14 +2821,6 @@
             <dd>Whether to allow the model to run tool calls in parallel.</dd>
 
             <dt class="optional">
-                parallel_tool_calls
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-parallel_tool_calls"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
-                <span class="property-type">boolean</span>
-            </dt>
-            <dd>Whether to allow the model to run tool calls in parallel.</dd>
-
-            <dt class="optional">
                 previous_response_id
                 <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-previous_response_id"
                     target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
@@ -2788,6 +2945,42 @@
             <dd>The ID of the response to delete.</dd>
         </dl>
 
+        <h4 style="font-weight: bolder;"> ⋙ Cancel Model Response</h4>
+        <p>Cancels an in-progress model response.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                response_id
+                <a href="https://platform.openai.com/docs/api-reference/responses/cancel#responses-cancel-response_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the response to cancel.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Compact Model Response</h4>
+        <p>Compacts prior conversation content to reduce context size while preserving continuity.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                conversation
+                <a href="https://platform.openai.com/docs/api-reference/responses/compact#responses-compact-conversation"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Conversation items to compact.</dd>
+
+            <dt class="optional">
+                model
+                <a href="https://platform.openai.com/docs/api-reference/responses/compact#responses-compact-model"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Optional model used during compaction.</dd>
+        </dl>
+
         <h4 style="font-weight: bolder;"> ⋙ List Input Items</h4>
         <p>Returns a list of input items for a given response.</p>
         <dl class="message-properties">
@@ -2837,6 +3030,7 @@
 
     </details>
 </section>
+
   <section>
     <details>
         <summary style="font-weight: bold;">🔄 Runs</summary>

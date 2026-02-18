@@ -65,14 +65,6 @@
             <dd>Whether to allow the model to run tool calls in parallel.</dd>
 
             <dt class="optional">
-                parallel_tool_calls
-                <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-parallel_tool_calls"
-                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
-                <span class="property-type">boolean</span>
-            </dt>
-            <dd>Whether to allow the model to run tool calls in parallel.</dd>
-
-            <dt class="optional">
                 previous_response_id
                 <a href="https://platform.openai.com/docs/api-reference/responses/create#responses-create-previous_response_id"
                     target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
@@ -195,6 +187,42 @@
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the response to delete.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Cancel Model Response</h4>
+        <p>Cancels an in-progress model response.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                response_id
+                <a href="https://platform.openai.com/docs/api-reference/responses/cancel#responses-cancel-response_id"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the response to cancel.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Compact Model Response</h4>
+        <p>Compacts prior conversation content to reduce context size while preserving continuity.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                conversation
+                <a href="https://platform.openai.com/docs/api-reference/responses/compact#responses-compact-conversation"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Conversation items to compact.</dd>
+
+            <dt class="optional">
+                model
+                <a href="https://platform.openai.com/docs/api-reference/responses/compact#responses-compact-model"
+                    target="_blank"><i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Optional model used during compaction.</dd>
         </dl>
 
         <h4 style="font-weight: bolder;"> ⋙ List Input Items</h4>
