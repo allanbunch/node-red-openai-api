@@ -62,7 +62,7 @@ After installation, find your node in the **AI** palette category labeled "OpenA
 
 ### Ehancements
 
-- Upgraded the OpenAI API Library dependency from [v4.89.0](https://github.com/openai/openai-node/releases/tag/v4.89.0) to [v4.103.0](https://github.com/openai/openai-node/releases/tag/v4.103.0)
+- Upgraded the OpenAI API Library dependency from [v4.103.0](https://github.com/openai/openai-node/releases/tag/v4.103.0) to [v6.22.0](https://github.com/openai/openai-node/releases/tag/v6.22.0)
 
 ### Notable Features & Changes
 
