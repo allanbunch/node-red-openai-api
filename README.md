@@ -154,19 +154,19 @@ See the in-editor node help for method-specific payload fields and links to offi
 
 Import-ready example flows are available in `examples/`:
 
-- `examples/assistants.json`
-- `examples/audio.json`
-- `examples/chat.json`
-- `examples/embeddings.json`
-- `examples/files.json`
-- `examples/fine-tuning.json`
-- `examples/images.json`
-- `examples/messages.json`
-- `examples/models.json`
-- `examples/moderations.json`
-- `examples/runs.json`
-- `examples/threads.json`
-- `examples/responses/mcp.json`
+- [`examples/assistants.json`](examples/assistants.json)
+- [`examples/audio.json`](examples/audio.json)
+- [`examples/chat.json`](examples/chat.json)
+- [`examples/embeddings.json`](examples/embeddings.json)
+- [`examples/files.json`](examples/files.json)
+- [`examples/fine-tuning.json`](examples/fine-tuning.json)
+- [`examples/images.json`](examples/images.json)
+- [`examples/messages.json`](examples/messages.json)
+- [`examples/models.json`](examples/models.json)
+- [`examples/moderations.json`](examples/moderations.json)
+- [`examples/runs.json`](examples/runs.json)
+- [`examples/threads.json`](examples/threads.json)
+- [`examples/responses/mcp.json`](examples/responses/mcp.json)
 
 ## Development
 
