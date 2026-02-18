@@ -22,6 +22,19 @@ function resolveApiKeyValue(config, credentials, apiKeyType) {
   return credentials.secureApiKeyValue;
 }
 
+function normalizeApiKeyHeaderOrQueryName(headerOrQueryName) {
+  if (typeof headerOrQueryName !== "string") {
+    return "Authorization";
+  }
+
+  const trimmedHeaderOrQueryName = headerOrQueryName.trim();
+  return trimmedHeaderOrQueryName || "Authorization";
+}
+
+function resolveApiKeyQueryMode(isQueryValue) {
+  return isQueryValue === true || isQueryValue === "true";
+}
+
 module.exports = function (RED) {
   class OpenaiApiNode {
     constructor(config) {
@@ -41,69 +54,91 @@ module.exports = function (RED) {
           node.service.evaluateTypedAsync("secureApiKeyValue", msg, node),
           node.service.evaluateTypedAsync("apiBase", msg, node),
           node.service.evaluateTypedAsync("organizationId", msg, node),
+          node.service.evaluateTypedAsync(
+            "secureApiKeyHeaderOrQueryName",
+            msg,
+            node
+          ),
         ])
-          .then(([clientApiKey, clientApiBase, clientOrganization]) => {
-            if (!clientApiKey) {
-              node.error("OpenAI API key is not configured", msg);
-              return;
-            }
-
-            let client = new OpenaiApi(
+          .then(
+            ([
               clientApiKey,
               clientApiBase,
-              clientOrganization
-            );
+              clientOrganization,
+              clientApiKeyHeaderOrQueryName,
+            ]) => {
+              if (!clientApiKey) {
+                node.error("OpenAI API key is not configured", msg);
+                return;
+              }
 
-            let payload;
+              const resolvedApiKeyHeaderOrQueryName =
+                normalizeApiKeyHeaderOrQueryName(clientApiKeyHeaderOrQueryName);
+              const apiKeyIsQuery = resolveApiKeyQueryMode(
+                node.service.secureApiKeyIsQuery
+              );
 
-            const propertyType = node.config.propertyType || "msg";
-            const propertyPath = node.config.property || "payload";
+              let client = new OpenaiApi(
+                clientApiKey,
+                clientApiBase,
+                clientOrganization,
+                {
+                  headerOrQueryName: resolvedApiKeyHeaderOrQueryName,
+                  isQuery: apiKeyIsQuery,
+                }
+              );
 
-            if (propertyType === "msg") {
-              payload = RED.util.getMessageProperty(msg, propertyPath);
-            } else {
-              // For flow and global contexts
-              payload = node.context()[propertyType].get(propertyPath);
-            }
+              let payload;
 
-            const serviceName = node.config.method; // Set the service name to call.
+              const propertyType = node.config.propertyType || "msg";
+              const propertyPath = node.config.property || "payload";
 
-            let serviceParametersObject = {
-              _node: node,
-              payload: payload,
-              msg: msg,
-            };
+              if (propertyType === "msg") {
+                payload = RED.util.getMessageProperty(msg, propertyPath);
+              } else {
+                // For flow and global contexts
+                payload = node.context()[propertyType].get(propertyPath);
+              }
 
-            // Dynamically call the function based on the service name
-            if (typeof client[serviceName] === "function") {
-              node.status({
-                fill: "blue",
-                shape: "dot",
-                text: "OpenaiApi.status.requesting",
-              });
+              const serviceName = node.config.method; // Set the service name to call.
 
-              client[serviceName](serviceParametersObject)
-                .then((payload) => {
-                  if (payload !== undefined) {
-                    // Update `msg.payload` with the payload from the API response, then send resonse to client.
-                    msg.payload = payload;
-                    node.send(msg);
-                    node.status({});
-                  }
-                })
-                .catch(function (error) {
-                  node.status({
-                    fill: "red",
-                    shape: "ring",
-                    text: "node-red:common.status.error",
-                  });
-                  let errorMessage = error.message;
-                  node.error(errorMessage, msg);
+              let serviceParametersObject = {
+                _node: node,
+                payload: payload,
+                msg: msg,
+              };
+
+              // Dynamically call the function based on the service name
+              if (typeof client[serviceName] === "function") {
+                node.status({
+                  fill: "blue",
+                  shape: "dot",
+                  text: "OpenaiApi.status.requesting",
                 });
-            } else {
-              console.error(`Function ${serviceName} does not exist on client.`);
+
+                client[serviceName](serviceParametersObject)
+                  .then((payload) => {
+                    if (payload !== undefined) {
+                      // Update `msg.payload` with the payload from the API response, then send resonse to client.
+                      msg.payload = payload;
+                      node.send(msg);
+                      node.status({});
+                    }
+                  })
+                  .catch(function (error) {
+                    node.status({
+                      fill: "red",
+                      shape: "ring",
+                      text: "node-red:common.status.error",
+                    });
+                    let errorMessage = error.message;
+                    node.error(errorMessage, msg);
+                  });
+              } else {
+                console.error(`Function ${serviceName} does not exist on client.`);
+              }
             }
-          })
+          )
           .catch((error) => {
             const errorMessage = error instanceof Error ? error.message : error;
             node.error(errorMessage, msg);

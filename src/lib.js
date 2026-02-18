@@ -21,12 +21,50 @@ const vectorStoreFileBatches = require("./vector-store-file-batches/methods.js")
 const vectorStoreFiles = require("./vector-store-files/methods.js");
 const vectorStores = require("./vector-stores/methods.js");
 
+function normalizeHeaderOrQueryName(headerOrQueryName) {
+  if (typeof headerOrQueryName !== "string") {
+    return "Authorization";
+  }
+
+  const trimmedHeaderOrQueryName = headerOrQueryName.trim();
+  return trimmedHeaderOrQueryName || "Authorization";
+}
+
+function createApiKeyTransportParams(apiKey, apiKeyTransport = {}) {
+  const headerOrQueryName = normalizeHeaderOrQueryName(
+    apiKeyTransport.headerOrQueryName
+  );
+
+  if (apiKeyTransport.isQuery) {
+    return {
+      defaultHeaders: {
+        Authorization: null,
+      },
+      defaultQuery: {
+        [headerOrQueryName]: apiKey,
+      },
+    };
+  }
+
+  if (headerOrQueryName.toLowerCase() === "authorization") {
+    return {};
+  }
+
+  return {
+    defaultHeaders: {
+      Authorization: null,
+      [headerOrQueryName]: apiKey,
+    },
+  };
+}
+
 class OpenaiApi {
-  constructor(apiKey, baseURL, organization) {
+  constructor(apiKey, baseURL, organization, apiKeyTransport) {
     this.clientParams = {
       apiKey,
       baseURL,
       organization,
+      ...createApiKeyTransportParams(apiKey, apiKeyTransport),
     };
   }
 }

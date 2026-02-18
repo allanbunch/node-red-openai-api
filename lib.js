@@ -9814,12 +9814,44 @@ var uploads = require_methods18();
 var vectorStoreFileBatches = require_methods19();
 var vectorStoreFiles = require_methods20();
 var vectorStores = require_methods21();
+function normalizeHeaderOrQueryName(headerOrQueryName) {
+  if (typeof headerOrQueryName !== "string") {
+    return "Authorization";
+  }
+  const trimmedHeaderOrQueryName = headerOrQueryName.trim();
+  return trimmedHeaderOrQueryName || "Authorization";
+}
+function createApiKeyTransportParams(apiKey, apiKeyTransport = {}) {
+  const headerOrQueryName = normalizeHeaderOrQueryName(
+    apiKeyTransport.headerOrQueryName
+  );
+  if (apiKeyTransport.isQuery) {
+    return {
+      defaultHeaders: {
+        Authorization: null
+      },
+      defaultQuery: {
+        [headerOrQueryName]: apiKey
+      }
+    };
+  }
+  if (headerOrQueryName.toLowerCase() === "authorization") {
+    return {};
+  }
+  return {
+    defaultHeaders: {
+      Authorization: null,
+      [headerOrQueryName]: apiKey
+    }
+  };
+}
 var OpenaiApi = class {
-  constructor(apiKey, baseURL, organization) {
+  constructor(apiKey, baseURL, organization, apiKeyTransport) {
     this.clientParams = {
       apiKey,
       baseURL,
-      organization
+      organization,
+      ...createApiKeyTransportParams(apiKey, apiKeyTransport)
     };
   }
 };

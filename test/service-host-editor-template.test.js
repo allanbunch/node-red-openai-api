@@ -19,6 +19,10 @@ test("service host API key editor uses native typedInput cred handling", () => {
   );
   assert.match(
     template,
+    /<input\s+type="text"\s+id="node-config-input-secureApiKeyHeaderOrQueryName"\s+placeholder="Authorization"\s+\/>/
+  );
+  assert.match(
+    template,
     /if \(inputValue && inputValue !== "__PWRD__"\) \{/
   );
   assert.match(
@@ -41,6 +45,9 @@ test("service host API key editor uses native typedInput cred handling", () => {
     template,
     /const inputValue = apiKeyInput\.typedInput\("value"\);/
   );
+  assert.match(
+    template,
+    /const existingCredValue = apiKeyInput\.val\(\);/
+  );
   assert.ok(!/apiKeyInput\.prop\("type"/.test(template));
-  assert.ok(!/apiKeyInput\.val\(/.test(template));
 });

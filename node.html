@@ -4193,7 +4193,11 @@
       <i class="fa fa-list"></i>
       <span data-i18n="OpenaiApi.label.header"></span>
     </label>
-    <input type="text" id="node-config-input-secureApiKeyHeaderOrQueryName" />
+    <input
+      type="text"
+      id="node-config-input-secureApiKeyHeaderOrQueryName"
+      placeholder="Authorization"
+    />
     <input type="hidden" id="node-config-input-secureApiKeyHeaderOrQueryNameType" />
   </div>
   <div class="form-row">
@@ -4240,6 +4244,7 @@
 </script>
 
 <script type="text/html" data-help-name="Service Host">
-  <p><b>Header</b>: Variable name to set API key</p>
-  <p><b>Value</b>: Value of API key</p>
+  <p><b>Auth Header</b>: Header name used to send the API key. Defaults to <code>Authorization</code>.</p>
+  <p><b>isQuery</b>: When true, the API key is sent as a query parameter using the Auth Header value as the parameter name.</p>
+  <p><b>API Key</b>: API key value or typed reference.</p>
 </script>

@@ -34,7 +34,9 @@ npm i @inductiv/node-red-openai-api
 Service Host fields support Node-RED typed inputs (`cred`, `env`, `msg`, `flow`, `global`).
 
 - **API Key**: Use `cred` for a masked credential value, or select **env/msg/flow/global** and provide the reference name.
-- **Other fields** (API base URL, organization ID, header name): use the same typed input selector as needed.
+- **Auth Header**: Defaults to `Authorization`. Override it for OpenAI-compatible services that expect a different API key header.
+- **isQuery**: When enabled, the API key is sent as a query parameter using the Auth Header value as the parameter name.
+- **Other fields** (API base URL, organization ID): use the same typed input selector as needed.
 
 This works with both OS env vars and Node-RED's `User Settings -> Environment` panel.
 
