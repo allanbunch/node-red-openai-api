@@ -4,17 +4,63 @@
 ![GitHub Issues](https://img.shields.io/github/issues/allanbunch/node-red-openai-api)
 ![GitHub Stars](https://img.shields.io/github/stars/allanbunch/node-red-openai-api)
 
-Node-RED node for calling the OpenAI API (and OpenAI-compatible APIs) through a single configurable node.
+This project brings the OpenAI API, and OpenAI-compatible APIs, into Node-RED as workflow-native building blocks.
 
-This package currently targets `openai` Node SDK `^6.27.0`.
+It is not just a thin wrapper around text generation. The node exposes modern AI capabilities inside a runtime people can inspect, route, test, and operate: request and response workflows, tools, conversations, streaming, realtime interactions, webhooks, and related API families that matter in real systems.
 
-## What You Get
+That makes this repository relevant beyond Node-RED alone. It is a practical implementation of how contemporary AI capabilities can live inside an open workflow environment instead of being locked inside a single vendor surface or hidden behind a one-purpose abstraction.
 
-- One `OpenAI API` node with method selection across major API families.
-- One `Service Host` config node for base URL, auth, and org settings.
-- Typed input support for key config fields: `str`, `env`, `msg`, `flow`, `global` (plus `cred` for API key).
-- Backward compatibility handling for older API key storage patterns.
-- Built-in examples for common flows.
+This package currently targets the `openai` Node SDK `^6.27.0`.
+
+## Why This Exists
+
+Modern AI work is no longer just "send a prompt, get a string back."
+
+Real systems now involve:
+
+- tool use
+- multi-step workflows
+- structured payloads
+- streaming responses
+- realtime sessions
+- webhook verification
+- provider compatibility and auth routing
+
+Node-RED is already good at orchestration, automation, event handling, integration, and operational clarity. This project connects those strengths to the OpenAI API surface so teams can build AI workflows in an environment that stays visible and composable.
+
+## Core Model
+
+The node model in this repository is intentionally simple:
+
+- one `OpenAI API` node handles the runtime method call
+- one `Service Host` config node handles API base URL, auth, and organization settings
+- the selected method determines which OpenAI API context is being called
+- request data is passed in through a configurable message property, `msg.payload` by default
+- method-specific details live in the editor help, example flows, and the underlying SDK contract
+
+In practice, that means one node can cover a wide API surface without turning the flow itself into a maze of special-purpose nodes.
+
+## What It Enables
+
+### Request and Response Workflows
+
+Use the node for direct generation, structured Responses API work, chat-style interactions, moderation, embeddings, image work, audio tasks, and other request/response patterns.
+
+### Tool-Enabled and Multi-Step AI Flows
+
+Use Responses tools, conversations, runs, messages, vector stores, files, skills, and related resources as part of larger control loops and operational workflows.
+
+### Streaming and Realtime Work
+
+Use streamed Responses output, Realtime client-secret creation, SIP call operations, and persistent Responses websocket connections where a flow needs more than one-shot request handling.
+
+### Event-Driven Integrations
+
+Use webhook signature verification and payload unwrapping in Node-RED flows that react to upstream platform events.
+
+### OpenAI-Compatible Provider Support
+
+Use the `Service Host` config to target compatible API providers with custom base URLs, custom auth header names, query-string auth routing, and typed configuration values.
 
 ## Requirements
 
@@ -39,13 +85,13 @@ npm i @inductiv/node-red-openai-api
 ## Quick Start
 
 1. Drop an `OpenAI API` node onto your flow.
-2. In the node editor, use the `Service Host` field to either select an existing config node or create one with the `+` button.
-3. In that `Service Host` config, set `API Base` (default: `https://api.openai.com/v1`).
-4. Set `API Key`:
-   - `cred` type for a masked credential value, or
-   - `env/msg/flow/global` and provide a reference name.
-5. Back in the `OpenAI API` node, select your method (for example `create model response`).
-6. Send request params in `msg.payload` (or change the input property on the node).
+2. Create or select a `Service Host` config node.
+3. Set `API Base` to your provider endpoint. The default OpenAI value is `https://api.openai.com/v1`.
+4. Set `API Key` using either:
+   - `cred` for a stored credential value, or
+   - `env`, `msg`, `flow`, or `global` for a runtime reference
+5. Pick a method on the `OpenAI API` node, such as `create model response`.
+6. Send the request payload through `msg.payload`, or change the node's input property if your flow uses a different message shape.
 
 Example `msg.payload` for `create model response`:
 
@@ -56,36 +102,39 @@ Example `msg.payload` for `create model response`:
 }
 ```
 
-Node output is written to `msg.payload`.
+The node writes its output back to `msg.payload`.
 
-## Service Host Configuration
+## Start Here
 
-### API Key
+If you want to understand the shape of this node quickly, these example flows are the best entry points:
 
-- `cred` keeps the value in Node-RED credentials (masked in the editor).
-- `env/msg/flow/global` treats the field as a reference, not a literal key.
-- Existing flows with older key storage formats are still handled.
+- [`examples/chat.json`](examples/chat.json)
+  A straightforward API-call flow for getting oriented.
+- [`examples/responses/phase.json`](examples/responses/phase.json)
+  A clean Responses example using newer payload features.
+- [`examples/responses/tool-search.json`](examples/responses/tool-search.json)
+  Shows tool-enabled Responses work in a practical flow.
+- [`examples/responses/computer-use.json`](examples/responses/computer-use.json)
+  Shows the request and follow-up contract for computer-use style workflows.
+- [`examples/responses/websocket.json`](examples/responses/websocket.json)
+  Shows explicit websocket lifecycle handling in one node instance.
+- [`examples/realtime/client-secrets.json`](examples/realtime/client-secrets.json)
+  Shows the Realtime client-secret contract for browser or mobile handoff.
 
-### Auth Header
+## Current Alignment Highlights
 
-- Default value is `Authorization`.
-- You can override it for OpenAI-compatible providers that use a different header name.
+This repository currently includes:
 
-### Organization ID
+- Responses API support, including `phase`, `prompt_cache_key`, `tool_search`, GA computer-use payloads, cancellation, compaction, input-token counting, and websocket mode
+- Realtime API support, including client-secret creation, SIP call operations, and current SDK-typed model ids such as `gpt-realtime-1.5` and `gpt-audio-1.5`
+- Conversations, Containers, Container Files, Evals, Skills, Videos, and Webhooks support
+- OpenAI-compatible auth routing through the `Service Host` config node
 
-- Optional.
-- Supports typed input (`str/env/msg/flow/global`) like other service fields.
+See the in-editor node help for exact method payloads and links to official API documentation.
 
-### Environment Variables
+## API Surface
 
-You can source values from:
-
-- OS-level environment variables.
-- Node-RED editor environment variables (`User Settings -> Environment`).
-
-## Supported API Families
-
-The method dropdown includes operations across:
+The method picker covers a wide range of OpenAI API families:
 
 - Assistants
 - Audio
@@ -114,70 +163,11 @@ The method dropdown includes operations across:
 - Videos
 - Webhooks
 
-`Graders` are supported through Evals payloads (`testing_criteria`) in the same way the official SDK models them.
+`Graders` are supported through Evals payloads via `testing_criteria`, in the same way the official SDK models them.
 
-See the in-editor node help for method-specific payload fields and links to official API docs.
+## Example Index
 
-## Recent Additions
-
-- OpenAI Node SDK `6.23.0` to `6.27.0` alignment:
-  - Responses API:
-    - `phase` support in assistant message inputs
-    - `prompt_cache_key`
-    - `tool_search`
-    - GA computer-use payload support
-    - persistent Responses websocket mode through `manage model response websocket`
-  - Realtime API:
-    - newer SDK-typed model ids such as `gpt-realtime-1.5` and `gpt-audio-1.5`
-    - corrected client-secret request contract documentation and example flow
-  - New example flows:
-    - `examples/responses/phase.json`
-    - `examples/responses/tool-search.json`
-    - `examples/responses/computer-use.json`
-    - `examples/responses/websocket.json`
-    - `examples/realtime/client-secrets.json`
-- Added environment variable support for service host configuration values.
-- OpenAI Node SDK upgraded from `4.103.0` to `6.22.0`.
-- Added `responses.cancel`.
-- Added `responses.compact`.
-- Added `responses.input_tokens` counting support.
-- Added Conversations API support:
-  - create/retrieve/modify/delete conversation
-  - create/retrieve/list/delete conversation items
-- Added Containers and Container Files support.
-- Added MCP tool use example flow at `examples/responses/mcp.json`.
-- Added Skills API support:
-  - list/create/retrieve/modify/delete skills
-  - retrieve skill content
-  - list/create/retrieve/delete skill versions
-  - retrieve skill version content
-- Added Evals API support:
-  - list/create/retrieve/modify/delete evals
-  - list/create/retrieve/cancel/delete eval runs
-  - list/retrieve eval run output items
-- Added Realtime API support:
-  - create client secret
-  - accept/hangup/refer/reject SIP calls
-  - newer SDK-typed model ids such as `gpt-realtime-1.5` and `gpt-audio-1.5`
-- Added Realtime client-secret example flow at `examples/realtime/client-secrets.json`.
-- Added Responses websocket mode support through a single action-driven method context:
-  - `connect`
-  - `send` with `response.create` client events
-  - `close`
-  - asynchronous server-event output with connection metadata
-- Added Responses websocket example flow at `examples/responses/websocket.json`.
-- Added Videos API support:
-  - list/create/retrieve/delete videos
-  - download video content
-  - remix videos
-- Added Webhooks utility support:
-  - unwrap signed webhook payloads
-  - verify webhook signatures
-- Service Host auth routing now applies `Auth Header` configuration at request time.
-
-## Examples
-
-Import-ready example flows are available in `examples/`:
+Import-ready example flows live under `examples/`:
 
 - [`examples/assistants.json`](examples/assistants.json)
 - [`examples/audio.json`](examples/audio.json)
@@ -189,14 +179,47 @@ Import-ready example flows are available in `examples/`:
 - [`examples/messages.json`](examples/messages.json)
 - [`examples/models.json`](examples/models.json)
 - [`examples/moderations.json`](examples/moderations.json)
-- [`examples/runs.json`](examples/runs.json)
-- [`examples/threads.json`](examples/threads.json)
+- [`examples/realtime/client-secrets.json`](examples/realtime/client-secrets.json)
+- [`examples/responses/computer-use.json`](examples/responses/computer-use.json)
 - [`examples/responses/mcp.json`](examples/responses/mcp.json)
 - [`examples/responses/phase.json`](examples/responses/phase.json)
 - [`examples/responses/tool-search.json`](examples/responses/tool-search.json)
-- [`examples/responses/computer-use.json`](examples/responses/computer-use.json)
 - [`examples/responses/websocket.json`](examples/responses/websocket.json)
-- [`examples/realtime/client-secrets.json`](examples/realtime/client-secrets.json)
+- [`examples/runs.json`](examples/runs.json)
+- [`examples/threads.json`](examples/threads.json)
+
+## Service Host Notes
+
+The `Service Host` config node handles the provider-specific runtime boundary.
+
+- `API Key` supports `cred`, `env`, `msg`, `flow`, and `global`
+- `API Base` can point at OpenAI or a compatible provider
+- `Auth Header` defaults to `Authorization`, but can be changed for provider-specific auth conventions
+- auth can be sent either as a header or as a query-string parameter
+- `Organization ID` is optional and supports typed values like the other service fields
+
+This is the piece that lets one runtime model work cleanly across both OpenAI and compatible API surfaces.
+
+## Repository Shape
+
+This repository is structured so the runtime, editor, examples, and generated artifacts stay understandable:
+
+- [`node.js`](node.js)
+  Node-RED runtime entry point and `Service Host` config-node logic.
+- [`src/`](src)
+  Source modules for method implementations, editor templates, and help content.
+- [`src/lib.js`](src/lib.js)
+  Source entry for the bundled runtime method surface.
+- [`lib.js`](lib.js)
+  Generated runtime bundle built from `src/lib.js`.
+- [`src/node.html`](src/node.html)
+  Source editor template that includes the per-family fragments.
+- [`node.html`](node.html)
+  Generated editor asset built from `src/node.html`.
+- [`examples/`](examples)
+  Import-ready Node-RED flows.
+- [`test/`](test)
+  Node test coverage for editor behavior, auth routing, method mapping, and websocket lifecycle behavior.
 
 ## Development
 
@@ -206,19 +229,23 @@ npm run build
 npm test
 ```
 
-Build output files are generated from `src/`:
+Generated files are part of the project:
 
-- `node.html` (from `src/node.html`)
-- `lib.js` (from `src/lib.js`)
+- `node.html` is built from `src/node.html`
+- `lib.js` is built from `src/lib.js`
+
+If you change source templates or runtime source files, rebuild before review or release.
 
 ## Contributing
 
-PRs are welcome. Please include:
+Contributions are welcome. Keep changes clear, intentional, and proven.
 
-- clear scope and rationale,
-- tests for behavior changes,
-- a short plain-language comment block at the top of each test file you add or touch,
-- doc updates when user-facing behavior changes.
+Please include:
+
+- a clear scope and rationale
+- tests for behavior changes
+- a short plain-language comment block at the top of each test file you add or touch
+- doc updates when user-facing behavior changes
 
 ## License
 
