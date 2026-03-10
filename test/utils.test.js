@@ -1,5 +1,8 @@
 "use strict";
 
+// This is a legacy utility test file.
+// It checks the small helper surfaces like validation, streaming helpers, and file utilities in plain terms.
+
 const assert = require("assert");
 const { validation, streaming, fileHelpers } = require("../src/index").utils;
 

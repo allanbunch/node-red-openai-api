@@ -1,0 +1,172 @@
+[
+    {
+        "id": "94f237d7e5864fc4",
+        "type": "tab",
+        "label": "Responses WebSocket Example",
+        "disabled": false,
+        "info": "Responses websocket example.\n\nThis flow demonstrates the websocket lifecycle through one `OpenAI API` node instance:\n- connect the websocket\n- send a `response.create` client event\n- inspect streamed server events from the same node\n- close the connection cleanly",
+        "env": []
+    },
+    {
+        "id": "7d097a8ea8f89f3b",
+        "type": "comment",
+        "z": "94f237d7e5864fc4",
+        "name": "Set your API key, then use the same OpenAI API node for connect, send, and close.",
+        "info": "Before running:\n- open the `OpenAI Auth` config node and set a valid API key\n- this example stores websocket commands in `msg.ai` because the `OpenAI API` node property is configured to `ai`\n- if your node uses the default property, move the same fields under `msg.payload`\n\nImportant:\n- the websocket connection lives inside a single `OpenAI API` node instance\n- for that reason, connect, send, and close all target the same node\n- click `Connect Responses WebSocket` first, then `Send response.create Event`, then `Close Responses WebSocket`",
+        "x": 480,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "9c6d8525af6b0e2a",
+        "type": "comment",
+        "z": "94f237d7e5864fc4",
+        "name": "What comes out of the node?",
+        "info": "This node produces two kinds of output:\n- immediate local acknowledgements for `connect`, `send`, and `close`\n- asynchronous Responses server events such as `response.created`, `response.in_progress`, `response.output_text.delta`, and `response.completed`\n\nServer events arrive in `msg.payload` and include connection metadata under `msg.openai`.",
+        "x": 410,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "b4a7fef11decb00a",
+        "type": "inject",
+        "z": "94f237d7e5864fc4",
+        "name": "Connect Responses WebSocket",
+        "props": [
+            {
+                "p": "ai.action",
+                "v": "connect",
+                "vt": "str"
+            },
+            {
+                "p": "ai.connection_id",
+                "v": "demo-connection-1",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 250,
+        "y": 320,
+        "wires": [
+            [
+                "2f33fb2b774e1f8f"
+            ]
+        ]
+    },
+    {
+        "id": "db2a19cffba6f2d1",
+        "type": "inject",
+        "z": "94f237d7e5864fc4",
+        "name": "Send response.create Event",
+        "props": [
+            {
+                "p": "ai.action",
+                "v": "send",
+                "vt": "str"
+            },
+            {
+                "p": "ai.connection_id",
+                "v": "demo-connection-1",
+                "vt": "str"
+            },
+            {
+                "p": "ai.event",
+                "v": "{\"type\":\"response.create\",\"model\":\"gpt-5.4\",\"input\":\"Say hello from Responses websocket mode in one sentence.\"}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 230,
+        "y": 400,
+        "wires": [
+            [
+                "2f33fb2b774e1f8f"
+            ]
+        ]
+    },
+    {
+        "id": "22f0c821e335fcbc",
+        "type": "inject",
+        "z": "94f237d7e5864fc4",
+        "name": "Close Responses WebSocket",
+        "props": [
+            {
+                "p": "ai.action",
+                "v": "close",
+                "vt": "str"
+            },
+            {
+                "p": "ai.connection_id",
+                "v": "demo-connection-1",
+                "vt": "str"
+            },
+            {
+                "p": "ai.reason",
+                "v": "Example flow complete",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 240,
+        "y": 480,
+        "wires": [
+            [
+                "2f33fb2b774e1f8f"
+            ]
+        ]
+    },
+    {
+        "id": "2f33fb2b774e1f8f",
+        "type": "OpenAI API",
+        "z": "94f237d7e5864fc4",
+        "name": "Manage Model Response WebSocket",
+        "property": "ai",
+        "propertyType": "msg",
+        "service": "c2b37d3bb51e2796",
+        "method": "manageModelResponseWebSocket",
+        "x": 600,
+        "y": 400,
+        "wires": [
+            [
+                "5260c60b85f63c44"
+            ]
+        ]
+    },
+    {
+        "id": "5260c60b85f63c44",
+        "type": "debug",
+        "z": "94f237d7e5864fc4",
+        "name": "Responses WebSocket",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "c2b37d3bb51e2796",
+        "type": "Service Host",
+        "apiBase": "https://api.openai.com/v1",
+        "secureApiKeyHeaderOrQueryName": "Authorization",
+        "organizationId": "",
+        "name": "OpenAI Auth"
+    }
+]

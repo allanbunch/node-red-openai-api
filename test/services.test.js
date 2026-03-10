@@ -1,5 +1,8 @@
 "use strict";
 
+// This is a legacy high-level service test file.
+// It exercises the older service factory layer and mocked API client behavior in a more end-to-end style.
+
 const assert = require("assert");
 const { createClient } = require("../src/client");
 const { createApi } = require("../src/index");

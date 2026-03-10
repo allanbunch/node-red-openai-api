@@ -1,5 +1,8 @@
 "use strict";
 
+// This file keeps the Service Host auth rules honest.
+// It checks that header auth, query auth, and default Authorization behavior are all routed the way this node promises.
+
 const assert = require("node:assert/strict");
 const EventEmitter = require("node:events");
 const test = require("node:test");

@@ -1,5 +1,8 @@
 "use strict";
 
+// This file is about the editor-side Service Host experience.
+// It checks that the config UI still exposes the typed-input behavior we rely on for API keys and related fields.
+
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");

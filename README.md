@@ -144,6 +144,12 @@ See the in-editor node help for method-specific payload fields and links to offi
   - accept/hangup/refer/reject SIP calls
   - newer SDK-typed model ids such as `gpt-realtime-1.5` and `gpt-audio-1.5`
 - Added Realtime client-secret example flow at `examples/realtime/client-secrets.json`.
+- Added Responses websocket mode support through a single action-driven method context:
+  - `connect`
+  - `send` with `response.create` client events
+  - `close`
+  - asynchronous server-event output with connection metadata
+- Added Responses websocket example flow at `examples/responses/websocket.json`.
 - Added Videos API support:
   - list/create/retrieve/delete videos
   - download video content
@@ -173,6 +179,7 @@ Import-ready example flows are available in `examples/`:
 - [`examples/responses/phase.json`](examples/responses/phase.json)
 - [`examples/responses/tool-search.json`](examples/responses/tool-search.json)
 - [`examples/responses/computer-use.json`](examples/responses/computer-use.json)
+- [`examples/responses/websocket.json`](examples/responses/websocket.json)
 - [`examples/realtime/client-secrets.json`](examples/realtime/client-secrets.json)
 
 ## Development
@@ -194,6 +201,7 @@ PRs are welcome. Please include:
 
 - clear scope and rationale,
 - tests for behavior changes,
+- a short plain-language comment block at the top of each test file you add or touch,
 - doc updates when user-facing behavior changes.
 
 ## License

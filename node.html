@@ -357,6 +357,11 @@
         data-i18n="OpenaiApi.parameters.countInputTokens"
         ></option>
 
+        <option
+        value="manageModelResponseWebSocket"
+        data-i18n="OpenaiApi.parameters.manageModelResponseWebSocket"
+        ></option>
+
       </optgroup>
 
               <optgroup style="font-style: normal;" label="🔄 Runs (Beta)">
@@ -3276,6 +3281,73 @@
             </dd>
 
         </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Manage Model Response WebSocket</h4>
+        <p>
+            Opens, uses, and closes a persistent Responses websocket connection from a single
+            <code>OpenAI API</code> node instance.
+        </p>
+        <p>
+            Use the same node instance for all websocket actions. Set <code>msg.payload.action</code> to
+            <code>connect</code>, <code>send</code>, or <code>close</code>.
+        </p>
+        <p>
+            Incoming server events are emitted asynchronously from this node as new messages with the raw
+            event object in <code>msg.payload</code>. Connection metadata is added under
+            <code>msg.openai</code>.
+        </p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                action
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                Required lifecycle action. Must be <code>connect</code>, <code>send</code>, or
+                <code>close</code>.
+            </dd>
+
+            <dt>
+                connection_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                Stable identifier for the websocket connection owned by this node instance.
+            </dd>
+
+            <dt class="optional">
+                event
+                <span class="property-type">object</span>
+            </dt>
+            <dd>
+                Required when <code>action</code> is <code>send</code>. Provide a Responses client event,
+                currently <code>{ "type": "response.create", ... }</code>.
+            </dd>
+
+            <dt class="optional">
+                code
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>
+                Optional websocket close code used when <code>action</code> is <code>close</code>.
+                Defaults to <code>1000</code>.
+            </dd>
+
+            <dt class="optional">
+                reason
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                Optional websocket close reason used when <code>action</code> is <code>close</code>.
+                Defaults to <code>OK</code>.
+            </dd>
+
+        </dl>
+        <p>
+            The websocket URL is derived from the configured <code>Service Host</code> API Base using the
+            same auth contract as the rest of this node, including custom auth headers and query-string auth.
+        </p>
 
     </details>
 </section>

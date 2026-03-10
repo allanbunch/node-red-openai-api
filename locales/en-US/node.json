@@ -140,6 +140,7 @@
             "compactModelResponse": "compact model response",
             "listInputItems": "list input items",
             "countInputTokens": "count input tokens",
+            "manageModelResponseWebSocket": "manage model response websocket",
             "listSkills": "list skills",
             "createSkill": "create skill",
             "getSkill": "retrieve skill",

@@ -1,5 +1,8 @@
 "use strict";
 
+// This file is the broad API surface sanity check.
+// It proves our method wrappers, examples, and help text still line up with the OpenAI SDK contract.
+
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
@@ -257,6 +260,13 @@ test("responses example flows remain valid JSON and cover the documented agentic
     "responses",
     "computer-use.json"
   );
+  const websocketExamplePath = path.join(
+    __dirname,
+    "..",
+    "examples",
+    "responses",
+    "websocket.json"
+  );
 
   const phaseExample = JSON.parse(fs.readFileSync(phaseExamplePath, "utf8"));
   const toolSearchExample = JSON.parse(
@@ -264,6 +274,9 @@ test("responses example flows remain valid JSON and cover the documented agentic
   );
   const computerUseExample = JSON.parse(
     fs.readFileSync(computerUseExamplePath, "utf8")
+  );
+  const websocketExample = JSON.parse(
+    fs.readFileSync(websocketExamplePath, "utf8")
   );
 
   [phaseExample, toolSearchExample, computerUseExample].forEach((flow) => {
@@ -322,6 +335,64 @@ test("responses example flows remain valid JSON and cover the documented agentic
   assert.equal(computerTool.type, "computer");
   assert.equal(computerCallOutput.type, "computer_call_output");
   assert.equal(computerCallOutput.output.type, "computer_screenshot");
+
+  assert.ok(Array.isArray(websocketExample));
+  const websocketOpenaiNode = websocketExample.find(
+    (entry) => entry.type === "OpenAI API"
+  );
+  const websocketCommentNodes = websocketExample.filter(
+    (entry) => entry.type === "comment"
+  );
+  const connectInjectNode = websocketExample.find(
+    (entry) =>
+      entry.type === "inject" && entry.name === "Connect Responses WebSocket"
+  );
+  const sendInjectNode = websocketExample.find(
+    (entry) =>
+      entry.type === "inject" && entry.name === "Send response.create Event"
+  );
+  const closeInjectNode = websocketExample.find(
+    (entry) =>
+      entry.type === "inject" && entry.name === "Close Responses WebSocket"
+  );
+
+  assert.ok(websocketOpenaiNode);
+  assert.equal(websocketOpenaiNode.method, "manageModelResponseWebSocket");
+  assert.ok(websocketCommentNodes.length >= 2);
+  assert.ok(connectInjectNode);
+  assert.ok(sendInjectNode);
+  assert.ok(closeInjectNode);
+  assert.equal(
+    connectInjectNode.props.find((prop) => prop.p === "ai.action").v,
+    "connect"
+  );
+  assert.equal(
+    sendInjectNode.props.find((prop) => prop.p === "ai.action").v,
+    "send"
+  );
+  assert.equal(
+    closeInjectNode.props.find((prop) => prop.p === "ai.action").v,
+    "close"
+  );
+  assert.deepEqual(
+    JSON.parse(sendInjectNode.props.find((prop) => prop.p === "ai.event").v),
+    {
+      type: "response.create",
+      model: "gpt-5.4",
+      input: "Say hello from Responses websocket mode in one sentence.",
+    }
+  );
+});
+
+test("responses help documents websocket lifecycle contract", () => {
+  const responsesHelpPath = path.join(__dirname, "..", "src", "responses", "help.html");
+  const responsesHelp = fs.readFileSync(responsesHelpPath, "utf8");
+
+  assert.match(responsesHelp, /Manage Model Response WebSocket/);
+  assert.match(responsesHelp, /msg\.payload\.action/);
+  assert.match(responsesHelp, /connect<\/code>, <code>send<\/code>, or <code>close<\/code>/);
+  assert.match(responsesHelp, /msg\.openai/);
+  assert.match(responsesHelp, /custom auth headers and query-string auth/);
 });
 
 test("realtime example flow remains valid JSON and documents the nested session contract", () => {

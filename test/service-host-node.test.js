@@ -1,5 +1,8 @@
 "use strict";
 
+// This file covers the runtime side of the Service Host config node.
+// It makes sure typed values resolve the right way, including the older storage formats we still support.
+
 const assert = require("node:assert/strict");
 const test = require("node:test");
 

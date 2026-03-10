@@ -43,6 +43,10 @@ module.exports = function (RED) {
       let node = this;
       node.service = RED.nodes.getNode(config.service);
       node.config = config;
+      node._cleanupHandlers = [];
+      node.registerCleanupHandler = function (handler) {
+        node._cleanupHandlers.push(handler);
+      };
 
       node.on("input", function (msg) {
         if (!node.service) {
@@ -143,6 +147,12 @@ module.exports = function (RED) {
             const errorMessage = error instanceof Error ? error.message : error;
             node.error(errorMessage, msg);
           });
+      });
+
+      node.on("close", function (done) {
+        Promise.all(node._cleanupHandlers.map((handler) => handler())).then(
+          () => done()
+        ).catch(done);
       });
     }
   }
