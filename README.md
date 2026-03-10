@@ -120,6 +120,22 @@ See the in-editor node help for method-specific payload fields and links to offi
 
 ## Recent Additions
 
+- OpenAI Node SDK `6.23.0` to `6.27.0` alignment:
+  - Responses API:
+    - `phase` support in assistant message inputs
+    - `prompt_cache_key`
+    - `tool_search`
+    - GA computer-use payload support
+    - persistent Responses websocket mode through `manage model response websocket`
+  - Realtime API:
+    - newer SDK-typed model ids such as `gpt-realtime-1.5` and `gpt-audio-1.5`
+    - corrected client-secret request contract documentation and example flow
+  - New example flows:
+    - `examples/responses/phase.json`
+    - `examples/responses/tool-search.json`
+    - `examples/responses/computer-use.json`
+    - `examples/responses/websocket.json`
+    - `examples/realtime/client-secrets.json`
 - Added environment variable support for service host configuration values.
 - OpenAI Node SDK upgraded from `4.103.0` to `6.22.0`.
 - Added `responses.cancel`.
