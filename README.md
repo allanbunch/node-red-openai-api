@@ -142,6 +142,8 @@ See the in-editor node help for method-specific payload fields and links to offi
 - Added Realtime API support:
   - create client secret
   - accept/hangup/refer/reject SIP calls
+  - newer SDK-typed model ids such as `gpt-realtime-1.5` and `gpt-audio-1.5`
+- Added Realtime client-secret example flow at `examples/realtime/client-secrets.json`.
 - Added Videos API support:
   - list/create/retrieve/delete videos
   - download video content
@@ -171,6 +173,7 @@ Import-ready example flows are available in `examples/`:
 - [`examples/responses/phase.json`](examples/responses/phase.json)
 - [`examples/responses/tool-search.json`](examples/responses/tool-search.json)
 - [`examples/responses/computer-use.json`](examples/responses/computer-use.json)
+- [`examples/realtime/client-secrets.json`](examples/realtime/client-secrets.json)
 
 ## Development
 

@@ -2673,44 +2673,87 @@
 
         <h4 style="font-weight: bolder;"> ⋙ Create Realtime Client Secret</h4>
         <p>Create an ephemeral client secret for browser/mobile realtime sessions.</p>
+        <p>Put Realtime session configuration inside <code>msg.payload.session</code>. Top-level
+            <code>msg.payload</code> is reserved for client-secret options such as
+            <code>expires_after</code>.</p>
         <dl class="message-properties">
             <h4>msg.payload Properties</h4>
             <dt class="optional">
-                model
+                expires_after
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional client-secret expiration config, for example
+                <code>{ "anchor": "created_at", "seconds": 600 }</code>.</dd>
+            <dt class="optional">
+                session
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Realtime session configuration to attach to the generated client secret.</dd>
+            <dt>
+                session.type
                 <span class="property-type">string</span>
             </dt>
-            <dd>Realtime model id.</dd>
+            <dd>Must be <code>realtime</code> for a Realtime session.</dd>
             <dt class="optional">
-                instructions
+                session.model
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Realtime model id, including newer SDK-supported ids such as
+                <code>gpt-realtime-1.5</code> and <code>gpt-audio-1.5</code>.</dd>
+            <dt class="optional">
+                session.instructions
                 <span class="property-type">string</span>
             </dt>
             <dd>Default system instructions for the session.</dd>
             <dt class="optional">
-                output_modalities
+                session.include
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Additional server output fields to include, such as
+                <code>item.input_audio_transcription.logprobs</code>.</dd>
+            <dt class="optional">
+                session.max_output_tokens
+                <span class="property-type">integer | string</span>
+            </dt>
+            <dd>Maximum output tokens per assistant response, or <code>inf</code>.</dd>
+            <dt class="optional">
+                session.output_modalities
                 <span class="property-type">array</span>
             </dt>
             <dd>Output modalities such as <code>text</code> or <code>audio</code>.</dd>
             <dt class="optional">
-                audio
+                session.audio
                 <span class="property-type">object</span>
             </dt>
             <dd>Input/output audio config for the session.</dd>
             <dt class="optional">
-                tools
+                session.prompt
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Reusable prompt reference and variables for the session.</dd>
+            <dt class="optional">
+                session.tools
                 <span class="property-type">array</span>
             </dt>
             <dd>Tools available to the realtime model.</dd>
             <dt class="optional">
-                tool_choice
+                session.tool_choice
                 <span class="property-type">string | object</span>
             </dt>
             <dd>How tools are selected.</dd>
             <dt class="optional">
-                tracing
+                session.tracing
                 <span class="property-type">string | object | null</span>
             </dt>
             <dd>Trace configuration for the realtime session.</dd>
+            <dt class="optional">
+                session.truncation
+                <span class="property-type">string | object</span>
+            </dt>
+            <dd>Conversation truncation behavior for the session.</dd>
         </dl>
+        <p>Successful responses are returned in <code>msg.payload</code> with top-level
+            <code>value</code>, <code>expires_at</code>, and <code>session</code> fields.</p>
 
         <h4 style="font-weight: bolder;"> ⋙ Accept Realtime Call</h4>
         <p>Accept an incoming SIP call and attach it to a realtime session.</p>
@@ -2727,15 +2770,42 @@
             </dt>
             <dd>Must be <code>realtime</code>.</dd>
             <dt class="optional">
+                include
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Additional server output fields to include, such as
+                <code>item.input_audio_transcription.logprobs</code>.</dd>
+            <dt class="optional">
                 model
                 <span class="property-type">string</span>
             </dt>
-            <dd>Realtime model id for the accepted call.</dd>
+            <dd>Realtime model id for the accepted call, including newer SDK-supported ids such as
+                <code>gpt-realtime-1.5</code> and <code>gpt-audio-1.5</code>.</dd>
             <dt class="optional">
                 instructions
                 <span class="property-type">string</span>
             </dt>
             <dd>System instructions for the call session.</dd>
+            <dt class="optional">
+                max_output_tokens
+                <span class="property-type">integer | string</span>
+            </dt>
+            <dd>Maximum output tokens per assistant response, or <code>inf</code>.</dd>
+            <dt class="optional">
+                output_modalities
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Output modalities such as <code>text</code> or <code>audio</code>.</dd>
+            <dt class="optional">
+                audio
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Input/output audio config for the accepted call session.</dd>
+            <dt class="optional">
+                prompt
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Reusable prompt reference and variables for the call session.</dd>
             <dt class="optional">
                 tools
                 <span class="property-type">array</span>
@@ -2746,6 +2816,16 @@
                 <span class="property-type">string | object</span>
             </dt>
             <dd>Tool selection strategy.</dd>
+            <dt class="optional">
+                tracing
+                <span class="property-type">string | object | null</span>
+            </dt>
+            <dd>Trace configuration for the accepted call session.</dd>
+            <dt class="optional">
+                truncation
+                <span class="property-type">string | object</span>
+            </dt>
+            <dd>Conversation truncation behavior for the call session.</dd>
         </dl>
 
         <h4 style="font-weight: bolder;"> ⋙ Hangup Realtime Call</h4>

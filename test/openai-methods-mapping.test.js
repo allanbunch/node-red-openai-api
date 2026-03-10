@@ -324,6 +324,64 @@ test("responses example flows remain valid JSON and cover the documented agentic
   assert.equal(computerCallOutput.output.type, "computer_screenshot");
 });
 
+test("realtime example flow remains valid JSON and documents the nested session contract", () => {
+  const realtimeExamplePath = path.join(
+    __dirname,
+    "..",
+    "examples",
+    "realtime",
+    "client-secrets.json"
+  );
+
+  const realtimeExample = JSON.parse(fs.readFileSync(realtimeExamplePath, "utf8"));
+  assert.ok(Array.isArray(realtimeExample));
+
+  const openaiNode = realtimeExample.find((entry) => entry.type === "OpenAI API");
+  const commentNodes = realtimeExample.filter((entry) => entry.type === "comment");
+  const explainerComment = realtimeExample.find(
+    (entry) => entry.type === "comment" && entry.name === "What is a client secret?"
+  );
+  const realtimeInjectNode = realtimeExample.find(
+    (entry) =>
+      entry.type === "inject" &&
+      entry.name === "Create Realtime 1.5 Client Secret"
+  );
+  const audioInjectNode = realtimeExample.find(
+    (entry) =>
+      entry.type === "inject" &&
+      entry.name === "Create Audio 1.5 Client Secret"
+  );
+
+  assert.ok(openaiNode);
+  assert.equal(openaiNode.method, "createRealtimeClientSecret");
+  assert.ok(commentNodes.length >= 3);
+  assert.ok(explainerComment);
+  assert.match(explainerComment.info, /not your long-lived OpenAI API key/);
+  assert.ok(realtimeInjectNode);
+  assert.ok(audioInjectNode);
+
+  assert.equal(
+    realtimeInjectNode.props.find((prop) => prop.p === "ai.session.type").v,
+    "realtime"
+  );
+  assert.equal(
+    realtimeInjectNode.props.find((prop) => prop.p === "ai.session.model").v,
+    "gpt-realtime-1.5"
+  );
+  assert.equal(
+    audioInjectNode.props.find((prop) => prop.p === "ai.session.type").v,
+    "realtime"
+  );
+  assert.equal(
+    audioInjectNode.props.find((prop) => prop.p === "ai.session.model").v,
+    "gpt-audio-1.5"
+  );
+  assert.equal(
+    realtimeInjectNode.props.find((prop) => prop.p === "ai.expires_after.seconds").v,
+    "600"
+  );
+});
+
 test("responses retrieve streams chunks when stream=true", async () => {
   const calls = [];
 
@@ -1042,7 +1100,7 @@ test("videos methods map to OpenAI SDK videos endpoints", async () => {
   ]);
 });
 
-test("realtime methods map to OpenAI SDK realtime endpoints", async () => {
+test("realtime methods map to OpenAI SDK realtime endpoints and pass newer model ids through unchanged", async () => {
   const calls = [];
 
   class FakeOpenAI {
@@ -1052,7 +1110,11 @@ test("realtime methods map to OpenAI SDK realtime endpoints", async () => {
         clientSecrets: {
           create: async (body) => {
             calls.push({ method: "realtime.clientSecrets.create", body });
-            return { client_secret: { value: "rt_secret_1", expires_at: 123 } };
+            return {
+              expires_at: 123,
+              session: body.session,
+              value: "ek_rt_secret_1",
+            };
           },
         },
         calls: {
@@ -1080,13 +1142,34 @@ test("realtime methods map to OpenAI SDK realtime endpoints", async () => {
 
     const clientContext = { clientParams: { apiKey: "sk-test" } };
 
+    const clientSecretPayload = {
+      expires_after: {
+        anchor: "created_at",
+        seconds: 600,
+      },
+      session: {
+        type: "realtime",
+        model: "gpt-realtime-1.5",
+        instructions: "Speak clearly and keep responses concise.",
+        output_modalities: ["audio"],
+      },
+    };
     const secret = await realtimeMethods.createRealtimeClientSecret.call(clientContext, {
-      payload: { model: "gpt-realtime" },
+      payload: clientSecretPayload,
     });
-    assert.deepEqual(secret, { client_secret: { value: "rt_secret_1", expires_at: 123 } });
+    assert.deepEqual(secret, {
+      expires_at: 123,
+      session: clientSecretPayload.session,
+      value: "ek_rt_secret_1",
+    });
 
     const accepted = await realtimeMethods.acceptRealtimeCall.call(clientContext, {
-      payload: { call_id: "call_1", type: "realtime", model: "gpt-realtime" },
+      payload: {
+        call_id: "call_1",
+        type: "realtime",
+        model: "gpt-audio-1.5",
+        output_modalities: ["audio"],
+      },
     });
     assert.deepEqual(accepted, { call_id: "call_1", status: "accepted" });
 
@@ -1112,12 +1195,27 @@ test("realtime methods map to OpenAI SDK realtime endpoints", async () => {
   assert.deepEqual(realtimeCalls, [
     {
       method: "realtime.clientSecrets.create",
-      body: { model: "gpt-realtime" },
+      body: {
+        expires_after: {
+          anchor: "created_at",
+          seconds: 600,
+        },
+        session: {
+          type: "realtime",
+          model: "gpt-realtime-1.5",
+          instructions: "Speak clearly and keep responses concise.",
+          output_modalities: ["audio"],
+        },
+      },
     },
     {
       method: "realtime.calls.accept",
       callId: "call_1",
-      body: { type: "realtime", model: "gpt-realtime" },
+      body: {
+        type: "realtime",
+        model: "gpt-audio-1.5",
+        output_modalities: ["audio"],
+      },
     },
     {
       method: "realtime.calls.hangup",
@@ -1342,6 +1440,10 @@ test("editor templates and locale expose latest methods", () => {
   assert.match(evalsHelp, /⋙ List Eval Run Output Items/);
   assert.match(realtimeHelp, /⋙ Create Realtime Client Secret/);
   assert.match(realtimeHelp, /⋙ Reject Realtime Call/);
+  assert.match(realtimeHelp, /msg\.payload\.session/);
+  assert.match(realtimeHelp, /session\.model/);
+  assert.match(realtimeHelp, /gpt-realtime-1\.5/);
+  assert.match(realtimeHelp, /gpt-audio-1\.5/);
   assert.match(skillsHelp, /⋙ Create Skill/);
   assert.match(skillsHelp, /⋙ List Skill Versions/);
   assert.match(videosHelp, /⋙ Download Video Content/);
