@@ -158,6 +158,172 @@ test("responses methods map delete/cancel/compact/input-items/input-tokens to Op
   ]);
 });
 
+test("responses create forwards phase, prompt_cache_key, tool_search, defer_loading, computer, and gpt-5.4 payloads", async () => {
+  const calls = [];
+
+  class FakeOpenAI {
+    constructor(clientParams) {
+      calls.push({ method: "ctor", clientParams });
+      this.responses = {
+        create: async (payload) => {
+          calls.push({ method: "responses.create", payload });
+          return { id: "resp_123", status: "completed" };
+        },
+      };
+    }
+  }
+
+  const requestPayload = {
+    model: "gpt-5.4",
+    prompt_cache_key: "responses-agentic-demo-v1",
+    input: [
+      {
+        type: "message",
+        role: "assistant",
+        phase: "commentary",
+        content: [{ type: "output_text", text: "Planning the response." }],
+      },
+      {
+        type: "message",
+        role: "user",
+        content: [{ type: "input_text", text: "Summarize the release work." }],
+      },
+    ],
+    tools: [
+      { type: "tool_search" },
+      {
+        type: "function",
+        name: "lookup_release_ticket",
+        description: "Look up a release ticket by id.",
+        parameters: {
+          type: "object",
+          properties: {
+            ticket_id: { type: "string" },
+          },
+          required: ["ticket_id"],
+          additionalProperties: false,
+        },
+        strict: true,
+        defer_loading: true,
+      },
+      { type: "computer" },
+    ],
+  };
+
+  await withMockedOpenAI(FakeOpenAI, async () => {
+    const modulePath = require.resolve("../src/responses/methods.js");
+    delete require.cache[modulePath];
+    const responsesMethods = require("../src/responses/methods.js");
+
+    const clientContext = { clientParams: { apiKey: "sk-test", baseURL: "https://api.example.com/v1" } };
+
+    const response = await responsesMethods.createModelResponse.call(clientContext, {
+      payload: requestPayload,
+    });
+
+    assert.deepEqual(response, { id: "resp_123", status: "completed" });
+
+    delete require.cache[modulePath];
+  });
+
+  const createCalls = calls.filter((entry) => entry.method === "responses.create");
+  assert.deepEqual(createCalls, [
+    {
+      method: "responses.create",
+      payload: requestPayload,
+    },
+  ]);
+});
+
+test("responses example flows remain valid JSON and cover the documented agentic payload shapes", () => {
+  const phaseExamplePath = path.join(
+    __dirname,
+    "..",
+    "examples",
+    "responses",
+    "phase.json"
+  );
+  const toolSearchExamplePath = path.join(
+    __dirname,
+    "..",
+    "examples",
+    "responses",
+    "tool-search.json"
+  );
+  const computerUseExamplePath = path.join(
+    __dirname,
+    "..",
+    "examples",
+    "responses",
+    "computer-use.json"
+  );
+
+  const phaseExample = JSON.parse(fs.readFileSync(phaseExamplePath, "utf8"));
+  const toolSearchExample = JSON.parse(
+    fs.readFileSync(toolSearchExamplePath, "utf8")
+  );
+  const computerUseExample = JSON.parse(
+    fs.readFileSync(computerUseExamplePath, "utf8")
+  );
+
+  [phaseExample, toolSearchExample, computerUseExample].forEach((flow) => {
+    assert.ok(Array.isArray(flow));
+    const openaiNode = flow.find((entry) => entry.type === "OpenAI API");
+    const commentNodes = flow.filter((entry) => entry.type === "comment");
+    assert.ok(openaiNode);
+    assert.equal(openaiNode.method, "createModelResponse");
+    assert.ok(commentNodes.length >= 1);
+  });
+
+  const phaseInjectNode = phaseExample.find(
+    (entry) => entry.type === "inject" && entry.name === "Create Phased Response"
+  );
+  const toolSearchInjectNode = toolSearchExample.find(
+    (entry) =>
+      entry.type === "inject" && entry.name === "Create Tool Search Request"
+  );
+  const computerCreateInjectNode = computerUseExample.find(
+    (entry) => entry.type === "inject" && entry.name === "Create Computer Request"
+  );
+  const computerFollowupInjectNode = computerUseExample.find(
+    (entry) =>
+      entry.type === "inject" &&
+      entry.name === "Submit Computer Screenshot (edit placeholders)"
+  );
+
+  assert.ok(phaseInjectNode);
+  assert.ok(toolSearchInjectNode);
+  assert.ok(computerCreateInjectNode);
+  assert.ok(computerFollowupInjectNode);
+
+  const phaseMessage = JSON.parse(
+    phaseInjectNode.props.find((prop) => prop.p === "ai.input[0]").v
+  );
+  const toolSearchTool = JSON.parse(
+    toolSearchInjectNode.props.find((prop) => prop.p === "ai.tools[0]").v
+  );
+  const deferredMcpTool = JSON.parse(
+    toolSearchInjectNode.props.find((prop) => prop.p === "ai.tools[1]").v
+  );
+  const computerTool = JSON.parse(
+    computerCreateInjectNode.props.find((prop) => prop.p === "ai.tools[0]").v
+  );
+  const computerCallOutput = JSON.parse(
+    computerFollowupInjectNode.props.find((prop) => prop.p === "ai.input[0]").v
+  );
+
+  assert.equal(
+    phaseInjectNode.props.find((prop) => prop.p === "ai.prompt_cache_key").v,
+    "responses-phase-example-v1"
+  );
+  assert.equal(phaseMessage.phase, "commentary");
+  assert.equal(toolSearchTool.type, "tool_search");
+  assert.equal(deferredMcpTool.defer_loading, true);
+  assert.equal(computerTool.type, "computer");
+  assert.equal(computerCallOutput.type, "computer_call_output");
+  assert.equal(computerCallOutput.output.type, "computer_screenshot");
+});
+
 test("responses retrieve streams chunks when stream=true", async () => {
   const calls = [];
 

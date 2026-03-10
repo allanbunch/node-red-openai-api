@@ -12,13 +12,20 @@
                 input
                 <span class="property-type">string | array</span>
             </dt>
-            <dd>Text, image, or file inputs to the model, used to generate a response.</dd>
+            <dd>
+                Text, image, or file inputs to the model, used to generate a response.
+                For assistant message items in an array input, you may also set
+                <code>phase</code> to <code>commentary</code> or <code>final_answer</code>.
+            </dd>
 
             <dt>
                 model
                 <span class="property-type">string</span>
             </dt>
-            <dd>Model ID used to generate the response.</dd>
+            <dd>
+                Model ID used to generate the response, including newer Responses-compatible
+                model strings such as <code>gpt-5.4</code>.
+            </dd>
 
             <dt class="optional">
                 background
@@ -153,6 +160,13 @@
             </dt>
             <dd>
                 An array of tools the model may call while generating a response.
+                This includes Model Context Protocol tools, Tool Search via
+                <code>{ "type": "tool_search" }</code>, and GA computer use via
+                <code>{ "type": "computer" }</code>.
+                Deferred tool loading is supported by setting
+                <code>defer_loading: true</code> on tool definitions.
+                Computer-tool workflows typically require follow-up requests that send
+                <code>computer_call_output</code> items back through <code>input</code>.
                 For Model Context Protocol (MCP) tools, each object in the array should follow <a
                     href="https://platform.openai.com/docs/guides/tools-remote-mcp?lang=javascript&utm_source==%40inductiv%2Fnode-red-openai-api"
                     target="_blank">this

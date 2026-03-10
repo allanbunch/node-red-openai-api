@@ -6,7 +6,7 @@
 
 Node-RED node for calling the OpenAI API (and OpenAI-compatible APIs) through a single configurable node.
 
-This package currently targets `openai` Node SDK `^6.22.0`.
+This package currently targets `openai` Node SDK `^6.27.0`.
 
 ## What You Get
 
@@ -168,6 +168,9 @@ Import-ready example flows are available in `examples/`:
 - [`examples/runs.json`](examples/runs.json)
 - [`examples/threads.json`](examples/threads.json)
 - [`examples/responses/mcp.json`](examples/responses/mcp.json)
+- [`examples/responses/phase.json`](examples/responses/phase.json)
+- [`examples/responses/tool-search.json`](examples/responses/tool-search.json)
+- [`examples/responses/computer-use.json`](examples/responses/computer-use.json)
 
 ## Development
 

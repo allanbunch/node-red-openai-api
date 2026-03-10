@@ -1,0 +1,142 @@
+[
+    {
+        "id": "45ed920ef7184d5e",
+        "type": "tab",
+        "label": "Computer Use Example",
+        "disabled": false,
+        "info": "Responses computer-use example.\n\nThis flow teaches the request contract rather than claiming to automate the whole browser loop inside Node-RED.\n\nUse it in two stages:\n1. Send the initial request with `tools: [{ type: \"computer\" }]`.\n2. After the model returns a `computer_call`, edit the placeholder `previous_response_id`, `call_id`, and screenshot location in the second inject node, then send the follow-up request with a `computer_call_output` item.\n\nThe actual screenshot capture and action execution still need external orchestration.",
+        "env": []
+    },
+    {
+        "id": "af8473d616d4c73f",
+        "type": "inject",
+        "z": "45ed920ef7184d5e",
+        "name": "Create Computer Request",
+        "props": [
+            {
+                "p": "ai.model",
+                "v": "gpt-5.4",
+                "vt": "str"
+            },
+            {
+                "p": "ai.tools[0]",
+                "v": "{\"type\":\"computer\"}",
+                "vt": "json"
+            },
+            {
+                "p": "ai.input",
+                "v": "Open the target site, inspect the main page, and tell me what action to take next.",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 320,
+        "y": 220,
+        "wires": [
+            [
+                "1c6d500f04f70757"
+            ]
+        ]
+    },
+    {
+        "id": "f8116f42c7c6774d",
+        "type": "comment",
+        "z": "45ed920ef7184d5e",
+        "name": "Stage 1: set your API key, then run the initial computer request.",
+        "info": "This example teaches the Responses computer-use payload contract.\n\nBefore running:\n- open the `OpenAI Auth` config node and set a valid API key\n- keep or replace `gpt-5.4` as needed\n- understand that this flow does not capture screenshots or execute actions for you\n\nStage 1:\n- send `Create Computer Request`\n- inspect the debug output for a `computer_call` item and note its `call_id`\n- note the response id you need for `previous_response_id` in stage 2",
+        "x": 480,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "66fb2697d4d37b47",
+        "type": "inject",
+        "z": "45ed920ef7184d5e",
+        "name": "Submit Computer Screenshot (edit placeholders)",
+        "props": [
+            {
+                "p": "ai.model",
+                "v": "gpt-5.4",
+                "vt": "str"
+            },
+            {
+                "p": "ai.previous_response_id",
+                "v": "resp_replace_me",
+                "vt": "str"
+            },
+            {
+                "p": "ai.input[0]",
+                "v": "{\"type\":\"computer_call_output\",\"call_id\":\"call_replace_me\",\"output\":{\"type\":\"computer_screenshot\",\"image_url\":\"https://example.com/replace-with-real-screenshot.png\"}}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 390,
+        "y": 300,
+        "wires": [
+            [
+                "1c6d500f04f70757"
+            ]
+        ]
+    },
+    {
+        "id": "57a7d580372bcfd8",
+        "type": "comment",
+        "z": "45ed920ef7184d5e",
+        "name": "Stage 2: replace the placeholders before submitting the screenshot payload.",
+        "info": "Before running `Submit Computer Screenshot (edit placeholders)`:\n- replace `resp_replace_me` with the response id from stage 1\n- replace `call_replace_me` with the `computer_call` id returned by the model\n- replace the placeholder screenshot URL with a real screenshot location the model can read\n\nWhat this flow sends back:\n- `previous_response_id`\n- one `computer_call_output` item\n- one `computer_screenshot` payload inside `output`\n\nExpected result:\n- the model continues the computer-use loop using the screenshot you supplied",
+        "x": 500,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "1c6d500f04f70757",
+        "type": "OpenAI API",
+        "z": "45ed920ef7184d5e",
+        "name": "Create Model Response",
+        "property": "ai",
+        "propertyType": "msg",
+        "service": "c23e0df9b74eae30",
+        "method": "createModelResponse",
+        "x": 660,
+        "y": 260,
+        "wires": [
+            [
+                "1b8c5a26f1517ac6"
+            ]
+        ]
+    },
+    {
+        "id": "1b8c5a26f1517ac6",
+        "type": "debug",
+        "z": "45ed920ef7184d5e",
+        "name": "Computer Use Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "c23e0df9b74eae30",
+        "type": "Service Host",
+        "apiBase": "https://api.openai.com/v1",
+        "secureApiKeyHeaderOrQueryName": "Authorization",
+        "organizationId": "",
+        "name": "OpenAI Auth"
+    }
+]

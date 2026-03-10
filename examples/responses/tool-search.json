@@ -1,0 +1,107 @@
+[
+    {
+        "id": "af5f0e330a6a497e",
+        "type": "tab",
+        "label": "Tool Search Example",
+        "disabled": false,
+        "info": "Minimal Responses Tool Search example.\n\nThis flow keeps the request contract small on purpose:\n- `tool_search` is enabled\n- the remote MCP tool is marked with `defer_loading: true`\n- the model can decide whether to load and use that deferred tool\n\nTool Search is most useful when many deferred tools are available. This example uses one deferred MCP tool so the payload shape is easy to inspect in Node-RED.",
+        "env": []
+    },
+    {
+        "id": "5b8e323b9e16bdb9",
+        "type": "inject",
+        "z": "af5f0e330a6a497e",
+        "name": "Create Tool Search Request",
+        "props": [
+            {
+                "p": "ai.model",
+                "v": "gpt-5.4",
+                "vt": "str"
+            },
+            {
+                "p": "ai.prompt_cache_key",
+                "v": "responses-tool-search-example-v1",
+                "vt": "str"
+            },
+            {
+                "p": "ai.tools[0]",
+                "v": "{\"type\":\"tool_search\"}",
+                "vt": "json"
+            },
+            {
+                "p": "ai.tools[1]",
+                "v": "{\"type\":\"mcp\",\"server_label\":\"deepwiki\",\"server_url\":\"https://mcp.deepwiki.com/mcp\",\"require_approval\":\"never\",\"defer_loading\":true}",
+                "vt": "json"
+            },
+            {
+                "p": "ai.input",
+                "v": "Use the available documentation tools to summarize the transport protocols supported by the MCP specification.",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 340,
+        "y": 240,
+        "wires": [
+            [
+                "8abca470f7d99d0b"
+            ]
+        ]
+    },
+    {
+        "id": "48f13ed89ac6c252",
+        "type": "comment",
+        "z": "af5f0e330a6a497e",
+        "name": "Set your API key, then send the inject node to test Tool Search.",
+        "info": "This example demonstrates the minimal Responses Tool Search contract.\n\nBefore running:\n- open the `OpenAI Auth` config node and set a valid API key\n- confirm the remote MCP server in `ai.tools[1]` is still reachable for your environment\n- keep or replace `gpt-5.4` as needed\n\nWhat this flow sends:\n- `tools[0] = { type: \"tool_search\" }`\n- a deferred MCP tool with `defer_loading: true`\n- a user prompt that should encourage the model to inspect and load the deferred tool only if useful\n\nExpected result:\n- the debug sidebar shows the Responses output, including any tool-search-driven behavior chosen by the model",
+        "x": 470,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "8abca470f7d99d0b",
+        "type": "OpenAI API",
+        "z": "af5f0e330a6a497e",
+        "name": "Create Model Response",
+        "property": "ai",
+        "propertyType": "msg",
+        "service": "51cb919695c46177",
+        "method": "createModelResponse",
+        "x": 590,
+        "y": 240,
+        "wires": [
+            [
+                "5c79d8c7482b4f46"
+            ]
+        ]
+    },
+    {
+        "id": "5c79d8c7482b4f46",
+        "type": "debug",
+        "z": "af5f0e330a6a497e",
+        "name": "Tool Search Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 820,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "51cb919695c46177",
+        "type": "Service Host",
+        "apiBase": "https://api.openai.com/v1",
+        "secureApiKeyHeaderOrQueryName": "Authorization",
+        "organizationId": "",
+        "name": "OpenAI Auth"
+    }
+]

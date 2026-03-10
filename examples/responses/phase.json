@@ -1,0 +1,102 @@
+[
+    {
+        "id": "2fd54c5f0db04e4b",
+        "type": "tab",
+        "label": "Responses Phase Example",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "0c8ab1e1e23314fd",
+        "type": "inject",
+        "z": "2fd54c5f0db04e4b",
+        "name": "Create Phased Response",
+        "props": [
+            {
+                "p": "ai.model",
+                "v": "gpt-5.4",
+                "vt": "str"
+            },
+            {
+                "p": "ai.prompt_cache_key",
+                "v": "responses-phase-example-v1",
+                "vt": "str"
+            },
+            {
+                "p": "ai.input[0]",
+                "v": "{\"type\":\"message\",\"role\":\"assistant\",\"phase\":\"commentary\",\"content\":[{\"type\":\"output_text\",\"text\":\"I will think through the request and then deliver the answer clearly.\"}]}",
+                "vt": "json"
+            },
+            {
+                "p": "ai.input[1]",
+                "v": "{\"type\":\"message\",\"role\":\"user\",\"content\":[{\"type\":\"input_text\",\"text\":\"Summarize the purpose of NOA-9 in one concise paragraph.\"}]}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 330,
+        "y": 240,
+        "wires": [
+            [
+                "4e34ed1e9c6c8f31"
+            ]
+        ]
+    },
+    {
+        "id": "f2dc3af908db35ee",
+        "type": "comment",
+        "z": "2fd54c5f0db04e4b",
+        "name": "Set your API key in Service Host, then send the inject node.",
+        "info": "This example shows how to preserve assistant `phase` on a Responses request.\n\nBefore running:\n- open the `OpenAI Auth` config node and set a valid API key\n- keep `gpt-5.4` or replace it with another Responses-compatible model if needed\n\nWhat this flow sends:\n- `prompt_cache_key`\n- an assistant message labeled `phase: commentary`\n- a follow-up user message\n\nExpected result:\n- the response appears in the debug sidebar as the normal `createModelResponse` output",
+        "x": 440,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "4e34ed1e9c6c8f31",
+        "type": "OpenAI API",
+        "z": "2fd54c5f0db04e4b",
+        "name": "Create Model Response",
+        "property": "ai",
+        "propertyType": "msg",
+        "service": "c9f1ae09c3b1c2cf",
+        "method": "createModelResponse",
+        "x": 560,
+        "y": 240,
+        "wires": [
+            [
+                "0b5d64c45d8709c8"
+            ]
+        ]
+    },
+    {
+        "id": "0b5d64c45d8709c8",
+        "type": "debug",
+        "z": "2fd54c5f0db04e4b",
+        "name": "Model Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "c9f1ae09c3b1c2cf",
+        "type": "Service Host",
+        "apiBase": "https://api.openai.com/v1",
+        "secureApiKeyHeaderOrQueryName": "Authorization",
+        "organizationId": "",
+        "name": "OpenAI Auth"
+    }
+]
