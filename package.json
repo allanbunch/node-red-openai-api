@@ -14,20 +14,15 @@
   },
   "keywords": [
     "node-red",
-    "aiot",
     "openai",
-    "gpt-4o-audio-preview",
     "ai",
-    "openai api",
-    "iot",
-    "node-red-contrib",
-    "automation",
-    "smart devices",
-    "node-red node",
-    "artificial intelligence",
-    "api integration",
-    "ai agent",
-    "low-code"
+    "openai-api",
+    "llm",
+    "responses-api",
+    "realtime-api",
+    "chatkit",
+    "agent-builder",
+    "node-red-contrib"
   ],
   "scripts": {
     "build:html": "gulp build-html",
