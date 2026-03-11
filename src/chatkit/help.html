@@ -1,0 +1,165 @@
+<section>
+    <details>
+        <summary style="font-weight: bold;">🤖 ChatKit</summary>
+        <a href="https://platform.openai.com/docs/guides/chatkit" target="_blank">Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create ChatKit Session</h4>
+        <p>Create a ChatKit session for a deployed Agent Builder workflow.</p>
+        <p>The session payload must include a stable <code>user</code> identifier and a
+            <code>workflow.id</code> for the published workflow you want to expose.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                user
+                <span class="property-type">string</span>
+            </dt>
+            <dd>User identifier that scopes the session and related ChatKit history.</dd>
+            <dt>
+                workflow
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Workflow reference and runtime overrides.</dd>
+            <dt>
+                workflow.id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The published workflow id.</dd>
+            <dt class="optional">
+                workflow.version
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Optional workflow version. Defaults to the latest deployed version.</dd>
+            <dt class="optional">
+                workflow.state_variables
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Primitive state variables forwarded into the workflow.</dd>
+            <dt class="optional">
+                workflow.tracing
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional tracing overrides, for example <code>{ "enabled": true }</code>.</dd>
+            <dt class="optional">
+                chatkit_configuration
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional ChatKit feature overrides for automatic thread titling, uploads, and history.</dd>
+            <dt class="optional">
+                expires_after
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional session expiration config, for example
+                <code>{ "anchor": "created_at", "seconds": 600 }</code>.</dd>
+            <dt class="optional">
+                rate_limits
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional request-rate overrides, such as
+                <code>{ "max_requests_per_1_minute": 10 }</code>.</dd>
+        </dl>
+        <p>Successful responses are returned in <code>msg.payload</code> and include a ChatKit
+            <code>client_secret</code> plus resolved workflow/session metadata.</p>
+        <p>Hand the returned <code>client_secret</code> to your ChatKit frontend/client library
+            immediately; it is the credential used to open or refresh the chat session.</p>
+
+        <h4 style="font-weight: bolder;"> ⋙ Cancel ChatKit Session</h4>
+        <p>Cancel an active ChatKit session so the issued client secret can no longer be used.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                session_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ChatKit session id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve ChatKit Thread</h4>
+        <p>Retrieve a ChatKit thread by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                thread_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ChatKit thread id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List ChatKit Threads</h4>
+        <p>List ChatKit threads, optionally scoped to one user.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor to return items after this thread id.</dd>
+            <dt class="optional">
+                before
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor to return items before this thread id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of threads to return.</dd>
+            <dt class="optional">
+                order
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Sort order by creation time. Default is <code>desc</code>.</dd>
+            <dt class="optional">
+                user
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Filter threads to one user identifier.</dd>
+        </dl>
+        <p>The node returns the current page's thread objects as an array in
+            <code>msg.payload</code>.</p>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete ChatKit Thread</h4>
+        <p>Delete a ChatKit thread, including its items and stored attachments.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                thread_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ChatKit thread id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List ChatKit Thread Items</h4>
+        <p>List the items that belong to a ChatKit thread.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                thread_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ChatKit thread id.</dd>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor to return items after this thread item id.</dd>
+            <dt class="optional">
+                before
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor to return items before this thread item id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of thread items to return.</dd>
+            <dt class="optional">
+                order
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Sort order by creation time. Default is <code>desc</code>.</dd>
+        </dl>
+        <p>The node returns the current page's thread item objects as an array in
+            <code>msg.payload</code>.</p>
+    </details>
+</section>

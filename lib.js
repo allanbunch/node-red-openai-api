@@ -9182,8 +9182,57 @@ var require_methods5 = __commonJS({
   }
 });
 
-// src/container-files/methods.js
+// src/chatkit/methods.js
 var require_methods6 = __commonJS({
+  "src/chatkit/methods.js"(exports2, module2) {
+    var OpenAI = require_openai().OpenAI;
+    async function createChatKitSession(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.beta.chatkit.sessions.create(parameters.payload);
+      return response;
+    }
+    async function cancelChatKitSession(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { session_id, ...params } = parameters.payload;
+      const response = await openai.beta.chatkit.sessions.cancel(session_id, params);
+      return response;
+    }
+    async function getChatKitThread(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { thread_id, ...params } = parameters.payload;
+      const response = await openai.beta.chatkit.threads.retrieve(thread_id, params);
+      return response;
+    }
+    async function listChatKitThreads(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const list = await openai.beta.chatkit.threads.list(parameters.payload);
+      return [...list.data];
+    }
+    async function deleteChatKitThread(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { thread_id, ...params } = parameters.payload;
+      const response = await openai.beta.chatkit.threads.delete(thread_id, params);
+      return response;
+    }
+    async function listChatKitThreadItems(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { thread_id, ...params } = parameters.payload;
+      const list = await openai.beta.chatkit.threads.listItems(thread_id, params);
+      return [...list.data];
+    }
+    module2.exports = {
+      createChatKitSession,
+      cancelChatKitSession,
+      getChatKitThread,
+      listChatKitThreads,
+      deleteChatKitThread,
+      listChatKitThreadItems
+    };
+  }
+});
+
+// src/container-files/methods.js
+var require_methods7 = __commonJS({
   "src/container-files/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     var fs = require("fs");
@@ -9243,7 +9292,7 @@ var require_methods6 = __commonJS({
 });
 
 // src/containers/methods.js
-var require_methods7 = __commonJS({
+var require_methods8 = __commonJS({
   "src/containers/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function listContainers(parameters) {
@@ -9278,7 +9327,7 @@ var require_methods7 = __commonJS({
 });
 
 // src/conversations/methods.js
-var require_methods8 = __commonJS({
+var require_methods9 = __commonJS({
   "src/conversations/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createConversation(parameters) {
@@ -9348,7 +9397,7 @@ var require_methods8 = __commonJS({
 });
 
 // src/embeddings/methods.js
-var require_methods9 = __commonJS({
+var require_methods10 = __commonJS({
   "src/embeddings/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createEmbedding(parameters) {
@@ -9363,7 +9412,7 @@ var require_methods9 = __commonJS({
 });
 
 // src/evals/methods.js
-var require_methods10 = __commonJS({
+var require_methods11 = __commonJS({
   "src/evals/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createEval(parameters) {
@@ -9470,7 +9519,7 @@ var require_methods10 = __commonJS({
 });
 
 // src/files/methods.js
-var require_methods11 = __commonJS({
+var require_methods12 = __commonJS({
   "src/files/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     var fs = require("fs");
@@ -9515,7 +9564,7 @@ var require_methods11 = __commonJS({
 });
 
 // src/fine-tuning/methods.js
-var require_methods12 = __commonJS({
+var require_methods13 = __commonJS({
   "src/fine-tuning/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createFineTuningJob(parameters) {
@@ -9576,7 +9625,7 @@ var require_methods12 = __commonJS({
 });
 
 // src/images/methods.js
-var require_methods13 = __commonJS({
+var require_methods14 = __commonJS({
   "src/images/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     var fs = require("fs");
@@ -9611,7 +9660,7 @@ var require_methods13 = __commonJS({
 });
 
 // src/messages/methods.js
-var require_methods14 = __commonJS({
+var require_methods15 = __commonJS({
   "src/messages/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function listMessages(parameters) {
@@ -9667,7 +9716,7 @@ var require_methods14 = __commonJS({
 });
 
 // src/models/methods.js
-var require_methods15 = __commonJS({
+var require_methods16 = __commonJS({
   "src/models/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function listModels(parameters) {
@@ -9696,7 +9745,7 @@ var require_methods15 = __commonJS({
 });
 
 // src/moderations/methods.js
-var require_methods16 = __commonJS({
+var require_methods17 = __commonJS({
   "src/moderations/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createModeration(parameters) {
@@ -9711,7 +9760,7 @@ var require_methods16 = __commonJS({
 });
 
 // src/realtime/methods.js
-var require_methods17 = __commonJS({
+var require_methods18 = __commonJS({
   "src/realtime/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createRealtimeClientSecret(parameters) {
@@ -13514,7 +13563,7 @@ var require_websocket2 = __commonJS({
 });
 
 // src/responses/methods.js
-var require_methods18 = __commonJS({
+var require_methods19 = __commonJS({
   "src/responses/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     var { ResponsesWebSocket } = require_websocket2();
@@ -13741,7 +13790,7 @@ var require_methods18 = __commonJS({
 });
 
 // src/runs/methods.js
-var require_methods19 = __commonJS({
+var require_methods20 = __commonJS({
   "src/runs/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createThreadAndRun(parameters) {
@@ -13885,7 +13934,7 @@ var require_methods19 = __commonJS({
 });
 
 // src/skills/methods.js
-var require_methods20 = __commonJS({
+var require_methods21 = __commonJS({
   "src/skills/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createSkill(parameters) {
@@ -13978,7 +14027,7 @@ var require_methods20 = __commonJS({
 });
 
 // src/threads/methods.js
-var require_methods21 = __commonJS({
+var require_methods22 = __commonJS({
   "src/threads/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createThread(parameters) {
@@ -14014,7 +14063,7 @@ var require_methods21 = __commonJS({
 });
 
 // src/uploads/methods.js
-var require_methods22 = __commonJS({
+var require_methods23 = __commonJS({
   "src/uploads/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createUpload(parameters) {
@@ -14112,7 +14161,7 @@ var require_methods22 = __commonJS({
 });
 
 // src/vector-store-file-batches/methods.js
-var require_methods23 = __commonJS({
+var require_methods24 = __commonJS({
   "src/vector-store-file-batches/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     var fs = require("fs");
@@ -14186,7 +14235,7 @@ var require_methods23 = __commonJS({
 });
 
 // src/vector-store-files/methods.js
-var require_methods24 = __commonJS({
+var require_methods25 = __commonJS({
   "src/vector-store-files/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createVectorStoreFile(parameters) {
@@ -14233,7 +14282,7 @@ var require_methods24 = __commonJS({
 });
 
 // src/vector-stores/methods.js
-var require_methods25 = __commonJS({
+var require_methods26 = __commonJS({
   "src/vector-stores/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createVectorStore(parameters) {
@@ -14276,7 +14325,7 @@ var require_methods25 = __commonJS({
 });
 
 // src/videos/methods.js
-var require_methods26 = __commonJS({
+var require_methods27 = __commonJS({
   "src/videos/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createVideo(parameters) {
@@ -14325,7 +14374,7 @@ var require_methods26 = __commonJS({
 });
 
 // src/webhooks/methods.js
-var require_methods27 = __commonJS({
+var require_methods28 = __commonJS({
   "src/webhooks/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function unwrapWebhookEvent(parameters) {
@@ -14372,28 +14421,29 @@ var assistants = require_methods2();
 var audio = require_methods3();
 var batch = require_methods4();
 var chat = require_methods5();
-var container_files = require_methods6();
-var containers = require_methods7();
-var conversations = require_methods8();
-var embeddings = require_methods9();
-var evals = require_methods10();
-var files = require_methods11();
-var fine_tuning = require_methods12();
-var images = require_methods13();
-var messages = require_methods14();
-var models = require_methods15();
-var moderations = require_methods16();
-var realtime = require_methods17();
-var responses = require_methods18();
-var runs = require_methods19();
-var skills = require_methods20();
-var threads = require_methods21();
-var uploads = require_methods22();
-var vectorStoreFileBatches = require_methods23();
-var vectorStoreFiles = require_methods24();
-var vectorStores = require_methods25();
-var videos = require_methods26();
-var webhooks = require_methods27();
+var chatkit = require_methods6();
+var container_files = require_methods7();
+var containers = require_methods8();
+var conversations = require_methods9();
+var embeddings = require_methods10();
+var evals = require_methods11();
+var files = require_methods12();
+var fine_tuning = require_methods13();
+var images = require_methods14();
+var messages = require_methods15();
+var models = require_methods16();
+var moderations = require_methods17();
+var realtime = require_methods18();
+var responses = require_methods19();
+var runs = require_methods20();
+var skills = require_methods21();
+var threads = require_methods22();
+var uploads = require_methods23();
+var vectorStoreFileBatches = require_methods24();
+var vectorStoreFiles = require_methods25();
+var vectorStores = require_methods26();
+var videos = require_methods27();
+var webhooks = require_methods28();
 function normalizeHeaderOrQueryName(headerOrQueryName) {
   if (typeof headerOrQueryName !== "string") {
     return "Authorization";
@@ -14441,6 +14491,7 @@ Object.assign(
   audio,
   batch,
   chat,
+  chatkit,
   container_files,
   containers,
   conversations,

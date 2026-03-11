@@ -844,6 +844,213 @@ test("skills methods map to OpenAI SDK skills endpoints", async () => {
   ]);
 });
 
+test("chatkit methods map to OpenAI SDK beta chatkit endpoints", async () => {
+  const calls = [];
+
+  class FakeOpenAI {
+    constructor(clientParams) {
+      calls.push({ method: "ctor", clientParams });
+      this.beta = {
+        chatkit: {
+          sessions: {
+            create: async (body) => {
+              calls.push({ method: "beta.chatkit.sessions.create", body });
+              return {
+                id: "cksess_1",
+                object: "chatkit.session",
+                user: body.user,
+              };
+            },
+            cancel: async (sessionId, options) => {
+              calls.push({
+                method: "beta.chatkit.sessions.cancel",
+                sessionId,
+                options,
+              });
+              return {
+                id: sessionId,
+                object: "chatkit.session",
+                status: "cancelled",
+              };
+            },
+          },
+          threads: {
+            retrieve: async (threadId, options) => {
+              calls.push({
+                method: "beta.chatkit.threads.retrieve",
+                threadId,
+                options,
+              });
+              return { id: threadId, object: "chatkit.thread" };
+            },
+            list: async (options) => {
+              calls.push({ method: "beta.chatkit.threads.list", options });
+              return {
+                data: [{ id: "cthr_1" }, { id: "cthr_2" }],
+              };
+            },
+            delete: async (threadId, options) => {
+              calls.push({
+                method: "beta.chatkit.threads.delete",
+                threadId,
+                options,
+              });
+              return { id: threadId, deleted: true };
+            },
+            listItems: async (threadId, options) => {
+              calls.push({
+                method: "beta.chatkit.threads.listItems",
+                threadId,
+                options,
+              });
+              return {
+                data: [{ id: "item_1" }, { id: "item_2" }],
+              };
+            },
+          },
+        },
+      };
+    }
+  }
+
+  await withMockedOpenAI(FakeOpenAI, async () => {
+    const modulePath = require.resolve("../src/chatkit/methods.js");
+    delete require.cache[modulePath];
+    const chatkitMethods = require("../src/chatkit/methods.js");
+
+    const clientContext = { clientParams: { apiKey: "sk-test" } };
+
+    const createdSession = await chatkitMethods.createChatKitSession.call(
+      clientContext,
+      {
+        payload: {
+          user: "user_123",
+          workflow: {
+            id: "wf_123",
+            version: "3",
+            state_variables: {
+              region: "us",
+              retries: 2,
+            },
+          },
+        },
+      }
+    );
+    assert.deepEqual(createdSession, {
+      id: "cksess_1",
+      object: "chatkit.session",
+      user: "user_123",
+    });
+
+    const cancelledSession = await chatkitMethods.cancelChatKitSession.call(
+      clientContext,
+      {
+        payload: {
+          session_id: "cksess_1",
+        },
+      }
+    );
+    assert.deepEqual(cancelledSession, {
+      id: "cksess_1",
+      object: "chatkit.session",
+      status: "cancelled",
+    });
+
+    const listedThreads = await chatkitMethods.listChatKitThreads.call(
+      clientContext,
+      {
+        payload: {
+          user: "user_123",
+          limit: 2,
+        },
+      }
+    );
+    assert.deepEqual(listedThreads, [{ id: "cthr_1" }, { id: "cthr_2" }]);
+
+    const fetchedThread = await chatkitMethods.getChatKitThread.call(
+      clientContext,
+      {
+        payload: {
+          thread_id: "cthr_1",
+        },
+      }
+    );
+    assert.deepEqual(fetchedThread, { id: "cthr_1", object: "chatkit.thread" });
+
+    const deletedThread = await chatkitMethods.deleteChatKitThread.call(
+      clientContext,
+      {
+        payload: {
+          thread_id: "cthr_1",
+        },
+      }
+    );
+    assert.deepEqual(deletedThread, { id: "cthr_1", deleted: true });
+
+    const threadItems = await chatkitMethods.listChatKitThreadItems.call(
+      clientContext,
+      {
+        payload: {
+          thread_id: "cthr_1",
+          limit: 2,
+          order: "desc",
+        },
+      }
+    );
+    assert.deepEqual(threadItems, [{ id: "item_1" }, { id: "item_2" }]);
+
+    delete require.cache[modulePath];
+  });
+
+  const chatkitCalls = calls.filter((entry) => entry.method !== "ctor");
+  assert.deepEqual(chatkitCalls, [
+    {
+      method: "beta.chatkit.sessions.create",
+      body: {
+        user: "user_123",
+        workflow: {
+          id: "wf_123",
+          version: "3",
+          state_variables: {
+            region: "us",
+            retries: 2,
+          },
+        },
+      },
+    },
+    {
+      method: "beta.chatkit.sessions.cancel",
+      sessionId: "cksess_1",
+      options: {},
+    },
+    {
+      method: "beta.chatkit.threads.list",
+      options: {
+        user: "user_123",
+        limit: 2,
+      },
+    },
+    {
+      method: "beta.chatkit.threads.retrieve",
+      threadId: "cthr_1",
+      options: {},
+    },
+    {
+      method: "beta.chatkit.threads.delete",
+      threadId: "cthr_1",
+      options: {},
+    },
+    {
+      method: "beta.chatkit.threads.listItems",
+      threadId: "cthr_1",
+      options: {
+        limit: 2,
+        order: "desc",
+      },
+    },
+  ]);
+});
+
 test("evals methods map to OpenAI SDK evals endpoints", async () => {
   const calls = [];
 
@@ -1408,6 +1615,8 @@ test("OpenaiApi prototype exposes latest methods", () => {
   assert.equal(typeof client.cancelModelResponse, "function");
   assert.equal(typeof client.compactModelResponse, "function");
   assert.equal(typeof client.countInputTokens, "function");
+  assert.equal(typeof client.createChatKitSession, "function");
+  assert.equal(typeof client.listChatKitThreadItems, "function");
   assert.equal(typeof client.createConversation, "function");
   assert.equal(typeof client.listConversationItems, "function");
   assert.equal(typeof client.createEval, "function");
@@ -1422,6 +1631,10 @@ test("OpenaiApi prototype exposes latest methods", () => {
 test("editor templates and locale expose latest methods", () => {
   const responsesTemplate = fs.readFileSync(
     path.join(__dirname, "..", "src", "responses", "template.html"),
+    "utf8"
+  );
+  const chatkitTemplate = fs.readFileSync(
+    path.join(__dirname, "..", "src", "chatkit", "template.html"),
     "utf8"
   );
   const conversationsTemplate = fs.readFileSync(
@@ -1456,6 +1669,10 @@ test("editor templates and locale expose latest methods", () => {
     path.join(__dirname, "..", "src", "responses", "help.html"),
     "utf8"
   );
+  const chatkitHelp = fs.readFileSync(
+    path.join(__dirname, "..", "src", "chatkit", "help.html"),
+    "utf8"
+  );
   const skillsHelp = fs.readFileSync(
     path.join(__dirname, "..", "src", "skills", "help.html"),
     "utf8"
@@ -1483,6 +1700,8 @@ test("editor templates and locale expose latest methods", () => {
   assert.match(responsesTemplate, /value="cancelModelResponse"/);
   assert.match(responsesTemplate, /value="compactModelResponse"/);
   assert.match(responsesTemplate, /value="countInputTokens"/);
+  assert.match(chatkitTemplate, /value="createChatKitSession"/);
+  assert.match(chatkitTemplate, /value="listChatKitThreadItems"/);
   assert.match(conversationsTemplate, /value="createConversation"/);
   assert.match(conversationsTemplate, /value="listConversationItems"/);
   assert.match(skillsTemplate, /value="listSkills"/);
@@ -1495,6 +1714,8 @@ test("editor templates and locale expose latest methods", () => {
   assert.match(webhooksTemplate, /value="verifyWebhookSignature"/);
   assert.match(nodeTemplate, /@@include\('\.\/conversations\/template\.html'\)/);
   assert.match(nodeTemplate, /@@include\('\.\/conversations\/help\.html'\)/);
+  assert.match(nodeTemplate, /@@include\('\.\/chatkit\/template\.html'\)/);
+  assert.match(nodeTemplate, /@@include\('\.\/chatkit\/help\.html'\)/);
   assert.match(nodeTemplate, /@@include\('\.\/evals\/template\.html'\)/);
   assert.match(nodeTemplate, /@@include\('\.\/evals\/help\.html'\)/);
   assert.match(nodeTemplate, /@@include\('\.\/realtime\/template\.html'\)/);
@@ -1507,6 +1728,10 @@ test("editor templates and locale expose latest methods", () => {
   assert.match(nodeTemplate, /@@include\('\.\/webhooks\/help\.html'\)/);
   assert.match(responsesHelp, /⋙ Count Input Tokens/);
   assert.match(responsesHelp, /Default is <code>desc<\/code>/);
+  assert.match(chatkitHelp, /⋙ Create ChatKit Session/);
+  assert.match(chatkitHelp, /workflow\.id/);
+  assert.match(chatkitHelp, /client_secret/);
+  assert.match(chatkitHelp, /⋙ List ChatKit Thread Items/);
   assert.match(evalsHelp, /⋙ Create Eval/);
   assert.match(evalsHelp, /⋙ List Eval Run Output Items/);
   assert.match(realtimeHelp, /⋙ Create Realtime Client Secret/);
@@ -1527,6 +1752,14 @@ test("editor templates and locale expose latest methods", () => {
   assert.equal(
     locale.OpenaiApi.parameters.countInputTokens,
     "count input tokens"
+  );
+  assert.equal(
+    locale.OpenaiApi.parameters.createChatKitSession,
+    "create chatkit session"
+  );
+  assert.equal(
+    locale.OpenaiApi.parameters.listChatKitThreads,
+    "list chatkit threads"
   );
   assert.equal(
     locale.OpenaiApi.parameters.createConversation,
