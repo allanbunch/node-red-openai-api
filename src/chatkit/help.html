@@ -60,6 +60,8 @@
         </dl>
         <p>Successful responses are returned in <code>msg.payload</code> and include a ChatKit
             <code>client_secret</code> plus resolved workflow/session metadata.</p>
+        <p>Hand the returned <code>client_secret</code> to your ChatKit frontend/client library
+            immediately; it is the credential used to open or refresh the chat session.</p>
 
         <h4 style="font-weight: bolder;"> ⋙ Cancel ChatKit Session</h4>
         <p>Cancel an active ChatKit session so the issued client secret can no longer be used.</p>
@@ -113,6 +115,8 @@
             </dt>
             <dd>Filter threads to one user identifier.</dd>
         </dl>
+        <p>The node returns the current page's thread objects as an array in
+            <code>msg.payload</code>.</p>
 
         <h4 style="font-weight: bolder;"> ⋙ Delete ChatKit Thread</h4>
         <p>Delete a ChatKit thread, including its items and stored attachments.</p>
@@ -155,5 +159,7 @@
             </dt>
             <dd>Sort order by creation time. Default is <code>desc</code>.</dd>
         </dl>
+        <p>The node returns the current page's thread item objects as an array in
+            <code>msg.payload</code>.</p>
     </details>
 </section>

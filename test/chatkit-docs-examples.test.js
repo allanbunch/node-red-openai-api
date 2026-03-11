@@ -9,6 +9,10 @@ const path = require("node:path");
 const test = require("node:test");
 
 const readme = fs.readFileSync(path.join(__dirname, "..", "README.md"), "utf8");
+const chatkitHelp = fs.readFileSync(
+  path.join(__dirname, "..", "src", "chatkit", "help.html"),
+  "utf8"
+);
 const examplePath = path.join(
   __dirname,
   "..",
@@ -74,4 +78,19 @@ test("ChatKit example flow covers the documented session and thread lifecycle", 
   assert.match(guidanceText, /published workflow id/i);
   assert.match(guidanceText, /thread operations need a real `cthr_...` id/i);
   assert.match(guidanceText, /session cancellation needs a real `cksess_...` id/i);
+});
+
+test("ChatKit help documents client_secret handoff and list return shape", () => {
+  assert.match(
+    chatkitHelp,
+    /Hand the returned <code>client_secret<\/code> to your ChatKit frontend\/client library/
+  );
+  assert.match(
+    chatkitHelp,
+    /current page's thread objects as an array in\s*<code>msg\.payload<\/code>/
+  );
+  assert.match(
+    chatkitHelp,
+    /current page's thread item objects as an array in\s*<code>msg\.payload<\/code>/
+  );
 });
