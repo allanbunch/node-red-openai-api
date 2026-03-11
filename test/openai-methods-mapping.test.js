@@ -1615,6 +1615,8 @@ test("OpenaiApi prototype exposes latest methods", () => {
   assert.equal(typeof client.cancelModelResponse, "function");
   assert.equal(typeof client.compactModelResponse, "function");
   assert.equal(typeof client.countInputTokens, "function");
+  assert.equal(typeof client.createChatKitSession, "function");
+  assert.equal(typeof client.listChatKitThreadItems, "function");
   assert.equal(typeof client.createConversation, "function");
   assert.equal(typeof client.listConversationItems, "function");
   assert.equal(typeof client.createEval, "function");
@@ -1629,6 +1631,10 @@ test("OpenaiApi prototype exposes latest methods", () => {
 test("editor templates and locale expose latest methods", () => {
   const responsesTemplate = fs.readFileSync(
     path.join(__dirname, "..", "src", "responses", "template.html"),
+    "utf8"
+  );
+  const chatkitTemplate = fs.readFileSync(
+    path.join(__dirname, "..", "src", "chatkit", "template.html"),
     "utf8"
   );
   const conversationsTemplate = fs.readFileSync(
@@ -1663,6 +1669,10 @@ test("editor templates and locale expose latest methods", () => {
     path.join(__dirname, "..", "src", "responses", "help.html"),
     "utf8"
   );
+  const chatkitHelp = fs.readFileSync(
+    path.join(__dirname, "..", "src", "chatkit", "help.html"),
+    "utf8"
+  );
   const skillsHelp = fs.readFileSync(
     path.join(__dirname, "..", "src", "skills", "help.html"),
     "utf8"
@@ -1690,6 +1700,8 @@ test("editor templates and locale expose latest methods", () => {
   assert.match(responsesTemplate, /value="cancelModelResponse"/);
   assert.match(responsesTemplate, /value="compactModelResponse"/);
   assert.match(responsesTemplate, /value="countInputTokens"/);
+  assert.match(chatkitTemplate, /value="createChatKitSession"/);
+  assert.match(chatkitTemplate, /value="listChatKitThreadItems"/);
   assert.match(conversationsTemplate, /value="createConversation"/);
   assert.match(conversationsTemplate, /value="listConversationItems"/);
   assert.match(skillsTemplate, /value="listSkills"/);
@@ -1702,6 +1714,8 @@ test("editor templates and locale expose latest methods", () => {
   assert.match(webhooksTemplate, /value="verifyWebhookSignature"/);
   assert.match(nodeTemplate, /@@include\('\.\/conversations\/template\.html'\)/);
   assert.match(nodeTemplate, /@@include\('\.\/conversations\/help\.html'\)/);
+  assert.match(nodeTemplate, /@@include\('\.\/chatkit\/template\.html'\)/);
+  assert.match(nodeTemplate, /@@include\('\.\/chatkit\/help\.html'\)/);
   assert.match(nodeTemplate, /@@include\('\.\/evals\/template\.html'\)/);
   assert.match(nodeTemplate, /@@include\('\.\/evals\/help\.html'\)/);
   assert.match(nodeTemplate, /@@include\('\.\/realtime\/template\.html'\)/);
@@ -1714,6 +1728,10 @@ test("editor templates and locale expose latest methods", () => {
   assert.match(nodeTemplate, /@@include\('\.\/webhooks\/help\.html'\)/);
   assert.match(responsesHelp, /⋙ Count Input Tokens/);
   assert.match(responsesHelp, /Default is <code>desc<\/code>/);
+  assert.match(chatkitHelp, /⋙ Create ChatKit Session/);
+  assert.match(chatkitHelp, /workflow\.id/);
+  assert.match(chatkitHelp, /client_secret/);
+  assert.match(chatkitHelp, /⋙ List ChatKit Thread Items/);
   assert.match(evalsHelp, /⋙ Create Eval/);
   assert.match(evalsHelp, /⋙ List Eval Run Output Items/);
   assert.match(realtimeHelp, /⋙ Create Realtime Client Secret/);
@@ -1734,6 +1752,14 @@ test("editor templates and locale expose latest methods", () => {
   assert.equal(
     locale.OpenaiApi.parameters.countInputTokens,
     "count input tokens"
+  );
+  assert.equal(
+    locale.OpenaiApi.parameters.createChatKitSession,
+    "create chatkit session"
+  );
+  assert.equal(
+    locale.OpenaiApi.parameters.listChatKitThreads,
+    "list chatkit threads"
   );
   assert.equal(
     locale.OpenaiApi.parameters.createConversation,
