@@ -1,0 +1,352 @@
+[
+    {
+        "id": "4a5ecedfe4b56019",
+        "type": "tab",
+        "label": "ChatKit Sessions and Threads",
+        "disabled": false,
+        "info": "ChatKit / Agent Builder example.\n\nBefore running:\n- open the `OpenAI Auth` config node and set a valid API key\n- replace `wf_pub_replace_me` with the published workflow id from Agent Builder\n- session cancellation needs a real `cksess_...` id returned by the create-session call\n- thread operations need a real `cthr_...` id after a ChatKit client has created conversation history\n\nThis flow keeps all request data under `msg.payload`, which matches the default `OpenAI API` node property.",
+        "env": []
+    },
+    {
+        "id": "d2b45b542dcf4019",
+        "type": "comment",
+        "z": "4a5ecedfe4b56019",
+        "name": "Replace the published workflow id before running create session.",
+        "info": "The create-session inject node uses `payload.workflow.id = wf_pub_replace_me` as a placeholder.\n\nReplace it with the published workflow id from your deployed Agent Builder workflow. That published id is the key identifier ChatKit needs in order to mint a browser/mobile client secret for the workflow.",
+        "x": 420,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "0c8f938ad4124e43",
+        "type": "comment",
+        "z": "4a5ecedfe4b56019",
+        "name": "Session actions use ChatKit session ids. Thread actions use ChatKit thread ids.",
+        "info": "After `createChatKitSession`, inspect the debug sidebar for the returned ChatKit session object and copy its `id` into the cancel-session inject node.\n\nAfter a client uses the ChatKit session and creates history, list threads for the same user and copy a real `cthr_...` id into the retrieve, delete, and list-items inject nodes.",
+        "x": 510,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "ff6123a713a24f64",
+        "type": "inject",
+        "z": "4a5ecedfe4b56019",
+        "name": "Create ChatKit Session",
+        "props": [
+            {
+                "p": "payload.user",
+                "v": "demo-user-123",
+                "vt": "str"
+            },
+            {
+                "p": "payload.workflow.id",
+                "v": "wf_pub_replace_me",
+                "vt": "str"
+            },
+            {
+                "p": "payload.workflow.version",
+                "v": "3",
+                "vt": "str"
+            },
+            {
+                "p": "payload.workflow.state_variables.region",
+                "v": "us",
+                "vt": "str"
+            },
+            {
+                "p": "payload.expires_after.anchor",
+                "v": "created_at",
+                "vt": "str"
+            },
+            {
+                "p": "payload.expires_after.seconds",
+                "v": "600",
+                "vt": "num"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 230,
+        "y": 240,
+        "wires": [
+            [
+                "84d71cdd68bc4db6"
+            ]
+        ]
+    },
+    {
+        "id": "84d71cdd68bc4db6",
+        "type": "OpenAI API",
+        "z": "4a5ecedfe4b56019",
+        "name": "Create ChatKit Session",
+        "property": "payload",
+        "propertyType": "msg",
+        "service": "6484ecfca4104ce4",
+        "method": "createChatKitSession",
+        "x": 520,
+        "y": 240,
+        "wires": [
+            [
+                "21b0e62d352f4558"
+            ]
+        ]
+    },
+    {
+        "id": "9c2524226df847de",
+        "type": "inject",
+        "z": "4a5ecedfe4b56019",
+        "name": "Cancel ChatKit Session",
+        "props": [
+            {
+                "p": "payload.session_id",
+                "v": "cksess_replace_me",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 230,
+        "y": 320,
+        "wires": [
+            [
+                "db696853266541a0"
+            ]
+        ]
+    },
+    {
+        "id": "db696853266541a0",
+        "type": "OpenAI API",
+        "z": "4a5ecedfe4b56019",
+        "name": "Cancel ChatKit Session",
+        "property": "payload",
+        "propertyType": "msg",
+        "service": "6484ecfca4104ce4",
+        "method": "cancelChatKitSession",
+        "x": 520,
+        "y": 320,
+        "wires": [
+            [
+                "21b0e62d352f4558"
+            ]
+        ]
+    },
+    {
+        "id": "6feea0ba54b449dc",
+        "type": "inject",
+        "z": "4a5ecedfe4b56019",
+        "name": "List ChatKit Threads",
+        "props": [
+            {
+                "p": "payload.user",
+                "v": "demo-user-123",
+                "vt": "str"
+            },
+            {
+                "p": "payload.limit",
+                "v": "5",
+                "vt": "num"
+            },
+            {
+                "p": "payload.order",
+                "v": "desc",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 220,
+        "y": 440,
+        "wires": [
+            [
+                "0fb0fd17639c4539"
+            ]
+        ]
+    },
+    {
+        "id": "0fb0fd17639c4539",
+        "type": "OpenAI API",
+        "z": "4a5ecedfe4b56019",
+        "name": "List ChatKit Threads",
+        "property": "payload",
+        "propertyType": "msg",
+        "service": "6484ecfca4104ce4",
+        "method": "listChatKitThreads",
+        "x": 520,
+        "y": 440,
+        "wires": [
+            [
+                "21b0e62d352f4558"
+            ]
+        ]
+    },
+    {
+        "id": "3395fd7648ba4d65",
+        "type": "inject",
+        "z": "4a5ecedfe4b56019",
+        "name": "Retrieve ChatKit Thread",
+        "props": [
+            {
+                "p": "payload.thread_id",
+                "v": "cthr_replace_me",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 220,
+        "y": 520,
+        "wires": [
+            [
+                "5dd6bc6188d84622"
+            ]
+        ]
+    },
+    {
+        "id": "5dd6bc6188d84622",
+        "type": "OpenAI API",
+        "z": "4a5ecedfe4b56019",
+        "name": "Retrieve ChatKit Thread",
+        "property": "payload",
+        "propertyType": "msg",
+        "service": "6484ecfca4104ce4",
+        "method": "getChatKitThread",
+        "x": 520,
+        "y": 520,
+        "wires": [
+            [
+                "21b0e62d352f4558"
+            ]
+        ]
+    },
+    {
+        "id": "e513eb71f1024f93",
+        "type": "inject",
+        "z": "4a5ecedfe4b56019",
+        "name": "Delete ChatKit Thread",
+        "props": [
+            {
+                "p": "payload.thread_id",
+                "v": "cthr_replace_me",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 220,
+        "y": 600,
+        "wires": [
+            [
+                "c83d41cc8c65467c"
+            ]
+        ]
+    },
+    {
+        "id": "c83d41cc8c65467c",
+        "type": "OpenAI API",
+        "z": "4a5ecedfe4b56019",
+        "name": "Delete ChatKit Thread",
+        "property": "payload",
+        "propertyType": "msg",
+        "service": "6484ecfca4104ce4",
+        "method": "deleteChatKitThread",
+        "x": 520,
+        "y": 600,
+        "wires": [
+            [
+                "21b0e62d352f4558"
+            ]
+        ]
+    },
+    {
+        "id": "30dca5c0950a437d",
+        "type": "inject",
+        "z": "4a5ecedfe4b56019",
+        "name": "List ChatKit Thread Items",
+        "props": [
+            {
+                "p": "payload.thread_id",
+                "v": "cthr_replace_me",
+                "vt": "str"
+            },
+            {
+                "p": "payload.limit",
+                "v": "10",
+                "vt": "num"
+            },
+            {
+                "p": "payload.order",
+                "v": "desc",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 210,
+        "y": 680,
+        "wires": [
+            [
+                "d44ef2ce25dd4095"
+            ]
+        ]
+    },
+    {
+        "id": "d44ef2ce25dd4095",
+        "type": "OpenAI API",
+        "z": "4a5ecedfe4b56019",
+        "name": "List ChatKit Thread Items",
+        "property": "payload",
+        "propertyType": "msg",
+        "service": "6484ecfca4104ce4",
+        "method": "listChatKitThreadItems",
+        "x": 520,
+        "y": 680,
+        "wires": [
+            [
+                "21b0e62d352f4558"
+            ]
+        ]
+    },
+    {
+        "id": "21b0e62d352f4558",
+        "type": "debug",
+        "z": "4a5ecedfe4b56019",
+        "name": "ChatKit Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "6484ecfca4104ce4",
+        "type": "Service Host",
+        "apiBase": "https://api.openai.com/v1",
+        "secureApiKeyHeaderOrQueryName": "Authorization",
+        "organizationId": "",
+        "name": "OpenAI Auth"
+    }
+]

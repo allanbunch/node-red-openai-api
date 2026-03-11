@@ -37,7 +37,7 @@
     "build:html": "gulp build-html",
     "build:js": "esbuild src/lib.js --bundle --outfile=lib.js --format=cjs --platform=node",
     "build": "npm run build:html && npm run build:js",
-    "test": "node --test test/service-host-node.test.js test/service-host-editor-template.test.js test/openai-node-auth-routing.test.js test/openai-methods-mapping.test.js test/openai-responses-websocket.test.js",
+    "test": "node --test test/service-host-node.test.js test/service-host-editor-template.test.js test/openai-node-auth-routing.test.js test/openai-methods-mapping.test.js test/openai-responses-websocket.test.js test/chatkit-docs-examples.test.js",
     "prepare": "npm run build"
   },
   "dependencies": {

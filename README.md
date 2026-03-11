@@ -48,7 +48,7 @@ Use the node for direct generation, structured Responses API work, chat-style in
 
 ### Tool-Enabled and Multi-Step AI Flows
 
-Use Responses tools, conversations, runs, messages, vector stores, files, skills, and related resources as part of larger control loops and operational workflows.
+Use Responses tools, conversations, runs, messages, vector stores, files, skills, and related resources as part of larger control loops and operational workflows. Use ChatKit sessions and threads when a published Agent Builder workflow needs to be exposed cleanly inside a Node-RED flow.
 
 ### Streaming and Realtime Work
 
@@ -110,6 +110,8 @@ If you want to understand the shape of this node quickly, these example flows ar
 
 - [`examples/chat.json`](examples/chat.json)
   A straightforward API-call flow for getting oriented.
+- [`examples/chatkit/sessions-and-threads.json`](examples/chatkit/sessions-and-threads.json)
+  Shows how to create and cancel ChatKit sessions for a published Agent Builder workflow, then inspect the resulting threads and thread items.
 - [`examples/responses/phase.json`](examples/responses/phase.json)
   A clean Responses example using newer payload features.
 - [`examples/responses/tool-search.json`](examples/responses/tool-search.json)
@@ -125,6 +127,7 @@ If you want to understand the shape of this node quickly, these example flows ar
 
 This repository currently includes:
 
+- ChatKit / Agent Builder support, including session creation and cancellation, plus thread and thread-item inspection for published workflows
 - Responses API support, including `phase`, `prompt_cache_key`, `tool_search`, GA computer-use payloads, cancellation, compaction, input-token counting, and websocket mode
 - Realtime API support, including client-secret creation, SIP call operations, and current SDK-typed model ids such as `gpt-realtime-1.5` and `gpt-audio-1.5`
 - Conversations, Containers, Container Files, Evals, Skills, Videos, and Webhooks support
@@ -140,6 +143,7 @@ The method picker covers a wide range of OpenAI API families:
 - Audio
 - Batch
 - Chat Completions
+- ChatKit
 - Container Files
 - Containers
 - Conversations
@@ -172,6 +176,7 @@ Import-ready example flows live under `examples/`:
 - [`examples/assistants.json`](examples/assistants.json)
 - [`examples/audio.json`](examples/audio.json)
 - [`examples/chat.json`](examples/chat.json)
+- [`examples/chatkit/sessions-and-threads.json`](examples/chatkit/sessions-and-threads.json)
 - [`examples/embeddings.json`](examples/embeddings.json)
 - [`examples/files.json`](examples/files.json)
 - [`examples/fine-tuning.json`](examples/fine-tuning.json)
