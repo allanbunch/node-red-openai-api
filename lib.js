@@ -406,7 +406,7 @@ var require_version = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.VERSION = void 0;
-    exports2.VERSION = "6.27.0";
+    exports2.VERSION = "6.29.0";
   }
 });
 
@@ -4022,7 +4022,7 @@ var require_speech = __commonJS({
        * const speech = await client.audio.speech.create({
        *   input: 'input',
        *   model: 'string',
-       *   voice: 'ash',
+       *   voice: 'string',
        * });
        *
        * const content = await speech.blob();
@@ -8035,7 +8035,7 @@ var require_videos = __commonJS({
        * Create a new video generation job from a prompt and optional reference assets.
        */
       create(body, options) {
-        return this._client.post("/videos", (0, uploads_1.maybeMultipartFormRequestOptions)({ body, ...options }, this._client));
+        return this._client.post("/videos", (0, uploads_1.multipartFormRequestOptions)({ body, ...options }, this._client));
       }
       /**
        * Fetch the latest metadata for a generated video.
@@ -8056,6 +8056,12 @@ var require_videos = __commonJS({
         return this._client.delete((0, path_1.path)`/videos/${videoID}`, options);
       }
       /**
+       * Create a character from an uploaded video.
+       */
+      createCharacter(body, options) {
+        return this._client.post("/videos/characters", (0, uploads_1.multipartFormRequestOptions)({ body, ...options }, this._client));
+      }
+      /**
        * Download the generated video bytes or a derived preview asset.
        *
        * Streams the rendered video content for the specified video job.
@@ -8067,6 +8073,25 @@ var require_videos = __commonJS({
           headers: (0, headers_1.buildHeaders)([{ Accept: "application/binary" }, options?.headers]),
           __binaryResponse: true
         });
+      }
+      /**
+       * Create a new video generation job by editing a source video or existing
+       * generated video.
+       */
+      edit(body, options) {
+        return this._client.post("/videos/edits", (0, uploads_1.multipartFormRequestOptions)({ body, ...options }, this._client));
+      }
+      /**
+       * Create an extension of a completed video.
+       */
+      extend(body, options) {
+        return this._client.post("/videos/extensions", (0, uploads_1.multipartFormRequestOptions)({ body, ...options }, this._client));
+      }
+      /**
+       * Fetch a character.
+       */
+      getCharacter(characterID, options) {
+        return this._client.get((0, path_1.path)`/videos/characters/${characterID}`, options);
       }
       /**
        * Create a remix of a completed video using a refreshed prompt.
@@ -8478,8 +8503,9 @@ var require_client = __commonJS({
         const baseURL = !tslib_1.__classPrivateFieldGet(this, _OpenAI_instances, "m", _OpenAI_baseURLOverridden).call(this) && defaultBaseURL || this.baseURL;
         const url = (0, values_1.isAbsoluteURL)(path) ? new URL(path) : new URL(baseURL + (baseURL.endsWith("/") && path.startsWith("/") ? path.slice(1) : path));
         const defaultQuery = this.defaultQuery();
-        if (!(0, values_2.isEmptyObj)(defaultQuery)) {
-          query = { ...defaultQuery, ...query };
+        const pathQuery = Object.fromEntries(url.searchParams);
+        if (!(0, values_2.isEmptyObj)(defaultQuery) || !(0, values_2.isEmptyObj)(pathQuery)) {
+          query = { ...pathQuery, ...defaultQuery, ...query };
         }
         if (typeof query === "object" && query && !Array.isArray(query)) {
           url.search = this.stringifyQuery(query);
