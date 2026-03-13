@@ -842,12 +842,14 @@
 
             <dt>
                 voice
-                <span class="property-type">string</span>
+                <span class="property-type">string or object</span>
             </dt>
             <dd>
-                The voice to use when generating the audio. Supported voices are <code>alloy</code>, <code>ash</code>,
-                <code>coral</code>, <code>echo</code>, <code>fable</code>, <code>onyx</code>, <code>nova</code>,
-                <code>sage</code> and <code>shimmer</code>.
+                The voice to use when generating the audio. You can send a built-in voice name such as
+                <code>alloy</code>, <code>ash</code>, <code>ballad</code>, <code>coral</code>, <code>echo</code>,
+                <code>fable</code>, <code>onyx</code>, <code>nova</code>, <code>sage</code>, <code>shimmer</code>,
+                <code>verse</code>, <code>marin</code>, or <code>cedar</code>. You can also send a custom voice object
+                with an id, for example <code>{ "id": "voice_1234" }</code>.
             </dd>
 
             <dt class="optional">
@@ -974,6 +976,7 @@
 
     </details>
 </section>
+
   <section>
     <details>
         <summary style="font-weight: bold;">📦 Batch</summary>

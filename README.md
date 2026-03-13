@@ -10,7 +10,7 @@ It is not just a thin wrapper around text generation. The node exposes modern AI
 
 That makes this repository relevant beyond Node-RED alone. It is a practical implementation of how contemporary AI capabilities can live inside an open workflow environment instead of being locked inside a single vendor surface or hidden behind a one-purpose abstraction.
 
-This package currently targets the `openai` Node SDK `^6.28.0`.
+This package currently targets the `openai` Node SDK `^6.29.0`.
 
 ## Why This Exists
 
@@ -45,6 +45,8 @@ In practice, that means one node can cover a wide API surface without turning th
 ### Request and Response Workflows
 
 Use the node for direct generation, structured Responses API work, chat-style interactions, moderation, embeddings, image work, audio tasks, and other request/response patterns.
+
+That includes speech work with built-in voices or a saved custom voice id, depending on what the flow needs.
 
 ### Video and Sora Workflows
 
@@ -136,6 +138,7 @@ This repository currently includes:
 - ChatKit / Agent Builder support, including session creation and cancellation, plus thread and thread-item inspection for published workflows
 - Responses API support, including `phase`, `prompt_cache_key`, `tool_search`, GA computer-use payloads, cancellation, compaction, input-token counting, and websocket mode
 - Realtime API support, including client-secret creation, SIP call operations, and current SDK-typed model ids such as `gpt-realtime-1.5` and `gpt-audio-1.5`
+- Audio speech support with built-in voices and saved custom voice ids
 - Videos / Sora support, including generation, remix, edit, extend, character creation, and downloadable assets
 - Conversations, Containers, Container Files, Evals, Skills, and Webhooks support
 - OpenAI-compatible auth routing through the `Service Host` config node
