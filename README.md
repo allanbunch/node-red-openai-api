@@ -46,6 +46,10 @@ In practice, that means one node can cover a wide API surface without turning th
 
 Use the node for direct generation, structured Responses API work, chat-style interactions, moderation, embeddings, image work, audio tasks, and other request/response patterns.
 
+### Video and Sora Workflows
+
+Use the node for OpenAI video work inside Node-RED, including current Sora video methods for generation, remix, edit, extend, character creation, and downloadable video assets. That lets video features live in the same visible, routable workflow environment as the rest of your AI system.
+
 ### Tool-Enabled and Multi-Step AI Flows
 
 Use Responses tools, conversations, runs, messages, vector stores, files, skills, and related resources as part of larger control loops and operational workflows. Use ChatKit sessions and threads when a published Agent Builder workflow needs to be exposed cleanly inside a Node-RED flow.
@@ -130,7 +134,8 @@ This repository currently includes:
 - ChatKit / Agent Builder support, including session creation and cancellation, plus thread and thread-item inspection for published workflows
 - Responses API support, including `phase`, `prompt_cache_key`, `tool_search`, GA computer-use payloads, cancellation, compaction, input-token counting, and websocket mode
 - Realtime API support, including client-secret creation, SIP call operations, and current SDK-typed model ids such as `gpt-realtime-1.5` and `gpt-audio-1.5`
-- Conversations, Containers, Container Files, Evals, Skills, Videos, and Webhooks support
+- Videos / Sora support, including generation, remix, edit, extend, character creation, and downloadable assets
+- Conversations, Containers, Container Files, Evals, Skills, and Webhooks support
 - OpenAI-compatible auth routing through the `Service Host` config node
 
 See the in-editor node help for exact method payloads and links to official API documentation.
