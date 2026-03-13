@@ -51,8 +51,8 @@
         "id": "f2dc3af908db35ee",
         "type": "comment",
         "z": "2fd54c5f0db04e4b",
-        "name": "Set your API key in Service Host, then send the inject node.",
-        "info": "This example shows how to preserve assistant `phase` on a Responses request.\n\nBefore running:\n- open the `OpenAI Auth` config node and set a valid API key\n- keep `gpt-5.4` or replace it with another Responses-compatible model if needed\n\nWhat this flow sends:\n- `prompt_cache_key`\n- an assistant message labeled `phase: commentary`\n- a follow-up user message\n\nExpected result:\n- the response appears in the debug sidebar as the normal `createModelResponse` output",
+        "name": "Configure the red-marked node, then send the inject node.",
+        "info": "This example shows how to preserve assistant `phase` on a Responses request.\n\nBefore running:\n- import the flow, then configure the red-marked `OpenAI API` node with your own `Service Host`\n- keep `gpt-5.4` or replace it with another Responses-compatible model if needed\n\nWhat this flow sends:\n- `prompt_cache_key`\n- an assistant message labeled `phase: commentary`\n- a follow-up user message\n\nExpected result:\n- the response appears in the debug sidebar as the normal `createModelResponse` output",
         "x": 440,
         "y": 180,
         "wires": []
@@ -64,7 +64,7 @@
         "name": "Create Model Response",
         "property": "ai",
         "propertyType": "msg",
-        "service": "c9f1ae09c3b1c2cf",
+        "service": "",
         "method": "createModelResponse",
         "x": 560,
         "y": 240,
@@ -90,13 +90,5 @@
         "x": 770,
         "y": 240,
         "wires": []
-    },
-    {
-        "id": "c9f1ae09c3b1c2cf",
-        "type": "Service Host",
-        "apiBase": "https://api.openai.com/v1",
-        "secureApiKeyHeaderOrQueryName": "Authorization",
-        "organizationId": "",
-        "name": "OpenAI Auth"
     }
 ]

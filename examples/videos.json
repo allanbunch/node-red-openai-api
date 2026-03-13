@@ -1,0 +1,376 @@
+[
+    {
+        "id": "10ff5e12f01476a4",
+        "type": "tab",
+        "label": "Videos Example",
+        "disabled": false,
+        "info": "Videos example.\n\nThis flow shows the current OpenAI video surface in the same direct Node-RED style as the rest of the project:\n- create a video job from a prompt\n- create a reusable character from an uploaded clip\n- fetch a saved character\n- edit, extend, or remix a completed video\n- download a rendered asset such as the thumbnail or main video\n\nSome inject nodes include placeholder ids or file paths. Replace those with real values before running them against the API.",
+        "env": []
+    },
+    {
+        "id": "9f6f8594b3dcbf9f",
+        "type": "comment",
+        "z": "10ff5e12f01476a4",
+        "name": "Configure the red-marked nodes, then replace the placeholder ids and file paths where needed.",
+        "info": "Before running:\n- import the flow, then configure each red-marked `OpenAI API` node with your own `Service Host`\n- this example stores request data in `msg.ai` because each `OpenAI API` node is configured to `ai`\n- if your node uses the default property, move the same fields under `msg.payload`\n\nWhat this flow covers:\n- Sora video creation from a prompt\n- character creation from an uploaded video clip\n- character retrieval by id\n- edit, extend, and remix flows for completed videos\n- downloadable assets through `downloadVideoContent`",
+        "x": 470,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "0d4567126bfb0be9",
+        "type": "inject",
+        "z": "10ff5e12f01476a4",
+        "name": "Create Video",
+        "props": [
+            {
+                "p": "ai.prompt",
+                "v": "A calm sunrise over a coastal city, filmed like a quiet documentary opening shot.",
+                "vt": "str"
+            },
+            {
+                "p": "ai.model",
+                "v": "sora-2",
+                "vt": "str"
+            },
+            {
+                "p": "ai.seconds",
+                "v": "8",
+                "vt": "str"
+            },
+            {
+                "p": "ai.size",
+                "v": "1280x720",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 180,
+        "y": 220,
+        "wires": [
+            [
+                "7f343de47d4a5e77"
+            ]
+        ]
+    },
+    {
+        "id": "7f343de47d4a5e77",
+        "type": "OpenAI API",
+        "z": "10ff5e12f01476a4",
+        "name": "Create Video",
+        "property": "ai",
+        "propertyType": "msg",
+        "service": "",
+        "method": "createVideo",
+        "x": 430,
+        "y": 220,
+        "wires": [
+            [
+                "d0dd9462465a1fb9"
+            ]
+        ]
+    },
+    {
+        "id": "8a31b2fbda8ad50f",
+        "type": "inject",
+        "z": "10ff5e12f01476a4",
+        "name": "Create Video Character",
+        "props": [
+            {
+                "p": "ai.name",
+                "v": "Lead Runner",
+                "vt": "str"
+            },
+            {
+                "p": "ai.video",
+                "v": "/path/to/character-source.mp4",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 190,
+        "y": 300,
+        "wires": [
+            [
+                "4f690ee43af6b79f"
+            ]
+        ]
+    },
+    {
+        "id": "4f690ee43af6b79f",
+        "type": "OpenAI API",
+        "z": "10ff5e12f01476a4",
+        "name": "Create Video Character",
+        "property": "ai",
+        "propertyType": "msg",
+        "service": "",
+        "method": "createVideoCharacter",
+        "x": 450,
+        "y": 300,
+        "wires": [
+            [
+                "d0dd9462465a1fb9"
+            ]
+        ]
+    },
+    {
+        "id": "f37548d372420f56",
+        "type": "inject",
+        "z": "10ff5e12f01476a4",
+        "name": "Get Video Character",
+        "props": [
+            {
+                "p": "ai.character_id",
+                "v": "char_replace_me",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 180,
+        "y": 380,
+        "wires": [
+            [
+                "d8e480cae6cf1f3b"
+            ]
+        ]
+    },
+    {
+        "id": "d8e480cae6cf1f3b",
+        "type": "OpenAI API",
+        "z": "10ff5e12f01476a4",
+        "name": "Get Video Character",
+        "property": "ai",
+        "propertyType": "msg",
+        "service": "",
+        "method": "getVideoCharacter",
+        "x": 440,
+        "y": 380,
+        "wires": [
+            [
+                "d0dd9462465a1fb9"
+            ]
+        ]
+    },
+    {
+        "id": "005ecdd640c0aa56",
+        "type": "inject",
+        "z": "10ff5e12f01476a4",
+        "name": "Edit Video",
+        "props": [
+            {
+                "p": "ai.prompt",
+                "v": "Keep the shot steady and give it a neon dusk color treatment.",
+                "vt": "str"
+            },
+            {
+                "p": "ai.video.id",
+                "v": "video_replace_me",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 460,
+        "wires": [
+            [
+                "2331b602ef6f5277"
+            ]
+        ]
+    },
+    {
+        "id": "2331b602ef6f5277",
+        "type": "OpenAI API",
+        "z": "10ff5e12f01476a4",
+        "name": "Edit Video",
+        "property": "ai",
+        "propertyType": "msg",
+        "service": "",
+        "method": "editVideo",
+        "x": 410,
+        "y": 460,
+        "wires": [
+            [
+                "d0dd9462465a1fb9"
+            ]
+        ]
+    },
+    {
+        "id": "2cafe14afce4e744",
+        "type": "inject",
+        "z": "10ff5e12f01476a4",
+        "name": "Extend Video",
+        "props": [
+            {
+                "p": "ai.prompt",
+                "v": "Continue the shot and let the city lights gradually come alive.",
+                "vt": "str"
+            },
+            {
+                "p": "ai.seconds",
+                "v": "16",
+                "vt": "str"
+            },
+            {
+                "p": "ai.video.id",
+                "v": "video_replace_me",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 160,
+        "y": 540,
+        "wires": [
+            [
+                "5737bba9d132fa7d"
+            ]
+        ]
+    },
+    {
+        "id": "5737bba9d132fa7d",
+        "type": "OpenAI API",
+        "z": "10ff5e12f01476a4",
+        "name": "Extend Video",
+        "property": "ai",
+        "propertyType": "msg",
+        "service": "",
+        "method": "extendVideo",
+        "x": 420,
+        "y": 540,
+        "wires": [
+            [
+                "d0dd9462465a1fb9"
+            ]
+        ]
+    },
+    {
+        "id": "e4766ca3fb430312",
+        "type": "inject",
+        "z": "10ff5e12f01476a4",
+        "name": "Remix Video",
+        "props": [
+            {
+                "p": "ai.video_id",
+                "v": "video_replace_me",
+                "vt": "str"
+            },
+            {
+                "p": "ai.prompt",
+                "v": "Keep the structure, but make it feel warmer and more cinematic.",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 160,
+        "y": 620,
+        "wires": [
+            [
+                "af2929abf2cf0fd8"
+            ]
+        ]
+    },
+    {
+        "id": "af2929abf2cf0fd8",
+        "type": "OpenAI API",
+        "z": "10ff5e12f01476a4",
+        "name": "Remix Video",
+        "property": "ai",
+        "propertyType": "msg",
+        "service": "",
+        "method": "remixVideo",
+        "x": 420,
+        "y": 620,
+        "wires": [
+            [
+                "d0dd9462465a1fb9"
+            ]
+        ]
+    },
+    {
+        "id": "da3d4e3ceef46c52",
+        "type": "inject",
+        "z": "10ff5e12f01476a4",
+        "name": "Download Thumbnail",
+        "props": [
+            {
+                "p": "ai.video_id",
+                "v": "video_replace_me",
+                "vt": "str"
+            },
+            {
+                "p": "ai.variant",
+                "v": "thumbnail",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 180,
+        "y": 700,
+        "wires": [
+            [
+                "0f6f375ec4fc2f20"
+            ]
+        ]
+    },
+    {
+        "id": "0f6f375ec4fc2f20",
+        "type": "OpenAI API",
+        "z": "10ff5e12f01476a4",
+        "name": "Download Video Content",
+        "property": "ai",
+        "propertyType": "msg",
+        "service": "",
+        "method": "downloadVideoContent",
+        "x": 450,
+        "y": 700,
+        "wires": [
+            [
+                "d0dd9462465a1fb9"
+            ]
+        ]
+    },
+    {
+        "id": "d0dd9462465a1fb9",
+        "type": "debug",
+        "z": "10ff5e12f01476a4",
+        "name": "Videos Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 340,
+        "wires": []
+    }
+]

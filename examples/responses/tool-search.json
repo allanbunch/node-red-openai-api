@@ -56,8 +56,8 @@
         "id": "48f13ed89ac6c252",
         "type": "comment",
         "z": "af5f0e330a6a497e",
-        "name": "Set your API key, then send the inject node to test Tool Search.",
-        "info": "This example demonstrates the minimal Responses Tool Search contract.\n\nBefore running:\n- open the `OpenAI Auth` config node and set a valid API key\n- confirm the remote MCP server in `ai.tools[1]` is still reachable for your environment\n- keep or replace `gpt-5.4` as needed\n\nWhat this flow sends:\n- `tools[0] = { type: \"tool_search\" }`\n- a deferred MCP tool with `defer_loading: true`\n- a user prompt that should encourage the model to inspect and load the deferred tool only if useful\n\nExpected result:\n- the debug sidebar shows the Responses output, including any tool-search-driven behavior chosen by the model",
+        "name": "Configure the red-marked node, then send the inject node to test Tool Search.",
+        "info": "This example demonstrates the minimal Responses Tool Search contract.\n\nBefore running:\n- import the flow, then configure the red-marked `OpenAI API` node with your own `Service Host`\n- confirm the remote MCP server in `ai.tools[1]` is still reachable for your environment\n- keep or replace `gpt-5.4` as needed\n\nWhat this flow sends:\n- `tools[0] = { type: \"tool_search\" }`\n- a deferred MCP tool with `defer_loading: true`\n- a user prompt that should encourage the model to inspect and load the deferred tool only if useful\n\nExpected result:\n- the debug sidebar shows the Responses output, including any tool-search-driven behavior chosen by the model",
         "x": 470,
         "y": 180,
         "wires": []
@@ -69,7 +69,7 @@
         "name": "Create Model Response",
         "property": "ai",
         "propertyType": "msg",
-        "service": "51cb919695c46177",
+        "service": "",
         "method": "createModelResponse",
         "x": 590,
         "y": 240,
@@ -95,13 +95,5 @@
         "x": 820,
         "y": 240,
         "wires": []
-    },
-    {
-        "id": "51cb919695c46177",
-        "type": "Service Host",
-        "apiBase": "https://api.openai.com/v1",
-        "secureApiKeyHeaderOrQueryName": "Authorization",
-        "organizationId": "",
-        "name": "OpenAI Auth"
     }
 ]

@@ -11,8 +11,8 @@
         "id": "7d097a8ea8f89f3b",
         "type": "comment",
         "z": "94f237d7e5864fc4",
-        "name": "Set your API key, then use the same OpenAI API node for connect, send, and close.",
-        "info": "Before running:\n- open the `OpenAI Auth` config node and set a valid API key\n- this example stores websocket commands in `msg.ai` because the `OpenAI API` node property is configured to `ai`\n- if your node uses the default property, move the same fields under `msg.payload`\n\nImportant:\n- the websocket connection lives inside a single `OpenAI API` node instance\n- for that reason, connect, send, and close all target the same node\n- click `Connect Responses WebSocket` first, then `Send response.create Event`, then `Close Responses WebSocket`",
+        "name": "Configure the red-marked node, then use the same OpenAI API node for connect, send, and close.",
+        "info": "Before running:\n- import the flow, then configure the red-marked `OpenAI API` node with your own `Service Host`\n- this example stores websocket commands in `msg.ai` because the `OpenAI API` node property is configured to `ai`\n- if your node uses the default property, move the same fields under `msg.payload`\n\nImportant:\n- the websocket connection lives inside a single `OpenAI API` node instance\n- for that reason, connect, send, and close all target the same node\n- click `Connect Responses WebSocket` first, then `Send response.create Event`, then `Close Responses WebSocket`",
         "x": 480,
         "y": 140,
         "wires": []
@@ -134,7 +134,7 @@
         "name": "Manage Model Response WebSocket",
         "property": "ai",
         "propertyType": "msg",
-        "service": "c2b37d3bb51e2796",
+        "service": "",
         "method": "manageModelResponseWebSocket",
         "x": 600,
         "y": 400,
@@ -160,13 +160,5 @@
         "x": 860,
         "y": 400,
         "wires": []
-    },
-    {
-        "id": "c2b37d3bb51e2796",
-        "type": "Service Host",
-        "apiBase": "https://api.openai.com/v1",
-        "secureApiKeyHeaderOrQueryName": "Authorization",
-        "organizationId": "",
-        "name": "OpenAI Auth"
     }
 ]

@@ -124,6 +124,8 @@ If you want to understand the shape of this node quickly, these example flows ar
   Shows the request and follow-up contract for computer-use style workflows.
 - [`examples/responses/websocket.json`](examples/responses/websocket.json)
   Shows explicit websocket lifecycle handling in one node instance.
+- [`examples/videos.json`](examples/videos.json)
+  Shows the current video flow surface, including create, character creation, edit, extend, remix, and asset download.
 - [`examples/realtime/client-secrets.json`](examples/realtime/client-secrets.json)
   Shows the Realtime client-secret contract for browser or mobile handoff.
 
@@ -195,6 +197,7 @@ Import-ready example flows live under `examples/`:
 - [`examples/responses/phase.json`](examples/responses/phase.json)
 - [`examples/responses/tool-search.json`](examples/responses/tool-search.json)
 - [`examples/responses/websocket.json`](examples/responses/websocket.json)
+- [`examples/videos.json`](examples/videos.json)
 - [`examples/runs.json`](examples/runs.json)
 - [`examples/threads.json`](examples/threads.json)
 

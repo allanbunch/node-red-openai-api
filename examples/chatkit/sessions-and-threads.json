@@ -4,7 +4,7 @@
         "type": "tab",
         "label": "ChatKit Sessions and Threads",
         "disabled": false,
-        "info": "ChatKit / Agent Builder example.\n\nBefore running:\n- open the `OpenAI Auth` config node and set a valid API key\n- replace `wf_pub_replace_me` with the published workflow id from Agent Builder\n- session cancellation needs a real `cksess_...` id returned by the create-session call\n- thread operations need a real `cthr_...` id after a ChatKit client has created conversation history\n\nThis flow keeps all request data under `msg.payload`, which matches the default `OpenAI API` node property.",
+        "info": "ChatKit / Agent Builder example.\n\nBefore running:\n- import the flow, then configure each red-marked `OpenAI API` node with your own `Service Host`\n- replace `wf_pub_replace_me` with the published workflow id from Agent Builder\n- session cancellation needs a real `cksess_...` id returned by the create-session call\n- thread operations need a real `cthr_...` id after a ChatKit client has created conversation history\n\nThis flow keeps all request data under `msg.payload`, which matches the default `OpenAI API` node property.",
         "env": []
     },
     {
@@ -84,7 +84,7 @@
         "name": "Create ChatKit Session",
         "property": "payload",
         "propertyType": "msg",
-        "service": "6484ecfca4104ce4",
+        "service": "",
         "method": "createChatKitSession",
         "x": 520,
         "y": 240,
@@ -126,7 +126,7 @@
         "name": "Cancel ChatKit Session",
         "property": "payload",
         "propertyType": "msg",
-        "service": "6484ecfca4104ce4",
+        "service": "",
         "method": "cancelChatKitSession",
         "x": 520,
         "y": 320,
@@ -178,7 +178,7 @@
         "name": "List ChatKit Threads",
         "property": "payload",
         "propertyType": "msg",
-        "service": "6484ecfca4104ce4",
+        "service": "",
         "method": "listChatKitThreads",
         "x": 520,
         "y": 440,
@@ -220,7 +220,7 @@
         "name": "Retrieve ChatKit Thread",
         "property": "payload",
         "propertyType": "msg",
-        "service": "6484ecfca4104ce4",
+        "service": "",
         "method": "getChatKitThread",
         "x": 520,
         "y": 520,
@@ -262,7 +262,7 @@
         "name": "Delete ChatKit Thread",
         "property": "payload",
         "propertyType": "msg",
-        "service": "6484ecfca4104ce4",
+        "service": "",
         "method": "deleteChatKitThread",
         "x": 520,
         "y": 600,
@@ -314,7 +314,7 @@
         "name": "List ChatKit Thread Items",
         "property": "payload",
         "propertyType": "msg",
-        "service": "6484ecfca4104ce4",
+        "service": "",
         "method": "listChatKitThreadItems",
         "x": 520,
         "y": 680,
@@ -340,13 +340,5 @@
         "x": 790,
         "y": 460,
         "wires": []
-    },
-    {
-        "id": "6484ecfca4104ce4",
-        "type": "Service Host",
-        "apiBase": "https://api.openai.com/v1",
-        "secureApiKeyHeaderOrQueryName": "Authorization",
-        "organizationId": "",
-        "name": "OpenAI Auth"
     }
 ]

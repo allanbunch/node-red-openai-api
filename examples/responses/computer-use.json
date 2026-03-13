@@ -46,8 +46,8 @@
         "id": "f8116f42c7c6774d",
         "type": "comment",
         "z": "45ed920ef7184d5e",
-        "name": "Stage 1: set your API key, then run the initial computer request.",
-        "info": "This example teaches the Responses computer-use payload contract.\n\nBefore running:\n- open the `OpenAI Auth` config node and set a valid API key\n- keep or replace `gpt-5.4` as needed\n- understand that this flow does not capture screenshots or execute actions for you\n\nStage 1:\n- send `Create Computer Request`\n- inspect the debug output for a `computer_call` item and note its `call_id`\n- note the response id you need for `previous_response_id` in stage 2",
+        "name": "Stage 1: configure the red-marked node, then run the initial computer request.",
+        "info": "This example teaches the Responses computer-use payload contract.\n\nBefore running:\n- import the flow, then configure the red-marked `OpenAI API` node with your own `Service Host`\n- keep or replace `gpt-5.4` as needed\n- understand that this flow does not capture screenshots or execute actions for you\n\nStage 1:\n- send `Create Computer Request`\n- inspect the debug output for a `computer_call` item and note its `call_id`\n- note the response id you need for `previous_response_id` in stage 2",
         "x": 480,
         "y": 160,
         "wires": []
@@ -104,7 +104,7 @@
         "name": "Create Model Response",
         "property": "ai",
         "propertyType": "msg",
-        "service": "c23e0df9b74eae30",
+        "service": "",
         "method": "createModelResponse",
         "x": 660,
         "y": 260,
@@ -130,13 +130,5 @@
         "x": 900,
         "y": 260,
         "wires": []
-    },
-    {
-        "id": "c23e0df9b74eae30",
-        "type": "Service Host",
-        "apiBase": "https://api.openai.com/v1",
-        "secureApiKeyHeaderOrQueryName": "Authorization",
-        "organizationId": "",
-        "name": "OpenAI Auth"
     }
 ]

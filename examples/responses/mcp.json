@@ -14,7 +14,7 @@
         "name": "MCP Request",
         "property": "ai",
         "propertyType": "msg",
-        "service": "6bf3be50f1f3a262",
+        "service": "",
         "method": "createModelResponse",
         "x": 520,
         "y": 240,
@@ -75,13 +75,5 @@
                 "4fd4d16e54babf47"
             ]
         ]
-    },
-    {
-        "id": "6bf3be50f1f3a262",
-        "type": "Service Host",
-        "apiBase": "https://api.openai.com/v1",
-        "secureApiKeyHeaderOrQueryName": "Authorization",
-        "organizationId": "",
-        "name": "OpenAI Auth"
     }
 ]
