@@ -13469,9 +13469,10 @@ var require_websocket2 = __commonJS({
     var { WebSocket } = require_ws();
     function buildResponsesWebSocketURL(clientParams) {
       const baseURL = clientParams.baseURL || "https://api.openai.com/v1";
-      const path = "/responses";
-      const url = new URL(baseURL + (baseURL.endsWith("/") ? path.slice(1) : path));
+      const url = new URL(baseURL);
       const defaultQuery = clientParams.defaultQuery || {};
+      const normalizedPathname = url.pathname.endsWith("/") ? url.pathname.slice(0, -1) : url.pathname;
+      url.pathname = `${normalizedPathname}/responses`;
       for (const [key, value] of Object.entries(defaultQuery)) {
         if (value !== void 0 && value !== null) {
           url.searchParams.set(key, value);

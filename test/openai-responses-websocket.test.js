@@ -334,6 +334,56 @@ test("responses websocket uses query auth and cleanup handlers close active conn
   });
 });
 
+test("responses websocket preserves base URL query parameters when building the connection URL", async () => {
+  FakeWebSocket.reset();
+
+  await withMockedWebSocket(FakeWebSocket, async (responsesMethods) => {
+    const node = {
+      send: () => { },
+      error: () => { },
+      registerCleanupHandler: () => { },
+    };
+
+    const clientContext = {
+      clientParams: {
+        apiKey: "sk-test",
+        baseURL: "https://api.example.com/v1?api-version=2026-01-01",
+        defaultQuery: {
+          api_token: "sk-test",
+        },
+        defaultHeaders: {
+          Authorization: null,
+        },
+      },
+    };
+
+    const connectResponse = await responsesMethods.manageModelResponseWebSocket.call(
+      clientContext,
+      {
+        _node: node,
+        payload: {
+          action: "connect",
+          connection_id: "connection-query-base",
+        },
+      }
+    );
+
+    const socket = FakeWebSocket.instances[0];
+    assert.ok(socket);
+    assert.equal(
+      connectResponse.url,
+      "wss://api.example.com/v1/responses?api-version=2026-01-01&api_token=sk-test"
+    );
+    assert.equal(
+      socket.url,
+      "wss://api.example.com/v1/responses?api-version=2026-01-01&api_token=sk-test"
+    );
+    assert.deepEqual(socket.options, {
+      headers: {},
+    });
+  });
+});
+
 test("responses websocket validates action, event shape, and parse errors", async () => {
   FakeWebSocket.reset();
 
