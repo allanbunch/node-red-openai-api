@@ -26,10 +26,35 @@ async function deleteVideo(parameters) {
   return response;
 }
 
+async function createVideoCharacter(parameters) {
+  const openai = new OpenAI(this.clientParams);
+  const response = await openai.videos.createCharacter(parameters.payload);
+  return response;
+}
+
 async function downloadVideoContent(parameters) {
   const openai = new OpenAI(this.clientParams);
   const { video_id, ...params } = parameters.payload;
   const response = await openai.videos.downloadContent(video_id, params);
+  return response;
+}
+
+async function editVideo(parameters) {
+  const openai = new OpenAI(this.clientParams);
+  const response = await openai.videos.edit(parameters.payload);
+  return response;
+}
+
+async function extendVideo(parameters) {
+  const openai = new OpenAI(this.clientParams);
+  const response = await openai.videos.extend(parameters.payload);
+  return response;
+}
+
+async function getVideoCharacter(parameters) {
+  const openai = new OpenAI(this.clientParams);
+  const { character_id, ...params } = parameters.payload;
+  const response = await openai.videos.getCharacter(character_id, params);
   return response;
 }
 
@@ -45,6 +70,10 @@ module.exports = {
   getVideo,
   listVideos,
   deleteVideo,
+  createVideoCharacter,
   downloadVideoContent,
+  editVideo,
+  extendVideo,
+  getVideoCharacter,
   remixVideo,
 };

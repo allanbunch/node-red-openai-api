@@ -466,7 +466,11 @@
     <option value="createVideo" data-i18n="OpenaiApi.parameters.createVideo"></option>
     <option value="getVideo" data-i18n="OpenaiApi.parameters.getVideo"></option>
     <option value="deleteVideo" data-i18n="OpenaiApi.parameters.deleteVideo"></option>
+    <option value="createVideoCharacter" data-i18n="OpenaiApi.parameters.createVideoCharacter"></option>
     <option value="downloadVideoContent" data-i18n="OpenaiApi.parameters.downloadVideoContent"></option>
+    <option value="editVideo" data-i18n="OpenaiApi.parameters.editVideo"></option>
+    <option value="extendVideo" data-i18n="OpenaiApi.parameters.extendVideo"></option>
+    <option value="getVideoCharacter" data-i18n="OpenaiApi.parameters.getVideoCharacter"></option>
     <option value="remixVideo" data-i18n="OpenaiApi.parameters.remixVideo"></option>
 </optgroup>
 
@@ -4360,9 +4364,9 @@
             <dd>Prompt describing the video output.</dd>
             <dt class="optional">
                 input_reference
-                <span class="property-type">file</span>
+                <span class="property-type">file | object</span>
             </dt>
-            <dd>Optional reference image upload.</dd>
+            <dd>Optional reference asset upload or reference object. Use a file upload, or an object with <code>file_id</code> or <code>image_url</code>.</dd>
             <dt class="optional">
                 model
                 <span class="property-type">string</span>
@@ -4377,7 +4381,7 @@
                 size
                 <span class="property-type">string</span>
             </dt>
-            <dd>Video resolution.</dd>
+            <dd>Video resolution. Supported sizes include <code>720x1280</code>, <code>1280x720</code>, <code>1024x1792</code>, and <code>1792x1024</code>.</dd>
         </dl>
 
         <h4 style="font-weight: bolder;"> ⋙ Retrieve Video</h4>
@@ -4402,6 +4406,22 @@
             <dd>The video id.</dd>
         </dl>
 
+        <h4 style="font-weight: bolder;"> ⋙ Create Video Character</h4>
+        <p>Create a reusable API character from an uploaded video.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                name
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Display name for the character.</dd>
+            <dt>
+                video
+                <span class="property-type">file</span>
+            </dt>
+            <dd>Uploaded video file used to create the character.</dd>
+        </dl>
+
         <h4 style="font-weight: bolder;"> ⋙ Download Video Content</h4>
         <p>Download rendered video content or related assets.</p>
         <dl class="message-properties">
@@ -4416,6 +4436,54 @@
                 <span class="property-type">string</span>
             </dt>
             <dd>Asset variant: <code>video</code>, <code>thumbnail</code>, or <code>spritesheet</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Edit Video</h4>
+        <p>Create a new video generation job by editing a source video or completed generated video.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                prompt
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Text prompt describing how to edit the source video.</dd>
+            <dt>
+                video
+                <span class="property-type">file | object</span>
+            </dt>
+            <dd>Source video upload or a reference object with <code>id</code> for a completed video.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Extend Video</h4>
+        <p>Create an extension of a completed video.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                prompt
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Updated prompt that directs the extension generation.</dd>
+            <dt>
+                seconds
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Length of the new extension segment in seconds. Supported values are <code>4</code>, <code>8</code>, <code>12</code>, <code>16</code>, and <code>20</code>.</dd>
+            <dt>
+                video
+                <span class="property-type">file | object</span>
+            </dt>
+            <dd>Source video upload or a reference object with <code>id</code> for a completed video.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Video Character</h4>
+        <p>Fetch one API character by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                character_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The character id.</dd>
         </dl>
 
         <h4 style="font-weight: bolder;"> ⋙ Remix Video</h4>

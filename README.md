@@ -10,7 +10,7 @@ It is not just a thin wrapper around text generation. The node exposes modern AI
 
 That makes this repository relevant beyond Node-RED alone. It is a practical implementation of how contemporary AI capabilities can live inside an open workflow environment instead of being locked inside a single vendor surface or hidden behind a one-purpose abstraction.
 
-This package currently targets the `openai` Node SDK `^6.27.0`.
+This package currently targets the `openai` Node SDK `^6.28.0`.
 
 ## Why This Exists
 

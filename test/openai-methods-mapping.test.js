@@ -1293,9 +1293,25 @@ test("videos methods map to OpenAI SDK videos endpoints", async () => {
           calls.push({ method: "videos.delete", videoId, options });
           return { id: videoId, deleted: true };
         },
+        createCharacter: async (body) => {
+          calls.push({ method: "videos.createCharacter", body });
+          return { id: "char_1", name: body.name };
+        },
         downloadContent: async (videoId, query) => {
           calls.push({ method: "videos.downloadContent", videoId, query });
           return { binary: true };
+        },
+        edit: async (body) => {
+          calls.push({ method: "videos.edit", body });
+          return { id: "video_edit" };
+        },
+        extend: async (body) => {
+          calls.push({ method: "videos.extend", body });
+          return { id: "video_extend" };
+        },
+        getCharacter: async (characterId, options) => {
+          calls.push({ method: "videos.getCharacter", characterId, options });
+          return { id: characterId };
         },
         remix: async (videoId, body) => {
           calls.push({ method: "videos.remix", videoId, body });
@@ -1332,10 +1348,30 @@ test("videos methods map to OpenAI SDK videos endpoints", async () => {
     });
     assert.deepEqual(deletedVideo, { id: "video_1", deleted: true });
 
+    const createdCharacter = await videoMethods.createVideoCharacter.call(clientContext, {
+      payload: { name: "Runner", video: { file_id: "file_1" } },
+    });
+    assert.deepEqual(createdCharacter, { id: "char_1", name: "Runner" });
+
     const downloaded = await videoMethods.downloadVideoContent.call(clientContext, {
       payload: { video_id: "video_1", variant: "thumbnail" },
     });
     assert.deepEqual(downloaded, { binary: true });
+
+    const edited = await videoMethods.editVideo.call(clientContext, {
+      payload: { prompt: "Add neon lighting", video: { id: "video_1" } },
+    });
+    assert.deepEqual(edited, { id: "video_edit" });
+
+    const extended = await videoMethods.extendVideo.call(clientContext, {
+      payload: { prompt: "Keep the motion going", seconds: "16", video: { id: "video_1" } },
+    });
+    assert.deepEqual(extended, { id: "video_extend" });
+
+    const fetchedCharacter = await videoMethods.getVideoCharacter.call(clientContext, {
+      payload: { character_id: "char_1" },
+    });
+    assert.deepEqual(fetchedCharacter, { id: "char_1" });
 
     const remixed = await videoMethods.remixVideo.call(clientContext, {
       payload: { video_id: "video_1", prompt: "Make it cinematic" },
@@ -1366,9 +1402,26 @@ test("videos methods map to OpenAI SDK videos endpoints", async () => {
       options: {},
     },
     {
+      method: "videos.createCharacter",
+      body: { name: "Runner", video: { file_id: "file_1" } },
+    },
+    {
       method: "videos.downloadContent",
       videoId: "video_1",
       query: { variant: "thumbnail" },
+    },
+    {
+      method: "videos.edit",
+      body: { prompt: "Add neon lighting", video: { id: "video_1" } },
+    },
+    {
+      method: "videos.extend",
+      body: { prompt: "Keep the motion going", seconds: "16", video: { id: "video_1" } },
+    },
+    {
+      method: "videos.getCharacter",
+      characterId: "char_1",
+      options: {},
     },
     {
       method: "videos.remix",
@@ -1625,6 +1678,10 @@ test("OpenaiApi prototype exposes latest methods", () => {
   assert.equal(typeof client.listSkills, "function");
   assert.equal(typeof client.getSkillVersionContent, "function");
   assert.equal(typeof client.createVideo, "function");
+  assert.equal(typeof client.createVideoCharacter, "function");
+  assert.equal(typeof client.editVideo, "function");
+  assert.equal(typeof client.extendVideo, "function");
+  assert.equal(typeof client.getVideoCharacter, "function");
   assert.equal(typeof client.verifyWebhookSignature, "function");
 });
 
@@ -1711,6 +1768,10 @@ test("editor templates and locale expose latest methods", () => {
   assert.match(realtimeTemplate, /value="createRealtimeClientSecret"/);
   assert.match(realtimeTemplate, /value="rejectRealtimeCall"/);
   assert.match(videosTemplate, /value="downloadVideoContent"/);
+  assert.match(videosTemplate, /value="createVideoCharacter"/);
+  assert.match(videosTemplate, /value="editVideo"/);
+  assert.match(videosTemplate, /value="extendVideo"/);
+  assert.match(videosTemplate, /value="getVideoCharacter"/);
   assert.match(webhooksTemplate, /value="verifyWebhookSignature"/);
   assert.match(nodeTemplate, /@@include\('\.\/conversations\/template\.html'\)/);
   assert.match(nodeTemplate, /@@include\('\.\/conversations\/help\.html'\)/);
@@ -1743,6 +1804,13 @@ test("editor templates and locale expose latest methods", () => {
   assert.match(skillsHelp, /⋙ Create Skill/);
   assert.match(skillsHelp, /⋙ List Skill Versions/);
   assert.match(videosHelp, /⋙ Download Video Content/);
+  assert.match(videosHelp, /⋙ Create Video Character/);
+  assert.match(videosHelp, /⋙ Edit Video/);
+  assert.match(videosHelp, /⋙ Extend Video/);
+  assert.match(videosHelp, /⋙ Retrieve Video Character/);
+  assert.match(videosHelp, /file_id/);
+  assert.match(videosHelp, /image_url/);
+  assert.match(videosHelp, /1792x1024/);
   assert.match(webhooksHelp, /⋙ Verify Webhook Signature/);
 
   assert.equal(
@@ -1784,6 +1852,22 @@ test("editor templates and locale expose latest methods", () => {
   assert.equal(
     locale.OpenaiApi.parameters.downloadVideoContent,
     "download video content"
+  );
+  assert.equal(
+    locale.OpenaiApi.parameters.createVideoCharacter,
+    "create video character"
+  );
+  assert.equal(
+    locale.OpenaiApi.parameters.editVideo,
+    "edit video"
+  );
+  assert.equal(
+    locale.OpenaiApi.parameters.extendVideo,
+    "extend video"
+  );
+  assert.equal(
+    locale.OpenaiApi.parameters.getVideoCharacter,
+    "retrieve video character"
   );
   assert.equal(
     locale.OpenaiApi.parameters.verifyWebhookSignature,
