@@ -252,6 +252,12 @@ Generated files are part of the project:
 
 If you change source templates or runtime source files, rebuild before review or release.
 
+## Support
+
+This project is maintained against the live OpenAI platform, which means real ongoing costs for API usage, testing, parity work, and release verification, especially when newer features and newer models need to be exercised properly.
+
+If this package is useful to you or your team, support through [GitHub Sponsors](https://github.com/sponsors/allanbunch) helps keep that work moving.
+
 ## Contributing
 
 Contributions are welcome. Keep changes clear, intentional, and proven.
