@@ -138,7 +138,7 @@ If you want to understand the shape of this node quickly, these example flows ar
 This repository currently includes:
 
 - ChatKit / Agent Builder support, including session creation and cancellation, plus thread and thread-item inspection for published workflows
-- Responses API support, including current SDK-typed model ids such as `gpt-5.4-mini`, `gpt-5.4-nano`, and dated variants like `gpt-5.4-mini-2026-03-17`, plus `phase`, `prompt_cache_key`, `tool_search`, GA computer-use payloads, parse and stream helpers, cancellation, compaction, input-token counting, and websocket mode
+- Responses API support, including current SDK-typed model ids such as `gpt-5.4-mini`, `gpt-5.4-nano`, and dated variants like `gpt-5.4-mini-2026-03-17`, plus `phase`, `prompt_cache_key`, `tool_search`, deferred MCP loading via `defer_loading`, GA computer-use payloads, parse and stream helpers, cancellation, compaction, input-token counting, and websocket mode
 - Vector Stores support, including direct vector-store search, vector-store file attribute updates, parsed file-content retrieval, and file-attribute filters using `ComparisonFilter` operators such as `in` and `nin`
 - Realtime API support, including client-secret creation, SIP call operations, and current SDK-typed model ids such as `gpt-realtime-1.5` and `gpt-audio-1.5`
 - Audio speech support with built-in voices and saved custom voice ids
