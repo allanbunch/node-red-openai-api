@@ -996,7 +996,11 @@
                 endpoint
                 <span class="property-type">string</span>
             </dt>
-            <dd>The endpoint to be used for all requests in the batch. Currently only /v1/chat/completions is supported.
+            <dd>The endpoint to be used for all requests in the batch. Supported values include
+                <code>/v1/responses</code>, <code>/v1/chat/completions</code>, <code>/v1/embeddings</code>,
+                <code>/v1/completions</code>, <code>/v1/moderations</code>,
+                <code>/v1/images/generations</code>, <code>/v1/images/edits</code>, and
+                <code>/v1/videos</code>.
             </dd>
             <dt>
                 completion_window
@@ -1060,6 +1064,7 @@
 
     </details>
 </section>
+
   <section>
     <details>
         <summary style="font-weight: bold;">💬 Chat</summary>

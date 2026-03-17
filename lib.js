@@ -406,7 +406,7 @@ var require_version = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.VERSION = void 0;
-    exports2.VERSION = "6.29.0";
+    exports2.VERSION = "6.32.0";
   }
 });
 
