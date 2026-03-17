@@ -75,7 +75,7 @@
             },
             {
                 "p": "ai.event",
-                "v": "{\"type\":\"response.create\",\"model\":\"gpt-5.4\",\"input\":\"Say hello from Responses websocket mode in one sentence.\"}",
+                "v": "{\"type\":\"response.create\",\"model\":\"gpt-5.4-nano-2026-03-17\",\"input\":\"Say hello from Responses websocket mode in one sentence.\"}",
                 "vt": "json"
             }
         ],

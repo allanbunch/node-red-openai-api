@@ -32,13 +32,20 @@ function withMockedOpenAI(FakeOpenAI, callback) {
   return run();
 }
 
-test("responses methods map delete/cancel/compact/input-items/input-tokens to OpenAI SDK", async () => {
+test("responses methods map parse/delete/cancel/compact/input-items/input-tokens to OpenAI SDK", async () => {
   const calls = [];
 
   class FakeOpenAI {
     constructor(clientParams) {
       calls.push({ method: "ctor", clientParams });
       this.responses = {
+        parse: async (payload) => {
+          calls.push({ method: "responses.parse", payload });
+          return {
+            id: "resp_parsed",
+            output_parsed: { answer: "done" },
+          };
+        },
         delete: async (responseId, options) => {
           calls.push({ method: "responses.delete", responseId, options });
           return { id: responseId, deleted: true };
@@ -75,6 +82,31 @@ test("responses methods map delete/cancel/compact/input-items/input-tokens to Op
     const responsesMethods = require("../src/responses/methods.js");
 
     const clientContext = { clientParams: { apiKey: "sk-test", baseURL: "https://api.example.com/v1" } };
+
+    const parsedResponse = await responsesMethods.parseModelResponse.call(clientContext, {
+      payload: {
+        model: "gpt-5.4-mini",
+        input: "Return structured output.",
+        text: {
+          format: {
+            type: "json_schema",
+            name: "result",
+            schema: {
+              type: "object",
+              properties: {
+                answer: { type: "string" },
+              },
+              required: ["answer"],
+              additionalProperties: false,
+            },
+          },
+        },
+      },
+    });
+    assert.deepEqual(parsedResponse, {
+      id: "resp_parsed",
+      output_parsed: { answer: "done" },
+    });
 
     const deleteResponse = await responsesMethods.deleteModelResponse.call(clientContext, {
       payload: {
@@ -127,6 +159,27 @@ test("responses methods map delete/cancel/compact/input-items/input-tokens to Op
   const responseCalls = calls.filter((entry) => entry.method !== "ctor");
   assert.deepEqual(responseCalls, [
     {
+      method: "responses.parse",
+      payload: {
+        model: "gpt-5.4-mini",
+        input: "Return structured output.",
+        text: {
+          format: {
+            type: "json_schema",
+            name: "result",
+            schema: {
+              type: "object",
+              properties: {
+                answer: { type: "string" },
+              },
+              required: ["answer"],
+              additionalProperties: false,
+            },
+          },
+        },
+      },
+    },
+    {
       method: "responses.delete",
       responseId: "resp_123",
       options: {},
@@ -161,7 +214,7 @@ test("responses methods map delete/cancel/compact/input-items/input-tokens to Op
   ]);
 });
 
-test("responses create forwards phase, prompt_cache_key, tool_search, defer_loading, computer, and gpt-5.4 payloads", async () => {
+test("responses create forwards phase, prompt_cache_key, tool_search, defer_loading, computer, and gpt-5.4-mini payloads", async () => {
   const calls = [];
 
   class FakeOpenAI {
@@ -177,7 +230,7 @@ test("responses create forwards phase, prompt_cache_key, tool_search, defer_load
   }
 
   const requestPayload = {
-    model: "gpt-5.4",
+    model: "gpt-5.4-mini",
     prompt_cache_key: "responses-agentic-demo-v1",
     input: [
       {
@@ -378,7 +431,7 @@ test("responses example flows remain valid JSON and cover the documented agentic
     JSON.parse(sendInjectNode.props.find((prop) => prop.p === "ai.event").v),
     {
       type: "response.create",
-      model: "gpt-5.4",
+      model: "gpt-5.4-nano-2026-03-17",
       input: "Say hello from Responses websocket mode in one sentence.",
     }
   );
@@ -543,6 +596,103 @@ test("responses retrieve streams chunks when stream=true", async () => {
       method: "responses.retrieve",
       responseId: "resp_non_stream",
       options: {},
+    },
+  ]);
+});
+
+test("responses stream helper emits events and returns the final parsed response", async () => {
+  const calls = [];
+
+  function createFakeResponseStream() {
+    return {
+      async *[Symbol.asyncIterator]() {
+        yield { type: "response.in_progress", sequence_number: 1 };
+        yield { type: "response.output_text.delta", sequence_number: 2, delta: "Hello" };
+        yield { type: "response.completed", sequence_number: 3 };
+      },
+      async finalResponse() {
+        return {
+          id: "resp_stream_final",
+          output_parsed: { answer: "Hello" },
+        };
+      },
+    };
+  }
+
+  class FakeOpenAI {
+    constructor(clientParams) {
+      calls.push({ method: "ctor", clientParams });
+      this.responses = {
+        stream: (payload) => {
+          calls.push({ method: "responses.stream", payload });
+          return createFakeResponseStream();
+        },
+      };
+    }
+  }
+
+  await withMockedOpenAI(FakeOpenAI, async () => {
+    const modulePath = require.resolve("../src/responses/methods.js");
+    delete require.cache[modulePath];
+    const responsesMethods = require("../src/responses/methods.js");
+
+    const sentMessages = [];
+    const statuses = [];
+    const node = {
+      send: (msg) => sentMessages.push(msg),
+      status: (status) => statuses.push(status),
+    };
+
+    const clientContext = { clientParams: { apiKey: "sk-test" } };
+
+    const finalResponse = await responsesMethods.streamModelResponse.call(clientContext, {
+      _node: node,
+      msg: { topic: "stream-helper" },
+      payload: {
+        model: "gpt-5.4-mini",
+        input: "Say hello from the stream helper.",
+      },
+    });
+
+    assert.deepEqual(finalResponse, {
+      id: "resp_stream_final",
+      output_parsed: { answer: "Hello" },
+    });
+
+    assert.deepEqual(sentMessages, [
+      {
+        topic: "stream-helper",
+        payload: { type: "response.in_progress", sequence_number: 1 },
+      },
+      {
+        topic: "stream-helper",
+        payload: { type: "response.output_text.delta", sequence_number: 2, delta: "Hello" },
+      },
+      {
+        topic: "stream-helper",
+        payload: { type: "response.completed", sequence_number: 3 },
+      },
+    ]);
+
+    assert.deepEqual(statuses, [
+      {
+        fill: "green",
+        shape: "dot",
+        text: "OpenaiApi.status.streaming",
+      },
+      {},
+    ]);
+
+    delete require.cache[modulePath];
+  });
+
+  assert.deepEqual(calls.filter((entry) => entry.method !== "ctor"), [
+    {
+      method: "responses.stream",
+      payload: {
+        model: "gpt-5.4-mini",
+        input: "Say hello from the stream helper.",
+      },
     },
   ]);
 });
@@ -1668,6 +1818,8 @@ test("OpenaiApi prototype exposes latest methods", () => {
   assert.equal(typeof client.cancelModelResponse, "function");
   assert.equal(typeof client.compactModelResponse, "function");
   assert.equal(typeof client.countInputTokens, "function");
+  assert.equal(typeof client.parseModelResponse, "function");
+  assert.equal(typeof client.streamModelResponse, "function");
   assert.equal(typeof client.createChatKitSession, "function");
   assert.equal(typeof client.listChatKitThreadItems, "function");
   assert.equal(typeof client.createConversation, "function");
@@ -1757,6 +1909,8 @@ test("editor templates and locale expose latest methods", () => {
   assert.match(responsesTemplate, /value="cancelModelResponse"/);
   assert.match(responsesTemplate, /value="compactModelResponse"/);
   assert.match(responsesTemplate, /value="countInputTokens"/);
+  assert.match(responsesTemplate, /value="parseModelResponse"/);
+  assert.match(responsesTemplate, /value="streamModelResponse"/);
   assert.match(chatkitTemplate, /value="createChatKitSession"/);
   assert.match(chatkitTemplate, /value="listChatKitThreadItems"/);
   assert.match(conversationsTemplate, /value="createConversation"/);
@@ -1788,6 +1942,10 @@ test("editor templates and locale expose latest methods", () => {
   assert.match(nodeTemplate, /@@include\('\.\/webhooks\/template\.html'\)/);
   assert.match(nodeTemplate, /@@include\('\.\/webhooks\/help\.html'\)/);
   assert.match(responsesHelp, /⋙ Count Input Tokens/);
+  assert.match(responsesHelp, /⋙ Parse Model Response/);
+  assert.match(responsesHelp, /⋙ Stream Model Response/);
+  assert.match(responsesHelp, /SDK parse helper/);
+  assert.match(responsesHelp, /helper's final parsed response object/);
   assert.match(responsesHelp, /Default is <code>desc<\/code>/);
   assert.match(chatkitHelp, /⋙ Create ChatKit Session/);
   assert.match(chatkitHelp, /workflow\.id/);
@@ -1818,8 +1976,16 @@ test("editor templates and locale expose latest methods", () => {
     "cancel model response"
   );
   assert.equal(
+    locale.OpenaiApi.parameters.parseModelResponse,
+    "parse model response"
+  );
+  assert.equal(
     locale.OpenaiApi.parameters.countInputTokens,
     "count input tokens"
+  );
+  assert.equal(
+    locale.OpenaiApi.parameters.streamModelResponse,
+    "stream model response"
   );
   assert.equal(
     locale.OpenaiApi.parameters.createChatKitSession,

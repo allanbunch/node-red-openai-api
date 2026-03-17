@@ -24,7 +24,8 @@
             </dt>
             <dd>
                 Model ID used to generate the response, including newer Responses-compatible
-                model strings such as <code>gpt-5.4</code>.
+                model strings such as <code>gpt-5.4-mini</code>, <code>gpt-5.4-nano</code>,
+                and dated variants like <code>gpt-5.4-mini-2026-03-17</code>.
             </dd>
 
             <dt class="optional">
@@ -193,6 +194,38 @@
 
         </dl>
 
+        <h4 style="font-weight: bolder;"> ⋙ Parse Model Response</h4>
+        <p>
+            Creates a model response and returns the SDK-parsed result for structured-output payloads.
+        </p>
+        <p>
+            Use the same request body shape as <code>Create Model Response</code> when your payload includes
+            parseable text formats or tools that the official SDK can parse for you.
+        </p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                input
+                <span class="property-type">string | array</span>
+            </dt>
+            <dd>Text, image, or file inputs to the model, used to generate a parsed response.</dd>
+            <dt>
+                model
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Model ID used to generate and parse the response.</dd>
+            <dt class="optional">
+                text
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Structured-output or text configuration used by the SDK parse helper.</dd>
+            <dt class="optional">
+                tools
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Tool definitions that the SDK can parse alongside the response.</dd>
+        </dl>
+
         <h4 style="font-weight: bolder;"> ⋙ Get Model Response</h4>
         <p>Retrieves a model response with the given ID.</p>
         <dl class="message-properties">
@@ -227,6 +260,48 @@
                 <span class="property-type">boolean</span>
             </dt>
             <dd>When true, retrieve the response as a stream of events.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Stream Model Response</h4>
+        <p>
+            Uses the SDK streaming helper to emit Responses stream events as they arrive and then returns the
+            helper's final parsed response object when the stream completes.
+        </p>
+        <p>
+            Use this helper for streamed create requests or streamed continuation by response id.
+        </p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                response_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>If provided, continue streaming an existing response by id.</dd>
+            <dt class="optional">
+                starting_after
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>When continuing by <code>response_id</code>, start after the given event sequence number.</dd>
+            <dt class="optional">
+                input
+                <span class="property-type">string | array</span>
+            </dt>
+            <dd>Input used for a new streamed response when <code>response_id</code> is not provided.</dd>
+            <dt class="optional">
+                model
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Model ID used for a new streamed response.</dd>
+            <dt class="optional">
+                text
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Text or structured-output configuration for the streamed response.</dd>
+            <dt class="optional">
+                tools
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Tool definitions to use while streaming the response.</dd>
         </dl>
 
         <h4 style="font-weight: bolder;"> ⋙ Delete Model Response</h4>

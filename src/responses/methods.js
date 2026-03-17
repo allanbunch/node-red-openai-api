@@ -187,6 +187,13 @@ async function createModelResponse(parameters) {
   }
 }
 
+async function parseModelResponse(parameters) {
+  const openai = new OpenAI(this.clientParams);
+  const response = await openai.responses.parse(parameters.payload);
+
+  return response;
+}
+
 async function getModelResponse(parameters) {
   const openai = new OpenAI(this.clientParams);
   const { response_id, ...params } = parameters.payload;
@@ -197,6 +204,15 @@ async function getModelResponse(parameters) {
   } else {
     return response;
   }
+}
+
+async function streamModelResponse(parameters) {
+  const openai = new OpenAI(this.clientParams);
+  const response = openai.responses.stream(parameters.payload);
+
+  await streamResponse(parameters, response);
+
+  return response.finalResponse();
 }
 
 async function deleteModelResponse(parameters) {
@@ -263,7 +279,9 @@ async function manageModelResponseWebSocket(parameters) {
 
 module.exports = {
   createModelResponse,
+  parseModelResponse,
   getModelResponse,
+  streamModelResponse,
   deleteModelResponse,
   cancelModelResponse,
   compactModelResponse,
