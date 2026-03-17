@@ -99,7 +99,8 @@ test("createSpeech forwards a custom voice object unchanged to the OpenAI SDK", 
 });
 
 test("README and Audio help describe the widened custom-voice contract", () => {
-  assert.match(readme, /openai` Node SDK `\^6\.29\.0`/);
+  assert.doesNotMatch(readme, /openai` Node SDK `\^6\.29\.0`/);
+  assert.match(readme, /openai` Node SDK `\^6\.32\.0`/);
   assert.match(
     readme,
     /Audio speech support with built-in voices and saved custom voice ids/

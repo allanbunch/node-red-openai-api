@@ -14201,40 +14201,63 @@ var require_methods24 = __commonJS({
       );
       return response;
     }
+    async function createAndPollVectorStoreFileBatch(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { vector_store_id, pollIntervalMs, ...body } = parameters.payload;
+      const response = await openai.vectorStores.fileBatches.createAndPoll(
+        vector_store_id,
+        body,
+        { pollIntervalMs }
+      );
+      return response;
+    }
     async function retrieveVectorStoreFileBatch(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { vector_store_id, batch_id, ...params } = parameters.payload;
-      const response = await openai.vectorStores.fileBatches.retrieve(
+      const response = await openai.vectorStores.fileBatches.retrieve(batch_id, {
+        vector_store_id,
+        ...params
+      });
+      return response;
+    }
+    async function pollVectorStoreFileBatch(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { vector_store_id, batch_id, pollIntervalMs } = parameters.payload;
+      const response = await openai.vectorStores.fileBatches.poll(
         vector_store_id,
         batch_id,
-        params
+        { pollIntervalMs }
       );
       return response;
     }
     async function cancelVectorStoreFileBatch(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { vector_store_id, batch_id, ...params } = parameters.payload;
-      const response = await openai.vectorStores.fileBatches.cancel(
+      const response = await openai.vectorStores.fileBatches.cancel(batch_id, {
         vector_store_id,
-        batch_id,
-        params
-      );
+        ...params
+      });
       return response;
     }
     async function listVectorStoreBatchFiles(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { vector_store_id, batch_id, ...params } = parameters.payload;
-      const list = await openai.vectorStores.fileBatches.listFiles(
+      const list = await openai.vectorStores.fileBatches.listFiles(batch_id, {
         vector_store_id,
-        batch_id,
-        params
-      );
+        ...params
+      });
       const batchFiles = [...list.data];
       return batchFiles;
     }
     async function uploadAndPollVectorStoreFileBatch(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const { vector_store_id, files: files2, file_ids, ...params } = parameters.payload;
+      const {
+        vector_store_id,
+        files: files2,
+        file_ids,
+        pollIntervalMs,
+        maxConcurrency
+      } = parameters.payload;
       if (!files2 || !Array.isArray(files2)) {
         throw new Error("Files is not defined or not an array");
       }
@@ -14247,13 +14270,15 @@ var require_methods24 = __commonJS({
       const response = await openai.vectorStores.fileBatches.uploadAndPoll(
         vector_store_id,
         { files: fileStreams, fileIds: file_ids },
-        params
+        { pollIntervalMs, maxConcurrency }
       );
       return response;
     }
     module2.exports = {
       createVectorStoreFileBatch,
+      createAndPollVectorStoreFileBatch,
       retrieveVectorStoreFileBatch,
+      pollVectorStoreFileBatch,
       cancelVectorStoreFileBatch,
       listVectorStoreBatchFiles,
       uploadAndPollVectorStoreFileBatch
@@ -14265,12 +14290,53 @@ var require_methods24 = __commonJS({
 var require_methods25 = __commonJS({
   "src/vector-store-files/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
+    var fs = require("fs");
     async function createVectorStoreFile(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { vector_store_id, ...params } = parameters.payload;
       const response = await openai.vectorStores.files.create(
         vector_store_id,
         params
+      );
+      return response;
+    }
+    async function createAndPollVectorStoreFile(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { vector_store_id, pollIntervalMs, ...body } = parameters.payload;
+      const response = await openai.vectorStores.files.createAndPoll(
+        vector_store_id,
+        body,
+        { pollIntervalMs }
+      );
+      return response;
+    }
+    async function uploadVectorStoreFile(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { vector_store_id, file, ...params } = parameters.payload;
+      const response = await openai.vectorStores.files.upload(
+        vector_store_id,
+        fs.createReadStream(file),
+        params
+      );
+      return response;
+    }
+    async function uploadAndPollVectorStoreFile(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { vector_store_id, file, pollIntervalMs } = parameters.payload;
+      const response = await openai.vectorStores.files.uploadAndPoll(
+        vector_store_id,
+        fs.createReadStream(file),
+        { pollIntervalMs }
+      );
+      return response;
+    }
+    async function pollVectorStoreFile(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { vector_store_id, file_id, pollIntervalMs } = parameters.payload;
+      const response = await openai.vectorStores.files.poll(
+        vector_store_id,
+        file_id,
+        { pollIntervalMs }
       );
       return response;
     }
@@ -14282,27 +14348,50 @@ var require_methods25 = __commonJS({
     }
     async function retrieveVectorStoreFile(parameters) {
       const openai = new OpenAI(this.clientParams);
-      const { vector_store_id, file_id } = parameters.payload;
-      const response = await openai.vectorStores.files.retrieve(
+      const { vector_store_id, file_id, ...params } = parameters.payload;
+      const response = await openai.vectorStores.files.retrieve(file_id, {
         vector_store_id,
-        file_id
-      );
+        ...params
+      });
       return response;
+    }
+    async function modifyVectorStoreFile(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { vector_store_id, file_id, ...body } = parameters.payload;
+      const response = await openai.vectorStores.files.update(file_id, {
+        vector_store_id,
+        ...body
+      });
+      return response;
+    }
+    async function getVectorStoreFileContent(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { vector_store_id, file_id, ...params } = parameters.payload;
+      const list = await openai.vectorStores.files.content(file_id, {
+        vector_store_id,
+        ...params
+      });
+      return [...list.data];
     }
     async function deleteVectorStoreFile(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { vector_store_id, file_id, ...params } = parameters.payload;
-      const response = await openai.vectorStores.files.del(
+      const response = await openai.vectorStores.files.del(file_id, {
         vector_store_id,
-        file_id,
-        params
-      );
+        ...params
+      });
       return response;
     }
     module2.exports = {
       createVectorStoreFile,
+      createAndPollVectorStoreFile,
+      uploadVectorStoreFile,
+      uploadAndPollVectorStoreFile,
+      pollVectorStoreFile,
       listVectorStoreFiles,
       retrieveVectorStoreFile,
+      modifyVectorStoreFile,
+      getVectorStoreFileContent,
       deleteVectorStoreFile
     };
   }
@@ -14322,6 +14411,13 @@ var require_methods26 = __commonJS({
       const list = await openai.vectorStores.list(parameters.payload);
       const vectorStores2 = [...list.data];
       return vectorStores2;
+    }
+    async function searchVectorStore(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { vector_store_id, ...body } = parameters.payload;
+      const list = await openai.vectorStores.search(vector_store_id, body);
+      const searchResults = [...list.data];
+      return searchResults;
     }
     async function retrieveVectorStore(parameters) {
       const openai = new OpenAI(this.clientParams);
@@ -14344,6 +14440,7 @@ var require_methods26 = __commonJS({
     module2.exports = {
       createVectorStore,
       listVectorStores,
+      searchVectorStore,
       retrieveVectorStore,
       modifyVectorStore,
       deleteVectorStore

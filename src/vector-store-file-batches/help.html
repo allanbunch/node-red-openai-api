@@ -20,6 +20,67 @@
             </dt>
             <dd>A list of File IDs that the vector store should use. Useful for tools like file_search that can access
                 files.</dd>
+
+            <dt class="optional">
+                files
+                <span class="property-type">array</span>
+            </dt>
+            <dd>An array of per-file objects that each include <code>file_id</code> plus optional
+                <code>attributes</code> or <code>chunking_strategy</code>.</dd>
+
+            <dt class="optional">
+                attributes
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Global attributes to apply to all files when using <code>file_ids</code>.</dd>
+
+            <dt class="optional">
+                chunking_strategy
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Global chunking strategy to apply to all files when using <code>file_ids</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create and Poll Vector Store File Batch</h4>
+        <p>SDK helper that creates a vector store file batch, then polls until processing completes.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                vector_store_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store for which to create a File Batch.</dd>
+
+            <dt class="optional">
+                file_ids
+                <span class="property-type">array</span>
+            </dt>
+            <dd>A list of File IDs to attach to the batch.</dd>
+
+            <dt class="optional">
+                files
+                <span class="property-type">array</span>
+            </dt>
+            <dd>An array of per-file objects that each include <code>file_id</code> plus optional
+                <code>attributes</code> or <code>chunking_strategy</code>.</dd>
+
+            <dt class="optional">
+                attributes
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Global attributes to apply to all files when using <code>file_ids</code>.</dd>
+
+            <dt class="optional">
+                chunking_strategy
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Global chunking strategy to apply to all files when using <code>file_ids</code>.</dd>
+
+            <dt class="optional">
+                pollIntervalMs
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Optional polling interval in milliseconds for the helper.</dd>
         </dl>
 
 
@@ -38,6 +99,29 @@
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the file batch being retrieved.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Poll Vector Store File Batch</h4>
+        <p>SDK helper that waits for a vector store file batch to finish processing.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                vector_store_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store that the file batch belongs to.</dd>
+
+            <dt>
+                batch_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the file batch to poll.</dd>
+
+            <dt class="optional">
+                pollIntervalMs
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Optional polling interval in milliseconds for the helper.</dd>
         </dl>
 
         <h4 style="font-weight: bolder;"> ⋙ Cancel Vector Store File Batch</h4>
@@ -105,8 +189,8 @@
             </dt>
             <dd>Filter by file status. One of in_progress, completed, failed, cancelled.</dd>
 
-            <h4 style="font-weight: bolder;"> ⋙ Upload and Poll File Batch [undocumented]</h4>
-            <p>Uploads the given files concurrently and then creates a vector store file batch.</p>
+            <h4 style="font-weight: bolder;"> ⋙ Upload and Poll Vector Store File Batch</h4>
+            <p>SDK helper that uploads local files concurrently, creates a vector store file batch, and polls until processing completes.</p>
             <dl class="message-properties">
                 <h4>msg.payload Properties</h4>
                 <dt>
@@ -124,6 +208,18 @@
                     <span class="property-type">array</span>
                 </dt>
                 <dd>A list of previously uploaded file ids.</dd>
+
+                <dt class="optional">
+                    pollIntervalMs
+                    <span class="property-type">integer</span>
+                </dt>
+                <dd>Optional polling interval in milliseconds for the helper.</dd>
+
+                <dt class="optional">
+                    maxConcurrency
+                    <span class="property-type">integer</span>
+                </dt>
+                <dd>Optional maximum number of concurrent file uploads for the helper.</dd>
             </dl>
 
     </details>

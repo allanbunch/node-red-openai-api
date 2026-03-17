@@ -15,6 +15,15 @@ async function listVectorStores(parameters) {
   return vectorStores;
 }
 
+async function searchVectorStore(parameters) {
+  const openai = new OpenAI(this.clientParams);
+  const { vector_store_id, ...body } = parameters.payload;
+  const list = await openai.vectorStores.search(vector_store_id, body);
+  const searchResults = [...list.data];
+
+  return searchResults;
+}
+
 async function retrieveVectorStore(parameters) {
   const openai = new OpenAI(this.clientParams);
   const { vector_store_id, ...params } = parameters.payload;
@@ -42,6 +51,7 @@ async function deleteVectorStore(parameters) {
 module.exports = {
   createVectorStore,
   listVectorStores,
+  searchVectorStore,
   retrieveVectorStore,
   modifyVectorStore,
   deleteVectorStore,

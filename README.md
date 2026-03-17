@@ -10,7 +10,7 @@ It is not just a thin wrapper around text generation. The node exposes modern AI
 
 That makes this repository relevant beyond Node-RED alone. It is a practical implementation of how contemporary AI capabilities can live inside an open workflow environment instead of being locked inside a single vendor surface or hidden behind a one-purpose abstraction.
 
-This package currently targets the `openai` Node SDK `^6.29.0`.
+This package currently targets the `openai` Node SDK `^6.32.0`.
 
 ## Why This Exists
 
@@ -128,6 +128,8 @@ If you want to understand the shape of this node quickly, these example flows ar
   Shows explicit websocket lifecycle handling in one node instance.
 - [`examples/videos.json`](examples/videos.json)
   Shows the current video flow surface, including create, character creation, edit, extend, remix, and asset download.
+- [`examples/vector-store-search.json`](examples/vector-store-search.json)
+  Shows direct vector-store search with `ComparisonFilter` `in` and `nin` operators.
 - [`examples/realtime/client-secrets.json`](examples/realtime/client-secrets.json)
   Shows the Realtime client-secret contract for browser or mobile handoff.
 
@@ -137,6 +139,7 @@ This repository currently includes:
 
 - ChatKit / Agent Builder support, including session creation and cancellation, plus thread and thread-item inspection for published workflows
 - Responses API support, including `phase`, `prompt_cache_key`, `tool_search`, GA computer-use payloads, cancellation, compaction, input-token counting, and websocket mode
+- Vector Stores support, including direct vector-store search, vector-store file attribute updates, parsed file-content retrieval, and file-attribute filters using `ComparisonFilter` operators such as `in` and `nin`
 - Realtime API support, including client-secret creation, SIP call operations, and current SDK-typed model ids such as `gpt-realtime-1.5` and `gpt-audio-1.5`
 - Audio speech support with built-in voices and saved custom voice ids
 - Videos / Sora support, including generation, remix, edit, extend, character creation, and downloadable assets
@@ -201,6 +204,7 @@ Import-ready example flows live under `examples/`:
 - [`examples/responses/tool-search.json`](examples/responses/tool-search.json)
 - [`examples/responses/websocket.json`](examples/responses/websocket.json)
 - [`examples/videos.json`](examples/videos.json)
+- [`examples/vector-store-search.json`](examples/vector-store-search.json)
 - [`examples/runs.json`](examples/runs.json)
 - [`examples/threads.json`](examples/threads.json)
 

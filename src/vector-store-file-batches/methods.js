@@ -12,13 +12,36 @@ async function createVectorStoreFileBatch(parameters) {
   return response;
 }
 
+async function createAndPollVectorStoreFileBatch(parameters) {
+  const openai = new OpenAI(this.clientParams);
+  const { vector_store_id, pollIntervalMs, ...body } = parameters.payload;
+  const response = await openai.vectorStores.fileBatches.createAndPoll(
+    vector_store_id,
+    body,
+    { pollIntervalMs }
+  );
+
+  return response;
+}
+
 async function retrieveVectorStoreFileBatch(parameters) {
   const openai = new OpenAI(this.clientParams);
   const { vector_store_id, batch_id, ...params } = parameters.payload;
-  const response = await openai.vectorStores.fileBatches.retrieve(
+  const response = await openai.vectorStores.fileBatches.retrieve(batch_id, {
+    vector_store_id,
+    ...params,
+  });
+
+  return response;
+}
+
+async function pollVectorStoreFileBatch(parameters) {
+  const openai = new OpenAI(this.clientParams);
+  const { vector_store_id, batch_id, pollIntervalMs } = parameters.payload;
+  const response = await openai.vectorStores.fileBatches.poll(
     vector_store_id,
     batch_id,
-    params
+    { pollIntervalMs }
   );
 
   return response;
@@ -27,11 +50,10 @@ async function retrieveVectorStoreFileBatch(parameters) {
 async function cancelVectorStoreFileBatch(parameters) {
   const openai = new OpenAI(this.clientParams);
   const { vector_store_id, batch_id, ...params } = parameters.payload;
-  const response = await openai.vectorStores.fileBatches.cancel(
+  const response = await openai.vectorStores.fileBatches.cancel(batch_id, {
     vector_store_id,
-    batch_id,
-    params
-  );
+    ...params,
+  });
 
   return response;
 }
@@ -39,11 +61,10 @@ async function cancelVectorStoreFileBatch(parameters) {
 async function listVectorStoreBatchFiles(parameters) {
   const openai = new OpenAI(this.clientParams);
   const { vector_store_id, batch_id, ...params } = parameters.payload;
-  const list = await openai.vectorStores.fileBatches.listFiles(
+  const list = await openai.vectorStores.fileBatches.listFiles(batch_id, {
     vector_store_id,
-    batch_id,
-    params
-  );
+    ...params,
+  });
   const batchFiles = [...list.data];
 
   return batchFiles;
@@ -51,7 +72,13 @@ async function listVectorStoreBatchFiles(parameters) {
 
 async function uploadAndPollVectorStoreFileBatch(parameters) {
   const openai = new OpenAI(this.clientParams);
-  const { vector_store_id, files, file_ids, ...params } = parameters.payload;
+  const {
+    vector_store_id,
+    files,
+    file_ids,
+    pollIntervalMs,
+    maxConcurrency,
+  } = parameters.payload;
 
   if (!files || !Array.isArray(files)) {
     throw new Error("Files is not defined or not an array");
@@ -69,7 +96,7 @@ async function uploadAndPollVectorStoreFileBatch(parameters) {
   const response = await openai.vectorStores.fileBatches.uploadAndPoll(
     vector_store_id,
     { files: fileStreams, fileIds: file_ids },
-    params
+    { pollIntervalMs, maxConcurrency }
   );
 
   return response;
@@ -77,7 +104,9 @@ async function uploadAndPollVectorStoreFileBatch(parameters) {
 
 module.exports = {
   createVectorStoreFileBatch,
+  createAndPollVectorStoreFileBatch,
   retrieveVectorStoreFileBatch,
+  pollVectorStoreFileBatch,
   cancelVectorStoreFileBatch,
   listVectorStoreBatchFiles,
   uploadAndPollVectorStoreFileBatch,

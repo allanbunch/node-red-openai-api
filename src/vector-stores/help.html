@@ -86,6 +86,56 @@
             <dd>The ID of the vector store to retrieve.</dd>
         </dl>
 
+        <h4 style="font-weight: bolder;"> ⋙ Search Vector Store</h4>
+        <p>Search a vector store for relevant chunks using a query and optional file-attribute filters.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                vector_store_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store to search.</dd>
+
+            <dt>
+                query
+                <span class="property-type">string | array</span>
+            </dt>
+            <dd>A search query string, or an array of query strings.</dd>
+
+            <dt class="optional">
+                filters
+                <span class="property-type">object</span>
+            </dt>
+            <dd>
+                File-attribute filters using the SDK's <code>ComparisonFilter</code> or
+                <code>CompoundFilter</code> contract. Comparison filters use
+                <code>key</code>, <code>type</code>, and <code>value</code>.
+                Supported comparison operators include <code>eq</code>, <code>ne</code>,
+                <code>gt</code>, <code>gte</code>, <code>lt</code>, <code>lte</code>,
+                <code>in</code>, and <code>nin</code>. Comparison values may be strings,
+                numbers, booleans, or arrays of strings or numbers.
+            </dd>
+
+            <dt class="optional">
+                max_num_results
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>The maximum number of search results to return. Must be between 1 and 50.</dd>
+
+            <dt class="optional">
+                ranking_options
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Ranking options for the search request.</dd>
+
+            <dt class="optional">
+                rewrite_query
+                <span class="property-type">boolean</span>
+            </dt>
+            <dd>Whether to let the API rewrite the natural-language query before searching.</dd>
+        </dl>
+
         <h4 style="font-weight: bolder;"> ⋙ Modify Vector Store</h4>
         <p>Modifies a vector store.</p>
         <dl class="message-properties">

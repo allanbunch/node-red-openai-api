@@ -482,14 +482,32 @@
         <optgroup style="font-style: normal;" label="🔢 Vector Stores">
   <option value="createVectorStore" data-i18n="OpenaiApi.parameters.createVectorStore"></option>
   <option value="listVectorStores" data-i18n="OpenaiApi.parameters.listVectorStores"></option>
+  <option value="searchVectorStore" data-i18n="OpenaiApi.parameters.searchVectorStore"></option>
   <option value="retrieveVectorStore" data-i18n="OpenaiApi.parameters.retrieveVectorStore"></option>
   <option value="modifyVectorStore" data-i18n="OpenaiApi.parameters.modifyVectorStore"></option>
   <option value="deleteVectorStore" data-i18n="OpenaiApi.parameters.deleteVectorStore"></option>
 </optgroup>
+
               <optgroup style="font-style: normal;" label="🗃️ Vector Store Files (Beta)">
         <option
           value="createVectorStoreFile"
           data-i18n="OpenaiApi.parameters.createVectorStoreFile"
+        ></option>
+        <option
+          value="createAndPollVectorStoreFile"
+          data-i18n="OpenaiApi.parameters.createAndPollVectorStoreFile"
+        ></option>
+        <option
+          value="uploadVectorStoreFile"
+          data-i18n="OpenaiApi.parameters.uploadVectorStoreFile"
+        ></option>
+        <option
+          value="uploadAndPollVectorStoreFile"
+          data-i18n="OpenaiApi.parameters.uploadAndPollVectorStoreFile"
+        ></option>
+        <option
+          value="pollVectorStoreFile"
+          data-i18n="OpenaiApi.parameters.pollVectorStoreFile"
         ></option>
         <option
           value="listVectorStoreFiles"
@@ -500,18 +518,35 @@
           data-i18n="OpenaiApi.parameters.retrieveVectorStoreFile"
         ></option>
         <option
+          value="modifyVectorStoreFile"
+          data-i18n="OpenaiApi.parameters.modifyVectorStoreFile"
+        ></option>
+        <option
+          value="getVectorStoreFileContent"
+          data-i18n="OpenaiApi.parameters.getVectorStoreFileContent"
+        ></option>
+        <option
           value="deleteVectorStoreFile"
           data-i18n="OpenaiApi.parameters.deleteVectorStoreFile"
         ></option>
       </optgroup>
+
               <optgroup style="font-style: normal;" label="🗄️ Vector Store File Batches (Beta)">
         <option
           value="createVectorStoreFileBatch"
           data-i18n="OpenaiApi.parameters.createVectorStoreFileBatch"
         ></option>
         <option
+          value="createAndPollVectorStoreFileBatch"
+          data-i18n="OpenaiApi.parameters.createAndPollVectorStoreFileBatch"
+        ></option>
+        <option
           value="retrieveVectorStoreFileBatch"
           data-i18n="OpenaiApi.parameters.retrieveVectorStoreFileBatch"
+        ></option>
+        <option
+          value="pollVectorStoreFileBatch"
+          data-i18n="OpenaiApi.parameters.pollVectorStoreFileBatch"
         ></option>
         <option
           value="cancelVectorStoreFileBatch"
@@ -526,6 +561,7 @@
           data-i18n="OpenaiApi.parameters.uploadAndPollVectorStoreFileBatch"
         ></option>
       </optgroup>
+
     </select>
   </div>
 </script>
@@ -4662,6 +4698,56 @@
             <dd>The ID of the vector store to retrieve.</dd>
         </dl>
 
+        <h4 style="font-weight: bolder;"> ⋙ Search Vector Store</h4>
+        <p>Search a vector store for relevant chunks using a query and optional file-attribute filters.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+
+            <dt>
+                vector_store_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store to search.</dd>
+
+            <dt>
+                query
+                <span class="property-type">string | array</span>
+            </dt>
+            <dd>A search query string, or an array of query strings.</dd>
+
+            <dt class="optional">
+                filters
+                <span class="property-type">object</span>
+            </dt>
+            <dd>
+                File-attribute filters using the SDK's <code>ComparisonFilter</code> or
+                <code>CompoundFilter</code> contract. Comparison filters use
+                <code>key</code>, <code>type</code>, and <code>value</code>.
+                Supported comparison operators include <code>eq</code>, <code>ne</code>,
+                <code>gt</code>, <code>gte</code>, <code>lt</code>, <code>lte</code>,
+                <code>in</code>, and <code>nin</code>. Comparison values may be strings,
+                numbers, booleans, or arrays of strings or numbers.
+            </dd>
+
+            <dt class="optional">
+                max_num_results
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>The maximum number of search results to return. Must be between 1 and 50.</dd>
+
+            <dt class="optional">
+                ranking_options
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Ranking options for the search request.</dd>
+
+            <dt class="optional">
+                rewrite_query
+                <span class="property-type">boolean</span>
+            </dt>
+            <dd>Whether to let the API rewrite the natural-language query before searching.</dd>
+        </dl>
+
         <h4 style="font-weight: bolder;"> ⋙ Modify Vector Store</h4>
         <p>Modifies a vector store.</p>
         <dl class="message-properties">
@@ -4707,6 +4793,7 @@
 
     </details>
 </section>
+
   <section>
     <details>
         <summary style="font-weight: bold;">📑 Vector Store Files</summary>
@@ -4730,6 +4817,116 @@
             </dt>
             <dd>A File ID that the vector store should use. Useful for tools like file_search that can access files.
             </dd>
+
+            <dt class="optional">
+                attributes
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional file attributes stored on the vector store file.</dd>
+
+            <dt class="optional">
+                chunking_strategy
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional chunking strategy for the attached file.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create and Poll Vector Store File</h4>
+        <p>SDK helper that creates a vector store file, then polls until processing completes.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                vector_store_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store for which to create a File.</dd>
+
+            <dt>
+                file_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>A File ID that the vector store should use.</dd>
+
+            <dt class="optional">
+                attributes
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional file attributes stored on the vector store file.</dd>
+
+            <dt class="optional">
+                chunking_strategy
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional chunking strategy for the attached file.</dd>
+
+            <dt class="optional">
+                pollIntervalMs
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Optional polling interval in milliseconds for the helper.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Upload Vector Store File</h4>
+        <p>SDK helper that uploads a local file and then attaches it to a vector store.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                vector_store_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store that will receive the uploaded file.</dd>
+
+            <dt>
+                file
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Absolute path to the local file to upload.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Upload and Poll Vector Store File</h4>
+        <p>SDK helper that uploads a local file, attaches it to the vector store, and polls until processing completes.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                vector_store_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store that will receive the uploaded file.</dd>
+
+            <dt>
+                file
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Absolute path to the local file to upload.</dd>
+
+            <dt class="optional">
+                pollIntervalMs
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Optional polling interval in milliseconds for the helper.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Poll Vector Store File</h4>
+        <p>SDK helper that waits for a vector store file to finish processing.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                vector_store_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store that owns the file.</dd>
+
+            <dt>
+                file_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the file to poll.</dd>
+
+            <dt class="optional">
+                pollIntervalMs
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Optional polling interval in milliseconds for the helper.</dd>
         </dl>
 
 
@@ -4795,6 +4992,46 @@
 
         </dl>
 
+        <h4 style="font-weight: bolder;"> ⋙ Modify Vector Store File</h4>
+        <p>Update attributes on a vector store file.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                vector_store_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store that the file belongs to.</dd>
+
+            <dt>
+                file_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the file to update.</dd>
+
+            <dt>
+                attributes
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Attributes to store on the vector store file. Set to <code>null</code> to clear them.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Get Vector Store File Content</h4>
+        <p>Retrieve the parsed contents of a vector store file.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                vector_store_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store that owns the file.</dd>
+
+            <dt>
+                file_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the file whose parsed content should be returned.</dd>
+        </dl>
+
         <h4 style="font-weight: bolder;"> ⋙ Delete Vector Store File</h4>
         <p>Remove a file from a vector store.</p>
         <dl class="message-properties">
@@ -4816,6 +5053,7 @@
 
     </details>
 </section>
+
   <section>
     <details>
         <summary style="font-weight: bold;">📥 Vector Store File Batches</summary>
@@ -4838,6 +5076,67 @@
             </dt>
             <dd>A list of File IDs that the vector store should use. Useful for tools like file_search that can access
                 files.</dd>
+
+            <dt class="optional">
+                files
+                <span class="property-type">array</span>
+            </dt>
+            <dd>An array of per-file objects that each include <code>file_id</code> plus optional
+                <code>attributes</code> or <code>chunking_strategy</code>.</dd>
+
+            <dt class="optional">
+                attributes
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Global attributes to apply to all files when using <code>file_ids</code>.</dd>
+
+            <dt class="optional">
+                chunking_strategy
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Global chunking strategy to apply to all files when using <code>file_ids</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create and Poll Vector Store File Batch</h4>
+        <p>SDK helper that creates a vector store file batch, then polls until processing completes.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                vector_store_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store for which to create a File Batch.</dd>
+
+            <dt class="optional">
+                file_ids
+                <span class="property-type">array</span>
+            </dt>
+            <dd>A list of File IDs to attach to the batch.</dd>
+
+            <dt class="optional">
+                files
+                <span class="property-type">array</span>
+            </dt>
+            <dd>An array of per-file objects that each include <code>file_id</code> plus optional
+                <code>attributes</code> or <code>chunking_strategy</code>.</dd>
+
+            <dt class="optional">
+                attributes
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Global attributes to apply to all files when using <code>file_ids</code>.</dd>
+
+            <dt class="optional">
+                chunking_strategy
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Global chunking strategy to apply to all files when using <code>file_ids</code>.</dd>
+
+            <dt class="optional">
+                pollIntervalMs
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Optional polling interval in milliseconds for the helper.</dd>
         </dl>
 
 
@@ -4856,6 +5155,29 @@
                 <span class="property-type">string</span>
             </dt>
             <dd>The ID of the file batch being retrieved.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Poll Vector Store File Batch</h4>
+        <p>SDK helper that waits for a vector store file batch to finish processing.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                vector_store_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store that the file batch belongs to.</dd>
+
+            <dt>
+                batch_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the file batch to poll.</dd>
+
+            <dt class="optional">
+                pollIntervalMs
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Optional polling interval in milliseconds for the helper.</dd>
         </dl>
 
         <h4 style="font-weight: bolder;"> ⋙ Cancel Vector Store File Batch</h4>
@@ -4923,8 +5245,8 @@
             </dt>
             <dd>Filter by file status. One of in_progress, completed, failed, cancelled.</dd>
 
-            <h4 style="font-weight: bolder;"> ⋙ Upload and Poll File Batch [undocumented]</h4>
-            <p>Uploads the given files concurrently and then creates a vector store file batch.</p>
+            <h4 style="font-weight: bolder;"> ⋙ Upload and Poll Vector Store File Batch</h4>
+            <p>SDK helper that uploads local files concurrently, creates a vector store file batch, and polls until processing completes.</p>
             <dl class="message-properties">
                 <h4>msg.payload Properties</h4>
                 <dt>
@@ -4942,10 +5264,23 @@
                     <span class="property-type">array</span>
                 </dt>
                 <dd>A list of previously uploaded file ids.</dd>
+
+                <dt class="optional">
+                    pollIntervalMs
+                    <span class="property-type">integer</span>
+                </dt>
+                <dd>Optional polling interval in milliseconds for the helper.</dd>
+
+                <dt class="optional">
+                    maxConcurrency
+                    <span class="property-type">integer</span>
+                </dt>
+                <dd>Optional maximum number of concurrent file uploads for the helper.</dd>
             </dl>
 
     </details>
 </section>
+
 </script>
 
 <script type="text/javascript">

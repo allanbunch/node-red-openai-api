@@ -21,6 +21,116 @@
             </dt>
             <dd>A File ID that the vector store should use. Useful for tools like file_search that can access files.
             </dd>
+
+            <dt class="optional">
+                attributes
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional file attributes stored on the vector store file.</dd>
+
+            <dt class="optional">
+                chunking_strategy
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional chunking strategy for the attached file.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create and Poll Vector Store File</h4>
+        <p>SDK helper that creates a vector store file, then polls until processing completes.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                vector_store_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store for which to create a File.</dd>
+
+            <dt>
+                file_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>A File ID that the vector store should use.</dd>
+
+            <dt class="optional">
+                attributes
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional file attributes stored on the vector store file.</dd>
+
+            <dt class="optional">
+                chunking_strategy
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional chunking strategy for the attached file.</dd>
+
+            <dt class="optional">
+                pollIntervalMs
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Optional polling interval in milliseconds for the helper.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Upload Vector Store File</h4>
+        <p>SDK helper that uploads a local file and then attaches it to a vector store.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                vector_store_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store that will receive the uploaded file.</dd>
+
+            <dt>
+                file
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Absolute path to the local file to upload.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Upload and Poll Vector Store File</h4>
+        <p>SDK helper that uploads a local file, attaches it to the vector store, and polls until processing completes.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                vector_store_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store that will receive the uploaded file.</dd>
+
+            <dt>
+                file
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Absolute path to the local file to upload.</dd>
+
+            <dt class="optional">
+                pollIntervalMs
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Optional polling interval in milliseconds for the helper.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Poll Vector Store File</h4>
+        <p>SDK helper that waits for a vector store file to finish processing.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                vector_store_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store that owns the file.</dd>
+
+            <dt>
+                file_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the file to poll.</dd>
+
+            <dt class="optional">
+                pollIntervalMs
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Optional polling interval in milliseconds for the helper.</dd>
         </dl>
 
 
@@ -84,6 +194,46 @@
             </dt>
             <dd>The ID of the file being retrieved.</dd>
 
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Vector Store File</h4>
+        <p>Update attributes on a vector store file.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                vector_store_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store that the file belongs to.</dd>
+
+            <dt>
+                file_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the file to update.</dd>
+
+            <dt>
+                attributes
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Attributes to store on the vector store file. Set to <code>null</code> to clear them.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Get Vector Store File Content</h4>
+        <p>Retrieve the parsed contents of a vector store file.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                vector_store_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the vector store that owns the file.</dd>
+
+            <dt>
+                file_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The ID of the file whose parsed content should be returned.</dd>
         </dl>
 
         <h4 style="font-weight: bolder;"> ⋙ Delete Vector Store File</h4>

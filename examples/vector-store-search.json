@@ -1,0 +1,94 @@
+[
+    {
+        "id": "e1c9d8b0c0b7bcb1",
+        "type": "tab",
+        "label": "Vector Store Search Example",
+        "disabled": false,
+        "info": "Vector store search example.\n\nThis flow demonstrates the direct `searchVectorStore` method using file-attribute filters that match the official `ComparisonFilter` contract.\n\nThe example intentionally shows both `in` and `nin` so the request shape is easy to inspect in Node-RED.",
+        "env": []
+    },
+    {
+        "id": "8bcfdb2e77318d41",
+        "type": "inject",
+        "z": "e1c9d8b0c0b7bcb1",
+        "name": "Search Vector Store",
+        "props": [
+            {
+                "p": "ai.vector_store_id",
+                "v": "vs_replace_me",
+                "vt": "str"
+            },
+            {
+                "p": "ai.query",
+                "v": "release alignment notes",
+                "vt": "str"
+            },
+            {
+                "p": "ai.filters",
+                "v": "{\"type\":\"and\",\"filters\":[{\"type\":\"in\",\"key\":\"team\",\"value\":[\"platform\",\"integrations\"]},{\"type\":\"nin\",\"key\":\"status\",\"value\":[\"archived\",\"draft\"]}]}",
+                "vt": "json"
+            },
+            {
+                "p": "ai.max_num_results",
+                "v": "5",
+                "vt": "num"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 260,
+        "y": 220,
+        "wires": [
+            [
+                "2d67dbca96fc6b83"
+            ]
+        ]
+    },
+    {
+        "id": "7ef33840223909fc",
+        "type": "comment",
+        "z": "e1c9d8b0c0b7bcb1",
+        "name": "Configure the red-marked node, replace the placeholder vector store id, then send the inject node.",
+        "info": "Before running:\n- import the flow, then configure the red-marked `OpenAI API` node with your own `Service Host`\n- replace `vs_replace_me` with a real vector store id from your project\n- keep or change the query text to match your data\n\nWhat this flow sends:\n- one `query` string\n- one `filters` object using `ComparisonFilter` operators `in` and `nin`\n- one `max_num_results` limit\n\nExpected result:\n- the debug sidebar shows the vector-store search matches returned by the API",
+        "x": 470,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "2d67dbca96fc6b83",
+        "type": "OpenAI API",
+        "z": "e1c9d8b0c0b7bcb1",
+        "name": "Search Vector Store",
+        "property": "ai",
+        "propertyType": "msg",
+        "service": "",
+        "method": "searchVectorStore",
+        "x": 550,
+        "y": 220,
+        "wires": [
+            [
+                "2491454f462614c2"
+            ]
+        ]
+    },
+    {
+        "id": "2491454f462614c2",
+        "type": "debug",
+        "z": "e1c9d8b0c0b7bcb1",
+        "name": "Vector Store Search Results",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 810,
+        "y": 220,
+        "wires": []
+    }
+]
