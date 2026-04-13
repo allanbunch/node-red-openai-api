@@ -150,7 +150,7 @@ var require_error = __commonJS({
   "node_modules/openai/core/error.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.InvalidWebhookSignatureError = exports2.ContentFilterFinishReasonError = exports2.LengthFinishReasonError = exports2.InternalServerError = exports2.RateLimitError = exports2.UnprocessableEntityError = exports2.ConflictError = exports2.NotFoundError = exports2.PermissionDeniedError = exports2.AuthenticationError = exports2.BadRequestError = exports2.APIConnectionTimeoutError = exports2.APIConnectionError = exports2.APIUserAbortError = exports2.APIError = exports2.OpenAIError = void 0;
+    exports2.SubjectTokenProviderError = exports2.OAuthError = exports2.InvalidWebhookSignatureError = exports2.ContentFilterFinishReasonError = exports2.LengthFinishReasonError = exports2.InternalServerError = exports2.RateLimitError = exports2.UnprocessableEntityError = exports2.ConflictError = exports2.NotFoundError = exports2.PermissionDeniedError = exports2.AuthenticationError = exports2.BadRequestError = exports2.APIConnectionTimeoutError = exports2.APIConnectionError = exports2.APIUserAbortError = exports2.APIError = exports2.OpenAIError = void 0;
     var errors_1 = require_errors();
     var OpenAIError = class extends Error {
     };
@@ -275,6 +275,33 @@ var require_error = __commonJS({
       }
     };
     exports2.InvalidWebhookSignatureError = InvalidWebhookSignatureError;
+    var OAuthError = class extends APIError {
+      constructor(status, error, headers) {
+        let finalMessage = "OAuth2 authentication error";
+        let error_code = void 0;
+        if (error && typeof error === "object") {
+          const errorData = error;
+          error_code = errorData["error"];
+          const description = errorData["error_description"];
+          if (description && typeof description === "string") {
+            finalMessage = description;
+          } else if (error_code) {
+            finalMessage = error_code;
+          }
+        }
+        super(status, error, finalMessage, headers);
+        this.error_code = error_code;
+      }
+    };
+    exports2.OAuthError = OAuthError;
+    var SubjectTokenProviderError = class extends OpenAIError {
+      constructor(message, provider, cause) {
+        super(message);
+        this.provider = provider;
+        this.cause = cause;
+      }
+    };
+    exports2.SubjectTokenProviderError = SubjectTokenProviderError;
   }
 });
 
@@ -406,7 +433,7 @@ var require_version = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.VERSION = void 0;
-    exports2.VERSION = "6.32.0";
+    exports2.VERSION = "6.34.0";
   }
 });
 
@@ -1949,6 +1976,102 @@ var require_pagination = __commonJS({
       }
     };
     exports2.ConversationCursorPage = ConversationCursorPage;
+  }
+});
+
+// node_modules/openai/auth/workload-identity-auth.js
+var require_workload_identity_auth = __commonJS({
+  "node_modules/openai/auth/workload-identity-auth.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.WorkloadIdentityAuth = void 0;
+    var tslib_1 = require_tslib();
+    var Shims = tslib_1.__importStar(require_shims());
+    var error_1 = require_error();
+    var SUBJECT_TOKEN_TYPES = {
+      jwt: "urn:ietf:params:oauth:token-type:jwt",
+      id: "urn:ietf:params:oauth:token-type:id_token"
+    };
+    var TOKEN_EXCHANGE_GRANT_TYPE = "urn:ietf:params:oauth:grant-type:token-exchange";
+    var WorkloadIdentityAuth = class {
+      constructor(config, fetch2) {
+        this.cachedToken = null;
+        this.refreshPromise = null;
+        this.tokenExchangeUrl = "https://auth.openai.com/oauth/token";
+        this.config = config;
+        this.fetch = fetch2 ?? Shims.getDefaultFetch();
+      }
+      async getToken() {
+        if (!this.cachedToken || this.isTokenExpired(this.cachedToken)) {
+          if (this.refreshPromise) {
+            return await this.refreshPromise;
+          }
+          this.refreshPromise = this.refreshToken();
+          try {
+            const token = await this.refreshPromise;
+            return token;
+          } finally {
+            this.refreshPromise = null;
+          }
+        }
+        if (this.needsRefresh(this.cachedToken) && !this.refreshPromise) {
+          this.refreshPromise = this.refreshToken().finally(() => {
+            this.refreshPromise = null;
+          });
+        }
+        return this.cachedToken.token;
+      }
+      async refreshToken() {
+        const subjectToken = await this.config.provider.getToken();
+        const response = await this.fetch(this.tokenExchangeUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            grant_type: TOKEN_EXCHANGE_GRANT_TYPE,
+            client_id: this.config.clientId,
+            subject_token: subjectToken,
+            subject_token_type: SUBJECT_TOKEN_TYPES[this.config.provider.tokenType],
+            identity_provider_id: this.config.identityProviderId,
+            service_account_id: this.config.serviceAccountId
+          })
+        });
+        if (!response.ok) {
+          const errorText = await response.text();
+          let body = void 0;
+          try {
+            body = JSON.parse(errorText);
+          } catch {
+          }
+          if (response.status === 400 || response.status === 401 || response.status === 403) {
+            throw new error_1.OAuthError(response.status, body, response.headers);
+          }
+          throw error_1.APIError.generate(response.status, body, `Token exchange failed with status ${response.status}`, response.headers);
+        }
+        const tokenResponse = await response.json();
+        const expiresIn = tokenResponse.expires_in || 3600;
+        const expiresAt = Date.now() + expiresIn * 1e3;
+        this.cachedToken = {
+          token: tokenResponse.access_token,
+          expiresAt
+        };
+        return tokenResponse.access_token;
+      }
+      isTokenExpired(cachedToken) {
+        return Date.now() >= cachedToken.expiresAt;
+      }
+      needsRefresh(cachedToken) {
+        const bufferSeconds = this.config.refreshBufferSeconds ?? 1200;
+        const bufferMs = bufferSeconds * 1e3;
+        return Date.now() >= cachedToken.expiresAt - bufferMs;
+      }
+      invalidateToken() {
+        this.cachedToken = null;
+        this.refreshPromise = null;
+      }
+    };
+    exports2.WorkloadIdentityAuth = WorkloadIdentityAuth;
   }
 });
 
@@ -8333,6 +8456,8 @@ var require_client = __commonJS({
     var version_1 = require_version();
     var Errors = tslib_1.__importStar(require_error());
     var Pagination = tslib_1.__importStar(require_pagination());
+    var workload_identity_auth_1 = require_workload_identity_auth();
+    var error_1 = require_error();
     var Uploads = tslib_1.__importStar(require_uploads2());
     var API = tslib_1.__importStar(require_resources());
     var api_promise_1 = require_api_promise();
@@ -8363,6 +8488,7 @@ var require_client = __commonJS({
     var env_1 = require_env();
     var log_1 = require_log();
     var values_2 = require_values();
+    var WORKLOAD_IDENTITY_API_KEY_PLACEHOLDER = "workload-identity-auth";
     var OpenAI = class {
       /**
        * API Client for interfacing with the OpenAI API.
@@ -8380,7 +8506,7 @@ var require_client = __commonJS({
        * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
        * @param {boolean} [opts.dangerouslyAllowBrowser=false] - By default, client-side use of this library is not allowed, as it risks exposing your secret API credentials to attackers.
        */
-      constructor({ baseURL = (0, env_1.readEnv)("OPENAI_BASE_URL"), apiKey = (0, env_1.readEnv)("OPENAI_API_KEY"), organization = (0, env_1.readEnv)("OPENAI_ORG_ID") ?? null, project = (0, env_1.readEnv)("OPENAI_PROJECT_ID") ?? null, webhookSecret = (0, env_1.readEnv)("OPENAI_WEBHOOK_SECRET") ?? null, ...opts } = {}) {
+      constructor({ baseURL = (0, env_1.readEnv)("OPENAI_BASE_URL"), apiKey = (0, env_1.readEnv)("OPENAI_API_KEY"), organization = (0, env_1.readEnv)("OPENAI_ORG_ID") ?? null, project = (0, env_1.readEnv)("OPENAI_PROJECT_ID") ?? null, webhookSecret = (0, env_1.readEnv)("OPENAI_WEBHOOK_SECRET") ?? null, workloadIdentity, ...opts } = {}) {
         _OpenAI_instances.add(this);
         _OpenAI_encoder.set(this, void 0);
         this.completions = new API.Completions(this);
@@ -8405,14 +8531,20 @@ var require_client = __commonJS({
         this.containers = new API.Containers(this);
         this.skills = new API.Skills(this);
         this.videos = new API.Videos(this);
-        if (apiKey === void 0) {
-          throw new Errors.OpenAIError("Missing credentials. Please pass an `apiKey`, or set the `OPENAI_API_KEY` environment variable.");
+        if (workloadIdentity) {
+          if (apiKey && apiKey !== WORKLOAD_IDENTITY_API_KEY_PLACEHOLDER) {
+            throw new Errors.OpenAIError("The `apiKey` and `workloadIdentity` arguments are mutually exclusive; only one can be passed at a time.");
+          }
+          apiKey = WORKLOAD_IDENTITY_API_KEY_PLACEHOLDER;
+        } else if (apiKey === void 0) {
+          throw new Errors.OpenAIError("Missing credentials. Please pass an `apiKey`, `workloadIdentity`, or set the `OPENAI_API_KEY` environment variable.");
         }
         const options = {
           apiKey,
           organization,
           project,
           webhookSecret,
+          workloadIdentity,
           ...opts,
           baseURL: baseURL || `https://api.openai.com/v1`
         };
@@ -8430,6 +8562,9 @@ var require_client = __commonJS({
         this.fetch = options.fetch ?? Shims.getDefaultFetch();
         tslib_1.__classPrivateFieldSet(this, _OpenAI_encoder, Opts.FallbackEncoder, "f");
         this._options = options;
+        if (workloadIdentity) {
+          this._workloadIdentityAuth = new workload_identity_auth_1.WorkloadIdentityAuth(workloadIdentity, this.fetch);
+        }
         this.apiKey = typeof apiKey === "string" ? apiKey : "Missing Key";
         this.organization = organization;
         this.project = project;
@@ -8449,6 +8584,7 @@ var require_client = __commonJS({
           fetch: this.fetch,
           fetchOptions: this.fetchOptions,
           apiKey: this.apiKey,
+          workloadIdentity: this._options.workloadIdentity,
           organization: this.organization,
           project: this.project,
           webhookSecret: this.webhookSecret,
@@ -8574,7 +8710,7 @@ var require_client = __commonJS({
           throw new Errors.APIUserAbortError();
         }
         const controller = new AbortController();
-        const response = await this.fetchWithTimeout(url, req, timeout, controller).catch(errors_1.castToError);
+        const response = await this.fetchWithAuth(url, req, timeout, controller).catch(errors_1.castToError);
         const headersTime = Date.now();
         if (response instanceof globalThis.Error) {
           const retryMessage = `retrying, ${retriesRemaining} attempts remaining`;
@@ -8599,6 +8735,9 @@ var require_client = __commonJS({
             durationMs: headersTime - startTime,
             message: response.message
           }));
+          if (response instanceof error_1.OAuthError || response instanceof error_1.SubjectTokenProviderError) {
+            throw response;
+          }
           if (isTimeout) {
             throw new Errors.APIConnectionTimeoutError();
           }
@@ -8607,6 +8746,17 @@ var require_client = __commonJS({
         const specialHeaders = [...response.headers.entries()].filter(([name]) => name === "x-request-id").map(([name, value]) => ", " + name + ": " + JSON.stringify(value)).join("");
         const responseInfo = `[${requestLogID}${retryLogStr}${specialHeaders}] ${req.method} ${url} ${response.ok ? "succeeded" : "failed"} with status ${response.status} in ${headersTime - startTime}ms`;
         if (!response.ok) {
+          if (response.status === 401 && this._workloadIdentityAuth && !options.__metadata?.["hasStreamingBody"] && !options.__metadata?.["workloadIdentityTokenRefreshed"]) {
+            await Shims.CancelReadableStream(response.body);
+            this._workloadIdentityAuth.invalidateToken();
+            return this.makeRequest({
+              ...options,
+              __metadata: {
+                ...options.__metadata,
+                workloadIdentityTokenRefreshed: true
+              }
+            }, retriesRemaining, retryOfRequestLogID ?? requestLogID);
+          }
           const shouldRetry = await this.shouldRetry(response);
           if (retriesRemaining && shouldRetry) {
             const retryMessage2 = `retrying, ${retriesRemaining} attempts remaining`;
@@ -8653,6 +8803,18 @@ var require_client = __commonJS({
       requestAPIList(Page, options) {
         const request = this.makeRequest(options, null, void 0);
         return new Pagination.PagePromise(this, request, Page);
+      }
+      async fetchWithAuth(url, init, timeout, controller) {
+        if (this._workloadIdentityAuth) {
+          const headers = init.headers;
+          const authHeader = headers.get("Authorization");
+          if (!authHeader || authHeader === `Bearer ${WORKLOAD_IDENTITY_API_KEY_PLACEHOLDER}`) {
+            const token = await this._workloadIdentityAuth.getToken();
+            headers.set("Authorization", `Bearer ${token}`);
+          }
+        }
+        const response = await this.fetchWithTimeout(url, init, timeout, controller);
+        return response;
       }
       async fetchWithTimeout(url, init, ms, controller) {
         const { signal, method, ...options } = init || {};
@@ -8732,7 +8894,13 @@ var require_client = __commonJS({
         if ("timeout" in options)
           (0, values_1.validatePositiveInteger)("timeout", options.timeout);
         options.timeout = options.timeout ?? this.timeout;
-        const { bodyHeaders, body } = this.buildBody({ options });
+        const { bodyHeaders, body, isStreamingBody } = this.buildBody({ options });
+        if (isStreamingBody) {
+          inputOptions.__metadata = {
+            ...inputOptions.__metadata,
+            hasStreamingBody: true
+          };
+        }
         const reqHeaders = await this.buildHeaders({ options: inputOptions, method, bodyHeaders, retryCount });
         const req = {
           method,
@@ -8776,9 +8944,11 @@ var require_client = __commonJS({
       }
       buildBody({ options: { body, headers: rawHeaders } }) {
         if (!body) {
-          return { bodyHeaders: void 0, body: void 0 };
+          return { bodyHeaders: void 0, body: void 0, isStreamingBody: false };
         }
         const headers = (0, headers_1.buildHeaders)([rawHeaders]);
+        const isReadableStream = typeof globalThis.ReadableStream !== "undefined" && body instanceof globalThis.ReadableStream;
+        const isRetryableBody = !isReadableStream && (typeof body === "string" || body instanceof ArrayBuffer || ArrayBuffer.isView(body) || typeof globalThis.Blob !== "undefined" && body instanceof globalThis.Blob || body instanceof URLSearchParams || body instanceof FormData);
         if (
           // Pass raw type verbatim
           ArrayBuffer.isView(body) || body instanceof ArrayBuffer || body instanceof DataView || typeof body === "string" && // Preserve legacy string encoding behavior for now
@@ -8786,18 +8956,23 @@ var require_client = __commonJS({
           globalThis.Blob && body instanceof globalThis.Blob || // `FormData` -> `multipart/form-data`
           body instanceof FormData || // `URLSearchParams` -> `application/x-www-form-urlencoded`
           body instanceof URLSearchParams || // Send chunked stream (each chunk has own `length`)
-          globalThis.ReadableStream && body instanceof globalThis.ReadableStream
+          isReadableStream
         ) {
-          return { bodyHeaders: void 0, body };
+          return { bodyHeaders: void 0, body, isStreamingBody: !isRetryableBody };
         } else if (typeof body === "object" && (Symbol.asyncIterator in body || Symbol.iterator in body && "next" in body && typeof body.next === "function")) {
-          return { bodyHeaders: void 0, body: Shims.ReadableStreamFrom(body) };
+          return {
+            bodyHeaders: void 0,
+            body: Shims.ReadableStreamFrom(body),
+            isStreamingBody: true
+          };
         } else if (typeof body === "object" && headers.values.get("content-type") === "application/x-www-form-urlencoded") {
           return {
             bodyHeaders: { "content-type": "application/x-www-form-urlencoded" },
-            body: this.stringifyQuery(body)
+            body: this.stringifyQuery(body),
+            isStreamingBody: false
           };
         } else {
-          return tslib_1.__classPrivateFieldGet(this, _OpenAI_encoder, "f").call(this, { body, headers });
+          return { ...tslib_1.__classPrivateFieldGet(this, _OpenAI_encoder, "f").call(this, { body, headers }), isStreamingBody: false };
         }
       }
     };
@@ -8955,7 +9130,7 @@ var require_openai = __commonJS({
       return new exports2.default(...args);
     };
     Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.AzureOpenAI = exports2.InvalidWebhookSignatureError = exports2.UnprocessableEntityError = exports2.PermissionDeniedError = exports2.InternalServerError = exports2.AuthenticationError = exports2.BadRequestError = exports2.RateLimitError = exports2.ConflictError = exports2.NotFoundError = exports2.APIUserAbortError = exports2.APIConnectionTimeoutError = exports2.APIConnectionError = exports2.APIError = exports2.OpenAIError = exports2.PagePromise = exports2.OpenAI = exports2.APIPromise = exports2.toFile = exports2.default = void 0;
+    exports2.AzureOpenAI = exports2.SubjectTokenProviderError = exports2.OAuthError = exports2.InvalidWebhookSignatureError = exports2.UnprocessableEntityError = exports2.PermissionDeniedError = exports2.InternalServerError = exports2.AuthenticationError = exports2.BadRequestError = exports2.RateLimitError = exports2.ConflictError = exports2.NotFoundError = exports2.APIUserAbortError = exports2.APIConnectionTimeoutError = exports2.APIConnectionError = exports2.APIError = exports2.OpenAIError = exports2.PagePromise = exports2.OpenAI = exports2.APIPromise = exports2.toFile = exports2.default = void 0;
     var client_1 = require_client();
     Object.defineProperty(exports2, "default", { enumerable: true, get: function() {
       return client_1.OpenAI;
@@ -9018,6 +9193,12 @@ var require_openai = __commonJS({
     } });
     Object.defineProperty(exports2, "InvalidWebhookSignatureError", { enumerable: true, get: function() {
       return error_1.InvalidWebhookSignatureError;
+    } });
+    Object.defineProperty(exports2, "OAuthError", { enumerable: true, get: function() {
+      return error_1.OAuthError;
+    } });
+    Object.defineProperty(exports2, "SubjectTokenProviderError", { enumerable: true, get: function() {
+      return error_1.SubjectTokenProviderError;
     } });
     var azure_1 = require_azure();
     Object.defineProperty(exports2, "AzureOpenAI", { enumerable: true, get: function() {
