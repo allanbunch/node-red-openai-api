@@ -46,6 +46,7 @@
     "url": "git+https://github.com/allanbunch/node-red-openai-api.git"
   },
   "devDependencies": {
+    "@cucumber/cucumber": "^12.8.0",
     "esbuild": "^0.27.0",
     "gulp": "^5.0.1",
     "gulp-file-include": "^2.3.0"
