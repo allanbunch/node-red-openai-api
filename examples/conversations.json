@@ -1,0 +1,84 @@
+[
+    {
+        "id": "4c1d97d31fb7457a",
+        "type": "tab",
+        "label": "Conversations Phase Example",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "73d7fbdc390a4f18",
+        "type": "comment",
+        "z": "4c1d97d31fb7457a",
+        "name": "Configure the red-marked node, then send the inject node.",
+        "info": "This example shows the Conversations create-item contract using an `items` array and preserved assistant-message `phase` values.\n\nBefore running:\n- import the flow, then configure the red-marked `OpenAI API` node with your own `Service Host`\n- replace `conv_123` with a real conversation id\n\nWhat this flow sends:\n- a `conversation_id` for an existing conversation\n- an `items` array instead of a singular `item` object\n- assistant messages labeled `phase: commentary` and `phase: final_answer`\n- preserved assistant-message `phase` values on follow-up context items\n\nExpected result:\n- the returned conversation items appear in the debug sidebar as the normal `createConversationItem` output",
+        "x": 470,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "6cf2a7186f9a44ce",
+        "type": "inject",
+        "z": "4c1d97d31fb7457a",
+        "name": "Add Phased Conversation Items",
+        "props": [
+            {
+                "p": "payload.conversation_id",
+                "v": "conv_123",
+                "vt": "str"
+            },
+            {
+                "p": "payload.items",
+                "v": "[{\"type\":\"message\",\"role\":\"assistant\",\"phase\":\"commentary\",\"content\":[{\"type\":\"output_text\",\"text\":\"I will compare the available delivery options before I answer.\"}]},{\"type\":\"message\",\"role\":\"assistant\",\"phase\":\"final_answer\",\"content\":[{\"type\":\"output_text\",\"text\":\"Express shipping arrives tomorrow for an additional fee.\"}]},{\"type\":\"message\",\"role\":\"user\",\"content\":[{\"type\":\"input_text\",\"text\":\"Thanks. Please add the express option to the order.\"}]}]",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 340,
+        "y": 240,
+        "wires": [
+            [
+                "d24b5c8968dc42dd"
+            ]
+        ]
+    },
+    {
+        "id": "d24b5c8968dc42dd",
+        "type": "OpenAI API",
+        "z": "4c1d97d31fb7457a",
+        "name": "Create Conversation Item",
+        "property": "payload",
+        "propertyType": "msg",
+        "service": "",
+        "method": "createConversationItem",
+        "x": 590,
+        "y": 240,
+        "wires": [
+            [
+                "3bcffbcaf7624d21"
+            ]
+        ]
+    },
+    {
+        "id": "3bcffbcaf7624d21",
+        "type": "debug",
+        "z": "4c1d97d31fb7457a",
+        "name": "Conversation Items",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 810,
+        "y": 240,
+        "wires": []
+    }
+]

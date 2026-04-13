@@ -12,7 +12,11 @@
                 items
                 <span class="property-type">array</span>
             </dt>
-            <dd>Optional initial conversation items.</dd>
+            <dd>
+                Optional initial conversation items. For assistant message items in the
+                array, you may also set <code>phase</code> to <code>commentary</code> or
+                <code>final_answer</code>.
+            </dd>
             <dt class="optional">
                 metadata
                 <span class="property-type">object</span>
@@ -68,10 +72,16 @@
             </dt>
             <dd>The conversation id.</dd>
             <dt>
-                item
-                <span class="property-type">object</span>
+                items
+                <span class="property-type">array</span>
             </dt>
-            <dd>The item payload to append.</dd>
+            <dd>
+                Conversation items to append. Assistant messages in the array may also set
+                <code>phase</code> to <code>commentary</code> or <code>final_answer</code>.
+                Preserve assistant-message <code>phase</code> on follow-up requests;
+                dropping it can degrade performance. <code>phase</code> is not required for
+                user messages.
+            </dd>
         </dl>
 
         <h4 style="font-weight: bolder;"> ⋙ Retrieve Conversation Item</h4>

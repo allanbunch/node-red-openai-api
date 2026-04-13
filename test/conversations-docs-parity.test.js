@@ -36,6 +36,9 @@ const conversationsHelp = fs.readFileSync(
     path.join(__dirname, "..", "src", "conversations", "help.html"),
     "utf8"
 );
+const readme = fs.readFileSync(path.join(__dirname, "..", "README.md"), "utf8");
+const examplePath = path.join(__dirname, "..", "examples", "conversations.json");
+const exampleNodes = JSON.parse(fs.readFileSync(examplePath, "utf8"));
 
 function getCreateConversationItemHelpSection() {
     const match = conversationsHelp.match(
@@ -132,5 +135,65 @@ test("Conversations help documents the items contract and assistant-only phase g
     assert.match(createConversationItemHelp, /commentary/);
     assert.match(createConversationItemHelp, /final_answer/);
     assert.match(createConversationItemHelp, /degrade performance/i);
-    assert.match(createConversationItemHelp, /not required for user messages/i);
+    assert.match(createConversationItemHelp, /not required for\s+user messages/i);
+});
+
+test("README highlights the Conversations example and breaking contract change", () => {
+    assert.match(readme, /examples\/conversations\.json/);
+    assert.match(
+        readme,
+        /Conversations support, including the upstream `items` array contract for create-item requests and assistant-message `phase` values `commentary` and `final_answer`/
+    );
+    assert.match(
+        readme,
+        /Create Conversation Item now follows the upstream Conversations contract: use `msg\.payload\.items` as an array\./
+    );
+    assert.match(
+        readme,
+        /Existing flows using singular `msg\.payload\.item` need to be updated\./
+    );
+    assert.match(
+        readme,
+        /Shows the Conversations create-item contract using an `items` array and preserved assistant-message `phase` values\./
+    );
+});
+
+test("Conversations example flow uses items arrays and preserved assistant-message phase values", () => {
+    const methods = exampleNodes
+        .filter((node) => node.type === "OpenAI API")
+        .map((node) => node.method);
+
+    assert.deepEqual(methods, ["createConversationItem"]);
+
+    const openaiNode = exampleNodes.find((node) => node.type === "OpenAI API");
+    assert.equal(openaiNode.property, "payload");
+    assert.equal(openaiNode.service, "");
+
+    const injectNode = exampleNodes.find(
+        (node) => node.type === "inject" && node.name === "Add Phased Conversation Items"
+    );
+    assert.ok(injectNode);
+
+    assert.equal(
+        injectNode.props.some((prop) => prop.p === "payload.conversation_id"),
+        true
+    );
+    assert.equal(
+        injectNode.props.some((prop) => prop.p === "payload.items"),
+        true
+    );
+
+    const items = JSON.parse(injectNode.props.find((prop) => prop.p === "payload.items").v);
+    assert.equal(Array.isArray(items), true);
+    assert.equal(items.some((item) => item.role === "assistant" && item.phase === "commentary"), true);
+    assert.equal(items.some((item) => item.role === "assistant" && item.phase === "final_answer"), true);
+
+    const guidanceText = exampleNodes
+        .filter((node) => node.type === "tab" || node.type === "comment")
+        .map((node) => `${node.name || ""}\n${node.info || ""}`)
+        .join("\n");
+
+    assert.match(guidanceText, /`items` array/);
+    assert.match(guidanceText, /preserved assistant-message `phase` values/);
+    assert.match(guidanceText, /replace `conv_123` with a real conversation id/i);
 });

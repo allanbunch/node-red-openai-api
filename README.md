@@ -10,7 +10,7 @@ It is not just a thin wrapper around text generation. The node exposes modern AI
 
 That makes this repository relevant beyond Node-RED alone. It is a practical implementation of how contemporary AI capabilities can live inside an open workflow environment instead of being locked inside a single vendor surface or hidden behind a one-purpose abstraction.
 
-This package currently targets the `openai` Node SDK `^6.32.0`.
+This package currently targets the `openai` Node SDK `^6.34.0`.
 
 ## Why This Exists
 
@@ -118,6 +118,8 @@ If you want to understand the shape of this node quickly, these example flows ar
   A straightforward API-call flow for getting oriented.
 - [`examples/chatkit/sessions-and-threads.json`](examples/chatkit/sessions-and-threads.json)
   Shows how to create and cancel ChatKit sessions for a published Agent Builder workflow, then inspect the resulting threads and thread items.
+- [`examples/conversations.json`](examples/conversations.json)
+  Shows the Conversations create-item contract using an `items` array and preserved assistant-message `phase` values.
 - [`examples/responses/phase.json`](examples/responses/phase.json)
   A clean Responses example using newer payload features.
 - [`examples/responses/tool-search.json`](examples/responses/tool-search.json)
@@ -138,15 +140,18 @@ If you want to understand the shape of this node quickly, these example flows ar
 This repository currently includes:
 
 - ChatKit / Agent Builder support, including session creation and cancellation, plus thread and thread-item inspection for published workflows
+- Conversations support, including the upstream `items` array contract for create-item requests and assistant-message `phase` values `commentary` and `final_answer`
 - Responses API support, including current SDK-typed model ids such as `gpt-5.4-mini`, `gpt-5.4-nano`, and dated variants like `gpt-5.4-mini-2026-03-17`, plus `phase`, `prompt_cache_key`, `tool_search`, deferred MCP loading via `defer_loading`, GA computer-use payloads, parse and stream helpers, cancellation, compaction, input-token counting, and websocket mode
 - Vector Stores support, including direct vector-store search, vector-store file attribute updates, parsed file-content retrieval, and file-attribute filters using `ComparisonFilter` operators such as `in` and `nin`
 - Realtime API support, including client-secret creation, SIP call operations, and current SDK-typed model ids such as `gpt-realtime-1.5` and `gpt-audio-1.5`
 - Audio speech support with built-in voices and saved custom voice ids
 - Videos / Sora support, including generation, remix, edit, extend, character creation, and downloadable assets
-- Conversations, Containers, Container Files, Evals, Skills, and Webhooks support
+- Containers, Container Files, Evals, Skills, and Webhooks support
 - OpenAI-compatible auth routing through the `Service Host` config node
 
 See the in-editor node help for exact method payloads and links to official API documentation.
+
+Create Conversation Item now follows the upstream Conversations contract: use `msg.payload.items` as an array. Existing flows using singular `msg.payload.item` need to be updated.
 
 ## API Surface
 
@@ -190,6 +195,7 @@ Import-ready example flows live under `examples/`:
 - [`examples/audio.json`](examples/audio.json)
 - [`examples/chat.json`](examples/chat.json)
 - [`examples/chatkit/sessions-and-threads.json`](examples/chatkit/sessions-and-threads.json)
+- [`examples/conversations.json`](examples/conversations.json)
 - [`examples/embeddings.json`](examples/embeddings.json)
 - [`examples/files.json`](examples/files.json)
 - [`examples/fine-tuning.json`](examples/fine-tuning.json)
