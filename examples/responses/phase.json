@@ -30,7 +30,7 @@
             },
             {
                 "p": "ai.input[1]",
-                "v": "{\"type\":\"message\",\"role\":\"user\",\"content\":[{\"type\":\"input_text\",\"text\":\"Summarize the purpose of NOA-9 in one concise paragraph.\"}]}",
+                "v": "{\"type\":\"message\",\"role\":\"user\",\"content\":[{\"type\":\"input_text\",\"text\":\"Summarize the purpose of this product launch plan in one concise paragraph.\"}]}",
                 "vt": "json"
             }
         ],
