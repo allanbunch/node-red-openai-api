@@ -1,6 +1,6 @@
 {
   "name": "@inductiv/node-red-openai-api",
-  "version": "6.32.0",
+  "version": "6.34.0",
   "funding": {
     "type": "github",
     "url": "https://github.com/sponsors/allanbunch"
@@ -32,11 +32,11 @@
     "build:html": "gulp build-html",
     "build:js": "esbuild src/lib.js --bundle --outfile=lib.js --format=cjs --platform=node",
     "build": "npm run build:html && npm run build:js",
-    "test": "node --test test/service-host-node.test.js test/service-host-editor-template.test.js test/openai-node-auth-routing.test.js test/openai-methods-mapping.test.js test/openai-responses-websocket.test.js test/chatkit-docs-examples.test.js test/videos-docs-examples.test.js test/examples-service-host-neutrality.test.js test/audio-docs-parity.test.js test/batch-docs-parity.test.js test/comparison-filter-parity.test.js test/vector-store-family-parity.test.js test/model-slug-parity.test.js test/defer-loading-parity.test.js",
+    "test": "node --test test/service-host-node.test.js test/service-host-editor-template.test.js test/openai-node-auth-routing.test.js test/openai-methods-mapping.test.js test/openai-responses-websocket.test.js test/chatkit-docs-examples.test.js test/videos-docs-examples.test.js test/examples-service-host-neutrality.test.js test/audio-docs-parity.test.js test/batch-docs-parity.test.js test/comparison-filter-parity.test.js test/vector-store-family-parity.test.js test/model-slug-parity.test.js test/defer-loading-parity.test.js test/conversations-docs-parity.test.js",
     "prepare": "npm run build"
   },
   "dependencies": {
-    "openai": "^6.32.0",
+    "openai": "^6.34.0",
     "ws": "^8.19.0"
   },
   "author": "Allan Bunch",

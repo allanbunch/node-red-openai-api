@@ -773,7 +773,14 @@ test("conversation methods map to OpenAI SDK conversations endpoints", async () 
     const createdItem = await conversationMethods.createConversationItem.call(clientContext, {
       payload: {
         conversation_id: "conv_1",
-        item: { role: "user", content: [{ type: "text", text: "hello" }] },
+        items: [
+          {
+            type: "message",
+            role: "assistant",
+            phase: "commentary",
+            content: [{ type: "output_text", text: "hello" }],
+          },
+        ],
       },
     });
     assert.deepEqual(createdItem, { id: "item_new" });
@@ -806,6 +813,23 @@ test("conversation methods map to OpenAI SDK conversations endpoints", async () 
   });
 
   assert.equal(calls.some((entry) => entry.method === "conversations.create"), true);
+  assert.deepEqual(
+    calls.find((entry) => entry.method === "conversations.items.create"),
+    {
+      method: "conversations.items.create",
+      conversationId: "conv_1",
+      body: {
+        items: [
+          {
+            type: "message",
+            role: "assistant",
+            phase: "commentary",
+            content: [{ type: "output_text", text: "hello" }],
+          },
+        ],
+      },
+    }
+  );
   assert.equal(calls.some((entry) => entry.method === "conversations.items.list"), true);
   assert.equal(calls.some((entry) => entry.method === "conversations.items.delete"), true);
 });
