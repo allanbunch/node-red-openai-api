@@ -291,6 +291,65 @@ test("responses create forwards phase, prompt_cache_key, tool_search, defer_load
   ]);
 });
 
+test("responses create preserves computer keypress actions with keys arrays", async () => {
+  class FakeOpenAI {
+    constructor() {
+      this.responses = {
+        create: async () => ({
+          id: "resp_computer_1",
+          output: [
+            {
+              id: "item_1",
+              type: "computer_call",
+              action: {
+                type: "keypress",
+                keys: ["CTRL", "L"],
+              },
+            },
+          ],
+        }),
+      };
+    }
+  }
+
+  await withMockedOpenAI(FakeOpenAI, async () => {
+    const modulePath = require.resolve("../src/responses/methods.js");
+    delete require.cache[modulePath];
+    const responsesMethods = require("../src/responses/methods.js");
+
+    const clientContext = {
+      clientParams: {
+        apiKey: "sk-test",
+        baseURL: "https://api.example.com/v1",
+      },
+    };
+
+    const response = await responsesMethods.createModelResponse.call(clientContext, {
+      payload: {
+        model: "gpt-5.4",
+        tools: [{ type: "computer" }],
+        input: "Open the address bar.",
+      },
+    });
+
+    assert.deepEqual(response, {
+      id: "resp_computer_1",
+      output: [
+        {
+          id: "item_1",
+          type: "computer_call",
+          action: {
+            type: "keypress",
+            keys: ["CTRL", "L"],
+          },
+        },
+      ],
+    });
+
+    delete require.cache[modulePath];
+  });
+});
+
 test("responses example flows remain valid JSON and cover the documented agentic payload shapes", () => {
   const phaseExamplePath = path.join(
     __dirname,
