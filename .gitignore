@@ -429,7 +429,5 @@ $RECYCLE.BIN/
 
 package-lock.json
 
-__scratchpad__
-
 .prettierrc
 .eslintrc.json
