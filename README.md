@@ -12,6 +12,15 @@ That makes this repository relevant beyond Node-RED alone. It is a practical imp
 
 This package currently targets the `openai` Node SDK `^6.34.0`.
 
+## Important v6.34.0 Update
+
+`Create Conversation Item` now follows the upstream OpenAI Conversations contract.
+
+Use `msg.payload.items` as an array.
+
+Older flows that send a singular `msg.payload.item` object no longer match the
+supported contract and must be updated before moving to this release.
+
 ## Why This Exists
 
 Modern AI work is no longer just "send a prompt, get a string back."
@@ -150,8 +159,6 @@ This repository currently includes:
 - OpenAI-compatible auth routing through the `Service Host` config node
 
 See the in-editor node help for exact method payloads and links to official API documentation.
-
-Create Conversation Item now follows the upstream Conversations contract: use `msg.payload.items` as an array. Existing flows using singular `msg.payload.item` need to be updated.
 
 ## API Surface
 

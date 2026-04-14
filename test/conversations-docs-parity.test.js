@@ -146,11 +146,19 @@ test("README highlights the Conversations example and breaking contract change",
     );
     assert.match(
         readme,
-        /Create Conversation Item now follows the upstream Conversations contract: use `msg\.payload\.items` as an array\./
+        /## Important v6\.34\.0 Update/
     );
     assert.match(
         readme,
-        /Existing flows using singular `msg\.payload\.item` need to be updated\./
+        /Create Conversation Item` now follows the upstream OpenAI Conversations contract\./
+    );
+    assert.match(
+        readme,
+        /Use `msg\.payload\.items` as an array\./
+    );
+    assert.match(
+        readme,
+        /Older flows that send a singular `msg\.payload\.item` object no longer match the\s+supported contract and must be updated before moving to this release\./
     );
     assert.match(
         readme,
