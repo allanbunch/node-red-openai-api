@@ -1,6 +1,6 @@
 {
   "name": "@inductiv/node-red-openai-api",
-  "version": "6.34.0",
+  "version": "6.37.0",
   "funding": {
     "type": "github",
     "url": "https://github.com/sponsors/allanbunch"
@@ -36,7 +36,7 @@
     "prepare": "npm run build"
   },
   "dependencies": {
-    "openai": "^6.34.0",
+    "openai": "^6.37.0",
     "ws": "^8.19.0"
   },
   "author": "Allan Bunch",
