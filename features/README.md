@@ -9,6 +9,7 @@ mixing unrelated behavior into one large feature file.
 Current layout:
 
 - `conversations/` for Conversations-specific behavior
+- `responses/` for Responses-specific behavior
 - `step_definitions/` for future executable Cucumber bindings
 - `support/` for future shared test helpers and setup
 
@@ -27,6 +28,8 @@ Examples:
 
 - `features/conversations/create-conversation-item/contract-alignment.feature`
 - `features/conversations/create-conversation-item/assistant-message-phase.feature`
+- `features/responses/create-model-response/request-shape-parity.feature`
+- `features/responses/compact-model-response/request-shape-parity.feature`
 
 At this stage these files define the expected behavior and review surface.
 Executable step definitions can be added later without moving the feature files.

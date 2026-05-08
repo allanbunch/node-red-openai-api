@@ -1,0 +1,109 @@
+[
+    {
+        "id": "0c7a942f5d5847eb",
+        "type": "tab",
+        "label": "Web Search Example",
+        "disabled": false,
+        "info": "Responses web-search example.\n\nThis flow keeps the newer request-shape fields visible in one small payload:\n- `tools[0] = { type: \"web_search\" }`\n- `include` asks for web-search results and output logprobs\n- `prompt_cache_retention` stays on the upstream `in_memory` spelling\n- `top_logprobs` is forwarded unchanged\n\nThe node does not translate these fields. It passes the SDK request body through unchanged.",
+        "env": []
+    },
+    {
+        "id": "64c7f90a04d50c8f",
+        "type": "comment",
+        "z": "0c7a942f5d5847eb",
+        "name": "Configure the red-marked node, then send the inject node to inspect the current Responses web-search contract.",
+        "info": "Before running:\n- import the flow, then configure the red-marked `OpenAI API` node with your own `Service Host`\n- keep or replace `gpt-5.4` as needed\n\nWhat this flow sends:\n- a built-in `web_search` tool\n- `include[0] = \"web_search_call.results\"`\n- `include[1] = \"message.output_text.logprobs\"`\n- `prompt_cache_retention = \"in_memory\"`\n- `top_logprobs = 3`\n\nExpected result:\n- the debug sidebar shows the standard Responses output, with the request fields preserved as sent",
+        "x": 500,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "df32e1d6eeb77a61",
+        "type": "inject",
+        "z": "0c7a942f5d5847eb",
+        "name": "Create Web Search Request",
+        "props": [
+            {
+                "p": "ai.model",
+                "v": "gpt-5.4",
+                "vt": "str"
+            },
+            {
+                "p": "ai.prompt_cache_retention",
+                "v": "in_memory",
+                "vt": "str"
+            },
+            {
+                "p": "ai.top_logprobs",
+                "v": "3",
+                "vt": "num"
+            },
+            {
+                "p": "ai.include[0]",
+                "v": "web_search_call.results",
+                "vt": "str"
+            },
+            {
+                "p": "ai.include[1]",
+                "v": "message.output_text.logprobs",
+                "vt": "str"
+            },
+            {
+                "p": "ai.tools[0]",
+                "v": "{\"type\":\"web_search\",\"search_context_size\":\"medium\"}",
+                "vt": "json"
+            },
+            {
+                "p": "ai.input",
+                "v": "Search the web for recent public coverage of Node-RED and summarize two themes in one concise paragraph.",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 320,
+        "y": 260,
+        "wires": [
+            [
+                "2d6622b7487d4ce5"
+            ]
+        ]
+    },
+    {
+        "id": "2d6622b7487d4ce5",
+        "type": "OpenAI API",
+        "z": "0c7a942f5d5847eb",
+        "name": "Create Model Response",
+        "property": "ai",
+        "propertyType": "msg",
+        "service": "",
+        "method": "createModelResponse",
+        "x": 590,
+        "y": 260,
+        "wires": [
+            [
+                "7d37f4b5146bb75b"
+            ]
+        ]
+    },
+    {
+        "id": "7d37f4b5146bb75b",
+        "type": "debug",
+        "z": "0c7a942f5d5847eb",
+        "name": "Web Search Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 260,
+        "wires": []
+    }
+]

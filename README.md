@@ -110,6 +110,15 @@ Example `msg.payload` for `create model response`:
 
 The node writes its output back to `msg.payload`.
 
+## Important v6.37.0 Update
+
+`Create Conversation Item` now follows the upstream OpenAI Conversations contract.
+
+Use `msg.payload.items` as an array.
+
+Older flows that send a singular `msg.payload.item` object no longer match the
+supported contract and must be updated before moving to this release.
+
 ## Start Here
 
 If you want to understand the shape of this node quickly, these example flows are the best entry points:
@@ -124,6 +133,8 @@ If you want to understand the shape of this node quickly, these example flows ar
   A clean Responses example using newer payload features.
 - [`examples/responses/tool-search.json`](examples/responses/tool-search.json)
   Shows tool-enabled Responses work in a practical flow.
+- [`examples/responses/web-search.json`](examples/responses/web-search.json)
+  Shows current web-search request shape, including `include`, `top_logprobs`, and `prompt_cache_retention`.
 - [`examples/responses/computer-use.json`](examples/responses/computer-use.json)
   Shows the request and follow-up contract for computer-use style workflows.
 - [`examples/responses/websocket.json`](examples/responses/websocket.json)
@@ -141,7 +152,8 @@ This repository currently includes:
 
 - ChatKit / Agent Builder support, including session creation and cancellation, plus thread and thread-item inspection for published workflows
 - Conversations support, including the upstream `items` array contract for create-item requests and assistant-message `phase` values `commentary` and `final_answer`
-- Responses API support, including current SDK-typed model ids such as `gpt-5.4-mini`, `gpt-5.4-nano`, and dated variants like `gpt-5.4-mini-2026-03-17`, plus `phase`, `prompt_cache_key`, `tool_search`, deferred MCP loading via `defer_loading`, GA computer-use payloads, parse and stream helpers, cancellation, compaction, input-token counting, and websocket mode
+- Responses API support, including current SDK-typed model ids such as `gpt-5.4-mini`, `gpt-5.4-nano`, and dated variants like `gpt-5.4-mini-2026-03-17`, plus `phase`, `input_file.detail`, `prompt_cache_key`, `prompt_cache_retention` values such as `in_memory`, `include` values such as `web_search_call.results`, `top_logprobs`, `tool_search`, deferred MCP loading via `defer_loading`, GA computer-use payloads, parse and stream helpers, cancellation, compaction, input-token counting, and websocket mode
+- Responses request-shape parity work stays intentionally thin at runtime: create, stream, and compact calls are direct SDK pass-throughs, and the repo proves that contract locally with focused docs, examples, and regression tests instead of adding translation logic
 - Vector Stores support, including direct vector-store search, vector-store file attribute updates, parsed file-content retrieval, and file-attribute filters using `ComparisonFilter` operators such as `in` and `nin`
 - Realtime API support, including client-secret creation, SIP call operations, and current SDK-typed model ids such as `gpt-realtime-1.5` and `gpt-audio-1.5`
 - Audio speech support with built-in voices and saved custom voice ids
@@ -206,6 +218,7 @@ Import-ready example flows live under `examples/`:
 - [`examples/responses/mcp.json`](examples/responses/mcp.json)
 - [`examples/responses/phase.json`](examples/responses/phase.json)
 - [`examples/responses/tool-search.json`](examples/responses/tool-search.json)
+- [`examples/responses/web-search.json`](examples/responses/web-search.json)
 - [`examples/responses/websocket.json`](examples/responses/websocket.json)
 - [`examples/videos.json`](examples/videos.json)
 - [`examples/vector-store-search.json`](examples/vector-store-search.json)

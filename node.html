@@ -3141,6 +3141,9 @@
                 Text, image, or file inputs to the model, used to generate a response.
                 For assistant message items in an array input, you may also set
                 <code>phase</code> to <code>commentary</code> or <code>final_answer</code>.
+                For file inputs, use <code>input_file</code> items and set
+                <code>detail</code> to <code>low</code> or <code>high</code> when
+                you need to control file rendering quality.
             </dd>
 
             <dt>
@@ -3175,7 +3178,12 @@
                 include
                 <span class="property-type">array</span>
             </dt>
-            <dd>Specify additional output data to include in the model response.</dd>
+            <dd>
+                Specify additional output data to include in the model response,
+                for example <code>web_search_call.results</code>,
+                <code>web_search_call.action.sources</code>, or
+                <code>message.output_text.logprobs</code>.
+            </dd>
 
             <dt class="optional">
                 instructions
@@ -3223,7 +3231,7 @@
                 prompt_cache_retention
                 <span class="property-type">string</span>
             </dt>
-            <dd>Prompt cache retention policy, such as <code>in-memory</code> or <code>24h</code>.</dd>
+            <dd>Prompt cache retention policy, such as <code>in_memory</code> or <code>24h</code>.</dd>
 
             <dt class="optional">
                 reasoning
@@ -3297,6 +3305,17 @@
                     href="https://platform.openai.com/docs/guides/tools-remote-mcp?lang=javascript&utm_source==%40inductiv%2Fnode-red-openai-api"
                     target="_blank">this
                     structure</a>.
+            </dd>
+
+            <dt class="optional">
+                top_logprobs
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>
+                Integer between 0 and 20 specifying how many likely alternative
+                tokens to return per position. Pair this with
+                <code>include: ["message.output_text.logprobs"]</code> when you
+                want the returned response to include those logprobs.
             </dd>
 
             <dt class="optional">
@@ -3395,6 +3414,11 @@
         <p>
             Use this helper for streamed create requests or streamed continuation by response id.
         </p>
+        <p>
+            When <code>response_id</code> is not provided, this helper uses the same request body shape as
+            <code>Create Model Response</code>, including fields such as <code>include</code>,
+            <code>prompt_cache_retention</code>, and <code>top_logprobs</code>.
+        </p>
         <dl class="message-properties">
             <h4>msg.payload Properties</h4>
             <dt class="optional">
@@ -3481,6 +3505,12 @@
                 <span class="property-type">string</span>
             </dt>
             <dd>Optional previous response id to continue compaction context.</dd>
+
+            <dt class="optional">
+                prompt_cache_retention
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Prompt cache retention policy for compaction requests, such as <code>in_memory</code> or <code>24h</code>.</dd>
         </dl>
 
         <h4 style="font-weight: bolder;"> ⋙ List Input Items</h4>
