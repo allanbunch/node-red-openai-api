@@ -32,7 +32,14 @@
     "build:html": "gulp build-html",
     "build:js": "esbuild src/lib.js --bundle --outfile=lib.js --format=cjs --platform=node",
     "build": "npm run build:html && npm run build:js",
-    "test": "node --test test/service-host-node.test.js test/service-host-editor-template.test.js test/openai-node-auth-routing.test.js test/openai-methods-mapping.test.js test/responses-docs-parity.test.js test/openai-responses-websocket.test.js test/chat-docs-parity.test.js test/chatkit-docs-examples.test.js test/videos-docs-examples.test.js test/examples-service-host-neutrality.test.js test/audio-docs-parity.test.js test/batch-docs-parity.test.js test/comparison-filter-parity.test.js test/vector-store-family-parity.test.js test/model-slug-parity.test.js test/defer-loading-parity.test.js test/conversations-docs-parity.test.js",
+    "test:service-host": "node --test test/service-host-node.test.js test/service-host-editor-template.test.js test/openai-node-auth-routing.test.js",
+    "test:methods": "node --test test/openai-methods-mapping.test.js",
+    "test:images": "node --test test/images-v637-parity.test.js",
+    "test:responses": "node --test test/responses-docs-parity.test.js test/openai-responses-websocket.test.js",
+    "test:docs": "node --test test/chat-docs-parity.test.js test/audio-docs-parity.test.js test/batch-docs-parity.test.js test/conversations-docs-parity.test.js",
+    "test:examples": "node --test test/chatkit-docs-examples.test.js test/videos-docs-examples.test.js test/examples-service-host-neutrality.test.js",
+    "test:parity": "node --test test/comparison-filter-parity.test.js test/vector-store-family-parity.test.js test/model-slug-parity.test.js test/defer-loading-parity.test.js",
+    "test": "npm run test:service-host && npm run test:methods && npm run test:images && npm run test:responses && npm run test:docs && npm run test:examples && npm run test:parity",
     "prepare": "npm run build"
   },
   "dependencies": {

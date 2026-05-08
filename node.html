@@ -2546,7 +2546,13 @@
                 model
                 <span class="property-type">string</span>
             </dt>
-            <dd>The model to use for image generation.</dd>
+            <dd>
+                The model to use for image generation. Supported model ids include
+                <code>gpt-image-2</code>, <code>gpt-image-2-2026-04-21</code>,
+                <code>gpt-image-1.5</code>, <code>chatgpt-image-latest</code>,
+                <code>gpt-image-1</code>, <code>gpt-image-1-mini</code>,
+                <code>dall-e-2</code>, and <code>dall-e-3</code>.
+            </dd>
             <dt class="optional">
                 n
                 <span class="property-type">integer</span>
@@ -2562,17 +2568,48 @@
                 <span class="property-type">string</span>
             </dt>
             <dd>
-                The format in which the generated images are returned. Must be one of
-                url or b64_json.
+                For <code>dall-e-2</code> and <code>dall-e-3</code>, the format in
+                which generated images are returned. Must be one of
+                <code>url</code> or <code>b64_json</code>.
+            </dd>
+            <dt class="optional">
+                output_format
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                For GPT image models, the output format. Must be one of
+                <code>png</code>, <code>jpeg</code>, or <code>webp</code>.
+            </dd>
+            <dt class="optional">
+                background
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                For GPT image models, the requested background. Must be one of
+                <code>transparent</code>, <code>opaque</code>, or <code>auto</code>.
+                <code>gpt-image-2</code> and <code>gpt-image-2-2026-04-21</code> do
+                not support transparent backgrounds; for those models use
+                <code>opaque</code> or <code>auto</code>. Transparent backgrounds
+                require <code>output_format</code> set to <code>png</code> or
+                <code>webp</code>.
             </dd>
             <dt class="optional">
                 size
                 <span class="property-type">string</span>
             </dt>
             <dd>
-                The size of the generated images. Must be one of 256x256, 512x512, or
-                1024x1024 for dall-e-2. Must be one of 1024x1024, 1792x1024, or
-                1024x1792.
+                The size of the generated images. For
+                <code>gpt-image-2</code> and <code>gpt-image-2-2026-04-21</code>,
+                arbitrary <code>WIDTHxHEIGHT</code> strings are supported, for
+                example <code>1536x864</code>. Width and height must both be
+                divisible by 16, and the requested aspect ratio must be between 1:3
+                and 3:1. Standard GPT image sizes include <code>1024x1024</code>,
+                <code>1536x1024</code>, and <code>1024x1536</code>; <code>auto</code>
+                is supported where the model allows it. <code>dall-e-2</code> keeps
+                the fixed <code>256x256</code>, <code>512x512</code>, and
+                <code>1024x1024</code> sizes. <code>dall-e-3</code> keeps
+                <code>1024x1024</code>, <code>1792x1024</code>, and
+                <code>1024x1792</code>.
             </dd>
             <dt class="optional">
                 style
@@ -2580,6 +2617,23 @@
             </dt>
             <dd>
                 The style of the generated images. Must be one of vivid or natural.
+            </dd>
+            <dt class="optional">
+                stream
+                <span class="property-type">boolean</span>
+            </dt>
+            <dd>
+                If <code>true</code>, the node emits image stream events as they
+                arrive instead of returning a final <code>response.data</code> array
+                in one message.
+            </dd>
+            <dt class="optional">
+                partial_images
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>
+                When streaming GPT image responses, request between 0 and 3 partial
+                images before the completed image event.
             </dd>
             <dt class="optional">
                 user
@@ -2600,9 +2654,13 @@
 
             <dt>
                 image
-                <span class="property-type">string</span>
+                <span class="property-type">string | string[]</span>
             </dt>
-            <dd>The image to edit.</dd>
+            <dd>
+                The image to edit. Provide one local file path, or an array of local
+                file paths for GPT image edit requests. GPT image models can accept up
+                to 16 images; <code>dall-e-2</code> still expects a single image.
+            </dd>
             <dt>
                 prompt
                 <span class="property-type">string</span>
@@ -2614,13 +2672,19 @@
             </dt>
             <dd>
                 An additional image whose fully transparent areas (e.g. where alpha is
-                zero) indicate where image should be edited.
+                zero) indicate where image should be edited. If you send multiple
+                input images, the mask applies to the first image.
             </dd>
             <dt class="optional">
                 model
-                <span class="property-type"></span>
+                <span class="property-type">string</span>
             </dt>
-            <dd>The model to use for image generation.</dd>
+            <dd>
+                The model to use for image generation. Use <code>dall-e-2</code> or a
+                GPT image model such as <code>gpt-image-2</code>,
+                <code>gpt-image-2-2026-04-21</code>, <code>gpt-image-1.5</code>, or
+                <code>chatgpt-image-latest</code>.
+            </dd>
             <dt class="optional">
                 n
                 <span class="property-type">integer</span>
@@ -2630,14 +2694,54 @@
                 size
                 <span class="property-type">string</span>
             </dt>
-            <dd>The size of the generated images.</dd>
+            <dd>
+                The size of the generated images. <code>gpt-image-2</code> and
+                <code>gpt-image-2-2026-04-21</code> support arbitrary
+                <code>WIDTHxHEIGHT</code> strings such as <code>1536x864</code> when
+                width and height are divisible by 16 and the aspect ratio stays between
+                1:3 and 3:1.
+            </dd>
             <dt class="optional">
                 response_format
                 <span class="property-type">string</span>
             </dt>
             <dd>
-                The format in which the generated images are returned. Must be one of
-                url or b64_json.
+                For <code>dall-e-2</code>, the format in which the generated images are
+                returned. Must be one of <code>url</code> or <code>b64_json</code>.
+            </dd>
+            <dt class="optional">
+                output_format
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                For GPT image models, the output format. Must be one of
+                <code>png</code>, <code>jpeg</code>, or <code>webp</code>.
+            </dd>
+            <dt class="optional">
+                background
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                For GPT image models, the requested background. Must be one of
+                <code>transparent</code>, <code>opaque</code>, or <code>auto</code>.
+                <code>gpt-image-2</code> and <code>gpt-image-2-2026-04-21</code> do
+                not support transparent backgrounds.
+            </dd>
+            <dt class="optional">
+                stream
+                <span class="property-type">boolean</span>
+            </dt>
+            <dd>
+                If <code>true</code>, the node emits image edit stream events as they
+                arrive instead of returning a final <code>response.data</code> array.
+            </dd>
+            <dt class="optional">
+                partial_images
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>
+                When streaming GPT image edits, request between 0 and 3 partial images
+                before the completed image event.
             </dd>
             <dt class="optional">
                 user

@@ -1,51 +1,51 @@
 [
     {
-        "id": "dc40eecb9611dce6",
+        "id": "2d1b8a57c16b4e11",
         "type": "tab",
         "label": "Image Examples",
         "disabled": false,
-        "info": "",
+        "info": "Images parity example flow.\n\nThis tab keeps the current Image 2 contract visible in one place:\n- `gpt-image-2` generate requests can use arbitrary `WIDTHxHEIGHT` sizes such as `1536x864`\n- Image 2 transparency should use `background = \"opaque\"` or `\"auto\"`, not `\"transparent\"`\n- generate and edit can stream image events with `stream = true`\n- edit requests can send multiple input image paths with `payload.image[0]`, `payload.image[1]`, and so on",
         "env": []
     },
     {
-        "id": "610413b8d258c093",
-        "type": "group",
-        "z": "dc40eecb9611dce6",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "d463be1fb4f4b316",
-            "defe047606001648",
-            "4e5290689cc38e3f",
-            "1ba407d00dd42425"
-        ],
-        "x": 114,
-        "y": 139,
-        "w": 592,
-        "h": 142
+        "id": "fb12602d94d979a3",
+        "type": "comment",
+        "z": "2d1b8a57c16b4e11",
+        "name": "Image 2 generate, stream, and multi-image edit examples.",
+        "info": "This flow covers the current image contract in one place:\n- `gpt-image-2` generate requests with arbitrary `WIDTHxHEIGHT` sizes such as `1536x864`\n- `background = \"auto\"` for Image 2 output\n- streaming image events on generate\n- multi-image edit input using `payload.image[0]` and `payload.image[1]`\n\nThe sample file paths are placeholders for local image files.",
+        "x": 540,
+        "y": 120,
+        "wires": []
     },
     {
-        "id": "d463be1fb4f4b316",
+        "id": "21b9e1f63d8310f5",
         "type": "inject",
-        "z": "dc40eecb9611dce6",
-        "g": "610413b8d258c093",
-        "name": "file details",
+        "z": "2d1b8a57c16b4e11",
+        "name": "Create Image 2 Request",
         "props": [
             {
-                "p": "payload.image",
-                "v": "/path/to/my/image/png",
+                "p": "payload.model",
+                "v": "gpt-image-2",
                 "vt": "str"
             },
             {
                 "p": "payload.prompt",
-                "v": "A graphic design logo with a blue dot in the middle.",
+                "v": "Create a widescreen transit poster with crisp typography and a sunrise skyline.",
+                "vt": "str"
+            },
+            {
+                "p": "payload.size",
+                "v": "1536x864",
+                "vt": "str"
+            },
+            {
+                "p": "payload.background",
+                "v": "auto",
+                "vt": "str"
+            },
+            {
+                "p": "payload.output_format",
+                "v": "png",
                 "vt": "str"
             }
         ],
@@ -54,20 +54,34 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 220,
-        "y": 240,
+        "x": 240,
+        "y": 220,
         "wires": [
             [
-                "1ba407d00dd42425"
+                "9d53e901db08fd7a"
             ]
         ]
     },
     {
-        "id": "defe047606001648",
+        "id": "9d53e901db08fd7a",
+        "type": "OpenAI API",
+        "z": "2d1b8a57c16b4e11",
+        "name": "Create Image",
+        "service": "",
+        "method": "createImage",
+        "x": 520,
+        "y": 220,
+        "wires": [
+            [
+                "519c760e1f253c3e"
+            ]
+        ]
+    },
+    {
+        "id": "519c760e1f253c3e",
         "type": "debug",
-        "z": "dc40eecb9611dce6",
-        "g": "610413b8d258c093",
-        "name": "response",
+        "z": "2d1b8a57c16b4e11",
+        "name": "Image 2 Response",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -76,35 +90,182 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 600,
-        "y": 240,
+        "x": 780,
+        "y": 220,
         "wires": []
     },
     {
-        "id": "4e5290689cc38e3f",
-        "type": "comment",
-        "z": "dc40eecb9611dce6",
-        "g": "610413b8d258c093",
-        "name": "Create Image Edit",
-        "info": "",
-        "x": 230,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "1ba407d00dd42425",
-        "type": "OpenAI API",
-        "z": "dc40eecb9611dce6",
-        "g": "610413b8d258c093",
-        "name": "create image edit",
-        "service": "",
-        "method": "createImageEdit",
-        "x": 410,
-        "y": 240,
+        "id": "f6179cd6673ef32b",
+        "type": "inject",
+        "z": "2d1b8a57c16b4e11",
+        "name": "Create Streaming Image 2 Request",
+        "props": [
+            {
+                "p": "payload.model",
+                "v": "gpt-image-2",
+                "vt": "str"
+            },
+            {
+                "p": "payload.prompt",
+                "v": "Create a magazine cover illustration with layered geometric clouds.",
+                "vt": "str"
+            },
+            {
+                "p": "payload.size",
+                "v": "1536x1024",
+                "vt": "str"
+            },
+            {
+                "p": "payload.background",
+                "v": "auto",
+                "vt": "str"
+            },
+            {
+                "p": "payload.output_format",
+                "v": "png",
+                "vt": "str"
+            },
+            {
+                "p": "payload.stream",
+                "v": "true",
+                "vt": "bool"
+            },
+            {
+                "p": "payload.partial_images",
+                "v": "2",
+                "vt": "num"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 256,
+        "y": 320,
         "wires": [
             [
-                "defe047606001648"
+                "90beb15338ee2b3b"
             ]
         ]
+    },
+    {
+        "id": "90beb15338ee2b3b",
+        "type": "OpenAI API",
+        "z": "2d1b8a57c16b4e11",
+        "name": "Create Image Stream",
+        "service": "",
+        "method": "createImage",
+        "x": 540,
+        "y": 320,
+        "wires": [
+            [
+                "6e8eb722311c12b5"
+            ]
+        ]
+    },
+    {
+        "id": "6e8eb722311c12b5",
+        "type": "debug",
+        "z": "2d1b8a57c16b4e11",
+        "name": "Image Stream Events",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "33f2c9438c57aa68",
+        "type": "inject",
+        "z": "2d1b8a57c16b4e11",
+        "name": "Create Multi-Image Edit Request",
+        "props": [
+            {
+                "p": "payload.image[0]",
+                "v": "/path/to/source-1.png",
+                "vt": "str"
+            },
+            {
+                "p": "payload.image[1]",
+                "v": "/path/to/source-2.png",
+                "vt": "str"
+            },
+            {
+                "p": "payload.prompt",
+                "v": "Blend these two source images into one clean poster composition.",
+                "vt": "str"
+            },
+            {
+                "p": "payload.model",
+                "v": "gpt-image-2",
+                "vt": "str"
+            },
+            {
+                "p": "payload.size",
+                "v": "1536x1024",
+                "vt": "str"
+            },
+            {
+                "p": "payload.background",
+                "v": "auto",
+                "vt": "str"
+            },
+            {
+                "p": "payload.output_format",
+                "v": "png",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 255,
+        "y": 420,
+        "wires": [
+            [
+                "de1e1b1529113bca"
+            ]
+        ]
+    },
+    {
+        "id": "de1e1b1529113bca",
+        "type": "OpenAI API",
+        "z": "2d1b8a57c16b4e11",
+        "name": "Create Image Edit",
+        "service": "",
+        "method": "createImageEdit",
+        "x": 532,
+        "y": 420,
+        "wires": [
+            [
+                "369f4f6bf69af6e0"
+            ]
+        ]
+    },
+    {
+        "id": "369f4f6bf69af6e0",
+        "type": "debug",
+        "z": "2d1b8a57c16b4e11",
+        "name": "Image Edit Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 786,
+        "y": 420,
+        "wires": []
     }
 ]
