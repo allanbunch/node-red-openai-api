@@ -26,13 +26,24 @@
                 session.type
                 <span class="property-type">string</span>
             </dt>
-            <dd>Must be <code>realtime</code> for a Realtime session.</dd>
+            <dd>Use <code>realtime</code> for voice-agent payloads or <code>translation</code> for
+                translation payloads.</dd>
             <dt class="optional">
                 session.model
                 <span class="property-type">string</span>
             </dt>
-            <dd>Realtime model id, including newer SDK-supported ids such as
-                <code>gpt-realtime-1.5</code> and <code>gpt-audio-1.5</code>.</dd>
+            <dd>Session model id, including <code>gpt-realtime-2</code>,
+                <code>gpt-realtime-1.5</code>, <code>gpt-audio-1.5</code>, or translation model ids.</dd>
+            <dt class="optional">
+                session.reasoning.effort
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Reasoning setting for supported models such as <code>gpt-realtime-2</code>.</dd>
+            <dt class="optional">
+                session.parallel_tool_calls
+                <span class="property-type">boolean</span>
+            </dt>
+            <dd>Allow parallel tool calls on supported realtime models.</dd>
             <dt class="optional">
                 session.instructions
                 <span class="property-type">string</span>
@@ -58,7 +69,13 @@
                 session.audio
                 <span class="property-type">object</span>
             </dt>
-            <dd>Input/output audio config for the session.</dd>
+            <dd>Input/output audio config, including
+                <code>session.audio.input.transcription.model</code> such as
+                <code>gpt-realtime-whisper</code>,
+                <code>session.audio.input.transcription.delay</code>,
+                <code>session.audio.input.turn_detection</code>,
+                <code>session.audio.input.noise_reduction</code>, and
+                <code>session.audio.output.language</code>.</dd>
             <dt class="optional">
                 session.prompt
                 <span class="property-type">object</span>
@@ -85,6 +102,7 @@
             </dt>
             <dd>Conversation truncation behavior for the session.</dd>
         </dl>
+        <p>See the official docs above for transport, lifecycle, and tuning details.</p>
         <p>Successful responses are returned in <code>msg.payload</code> with top-level
             <code>value</code>, <code>expires_at</code>, and <code>session</code> fields.</p>
 
@@ -112,8 +130,18 @@
                 model
                 <span class="property-type">string</span>
             </dt>
-            <dd>Realtime model id for the accepted call, including newer SDK-supported ids such as
-                <code>gpt-realtime-1.5</code> and <code>gpt-audio-1.5</code>.</dd>
+            <dd>Realtime model id, including <code>gpt-realtime-2</code>,
+                <code>gpt-realtime-1.5</code>, and <code>gpt-audio-1.5</code>.</dd>
+            <dt class="optional">
+                reasoning.effort
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Reasoning setting for supported realtime call models.</dd>
+            <dt class="optional">
+                parallel_tool_calls
+                <span class="property-type">boolean</span>
+            </dt>
+            <dd>Allow multiple parallel tool calls for supported realtime call models.</dd>
             <dt class="optional">
                 instructions
                 <span class="property-type">string</span>

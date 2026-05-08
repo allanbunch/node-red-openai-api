@@ -524,24 +524,35 @@ test("realtime example flow remains valid JSON and documents the nested session 
   const explainerComment = realtimeExample.find(
     (entry) => entry.type === "comment" && entry.name === "What is a client secret?"
   );
+  const translationScopeComment = realtimeExample.find(
+    (entry) => entry.type === "comment" && entry.name === "Translation session scope"
+  );
   const realtimeInjectNode = realtimeExample.find(
     (entry) =>
       entry.type === "inject" &&
-      entry.name === "Create Realtime 1.5 Client Secret"
+      entry.name === "Create Realtime 2 Client Secret"
   );
   const audioInjectNode = realtimeExample.find(
     (entry) =>
       entry.type === "inject" &&
       entry.name === "Create Audio 1.5 Client Secret"
   );
+  const translationInjectNode = realtimeExample.find(
+    (entry) =>
+      entry.type === "inject" &&
+      entry.name === "Create Translation Client Secret"
+  );
 
   assert.ok(openaiNode);
   assert.equal(openaiNode.method, "createRealtimeClientSecret");
-  assert.ok(commentNodes.length >= 3);
+  assert.ok(commentNodes.length >= 4);
   assert.ok(explainerComment);
+  assert.ok(translationScopeComment);
   assert.match(explainerComment.info, /not your long-lived OpenAI API key/);
+  assert.match(translationScopeComment.info, /out of scope/);
   assert.ok(realtimeInjectNode);
   assert.ok(audioInjectNode);
+  assert.ok(translationInjectNode);
 
   assert.equal(
     realtimeInjectNode.props.find((prop) => prop.p === "ai.session.type").v,
@@ -549,7 +560,15 @@ test("realtime example flow remains valid JSON and documents the nested session 
   );
   assert.equal(
     realtimeInjectNode.props.find((prop) => prop.p === "ai.session.model").v,
-    "gpt-realtime-1.5"
+    "gpt-realtime-2"
+  );
+  assert.equal(
+    realtimeInjectNode.props.find((prop) => prop.p === "ai.session.reasoning.effort").v,
+    "low"
+  );
+  assert.equal(
+    realtimeInjectNode.props.find((prop) => prop.p === "ai.session.parallel_tool_calls").v,
+    "true"
   );
   assert.equal(
     audioInjectNode.props.find((prop) => prop.p === "ai.session.type").v,
@@ -562,6 +581,34 @@ test("realtime example flow remains valid JSON and documents the nested session 
   assert.equal(
     realtimeInjectNode.props.find((prop) => prop.p === "ai.expires_after.seconds").v,
     "600"
+  );
+  assert.equal(
+    translationInjectNode.props.find((prop) => prop.p === "ai.session.type").v,
+    "translation"
+  );
+  assert.equal(
+    translationInjectNode.props.find((prop) => prop.p === "ai.session.model").v,
+    "gpt-realtime-translate"
+  );
+  assert.equal(
+    translationInjectNode.props.find((prop) => prop.p === "ai.session.audio.input.noise_reduction.type").v,
+    "near_field"
+  );
+  assert.equal(
+    translationInjectNode.props.find((prop) => prop.p === "ai.session.audio.input.transcription.model").v,
+    "gpt-realtime-whisper"
+  );
+  assert.equal(
+    translationInjectNode.props.find((prop) => prop.p === "ai.session.audio.input.transcription.delay").v,
+    "low"
+  );
+  assert.equal(
+    translationInjectNode.props.find((prop) => prop.p === "ai.session.audio.input.turn_detection").v,
+    "null"
+  );
+  assert.equal(
+    translationInjectNode.props.find((prop) => prop.p === "ai.session.audio.output.language").v,
+    "es"
   );
 });
 
@@ -1664,7 +1711,7 @@ test("videos methods map to OpenAI SDK videos endpoints", async () => {
   ]);
 });
 
-test("realtime methods map to OpenAI SDK realtime endpoints and pass newer model ids through unchanged", async () => {
+test("realtime methods map to OpenAI SDK realtime endpoints and pass newer session payloads through unchanged", async () => {
   const calls = [];
 
   class FakeOpenAI {
@@ -1706,24 +1753,59 @@ test("realtime methods map to OpenAI SDK realtime endpoints and pass newer model
 
     const clientContext = { clientParams: { apiKey: "sk-test" } };
 
-    const clientSecretPayload = {
+    const realtimeTwoPayload = {
       expires_after: {
         anchor: "created_at",
         seconds: 600,
       },
       session: {
         type: "realtime",
-        model: "gpt-realtime-1.5",
+        model: "gpt-realtime-2",
         instructions: "Speak clearly and keep responses concise.",
         output_modalities: ["audio"],
+        reasoning: { effort: "low" },
+        parallel_tool_calls: true,
       },
     };
     const secret = await realtimeMethods.createRealtimeClientSecret.call(clientContext, {
-      payload: clientSecretPayload,
+      payload: realtimeTwoPayload,
     });
     assert.deepEqual(secret, {
       expires_at: 123,
-      session: clientSecretPayload.session,
+      session: realtimeTwoPayload.session,
+      value: "ek_rt_secret_1",
+    });
+
+    const translationPayload = {
+      expires_after: {
+        anchor: "created_at",
+        seconds: 600,
+      },
+      session: {
+        type: "translation",
+        model: "gpt-realtime-translate",
+        audio: {
+          input: {
+            noise_reduction: { type: "near_field" },
+            transcription: {
+              model: "gpt-realtime-whisper",
+              delay: "low",
+              language: "en",
+            },
+            turn_detection: null,
+          },
+          output: {
+            language: "es",
+          },
+        },
+      },
+    };
+    const translationSecret = await realtimeMethods.createRealtimeClientSecret.call(clientContext, {
+      payload: translationPayload,
+    });
+    assert.deepEqual(translationSecret, {
+      expires_at: 123,
+      session: translationPayload.session,
       value: "ek_rt_secret_1",
     });
 
@@ -1731,8 +1813,10 @@ test("realtime methods map to OpenAI SDK realtime endpoints and pass newer model
       payload: {
         call_id: "call_1",
         type: "realtime",
-        model: "gpt-audio-1.5",
+        model: "gpt-realtime-2",
         output_modalities: ["audio"],
+        reasoning: { effort: "low" },
+        parallel_tool_calls: true,
       },
     });
     assert.deepEqual(accepted, { call_id: "call_1", status: "accepted" });
@@ -1766,9 +1850,38 @@ test("realtime methods map to OpenAI SDK realtime endpoints and pass newer model
         },
         session: {
           type: "realtime",
-          model: "gpt-realtime-1.5",
+          model: "gpt-realtime-2",
           instructions: "Speak clearly and keep responses concise.",
           output_modalities: ["audio"],
+          reasoning: { effort: "low" },
+          parallel_tool_calls: true,
+        },
+      },
+    },
+    {
+      method: "realtime.clientSecrets.create",
+      body: {
+        expires_after: {
+          anchor: "created_at",
+          seconds: 600,
+        },
+        session: {
+          type: "translation",
+          model: "gpt-realtime-translate",
+          audio: {
+            input: {
+              noise_reduction: { type: "near_field" },
+              transcription: {
+                model: "gpt-realtime-whisper",
+                delay: "low",
+                language: "en",
+              },
+              turn_detection: null,
+            },
+            output: {
+              language: "es",
+            },
+          },
         },
       },
     },
@@ -1777,8 +1890,10 @@ test("realtime methods map to OpenAI SDK realtime endpoints and pass newer model
       callId: "call_1",
       body: {
         type: "realtime",
-        model: "gpt-audio-1.5",
+        model: "gpt-realtime-2",
         output_modalities: ["audio"],
+        reasoning: { effort: "low" },
+        parallel_tool_calls: true,
       },
     },
     {
@@ -2040,8 +2155,16 @@ test("editor templates and locale expose latest methods", () => {
   assert.match(realtimeHelp, /⋙ Reject Realtime Call/);
   assert.match(realtimeHelp, /msg\.payload\.session/);
   assert.match(realtimeHelp, /session\.model/);
+  assert.match(realtimeHelp, /gpt-realtime-2/);
   assert.match(realtimeHelp, /gpt-realtime-1\.5/);
   assert.match(realtimeHelp, /gpt-audio-1\.5/);
+  assert.match(realtimeHelp, /session\.reasoning\.effort/);
+  assert.match(realtimeHelp, /session\.parallel_tool_calls/);
+  assert.match(realtimeHelp, /gpt-realtime-whisper/);
+  assert.match(realtimeHelp, /session\.audio\.input\.transcription\.delay/);
+  assert.match(realtimeHelp, /session\.audio\.input\.turn_detection/);
+  assert.match(realtimeHelp, /session\.audio\.output\.language/);
+  assert.match(realtimeHelp, /See the official docs above for transport, lifecycle, and tuning details/);
   assert.match(skillsHelp, /⋙ Create Skill/);
   assert.match(skillsHelp, /⋙ List Skill Versions/);
   assert.match(videosHelp, /⋙ Download Video Content/);
