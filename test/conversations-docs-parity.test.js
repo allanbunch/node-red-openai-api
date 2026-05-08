@@ -146,7 +146,7 @@ test("README highlights the Conversations example and breaking contract change",
     );
     assert.match(
         readme,
-        /## Important v6\.34\.0 Update/
+        /## Important v6\.37\.0 Update/
     );
     assert.match(
         readme,

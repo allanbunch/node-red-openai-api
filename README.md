@@ -10,16 +10,7 @@ It is not just a thin wrapper around text generation. The node exposes modern AI
 
 That makes this repository relevant beyond Node-RED alone. It is a practical implementation of how contemporary AI capabilities can live inside an open workflow environment instead of being locked inside a single vendor surface or hidden behind a one-purpose abstraction.
 
-This package currently targets the `openai` Node SDK `^6.34.0`.
-
-## Important v6.34.0 Update
-
-`Create Conversation Item` now follows the upstream OpenAI Conversations contract.
-
-Use `msg.payload.items` as an array.
-
-Older flows that send a singular `msg.payload.item` object no longer match the
-supported contract and must be updated before moving to this release.
+This package currently targets the `openai` Node SDK `^6.37.0`.
 
 ## Why This Exists
 
