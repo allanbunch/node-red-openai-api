@@ -78,6 +78,7 @@
       <span data-i18n="OpenaiApi.label.method"></span
     ></label>
     <select id="node-input-method">
+      @@include('./admin/template.html')
         @@include('./assistants/template.html')
         @@include('./audio/template.html')
         @@include('./batch/template.html')
@@ -119,6 +120,7 @@
   </p>
   <p><b>Reference</b></p>
 
+  @@include('./admin/help.html')
   @@include('./assistants/help.html')
   @@include('./audio/help.html')
   @@include('./batch/help.html')

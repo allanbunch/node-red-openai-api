@@ -2009,10 +2009,183 @@ test("webhooks methods map to OpenAI SDK webhooks utilities", async () => {
   ]);
 });
 
+test("admin methods map representative organization and project resources to OpenAI SDK", async () => {
+  const calls = [];
+
+  class FakeOpenAI {
+    constructor(clientParams) {
+      calls.push({ method: "ctor", clientParams });
+      this.admin = {
+        organization: {
+          auditLogs: {
+            list: async (query) => {
+              calls.push({ method: "admin.organization.auditLogs.list", query });
+              return { data: [{ id: "log_1" }, { id: "log_2" }] };
+            },
+          },
+          adminAPIKeys: {
+            retrieve: async (keyID, options) => {
+              calls.push({ method: "admin.organization.adminAPIKeys.retrieve", keyID, options });
+              return { id: keyID, object: "organization.admin_api_key" };
+            },
+          },
+          users: {
+            roles: {
+              create: async (userID, body) => {
+                calls.push({ method: "admin.organization.users.roles.create", userID, body });
+                return { id: "role_assignment_1", user_id: userID };
+              },
+            },
+          },
+          projects: {
+            list: async (query) => {
+              calls.push({ method: "admin.organization.projects.list", query });
+              return { data: [{ id: "proj_1" }, { id: "proj_2" }] };
+            },
+            users: {
+              retrieve: async (userID, params) => {
+                calls.push({ method: "admin.organization.projects.users.retrieve", userID, params });
+                return { id: userID, project_id: params.project_id };
+              },
+            },
+            rateLimits: {
+              updateRateLimit: async (rateLimitID, params) => {
+                calls.push({ method: "admin.organization.projects.rateLimits.updateRateLimit", rateLimitID, params });
+                return { id: rateLimitID, project_id: params.project_id, max_requests_per_1_minute: params.max_requests_per_1_minute };
+              },
+            },
+          },
+        },
+      };
+    }
+  }
+
+  await withMockedOpenAI(FakeOpenAI, async () => {
+    const modulePath = require.resolve("../src/admin/methods.js");
+    delete require.cache[modulePath];
+    const adminMethods = require("../src/admin/methods.js");
+
+    const clientContext = {
+      clientParams: {
+        apiKey: null,
+        adminAPIKey: "sk-admin-test",
+        baseURL: "https://api.example.com/v1",
+      },
+    };
+
+    const auditLogs = await adminMethods.listOrganizationAuditLogs.call(clientContext, {
+      payload: {
+        effective_at: { gt: 1710000000 },
+        project_ids: ["proj_1"],
+      },
+    });
+    assert.deepEqual(auditLogs, [{ id: "log_1" }, { id: "log_2" }]);
+
+    const adminApiKey = await adminMethods.getOrganizationAdminApiKey.call(clientContext, {
+      payload: {
+        key_id: "key_123",
+      },
+    });
+    assert.deepEqual(adminApiKey, {
+      id: "key_123",
+      object: "organization.admin_api_key",
+    });
+
+    const userRole = await adminMethods.createOrganizationUserRole.call(clientContext, {
+      payload: {
+        user_id: "user_123",
+        role: "owner",
+      },
+    });
+    assert.deepEqual(userRole, { id: "role_assignment_1", user_id: "user_123" });
+
+    const projects = await adminMethods.listOrganizationProjects.call(clientContext, {
+      payload: {
+        limit: 20,
+        include_archived: true,
+      },
+    });
+    assert.deepEqual(projects, [{ id: "proj_1" }, { id: "proj_2" }]);
+
+    const projectUser = await adminMethods.getProjectUser.call(clientContext, {
+      payload: {
+        project_id: "proj_1",
+        user_id: "user_456",
+      },
+    });
+    assert.deepEqual(projectUser, { id: "user_456", project_id: "proj_1" });
+
+    const rateLimit = await adminMethods.modifyProjectRateLimit.call(clientContext, {
+      payload: {
+        project_id: "proj_1",
+        rate_limit_id: "rl_123",
+        max_requests_per_1_minute: 500,
+      },
+    });
+    assert.deepEqual(rateLimit, {
+      id: "rl_123",
+      project_id: "proj_1",
+      max_requests_per_1_minute: 500,
+    });
+
+    assert.equal(adminMethods.listOrganizationProjects.authentication, "admin");
+    assert.equal(adminMethods.modifyProjectRateLimit.authentication, "admin");
+
+    delete require.cache[modulePath];
+  });
+
+  const adminCalls = calls.filter((entry) => entry.method !== "ctor");
+  assert.deepEqual(adminCalls, [
+    {
+      method: "admin.organization.auditLogs.list",
+      query: {
+        effective_at: { gt: 1710000000 },
+        project_ids: ["proj_1"],
+      },
+    },
+    {
+      method: "admin.organization.adminAPIKeys.retrieve",
+      keyID: "key_123",
+      options: {},
+    },
+    {
+      method: "admin.organization.users.roles.create",
+      userID: "user_123",
+      body: {
+        role: "owner",
+      },
+    },
+    {
+      method: "admin.organization.projects.list",
+      query: {
+        limit: 20,
+        include_archived: true,
+      },
+    },
+    {
+      method: "admin.organization.projects.users.retrieve",
+      userID: "user_456",
+      params: {
+        project_id: "proj_1",
+      },
+    },
+    {
+      method: "admin.organization.projects.rateLimits.updateRateLimit",
+      rateLimitID: "rl_123",
+      params: {
+        project_id: "proj_1",
+        max_requests_per_1_minute: 500,
+      },
+    },
+  ]);
+});
+
 test("OpenaiApi prototype exposes latest methods", () => {
   const OpenaiApi = require("../src/lib.js");
   const client = new OpenaiApi("sk-test", "https://api.openai.com/v1", null);
 
+  assert.equal(typeof client.listOrganizationProjects, "function");
+  assert.equal(typeof client.modifyProjectRateLimit, "function");
   assert.equal(typeof client.cancelModelResponse, "function");
   assert.equal(typeof client.compactModelResponse, "function");
   assert.equal(typeof client.countInputTokens, "function");
@@ -2036,6 +2209,10 @@ test("OpenaiApi prototype exposes latest methods", () => {
 });
 
 test("editor templates and locale expose latest methods", () => {
+  const adminTemplate = fs.readFileSync(
+    path.join(__dirname, "..", "src", "admin", "template.html"),
+    "utf8"
+  );
   const responsesTemplate = fs.readFileSync(
     path.join(__dirname, "..", "src", "responses", "template.html"),
     "utf8"
@@ -2072,6 +2249,10 @@ test("editor templates and locale expose latest methods", () => {
     path.join(__dirname, "..", "src", "node.html"),
     "utf8"
   );
+  const adminHelp = fs.readFileSync(
+    path.join(__dirname, "..", "src", "admin", "help.html"),
+    "utf8"
+  );
   const responsesHelp = fs.readFileSync(
     path.join(__dirname, "..", "src", "responses", "help.html"),
     "utf8"
@@ -2104,6 +2285,8 @@ test("editor templates and locale expose latest methods", () => {
     fs.readFileSync(path.join(__dirname, "..", "locales", "en-US", "node.json"), "utf8")
   );
 
+  assert.match(adminTemplate, /value="listOrganizationProjects"/);
+  assert.match(adminTemplate, /value="modifyProjectRateLimit"/);
   assert.match(responsesTemplate, /value="cancelModelResponse"/);
   assert.match(responsesTemplate, /value="compactModelResponse"/);
   assert.match(responsesTemplate, /value="countInputTokens"/);
@@ -2125,6 +2308,8 @@ test("editor templates and locale expose latest methods", () => {
   assert.match(videosTemplate, /value="extendVideo"/);
   assert.match(videosTemplate, /value="getVideoCharacter"/);
   assert.match(webhooksTemplate, /value="verifyWebhookSignature"/);
+  assert.match(nodeTemplate, /@@include\('\.\/admin\/template\.html'\)/);
+  assert.match(nodeTemplate, /@@include\('\.\/admin\/help\.html'\)/);
   assert.match(nodeTemplate, /@@include\('\.\/conversations\/template\.html'\)/);
   assert.match(nodeTemplate, /@@include\('\.\/conversations\/help\.html'\)/);
   assert.match(nodeTemplate, /@@include\('\.\/chatkit\/template\.html'\)/);
@@ -2139,6 +2324,9 @@ test("editor templates and locale expose latest methods", () => {
   assert.match(nodeTemplate, /@@include\('\.\/videos\/help\.html'\)/);
   assert.match(nodeTemplate, /@@include\('\.\/webhooks\/template\.html'\)/);
   assert.match(nodeTemplate, /@@include\('\.\/webhooks\/help\.html'\)/);
+  assert.match(adminHelp, /⋙ List Organization Projects/);
+  assert.match(adminHelp, /⋙ List Project Rate Limits/);
+  assert.match(adminHelp, /Admin API Key/);
   assert.match(responsesHelp, /⋙ Count Input Tokens/);
   assert.match(responsesHelp, /⋙ Parse Model Response/);
   assert.match(responsesHelp, /⋙ Stream Model Response/);
@@ -2177,6 +2365,14 @@ test("editor templates and locale expose latest methods", () => {
   assert.match(videosHelp, /1792x1024/);
   assert.match(webhooksHelp, /⋙ Verify Webhook Signature/);
 
+  assert.equal(
+    locale.OpenaiApi.parameters.listOrganizationProjects,
+    "list organization projects"
+  );
+  assert.equal(
+    locale.OpenaiApi.parameters.modifyProjectRateLimit,
+    "modify project rate limit"
+  );
   assert.equal(
     locale.OpenaiApi.parameters.cancelModelResponse,
     "cancel model response"

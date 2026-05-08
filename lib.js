@@ -11467,8 +11467,563 @@ var require_openai = __commonJS({
   }
 });
 
-// src/assistants/methods.js
+// src/admin/methods.js
 var require_methods2 = __commonJS({
+  "src/admin/methods.js"(exports2, module2) {
+    var OpenAI = require_openai().OpenAI;
+    async function listOrganizationAuditLogs(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const list = await openai.admin.organization.auditLogs.list(parameters.payload);
+      return [...list.data];
+    }
+    async function createOrganizationAdminApiKey(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.admin.organization.adminAPIKeys.create(parameters.payload);
+      return response;
+    }
+    async function getOrganizationAdminApiKey(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { key_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.adminAPIKeys.retrieve(key_id, params);
+      return response;
+    }
+    async function listOrganizationAdminApiKeys(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const list = await openai.admin.organization.adminAPIKeys.list(parameters.payload);
+      return [...list.data];
+    }
+    async function deleteOrganizationAdminApiKey(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { key_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.adminAPIKeys.delete(key_id, params);
+      return response;
+    }
+    async function getOrganizationUsageAudioSpeeches(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.admin.organization.usage.audioSpeeches(parameters.payload);
+      return response;
+    }
+    async function getOrganizationUsageAudioTranscriptions(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.admin.organization.usage.audioTranscriptions(parameters.payload);
+      return response;
+    }
+    async function getOrganizationUsageCodeInterpreterSessions(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.admin.organization.usage.codeInterpreterSessions(parameters.payload);
+      return response;
+    }
+    async function getOrganizationUsageCompletions(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.admin.organization.usage.completions(parameters.payload);
+      return response;
+    }
+    async function getOrganizationCosts(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.admin.organization.usage.costs(parameters.payload);
+      return response;
+    }
+    async function getOrganizationUsageEmbeddings(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.admin.organization.usage.embeddings(parameters.payload);
+      return response;
+    }
+    async function getOrganizationUsageImages(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.admin.organization.usage.images(parameters.payload);
+      return response;
+    }
+    async function getOrganizationUsageModerations(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.admin.organization.usage.moderations(parameters.payload);
+      return response;
+    }
+    async function getOrganizationUsageVectorStores(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.admin.organization.usage.vectorStores(parameters.payload);
+      return response;
+    }
+    async function createOrganizationInvite(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.admin.organization.invites.create(parameters.payload);
+      return response;
+    }
+    async function getOrganizationInvite(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { invite_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.invites.retrieve(invite_id, params);
+      return response;
+    }
+    async function listOrganizationInvites(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const list = await openai.admin.organization.invites.list(parameters.payload);
+      return [...list.data];
+    }
+    async function deleteOrganizationInvite(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { invite_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.invites.delete(invite_id, params);
+      return response;
+    }
+    async function getOrganizationUser(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { user_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.users.retrieve(user_id, params);
+      return response;
+    }
+    async function modifyOrganizationUser(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { user_id, ...body } = parameters.payload;
+      const response = await openai.admin.organization.users.update(user_id, body);
+      return response;
+    }
+    async function listOrganizationUsers(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const list = await openai.admin.organization.users.list(parameters.payload);
+      return [...list.data];
+    }
+    async function deleteOrganizationUser(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { user_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.users.delete(user_id, params);
+      return response;
+    }
+    async function createOrganizationUserRole(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { user_id, ...body } = parameters.payload;
+      const response = await openai.admin.organization.users.roles.create(user_id, body);
+      return response;
+    }
+    async function listOrganizationUserRoles(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { user_id, ...params } = parameters.payload;
+      const list = await openai.admin.organization.users.roles.list(user_id, params);
+      return [...list.data];
+    }
+    async function deleteOrganizationUserRole(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { role_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.users.roles.delete(role_id, params);
+      return response;
+    }
+    async function createOrganizationGroup(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.admin.organization.groups.create(parameters.payload);
+      return response;
+    }
+    async function modifyOrganizationGroup(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { group_id, ...body } = parameters.payload;
+      const response = await openai.admin.organization.groups.update(group_id, body);
+      return response;
+    }
+    async function listOrganizationGroups(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const list = await openai.admin.organization.groups.list(parameters.payload);
+      return [...list.data];
+    }
+    async function deleteOrganizationGroup(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { group_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.groups.delete(group_id, params);
+      return response;
+    }
+    async function createOrganizationGroupUser(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { group_id, ...body } = parameters.payload;
+      const response = await openai.admin.organization.groups.users.create(group_id, body);
+      return response;
+    }
+    async function listOrganizationGroupUsers(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { group_id, ...params } = parameters.payload;
+      const list = await openai.admin.organization.groups.users.list(group_id, params);
+      return [...list.data];
+    }
+    async function deleteOrganizationGroupUser(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { user_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.groups.users.delete(user_id, params);
+      return response;
+    }
+    async function createOrganizationGroupRole(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { group_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.groups.roles.create(group_id, params);
+      return response;
+    }
+    async function listOrganizationGroupRoles(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { group_id, ...params } = parameters.payload;
+      const list = await openai.admin.organization.groups.roles.list(group_id, params);
+      return [...list.data];
+    }
+    async function deleteOrganizationGroupRole(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { role_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.groups.roles.delete(role_id, params);
+      return response;
+    }
+    async function createOrganizationRole(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.admin.organization.roles.create(parameters.payload);
+      return response;
+    }
+    async function modifyOrganizationRole(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { role_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.roles.update(role_id, params);
+      return response;
+    }
+    async function listOrganizationRoles(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const list = await openai.admin.organization.roles.list(parameters.payload);
+      return [...list.data];
+    }
+    async function deleteOrganizationRole(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { role_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.roles.delete(role_id, params);
+      return response;
+    }
+    async function createOrganizationCertificate(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.admin.organization.certificates.create(parameters.payload);
+      return response;
+    }
+    async function getOrganizationCertificate(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { certificate_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.certificates.retrieve(certificate_id, params);
+      return response;
+    }
+    async function modifyOrganizationCertificate(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { certificate_id, ...body } = parameters.payload;
+      const response = await openai.admin.organization.certificates.update(certificate_id, body);
+      return response;
+    }
+    async function listOrganizationCertificates(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const list = await openai.admin.organization.certificates.list(parameters.payload);
+      return [...list.data];
+    }
+    async function deleteOrganizationCertificate(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { certificate_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.certificates.delete(certificate_id, params);
+      return response;
+    }
+    async function activateOrganizationCertificates(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const list = await openai.admin.organization.certificates.activate(parameters.payload);
+      return [...list.data];
+    }
+    async function deactivateOrganizationCertificates(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const list = await openai.admin.organization.certificates.deactivate(parameters.payload);
+      return [...list.data];
+    }
+    async function createOrganizationProject(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const response = await openai.admin.organization.projects.create(parameters.payload);
+      return response;
+    }
+    async function getOrganizationProject(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { project_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.retrieve(project_id, params);
+      return response;
+    }
+    async function modifyOrganizationProject(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { project_id, ...body } = parameters.payload;
+      const response = await openai.admin.organization.projects.update(project_id, body);
+      return response;
+    }
+    async function listOrganizationProjects(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const list = await openai.admin.organization.projects.list(parameters.payload);
+      return [...list.data];
+    }
+    async function archiveOrganizationProject(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { project_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.archive(project_id, params);
+      return response;
+    }
+    async function getProjectApiKey(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { api_key_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.apiKeys.retrieve(api_key_id, params);
+      return response;
+    }
+    async function listProjectApiKeys(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { project_id, ...params } = parameters.payload;
+      const list = await openai.admin.organization.projects.apiKeys.list(project_id, params);
+      return [...list.data];
+    }
+    async function deleteProjectApiKey(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { api_key_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.apiKeys.delete(api_key_id, params);
+      return response;
+    }
+    async function listProjectCertificates(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { project_id, ...params } = parameters.payload;
+      const list = await openai.admin.organization.projects.certificates.list(project_id, params);
+      return [...list.data];
+    }
+    async function activateProjectCertificates(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { project_id, ...body } = parameters.payload;
+      const list = await openai.admin.organization.projects.certificates.activate(project_id, body);
+      return [...list.data];
+    }
+    async function deactivateProjectCertificates(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { project_id, ...body } = parameters.payload;
+      const list = await openai.admin.organization.projects.certificates.deactivate(project_id, body);
+      return [...list.data];
+    }
+    async function createProjectServiceAccount(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { project_id, ...body } = parameters.payload;
+      const response = await openai.admin.organization.projects.serviceAccounts.create(project_id, body);
+      return response;
+    }
+    async function getProjectServiceAccount(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { service_account_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.serviceAccounts.retrieve(service_account_id, params);
+      return response;
+    }
+    async function listProjectServiceAccounts(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { project_id, ...params } = parameters.payload;
+      const list = await openai.admin.organization.projects.serviceAccounts.list(project_id, params);
+      return [...list.data];
+    }
+    async function deleteProjectServiceAccount(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { service_account_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.serviceAccounts.delete(service_account_id, params);
+      return response;
+    }
+    async function createProjectUser(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { project_id, ...body } = parameters.payload;
+      const response = await openai.admin.organization.projects.users.create(project_id, body);
+      return response;
+    }
+    async function getProjectUser(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { user_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.users.retrieve(user_id, params);
+      return response;
+    }
+    async function modifyProjectUser(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { user_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.users.update(user_id, params);
+      return response;
+    }
+    async function listProjectUsers(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { project_id, ...params } = parameters.payload;
+      const list = await openai.admin.organization.projects.users.list(project_id, params);
+      return [...list.data];
+    }
+    async function deleteProjectUser(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { user_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.users.delete(user_id, params);
+      return response;
+    }
+    async function createProjectUserRole(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { user_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.users.roles.create(user_id, params);
+      return response;
+    }
+    async function listProjectUserRoles(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { user_id, ...params } = parameters.payload;
+      const list = await openai.admin.organization.projects.users.roles.list(user_id, params);
+      return [...list.data];
+    }
+    async function deleteProjectUserRole(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { role_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.users.roles.delete(role_id, params);
+      return response;
+    }
+    async function createProjectGroup(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { project_id, ...body } = parameters.payload;
+      const response = await openai.admin.organization.projects.groups.create(project_id, body);
+      return response;
+    }
+    async function listProjectGroups(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { project_id, ...params } = parameters.payload;
+      const list = await openai.admin.organization.projects.groups.list(project_id, params);
+      return [...list.data];
+    }
+    async function deleteProjectGroup(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { group_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.groups.delete(group_id, params);
+      return response;
+    }
+    async function createProjectGroupRole(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { group_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.groups.roles.create(group_id, params);
+      return response;
+    }
+    async function listProjectGroupRoles(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { group_id, ...params } = parameters.payload;
+      const list = await openai.admin.organization.projects.groups.roles.list(group_id, params);
+      return [...list.data];
+    }
+    async function deleteProjectGroupRole(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { role_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.groups.roles.delete(role_id, params);
+      return response;
+    }
+    async function createProjectRole(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { project_id, ...body } = parameters.payload;
+      const response = await openai.admin.organization.projects.roles.create(project_id, body);
+      return response;
+    }
+    async function modifyProjectRole(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { role_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.roles.update(role_id, params);
+      return response;
+    }
+    async function listProjectRoles(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { project_id, ...params } = parameters.payload;
+      const list = await openai.admin.organization.projects.roles.list(project_id, params);
+      return [...list.data];
+    }
+    async function deleteProjectRole(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { role_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.roles.delete(role_id, params);
+      return response;
+    }
+    async function listProjectRateLimits(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { project_id, ...params } = parameters.payload;
+      const list = await openai.admin.organization.projects.rateLimits.listRateLimits(project_id, params);
+      return [...list.data];
+    }
+    async function modifyProjectRateLimit(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { rate_limit_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.rateLimits.updateRateLimit(rate_limit_id, params);
+      return response;
+    }
+    var adminMethods = {
+      listOrganizationAuditLogs,
+      createOrganizationAdminApiKey,
+      getOrganizationAdminApiKey,
+      listOrganizationAdminApiKeys,
+      deleteOrganizationAdminApiKey,
+      getOrganizationUsageAudioSpeeches,
+      getOrganizationUsageAudioTranscriptions,
+      getOrganizationUsageCodeInterpreterSessions,
+      getOrganizationUsageCompletions,
+      getOrganizationCosts,
+      getOrganizationUsageEmbeddings,
+      getOrganizationUsageImages,
+      getOrganizationUsageModerations,
+      getOrganizationUsageVectorStores,
+      createOrganizationInvite,
+      getOrganizationInvite,
+      listOrganizationInvites,
+      deleteOrganizationInvite,
+      getOrganizationUser,
+      modifyOrganizationUser,
+      listOrganizationUsers,
+      deleteOrganizationUser,
+      createOrganizationUserRole,
+      listOrganizationUserRoles,
+      deleteOrganizationUserRole,
+      createOrganizationGroup,
+      modifyOrganizationGroup,
+      listOrganizationGroups,
+      deleteOrganizationGroup,
+      createOrganizationGroupUser,
+      listOrganizationGroupUsers,
+      deleteOrganizationGroupUser,
+      createOrganizationGroupRole,
+      listOrganizationGroupRoles,
+      deleteOrganizationGroupRole,
+      createOrganizationRole,
+      modifyOrganizationRole,
+      listOrganizationRoles,
+      deleteOrganizationRole,
+      createOrganizationCertificate,
+      getOrganizationCertificate,
+      modifyOrganizationCertificate,
+      listOrganizationCertificates,
+      deleteOrganizationCertificate,
+      activateOrganizationCertificates,
+      deactivateOrganizationCertificates,
+      createOrganizationProject,
+      getOrganizationProject,
+      modifyOrganizationProject,
+      listOrganizationProjects,
+      archiveOrganizationProject,
+      getProjectApiKey,
+      listProjectApiKeys,
+      deleteProjectApiKey,
+      listProjectCertificates,
+      activateProjectCertificates,
+      deactivateProjectCertificates,
+      createProjectServiceAccount,
+      getProjectServiceAccount,
+      listProjectServiceAccounts,
+      deleteProjectServiceAccount,
+      createProjectUser,
+      getProjectUser,
+      modifyProjectUser,
+      listProjectUsers,
+      deleteProjectUser,
+      createProjectUserRole,
+      listProjectUserRoles,
+      deleteProjectUserRole,
+      createProjectGroup,
+      listProjectGroups,
+      deleteProjectGroup,
+      createProjectGroupRole,
+      listProjectGroupRoles,
+      deleteProjectGroupRole,
+      createProjectRole,
+      modifyProjectRole,
+      listProjectRoles,
+      deleteProjectRole,
+      listProjectRateLimits,
+      modifyProjectRateLimit
+    };
+    Object.values(adminMethods).forEach((method) => {
+      method.authentication = "admin";
+    });
+    module2.exports = adminMethods;
+  }
+});
+
+// src/assistants/methods.js
+var require_methods3 = __commonJS({
   "src/assistants/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function listAssistants(parameters) {
@@ -11510,7 +12065,7 @@ var require_methods2 = __commonJS({
 });
 
 // src/audio/methods.js
-var require_methods3 = __commonJS({
+var require_methods4 = __commonJS({
   "src/audio/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     var fs = require("fs");
@@ -11543,7 +12098,7 @@ var require_methods3 = __commonJS({
 });
 
 // src/batch/methods.js
-var require_methods4 = __commonJS({
+var require_methods5 = __commonJS({
   "src/batch/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createBatch(parameters) {
@@ -11579,7 +12134,7 @@ var require_methods4 = __commonJS({
 });
 
 // src/chat/methods.js
-var require_methods5 = __commonJS({
+var require_methods6 = __commonJS({
   "src/chat/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createChatCompletion(parameters) {
@@ -11650,7 +12205,7 @@ var require_methods5 = __commonJS({
 });
 
 // src/chatkit/methods.js
-var require_methods6 = __commonJS({
+var require_methods7 = __commonJS({
   "src/chatkit/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createChatKitSession(parameters) {
@@ -11699,7 +12254,7 @@ var require_methods6 = __commonJS({
 });
 
 // src/container-files/methods.js
-var require_methods7 = __commonJS({
+var require_methods8 = __commonJS({
   "src/container-files/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     var fs = require("fs");
@@ -11759,7 +12314,7 @@ var require_methods7 = __commonJS({
 });
 
 // src/containers/methods.js
-var require_methods8 = __commonJS({
+var require_methods9 = __commonJS({
   "src/containers/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function listContainers(parameters) {
@@ -11794,7 +12349,7 @@ var require_methods8 = __commonJS({
 });
 
 // src/conversations/methods.js
-var require_methods9 = __commonJS({
+var require_methods10 = __commonJS({
   "src/conversations/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createConversation(parameters) {
@@ -11864,7 +12419,7 @@ var require_methods9 = __commonJS({
 });
 
 // src/embeddings/methods.js
-var require_methods10 = __commonJS({
+var require_methods11 = __commonJS({
   "src/embeddings/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createEmbedding(parameters) {
@@ -11879,7 +12434,7 @@ var require_methods10 = __commonJS({
 });
 
 // src/evals/methods.js
-var require_methods11 = __commonJS({
+var require_methods12 = __commonJS({
   "src/evals/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createEval(parameters) {
@@ -11986,7 +12541,7 @@ var require_methods11 = __commonJS({
 });
 
 // src/files/methods.js
-var require_methods12 = __commonJS({
+var require_methods13 = __commonJS({
   "src/files/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     var fs = require("fs");
@@ -12031,7 +12586,7 @@ var require_methods12 = __commonJS({
 });
 
 // src/fine-tuning/methods.js
-var require_methods13 = __commonJS({
+var require_methods14 = __commonJS({
   "src/fine-tuning/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createFineTuningJob(parameters) {
@@ -12092,7 +12647,7 @@ var require_methods13 = __commonJS({
 });
 
 // src/images/methods.js
-var require_methods14 = __commonJS({
+var require_methods15 = __commonJS({
   "src/images/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     var fs = require("fs");
@@ -12158,7 +12713,7 @@ var require_methods14 = __commonJS({
 });
 
 // src/messages/methods.js
-var require_methods15 = __commonJS({
+var require_methods16 = __commonJS({
   "src/messages/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function listMessages(parameters) {
@@ -12214,7 +12769,7 @@ var require_methods15 = __commonJS({
 });
 
 // src/models/methods.js
-var require_methods16 = __commonJS({
+var require_methods17 = __commonJS({
   "src/models/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function listModels(parameters) {
@@ -12243,7 +12798,7 @@ var require_methods16 = __commonJS({
 });
 
 // src/moderations/methods.js
-var require_methods17 = __commonJS({
+var require_methods18 = __commonJS({
   "src/moderations/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createModeration(parameters) {
@@ -12258,7 +12813,7 @@ var require_methods17 = __commonJS({
 });
 
 // src/realtime/methods.js
-var require_methods18 = __commonJS({
+var require_methods19 = __commonJS({
   "src/realtime/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createRealtimeClientSecret(parameters) {
@@ -16072,7 +16627,7 @@ var require_websocket2 = __commonJS({
 });
 
 // src/responses/methods.js
-var require_methods19 = __commonJS({
+var require_methods20 = __commonJS({
   "src/responses/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     var { ResponsesWebSocket } = require_websocket2();
@@ -16312,7 +16867,7 @@ var require_methods19 = __commonJS({
 });
 
 // src/runs/methods.js
-var require_methods20 = __commonJS({
+var require_methods21 = __commonJS({
   "src/runs/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createThreadAndRun(parameters) {
@@ -16456,7 +17011,7 @@ var require_methods20 = __commonJS({
 });
 
 // src/skills/methods.js
-var require_methods21 = __commonJS({
+var require_methods22 = __commonJS({
   "src/skills/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createSkill(parameters) {
@@ -16549,7 +17104,7 @@ var require_methods21 = __commonJS({
 });
 
 // src/threads/methods.js
-var require_methods22 = __commonJS({
+var require_methods23 = __commonJS({
   "src/threads/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createThread(parameters) {
@@ -16585,7 +17140,7 @@ var require_methods22 = __commonJS({
 });
 
 // src/uploads/methods.js
-var require_methods23 = __commonJS({
+var require_methods24 = __commonJS({
   "src/uploads/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createUpload(parameters) {
@@ -16683,7 +17238,7 @@ var require_methods23 = __commonJS({
 });
 
 // src/vector-store-file-batches/methods.js
-var require_methods24 = __commonJS({
+var require_methods25 = __commonJS({
   "src/vector-store-file-batches/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     var fs = require("fs");
@@ -16782,7 +17337,7 @@ var require_methods24 = __commonJS({
 });
 
 // src/vector-store-files/methods.js
-var require_methods25 = __commonJS({
+var require_methods26 = __commonJS({
   "src/vector-store-files/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     var fs = require("fs");
@@ -16893,7 +17448,7 @@ var require_methods25 = __commonJS({
 });
 
 // src/vector-stores/methods.js
-var require_methods26 = __commonJS({
+var require_methods27 = __commonJS({
   "src/vector-stores/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createVectorStore(parameters) {
@@ -16944,7 +17499,7 @@ var require_methods26 = __commonJS({
 });
 
 // src/videos/methods.js
-var require_methods27 = __commonJS({
+var require_methods28 = __commonJS({
   "src/videos/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function createVideo(parameters) {
@@ -17018,7 +17573,7 @@ var require_methods27 = __commonJS({
 });
 
 // src/webhooks/methods.js
-var require_methods28 = __commonJS({
+var require_methods29 = __commonJS({
   "src/webhooks/methods.js"(exports2, module2) {
     var OpenAI = require_openai().OpenAI;
     async function unwrapWebhookEvent(parameters) {
@@ -17061,33 +17616,34 @@ var require_methods28 = __commonJS({
 });
 
 // src/lib.js
-var assistants = require_methods2();
-var audio = require_methods3();
-var batch = require_methods4();
-var chat = require_methods5();
-var chatkit = require_methods6();
-var container_files = require_methods7();
-var containers = require_methods8();
-var conversations = require_methods9();
-var embeddings = require_methods10();
-var evals = require_methods11();
-var files = require_methods12();
-var fine_tuning = require_methods13();
-var images = require_methods14();
-var messages = require_methods15();
-var models = require_methods16();
-var moderations = require_methods17();
-var realtime = require_methods18();
-var responses = require_methods19();
-var runs = require_methods20();
-var skills = require_methods21();
-var threads = require_methods22();
-var uploads = require_methods23();
-var vectorStoreFileBatches = require_methods24();
-var vectorStoreFiles = require_methods25();
-var vectorStores = require_methods26();
-var videos = require_methods27();
-var webhooks = require_methods28();
+var admin = require_methods2();
+var assistants = require_methods3();
+var audio = require_methods4();
+var batch = require_methods5();
+var chat = require_methods6();
+var chatkit = require_methods7();
+var container_files = require_methods8();
+var containers = require_methods9();
+var conversations = require_methods10();
+var embeddings = require_methods11();
+var evals = require_methods12();
+var files = require_methods13();
+var fine_tuning = require_methods14();
+var images = require_methods15();
+var messages = require_methods16();
+var models = require_methods17();
+var moderations = require_methods18();
+var realtime = require_methods19();
+var responses = require_methods20();
+var runs = require_methods21();
+var skills = require_methods22();
+var threads = require_methods23();
+var uploads = require_methods24();
+var vectorStoreFileBatches = require_methods25();
+var vectorStoreFiles = require_methods26();
+var vectorStores = require_methods27();
+var videos = require_methods28();
+var webhooks = require_methods29();
 function normalizeHeaderOrQueryName(headerOrQueryName) {
   if (typeof headerOrQueryName !== "string") {
     return "Authorization";
@@ -17141,6 +17697,7 @@ var OpenaiApi = class {
 };
 Object.assign(
   OpenaiApi.prototype,
+  admin,
   assistants,
   audio,
   batch,

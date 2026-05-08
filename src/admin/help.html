@@ -1,0 +1,1353 @@
+<section>
+    <details>
+        <summary style="font-weight: bold;">🛡️ Admin</summary>
+        <a href="https://developers.openai.com/api/reference/administration/overview" target="_blank">Official Documentation
+            <i class="fa fa-external-link fa-sm" aria-hidden="true"></i></a>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Organization Audit Logs</h4>
+        <p>List organization audit logs.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                effective_at
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional timestamp filter object.</dd>
+            <dt class="optional">
+                project_ids
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Optional project ids to filter by.</dd>
+            <dt class="optional">
+                actor_ids
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Optional actor ids to filter by.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of audit log entries to return.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Organization Admin API Key</h4>
+        <p>Create an organization Admin API key.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                name
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Optional label for the new Admin API key.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization Admin API Key</h4>
+        <p>Retrieve an organization Admin API key by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                key_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The Admin API key id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Organization Admin API Keys</h4>
+        <p>List organization Admin API keys.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for keys after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of keys to return.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Organization Admin API Key</h4>
+        <p>Delete an organization Admin API key by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                key_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The Admin API key id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization Usage Audio Speeches</h4>
+        <p>Retrieve organization usage for audio speech generation.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                start_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Inclusive Unix timestamp for the start of the reporting window.</dd>
+            <dt>
+                end_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Exclusive Unix timestamp for the end of the reporting window.</dd>
+            <dt class="optional">
+                bucket_width
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Bucket size such as <code>1m</code>, <code>1h</code>, or <code>1d</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization Usage Audio Transcriptions</h4>
+        <p>Retrieve organization usage for audio transcriptions.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                start_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Inclusive Unix timestamp for the start of the reporting window.</dd>
+            <dt>
+                end_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Exclusive Unix timestamp for the end of the reporting window.</dd>
+            <dt class="optional">
+                bucket_width
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Bucket size such as <code>1m</code>, <code>1h</code>, or <code>1d</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization Usage Code Interpreter Sessions</h4>
+        <p>Retrieve organization usage for code interpreter sessions.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                start_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Inclusive Unix timestamp for the start of the reporting window.</dd>
+            <dt>
+                end_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Exclusive Unix timestamp for the end of the reporting window.</dd>
+            <dt class="optional">
+                bucket_width
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Bucket size such as <code>1m</code>, <code>1h</code>, or <code>1d</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization Usage Completions</h4>
+        <p>Retrieve organization usage for completions.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                start_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Inclusive Unix timestamp for the start of the reporting window.</dd>
+            <dt>
+                end_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Exclusive Unix timestamp for the end of the reporting window.</dd>
+            <dt class="optional">
+                project_ids
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Optional project ids to include.</dd>
+            <dt class="optional">
+                user_ids
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Optional user ids to include.</dd>
+            <dt class="optional">
+                api_key_ids
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Optional API key ids to include.</dd>
+            <dt class="optional">
+                group_by
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Optional dimensions to group by.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization Costs</h4>
+        <p>Retrieve organization cost data.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                start_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Inclusive Unix timestamp for the start of the reporting window.</dd>
+            <dt>
+                end_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Exclusive Unix timestamp for the end of the reporting window.</dd>
+            <dt class="optional">
+                bucket_width
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Bucket size such as <code>1d</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization Usage Embeddings</h4>
+        <p>Retrieve organization usage for embeddings.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                start_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Inclusive Unix timestamp for the start of the reporting window.</dd>
+            <dt>
+                end_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Exclusive Unix timestamp for the end of the reporting window.</dd>
+            <dt class="optional">
+                bucket_width
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Bucket size such as <code>1m</code>, <code>1h</code>, or <code>1d</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization Usage Images</h4>
+        <p>Retrieve organization usage for images.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                start_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Inclusive Unix timestamp for the start of the reporting window.</dd>
+            <dt>
+                end_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Exclusive Unix timestamp for the end of the reporting window.</dd>
+            <dt class="optional">
+                bucket_width
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Bucket size such as <code>1m</code>, <code>1h</code>, or <code>1d</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization Usage Moderations</h4>
+        <p>Retrieve organization usage for moderations.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                start_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Inclusive Unix timestamp for the start of the reporting window.</dd>
+            <dt>
+                end_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Exclusive Unix timestamp for the end of the reporting window.</dd>
+            <dt class="optional">
+                bucket_width
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Bucket size such as <code>1m</code>, <code>1h</code>, or <code>1d</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization Usage Vector Stores</h4>
+        <p>Retrieve organization usage for vector stores.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                start_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Inclusive Unix timestamp for the start of the reporting window.</dd>
+            <dt>
+                end_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Exclusive Unix timestamp for the end of the reporting window.</dd>
+            <dt class="optional">
+                bucket_width
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Bucket size such as <code>1m</code>, <code>1h</code>, or <code>1d</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Organization Invite</h4>
+        <p>Create an organization invite.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                email
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The email address to invite.</dd>
+            <dt class="optional">
+                role
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Optional organization role to assign with the invite.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization Invite</h4>
+        <p>Retrieve an organization invite by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                invite_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The invite id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Organization Invites</h4>
+        <p>List organization invites.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for invites after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of invites to return.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Organization Invite</h4>
+        <p>Delete an organization invite by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                invite_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The invite id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization User</h4>
+        <p>Retrieve an organization user by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                user_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The user id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Organization User</h4>
+        <p>Update mutable fields for an organization user.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                user_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The user id.</dd>
+            <dt class="optional">
+                role
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Optional updated role or other mutable fields supported by the API.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Organization Users</h4>
+        <p>List organization users.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for users after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of users to return.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Organization User</h4>
+        <p>Delete an organization user by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                user_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The user id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Organization User Role</h4>
+        <p>Create a role assignment for an organization user.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                user_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The user id.</dd>
+            <dt>
+                role
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The role to assign.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Organization User Roles</h4>
+        <p>List role assignments for an organization user.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                user_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The user id.</dd>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for roles after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of roles to return.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Organization User Role</h4>
+        <p>Delete a role assignment from an organization user.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                user_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The user id.</dd>
+            <dt>
+                role_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The role assignment id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Organization Group</h4>
+        <p>Create an organization group.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                name
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The group name.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Organization Group</h4>
+        <p>Update an organization group.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                group_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The group id.</dd>
+            <dt class="optional">
+                name
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Updated group name.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Organization Groups</h4>
+        <p>List organization groups.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for groups after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of groups to return.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Organization Group</h4>
+        <p>Delete an organization group by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                group_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The group id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Organization Group User</h4>
+        <p>Add a user to an organization group.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                group_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The group id.</dd>
+            <dt>
+                user_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The user id to add.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Organization Group Users</h4>
+        <p>List users in an organization group.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                group_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The group id.</dd>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for users after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of users to return.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Organization Group User</h4>
+        <p>Remove a user from an organization group.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                group_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The group id.</dd>
+            <dt>
+                user_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The user id to remove.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Organization Group Role</h4>
+        <p>Create a role assignment for an organization group.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                group_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The group id.</dd>
+            <dt>
+                role
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The role to assign.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Organization Group Roles</h4>
+        <p>List role assignments for an organization group.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                group_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The group id.</dd>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for roles after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of roles to return.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Organization Group Role</h4>
+        <p>Delete a role assignment from an organization group.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                group_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The group id.</dd>
+            <dt>
+                role_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The role assignment id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Organization Role</h4>
+        <p>Create an organization role.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                role
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The role name to create.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Organization Role</h4>
+        <p>Update an organization role.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                role_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The role id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Organization Roles</h4>
+        <p>List organization roles.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for roles after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of roles to return.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Organization Role</h4>
+        <p>Delete an organization role by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                role_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The role id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Organization Certificate</h4>
+        <p>Create an organization certificate.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                certificate
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The certificate content or reference required by the API.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization Certificate</h4>
+        <p>Retrieve an organization certificate by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                certificate_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The certificate id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Organization Certificate</h4>
+        <p>Update an organization certificate.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                certificate_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The certificate id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Organization Certificates</h4>
+        <p>List organization certificates.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for certificates after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of certificates to return.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Organization Certificate</h4>
+        <p>Delete an organization certificate by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                certificate_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The certificate id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Activate Organization Certificates</h4>
+        <p>Activate organization certificates.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                certificate_ids
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Certificate ids to activate.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Deactivate Organization Certificates</h4>
+        <p>Deactivate organization certificates.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                certificate_ids
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Certificate ids to deactivate.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Organization Project</h4>
+        <p>Create an organization project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                name
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project name.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization Project</h4>
+        <p>Retrieve an organization project by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Organization Project</h4>
+        <p>Update mutable fields for an organization project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt class="optional">
+                name
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Updated project name.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Organization Projects</h4>
+        <p>List organization projects.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for projects after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of projects to return.</dd>
+            <dt class="optional">
+                include_archived
+                <span class="property-type">boolean</span>
+            </dt>
+            <dd>Whether to include archived projects.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Archive Organization Project</h4>
+        <p>Archive an organization project by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Project API Key</h4>
+        <p>Retrieve a project API key by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                api_key_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project API key id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Project API Keys</h4>
+        <p>List API keys for a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for keys after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of keys to return.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Project API Key</h4>
+        <p>Delete a project API key by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                api_key_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project API key id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Project Certificates</h4>
+        <p>List certificates for a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for certificates after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of certificates to return.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Activate Project Certificates</h4>
+        <p>Activate certificates for a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt class="optional">
+                certificate_ids
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Certificate ids to activate.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Deactivate Project Certificates</h4>
+        <p>Deactivate certificates for a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt class="optional">
+                certificate_ids
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Certificate ids to deactivate.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Project Service Account</h4>
+        <p>Create a service account for a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt class="optional">
+                name
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Optional service account name.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Project Service Account</h4>
+        <p>Retrieve a project service account by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                service_account_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The service account id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Project Service Accounts</h4>
+        <p>List service accounts for a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for service accounts after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of service accounts to return.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Project Service Account</h4>
+        <p>Delete a project service account by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                service_account_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The service account id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Project User</h4>
+        <p>Add a user to a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                user_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The user id to add.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Project User</h4>
+        <p>Retrieve a project user by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                user_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project user id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Project User</h4>
+        <p>Update a project user.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                user_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project user id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Project Users</h4>
+        <p>List users in a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for users after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of users to return.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Project User</h4>
+        <p>Remove a user from a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                user_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project user id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Project User Role</h4>
+        <p>Create a role assignment for a project user.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                user_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project user id.</dd>
+            <dt>
+                role
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The role to assign.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Project User Roles</h4>
+        <p>List role assignments for a project user.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                user_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project user id.</dd>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for roles after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of roles to return.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Project User Role</h4>
+        <p>Delete a role assignment from a project user.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                user_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project user id.</dd>
+            <dt>
+                role_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The role assignment id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Project Group</h4>
+        <p>Add a group to a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                group_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The group id to add.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Project Groups</h4>
+        <p>List groups in a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for groups after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of groups to return.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Project Group</h4>
+        <p>Remove a group from a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                group_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The group id to remove.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Project Group Role</h4>
+        <p>Create a role assignment for a project group.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                group_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The group id.</dd>
+            <dt>
+                role
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The role to assign.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Project Group Roles</h4>
+        <p>List role assignments for a project group.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                group_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The group id.</dd>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for roles after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of roles to return.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Project Group Role</h4>
+        <p>Delete a role assignment from a project group.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                group_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The group id.</dd>
+            <dt>
+                role_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The role assignment id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Project Role</h4>
+        <p>Create a project role.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                role
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The role to create.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Project Role</h4>
+        <p>Update a project role.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                role_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The role id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Project Roles</h4>
+        <p>List project roles.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt class="optional">
+                after
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for roles after this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of roles to return.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Project Role</h4>
+        <p>Delete a project role by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                role_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The role id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Project Rate Limits</h4>
+        <p>List project rate limits.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Project Rate Limit</h4>
+        <p>Update a project rate limit by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                rate_limit_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The rate limit id.</dd>
+        </dl>
+    </details>
+</section>

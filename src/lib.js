@@ -1,5 +1,6 @@
 "use strict";
 
+const admin = require("./admin/methods.js");
 const assistants = require("./assistants/methods.js");
 const audio = require("./audio/methods.js");
 const batch = require("./batch/methods.js");
@@ -96,6 +97,7 @@ class OpenaiApi {
 // Attach all exported methods as instance methods
 Object.assign(
   OpenaiApi.prototype,
+  admin,
   assistants,
   audio,
   batch,
