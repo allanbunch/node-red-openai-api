@@ -17096,6 +17096,9 @@ function normalizeHeaderOrQueryName(headerOrQueryName) {
   return trimmedHeaderOrQueryName || "Authorization";
 }
 function createApiKeyTransportParams(apiKey, apiKeyTransport = {}) {
+  if (!apiKey) {
+    return {};
+  }
   const headerOrQueryName = normalizeHeaderOrQueryName(
     apiKeyTransport.headerOrQueryName
   );
@@ -17120,12 +17123,19 @@ function createApiKeyTransportParams(apiKey, apiKeyTransport = {}) {
   };
 }
 var OpenaiApi = class {
-  constructor(apiKey, baseURL, organization, apiKeyTransport) {
-    this.clientParams = {
-      apiKey,
+  constructor(apiKeyOrOptions, baseURL, organization, apiKeyTransport) {
+    const options = typeof apiKeyOrOptions === "object" && apiKeyOrOptions !== null && !Array.isArray(apiKeyOrOptions) ? apiKeyOrOptions : {
+      apiKey: apiKeyOrOptions,
       baseURL,
       organization,
-      ...createApiKeyTransportParams(apiKey, apiKeyTransport)
+      apiKeyTransport
+    };
+    this.clientParams = {
+      apiKey: options.apiKey ?? null,
+      adminAPIKey: options.adminAPIKey ?? null,
+      baseURL: options.baseURL,
+      organization: options.organization,
+      ...createApiKeyTransportParams(options.apiKey, options.apiKeyTransport)
     };
   }
 };

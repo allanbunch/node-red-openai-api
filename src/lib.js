@@ -38,6 +38,10 @@ function normalizeHeaderOrQueryName(headerOrQueryName) {
 }
 
 function createApiKeyTransportParams(apiKey, apiKeyTransport = {}) {
+  if (!apiKey) {
+    return {};
+  }
+
   const headerOrQueryName = normalizeHeaderOrQueryName(
     apiKeyTransport.headerOrQueryName
   );
@@ -66,12 +70,25 @@ function createApiKeyTransportParams(apiKey, apiKeyTransport = {}) {
 }
 
 class OpenaiApi {
-  constructor(apiKey, baseURL, organization, apiKeyTransport) {
+  constructor(apiKeyOrOptions, baseURL, organization, apiKeyTransport) {
+    const options =
+      typeof apiKeyOrOptions === "object" &&
+        apiKeyOrOptions !== null &&
+        !Array.isArray(apiKeyOrOptions)
+        ? apiKeyOrOptions
+        : {
+          apiKey: apiKeyOrOptions,
+          baseURL,
+          organization,
+          apiKeyTransport,
+        };
+
     this.clientParams = {
-      apiKey,
-      baseURL,
-      organization,
-      ...createApiKeyTransportParams(apiKey, apiKeyTransport),
+      apiKey: options.apiKey ?? null,
+      adminAPIKey: options.adminAPIKey ?? null,
+      baseURL: options.baseURL,
+      organization: options.organization,
+      ...createApiKeyTransportParams(options.apiKey, options.apiKeyTransport),
     };
   }
 }

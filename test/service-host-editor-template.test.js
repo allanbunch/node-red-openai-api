@@ -26,31 +26,35 @@ test("service host API key editor uses native typedInput cred handling", () => {
   );
   assert.match(
     template,
-    /if \(inputValue && inputValue !== "__PWRD__"\) \{/
+    /<input type="text" id="node-config-input-secureAdminApiKeyValue" placeholder="" \/>/
   );
   assert.match(
     template,
-    /const syncApiKeyInputValue = function \(\) \{/
+    /function initializeCredentialTypedInput\(fieldName\) \{/
   );
   assert.match(
     template,
-    /if \(selectedType !== "cred" && currentValue === "__PWRD__"\) \{/
+    /function saveCredentialTypedInput\(fieldName\) \{/
   );
   assert.match(
     template,
-    /apiKeyInput\.typedInput\("value", apiKeyRef\.val\(\) \|\| ""\);/
+    /initializeCredentialTypedInput\("secureApiKeyValue"\);/
   );
   assert.match(
     template,
-    /if \(selectedType === "cred" && previousApiKeyType !== "cred"\) \{/
+    /initializeCredentialTypedInput\("secureAdminApiKeyValue"\);/
   );
   assert.match(
     template,
-    /const inputValue = apiKeyInput\.typedInput\("value"\);/
+    /saveCredentialTypedInput\("secureApiKeyValue"\);/
   );
   assert.match(
     template,
-    /const existingCredValue = apiKeyInput\.val\(\);/
+    /saveCredentialTypedInput\("secureAdminApiKeyValue"\);/
   );
-  assert.ok(!/apiKeyInput\.prop\("type"/.test(template));
+  assert.match(
+    template,
+    /<span data-i18n="OpenaiApi.label.adminApiKey"><\/span>/
+  );
+  assert.ok(!/\.prop\("type"/.test(template));
 });

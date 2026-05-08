@@ -1,25 +1,37 @@
 "use strict";
 const OpenaiApi = require("./lib.js");
 
-function resolveApiKeyType(config, credentials) {
-  return config.secureApiKeyValueType || credentials.secureApiKeyValueType || "cred";
+function resolveCredentialType(config, credentials, valueProp) {
+  return config[`${valueProp}Type`] || credentials[`${valueProp}Type`] || "cred";
 }
 
-function resolveApiKeyValue(config, credentials, apiKeyType) {
-  if (apiKeyType === "cred") {
-    return credentials.secureApiKeyValue;
+function resolveCredentialValue(config, credentials, valueProp, credentialType) {
+  if (credentialType === "cred") {
+    return credentials[valueProp];
   }
 
-  const apiKeyRef = config.secureApiKeyValueRef;
-  if (typeof apiKeyRef === "string" && apiKeyRef.trim() !== "") {
-    return apiKeyRef;
+  const credentialRef = config[`${valueProp}Ref`];
+  if (typeof credentialRef === "string" && credentialRef.trim() !== "") {
+    return credentialRef;
   }
 
-  if (apiKeyRef !== undefined && apiKeyRef !== null && apiKeyRef !== "") {
-    return apiKeyRef;
+  if (
+    credentialRef !== undefined &&
+    credentialRef !== null &&
+    credentialRef !== ""
+  ) {
+    return credentialRef;
   }
 
-  return credentials.secureApiKeyValue;
+  return credentials[valueProp];
+}
+
+function resolveCredentialEntry(config, credentials, valueProp) {
+  const credentialType = resolveCredentialType(config, credentials, valueProp);
+  return {
+    type: credentialType,
+    value: resolveCredentialValue(config, credentials, valueProp, credentialType),
+  };
 }
 
 function normalizeApiKeyHeaderOrQueryName(headerOrQueryName) {
@@ -33,6 +45,10 @@ function normalizeApiKeyHeaderOrQueryName(headerOrQueryName) {
 
 function resolveApiKeyQueryMode(isQueryValue) {
   return isQueryValue === true || isQueryValue === "true";
+}
+
+function methodUsesAdminApiKey(serviceMethod) {
+  return serviceMethod?.authentication === "admin";
 }
 
 module.exports = function (RED) {
@@ -56,6 +72,7 @@ module.exports = function (RED) {
 
         Promise.all([
           node.service.evaluateTypedAsync("secureApiKeyValue", msg, node),
+          node.service.evaluateTypedAsync("secureAdminApiKeyValue", msg, node),
           node.service.evaluateTypedAsync("apiBase", msg, node),
           node.service.evaluateTypedAsync("organizationId", msg, node),
           node.service.evaluateTypedAsync(
@@ -67,11 +84,21 @@ module.exports = function (RED) {
           .then(
             ([
               clientApiKey,
+              clientAdminApiKey,
               clientApiBase,
               clientOrganization,
               clientApiKeyHeaderOrQueryName,
             ]) => {
-              if (!clientApiKey) {
+              const serviceName = node.config.method;
+              const serviceMethod = OpenaiApi.prototype[serviceName];
+              const usesAdminApiKey = methodUsesAdminApiKey(serviceMethod);
+
+              if (usesAdminApiKey && !clientAdminApiKey) {
+                node.error("OpenAI Admin API key is not configured", msg);
+                return;
+              }
+
+              if (!usesAdminApiKey && !clientApiKey) {
                 node.error("OpenAI API key is not configured", msg);
                 return;
               }
@@ -83,12 +110,17 @@ module.exports = function (RED) {
               );
 
               let client = new OpenaiApi(
-                clientApiKey,
-                clientApiBase,
-                clientOrganization,
                 {
-                  headerOrQueryName: resolvedApiKeyHeaderOrQueryName,
-                  isQuery: apiKeyIsQuery,
+                  apiKey: usesAdminApiKey ? null : clientApiKey,
+                  adminAPIKey: usesAdminApiKey ? clientAdminApiKey : null,
+                  baseURL: clientApiBase,
+                  organization: clientOrganization,
+                  apiKeyTransport: usesAdminApiKey
+                    ? undefined
+                    : {
+                      headerOrQueryName: resolvedApiKeyHeaderOrQueryName,
+                      isQuery: apiKeyIsQuery,
+                    },
                 }
               );
 
@@ -103,8 +135,6 @@ module.exports = function (RED) {
                 // For flow and global contexts
                 payload = node.context()[propertyType].get(propertyPath);
               }
-
-              const serviceName = node.config.method; // Set the service name to call.
 
               let serviceParametersObject = {
                 _node: node,
@@ -168,8 +198,12 @@ module.exports = function (RED) {
       this.organizationId = n.organizationId;
 
       const creds = this.credentials || {};
-      const apiKeyType = resolveApiKeyType(n, creds);
-      const apiKeyValue = resolveApiKeyValue(n, creds, apiKeyType);
+      const apiKey = resolveCredentialEntry(n, creds, "secureApiKeyValue");
+      const adminApiKey = resolveCredentialEntry(
+        n,
+        creds,
+        "secureAdminApiKeyValue"
+      );
 
       this.typedConfig = {
         apiBase: { value: n.apiBase, type: n.apiBaseType || "str" },
@@ -178,8 +212,12 @@ module.exports = function (RED) {
           type: n.secureApiKeyHeaderOrQueryNameType || "str",
         },
         secureApiKeyValue: {
-          value: apiKeyValue,
-          type: apiKeyType,
+          value: apiKey.value,
+          type: apiKey.type,
+        },
+        secureAdminApiKeyValue: {
+          value: adminApiKey.value,
+          type: adminApiKey.type,
         },
         organizationId: {
           value: n.organizationId,
@@ -240,6 +278,7 @@ module.exports = function (RED) {
   RED.nodes.registerType("Service Host", ServiceHostNode, {
     credentials: {
       secureApiKeyValue: { type: "password" },
+      secureAdminApiKeyValue: { type: "password" },
       temp: { type: "text" },
     },
   });

@@ -8,6 +8,7 @@
             "header": "Auth Header",
             "organizationId": "Org Id",
             "apiKey": "API Key",
+            "adminApiKey": "Admin API Key",
             "isQuery": "isQuery",
             "property": "Property"
         },

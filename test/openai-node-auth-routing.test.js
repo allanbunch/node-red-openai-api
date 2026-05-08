@@ -86,7 +86,14 @@ function createNodeHarness() {
   };
 }
 
-async function runAuthRoutingCase(serviceConfig) {
+async function runAuthRoutingCase(serviceConfig, nodeConfig = {}) {
+  const { apiNode } = await emitAuthRoutingCase(serviceConfig, nodeConfig);
+
+  assert.equal(apiNode.errorMessages.length, 0);
+  assert.equal(apiNode.sentMessages.length, 1);
+}
+
+async function emitAuthRoutingCase(serviceConfig, nodeConfig = {}) {
   const harness = createNodeHarness();
   assert.ok(harness.OpenaiApiNode, "OpenAI API node should register");
   assert.ok(harness.ServiceHostNode, "Service Host node should register");
@@ -101,6 +108,7 @@ async function runAuthRoutingCase(serviceConfig) {
     organizationIdType: "env",
     secureApiKeyIsQuery: false,
     secureApiKeyValueType: "cred",
+    secureAdminApiKeyValueType: "cred",
     credentials: {
       secureApiKeyValue: "sk-test",
     },
@@ -114,6 +122,7 @@ async function runAuthRoutingCase(serviceConfig) {
     method: "createModelResponse",
     property: "payload",
     propertyType: "msg",
+    ...nodeConfig,
   });
 
   apiNode.emit("input", { payload: { model: "gpt-5-nano" } });
@@ -122,8 +131,7 @@ async function runAuthRoutingCase(serviceConfig) {
   await new Promise((resolve) => setImmediate(resolve));
   await new Promise((resolve) => setImmediate(resolve));
 
-  assert.equal(apiNode.errorMessages.length, 0);
-  assert.equal(apiNode.sentMessages.length, 1);
+  return { harness, serviceNode, apiNode };
 }
 
 test("applies custom auth header to OpenAI client params", async () => {
@@ -203,4 +211,125 @@ test("keeps OpenAI SDK default Authorization behavior when header stays Authoriz
   assert.equal(capturedClientParams.length, 1);
   assert.equal(capturedClientParams[0].defaultHeaders, undefined);
   assert.equal(capturedClientParams[0].defaultQuery, undefined);
+});
+
+test("uses adminAPIKey for Admin-authenticated methods without requiring a normal API key", async () => {
+  const originalMethod = OpenaiApi.prototype.listAdminProjects;
+  const capturedClientParams = [];
+
+  const adminMethod = async function () {
+    capturedClientParams.push({ ...this.clientParams });
+    return { ok: true };
+  };
+  adminMethod.authentication = "admin";
+  OpenaiApi.prototype.listAdminProjects = adminMethod;
+
+  try {
+    await runAuthRoutingCase(
+      {
+        secureApiKeyValueType: "cred",
+        secureAdminApiKeyValueType: "cred",
+        credentials: {
+          secureAdminApiKeyValue: "sk-admin-test",
+        },
+      },
+      { method: "listAdminProjects" }
+    );
+  } finally {
+    if (originalMethod) {
+      OpenaiApi.prototype.listAdminProjects = originalMethod;
+    } else {
+      delete OpenaiApi.prototype.listAdminProjects;
+    }
+  }
+
+  assert.equal(capturedClientParams.length, 1);
+  assert.equal(capturedClientParams[0].apiKey, null);
+  assert.equal(capturedClientParams[0].adminAPIKey, "sk-admin-test");
+  assert.equal(capturedClientParams[0].defaultHeaders, undefined);
+  assert.equal(capturedClientParams[0].defaultQuery, undefined);
+});
+
+test("Admin-authenticated methods ignore normal custom auth routing settings", async () => {
+  const originalMethod = OpenaiApi.prototype.listAdminProjects;
+  const capturedClientParams = [];
+
+  const adminMethod = async function () {
+    capturedClientParams.push({ ...this.clientParams });
+    return { ok: true };
+  };
+  adminMethod.authentication = "admin";
+  OpenaiApi.prototype.listAdminProjects = adminMethod;
+
+  try {
+    await runAuthRoutingCase(
+      {
+        secureApiKeyHeaderOrQueryName: "X-API-Key",
+        secureApiKeyHeaderOrQueryNameType: "str",
+        secureApiKeyIsQuery: "true",
+        credentials: {
+          secureApiKeyValue: "sk-test",
+          secureAdminApiKeyValue: "sk-admin-test",
+        },
+      },
+      { method: "listAdminProjects" }
+    );
+  } finally {
+    if (originalMethod) {
+      OpenaiApi.prototype.listAdminProjects = originalMethod;
+    } else {
+      delete OpenaiApi.prototype.listAdminProjects;
+    }
+  }
+
+  assert.equal(capturedClientParams.length, 1);
+  assert.equal(capturedClientParams[0].apiKey, null);
+  assert.equal(capturedClientParams[0].adminAPIKey, "sk-admin-test");
+  assert.equal(capturedClientParams[0].defaultHeaders, undefined);
+  assert.equal(capturedClientParams[0].defaultQuery, undefined);
+});
+
+test("non-Admin methods still require the normal API key even when an Admin API key is configured", async () => {
+  const { apiNode } = await emitAuthRoutingCase({
+    secureApiKeyValueType: "cred",
+    secureAdminApiKeyValueType: "cred",
+    credentials: {
+      secureAdminApiKeyValue: "sk-admin-test",
+    },
+  });
+
+  assert.equal(apiNode.sentMessages.length, 0);
+  assert.equal(apiNode.errorMessages.length, 1);
+  assert.equal(apiNode.errorMessages[0].error, "OpenAI API key is not configured");
+});
+
+test("Admin-authenticated methods require the Admin API key", async () => {
+  const originalMethod = OpenaiApi.prototype.listAdminProjects;
+
+  const adminMethod = async function () {
+    return { ok: true };
+  };
+  adminMethod.authentication = "admin";
+  OpenaiApi.prototype.listAdminProjects = adminMethod;
+
+  try {
+    const { apiNode } = await emitAuthRoutingCase(
+      {
+        credentials: {
+          secureApiKeyValue: "sk-test",
+        },
+      },
+      { method: "listAdminProjects" }
+    );
+
+    assert.equal(apiNode.sentMessages.length, 0);
+    assert.equal(apiNode.errorMessages.length, 1);
+    assert.equal(apiNode.errorMessages[0].error, "OpenAI Admin API key is not configured");
+  } finally {
+    if (originalMethod) {
+      OpenaiApi.prototype.listAdminProjects = originalMethod;
+    } else {
+      delete OpenaiApi.prototype.listAdminProjects;
+    }
+  }
 });

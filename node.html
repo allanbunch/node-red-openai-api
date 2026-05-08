@@ -5555,10 +5555,13 @@
       secureApiKeyIsQuery: { value: false },
       secureApiKeyValueType: { value: "cred" },
       secureApiKeyValueRef: { value: "" },
+      secureAdminApiKeyValueType: { value: "cred" },
+      secureAdminApiKeyValueRef: { value: "" },
       name: { value: "" },
     },
     credentials: {
       secureApiKeyValue: { type: "password" },
+      secureAdminApiKeyValue: { type: "password" },
       temp: { type: "text" },
     },
     label: function () {
@@ -5577,55 +5580,76 @@
         $("#node-config-input-secureApiKeyIsQuery").val(false);
       }
 
-      const apiKeyInput = $("#node-config-input-secureApiKeyValue");
-      const apiKeyType = $("#node-config-input-secureApiKeyValueType");
-      const apiKeyRef = $("#node-config-input-secureApiKeyValueRef");
+      function initializeCredentialTypedInput(fieldName) {
+        const input = $(`#node-config-input-${fieldName}`);
+        const typeInput = $(`#node-config-input-${fieldName}Type`);
+        const refInput = $(`#node-config-input-${fieldName}Ref`);
+        const existingCredValue = input.val();
 
-      // Preserve existing credential value before initializing typedInput
-      const existingCredValue = apiKeyInput.val();
+        input.typedInput({
+          default: "cred",
+          types: ["cred", "env", "msg", "flow", "global"],
+          typeField: `#node-config-input-${fieldName}Type`,
+        });
 
-      apiKeyInput.typedInput({
-        default: "cred",
-        types: ["cred", "env", "msg", "flow", "global"],
-        typeField: "#node-config-input-secureApiKeyValueType",
-      });
-
-      // Restore credential value if it was populated by Node-RED
-      if (apiKeyType.val() === "cred" && existingCredValue) {
-        apiKeyInput.typedInput("value", existingCredValue);
-      }
-
-      let previousApiKeyType = apiKeyInput.typedInput("type");
-      const syncApiKeyInputValue = function () {
-        const selectedType = apiKeyInput.typedInput("type");
-        const currentValue = apiKeyInput.typedInput("value");
-
-        if (selectedType !== "cred" && currentValue === "__PWRD__") {
-          apiKeyInput.typedInput("value", apiKeyRef.val() || "");
+        if (typeInput.val() === "cred" && existingCredValue) {
+          input.typedInput("value", existingCredValue);
         }
 
-        // Prevent moving a non-credential reference value into credentials.
-        if (selectedType === "cred" && previousApiKeyType !== "cred") {
-          if (currentValue === apiKeyRef.val()) {
-            apiKeyInput.typedInput("value", "");
+        let previousType = input.typedInput("type");
+        const syncInputValue = function () {
+          const selectedType = input.typedInput("type");
+          const currentValue = input.typedInput("value");
+
+          if (selectedType !== "cred" && currentValue === "__PWRD__") {
+            input.typedInput("value", refInput.val() || "");
           }
+
+          if (selectedType === "cred" && previousType !== "cred") {
+            if (currentValue === refInput.val()) {
+              input.typedInput("value", "");
+            }
+          }
+
+          previousType = selectedType;
+        };
+
+        if (typeInput.val() === "str") {
+          input.typedInput("type", "cred");
+          typeInput.val("cred");
         }
 
-        previousApiKeyType = selectedType;
-      };
+        if (typeInput.val() !== "cred" && refInput.val()) {
+          input.typedInput("value", refInput.val());
+        }
 
-      if (apiKeyType.val() === "str") {
-        apiKeyInput.typedInput("type", "cred");
-        apiKeyType.val("cred");
+        syncInputValue();
+        input.on("change", function () {
+          syncInputValue();
+        });
       }
 
-      if (apiKeyType.val() !== "cred" && apiKeyRef.val()) {
-        apiKeyInput.typedInput("value", apiKeyRef.val());
+      function saveCredentialTypedInput(fieldName) {
+        const input = $(`#node-config-input-${fieldName}`);
+        const typeInput = $(`#node-config-input-${fieldName}Type`);
+        const refInput = $(`#node-config-input-${fieldName}Ref`);
+        const selectedType = input.typedInput("type");
+
+        typeInput.val(selectedType);
+
+        if (selectedType !== "cred") {
+          const inputValue = input.typedInput("value");
+          if (inputValue && inputValue !== "__PWRD__") {
+            refInput.val(inputValue);
+            input.typedInput("value", "");
+          }
+        } else {
+          refInput.val("");
+        }
       }
-      syncApiKeyInputValue();
-      apiKeyInput.on("change", function () {
-        syncApiKeyInputValue();
-      });
+
+      initializeCredentialTypedInput("secureApiKeyValue");
+      initializeCredentialTypedInput("secureAdminApiKeyValue");
 
       [
         { input: "#node-config-input-apiBase", type: "#node-config-input-apiBaseType" },
@@ -5640,22 +5664,27 @@
       });
     },
     oneditsave: function () {
-      const apiKeyInput = $("#node-config-input-secureApiKeyValue");
-      const apiKeyType = $("#node-config-input-secureApiKeyValueType");
-      const apiKeyRef = $("#node-config-input-secureApiKeyValueRef");
-      const selectedType = apiKeyInput.typedInput("type");
+      function saveCredentialTypedInput(fieldName) {
+        const input = $(`#node-config-input-${fieldName}`);
+        const typeInput = $(`#node-config-input-${fieldName}Type`);
+        const refInput = $(`#node-config-input-${fieldName}Ref`);
+        const selectedType = input.typedInput("type");
 
-      apiKeyType.val(selectedType);
+        typeInput.val(selectedType);
 
-      if (selectedType !== "cred") {
-        const inputValue = apiKeyInput.typedInput("value");
-        if (inputValue && inputValue !== "__PWRD__") {
-          apiKeyRef.val(inputValue);
-          apiKeyInput.typedInput("value", "");
+        if (selectedType !== "cred") {
+          const inputValue = input.typedInput("value");
+          if (inputValue && inputValue !== "__PWRD__") {
+            refInput.val(inputValue);
+            input.typedInput("value", "");
+          }
+        } else {
+          refInput.val("");
         }
-      } else {
-        apiKeyRef.val("");
       }
+
+      saveCredentialTypedInput("secureApiKeyValue");
+      saveCredentialTypedInput("secureAdminApiKeyValue");
     },
   });
 </script>
@@ -5695,6 +5724,15 @@
     <input type="hidden" id="node-config-input-secureApiKeyValueRef" />
   </div>
   <div class="form-row">
+    <label id="node-config-input-secureAdminApiKeyValue-label" for="node-config-input-secureAdminApiKeyValue">
+      <i class="fa fa-lock"></i>
+      <span data-i18n="OpenaiApi.label.adminApiKey"></span>
+    </label>
+    <input type="text" id="node-config-input-secureAdminApiKeyValue" placeholder="" />
+    <input type="hidden" id="node-config-input-secureAdminApiKeyValueType" />
+    <input type="hidden" id="node-config-input-secureAdminApiKeyValueRef" />
+  </div>
+  <div class="form-row">
     <label id="node-config-input-organizationId-label" for="node-config-input-organizationId">
       <i class="fa fa-list"></i>
       <span data-i18n="OpenaiApi.label.organizationId"></span>
@@ -5731,5 +5769,6 @@
 <script type="text/html" data-help-name="Service Host">
   <p><b>Auth Header</b>: Header name used to send the API key. Defaults to <code>Authorization</code>.</p>
   <p><b>isQuery</b>: When true, the API key is sent as a query parameter using the Auth Header value as the parameter name.</p>
-  <p><b>API Key</b>: API key value or typed reference.</p>
+  <p><b>API Key</b>: Normal API key value or typed reference. Custom header and query auth settings apply to this key only.</p>
+  <p><b>Admin API Key</b>: Admin-only API key value or typed reference used for OpenAI Admin-authenticated routes.</p>
 </script>

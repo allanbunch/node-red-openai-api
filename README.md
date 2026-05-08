@@ -230,9 +230,10 @@ Import-ready example flows live under `examples/`:
 The `Service Host` config node handles the provider-specific runtime boundary.
 
 - `API Key` supports `cred`, `env`, `msg`, `flow`, and `global`
+- `Admin API Key` supports `cred`, `env`, `msg`, `flow`, and `global` for Admin-authenticated OpenAI routes
 - `API Base` can point at OpenAI or a compatible provider
-- `Auth Header` defaults to `Authorization`, but can be changed for provider-specific auth conventions
-- auth can be sent either as a header or as a query-string parameter
+- `Auth Header` defaults to `Authorization`, but can be changed for provider-specific auth conventions on the normal API key path
+- auth can be sent either as a header or as a query-string parameter for the normal API key path
 - `Organization ID` is optional and supports typed values like the other service fields
 
 This is the piece that lets one runtime model work cleanly across both OpenAI and compatible API surfaces.

@@ -98,6 +98,23 @@ test("uses explicit reference value when API key type is env", () => {
   assert.equal(calls[0].type, "env");
 });
 
+test("uses explicit reference value when Admin API key type is env", () => {
+  const calls = [];
+  const ServiceHostNode = createServiceHostNode(createEvaluateNodeProperty(calls));
+  const node = new ServiceHostNode({
+    secureAdminApiKeyValueType: "env",
+    secureAdminApiKeyValueRef: "OPENAI_ADMIN_KEY",
+    credentials: { secureAdminApiKeyValue: "sk-admin-ignored" },
+  });
+
+  const result = node.evaluateTyped("secureAdminApiKeyValue", {}, node);
+
+  assert.equal(result, "resolved:env:OPENAI_ADMIN_KEY");
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].value, "OPENAI_ADMIN_KEY");
+  assert.equal(calls[0].type, "env");
+});
+
 test("supports legacy non-cred nodes that stored env reference in credentials", () => {
   const calls = [];
   const ServiceHostNode = createServiceHostNode(createEvaluateNodeProperty(calls));
