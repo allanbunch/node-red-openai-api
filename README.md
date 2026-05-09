@@ -125,6 +125,8 @@ If you want to understand the shape of this node quickly, these example flows ar
 
 - [`examples/chat.json`](examples/chat.json)
   A straightforward API-call flow for getting oriented.
+- [`examples/admin.json`](examples/admin.json)
+  Shows the Admin surface for organization and project controls, including project listing, audit-log retrieval, rate-limit inspection, and rate-limit updates.
 - [`examples/chatkit/sessions-and-threads.json`](examples/chatkit/sessions-and-threads.json)
   Shows how to create and cancel ChatKit sessions for a published Agent Builder workflow, then inspect the resulting threads and thread items.
 - [`examples/conversations.json`](examples/conversations.json)
@@ -150,6 +152,7 @@ If you want to understand the shape of this node quickly, these example flows ar
 
 This repository currently includes:
 
+- Admin API support, including Admin API key routing, organization audit logs, organization project controls, project rate-limit operations, and a first-class Admin method family in the editor
 - ChatKit / Agent Builder support, including session creation and cancellation, plus thread and thread-item inspection for published workflows
 - Conversations support, including the upstream `items` array contract for create-item requests and assistant-message `phase` values `commentary` and `final_answer`
 - Responses API support, including current SDK-typed model ids such as `gpt-5.4-mini`, `gpt-5.4-nano`, and dated variants like `gpt-5.4-mini-2026-03-17`, plus `phase`, `input_file.detail`, `prompt_cache_key`, `prompt_cache_retention` values such as `in_memory`, `include` values such as `web_search_call.results`, `top_logprobs`, `tool_search`, deferred MCP loading via `defer_loading`, GA computer-use payloads, parse and stream helpers, cancellation, compaction, input-token counting, and websocket mode
@@ -167,6 +170,7 @@ See the in-editor node help for exact method payloads and links to official API 
 
 The method picker covers a wide range of OpenAI API families:
 
+- Admin
 - Assistants
 - Audio
 - Batch
@@ -201,6 +205,7 @@ The method picker covers a wide range of OpenAI API families:
 
 Import-ready example flows live under `examples/`:
 
+- [`examples/admin.json`](examples/admin.json)
 - [`examples/assistants.json`](examples/assistants.json)
 - [`examples/audio.json`](examples/audio.json)
 - [`examples/chat.json`](examples/chat.json)

@@ -1,0 +1,225 @@
+[
+    {
+        "id": "6a49c6dfe3a24511",
+        "type": "tab",
+        "label": "Admin Example",
+        "disabled": false,
+        "info": "Admin example.\n\nThis flow shows the current Admin surface for organization and project controls in the same direct Node-RED style as the rest of the project:\n- list organization projects\n- inspect recent organization audit logs\n- inspect project rate limits\n- update a project rate limit by id\n\nBefore running:\n- import the flow, then configure each red-marked `OpenAI API` node with your own `Service Host`\n- the selected `Service Host` must include an `Admin API Key`\n- replace `proj_replace_me` and `rlimit_replace_me` with real ids returned by your organization or project lookups\n\nThis flow keeps all request data under `msg.payload`, which matches the default `OpenAI API` node property.",
+        "env": []
+    },
+    {
+        "id": "eb58f2dd2c6a4d73",
+        "type": "comment",
+        "z": "6a49c6dfe3a24511",
+        "name": "Use a Service Host with an Admin API Key, then replace the placeholder project and rate-limit ids.",
+        "info": "What this flow covers:\n- organization project listing through `listOrganizationProjects`\n- organization audit-log retrieval through `listOrganizationAuditLogs`\n- project rate-limit inspection through `listProjectRateLimits`\n- project rate-limit updates through `modifyProjectRateLimit`\n\nExpected setup:\n- your `Service Host` must include a working `Admin API Key`\n- `proj_replace_me` should be replaced with a real `project_id`\n- `rlimit_replace_me` should be replaced with a real `rate_limit_id` from the list-rate-limits response",
+        "x": 520,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "4f4c2c4d3f9f4f6d",
+        "type": "inject",
+        "z": "6a49c6dfe3a24511",
+        "name": "List Organization Projects",
+        "props": [
+            {
+                "p": "payload.limit",
+                "v": "10",
+                "vt": "num"
+            },
+            {
+                "p": "payload.include_archived",
+                "v": "false",
+                "vt": "bool"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 210,
+        "y": 220,
+        "wires": [
+            [
+                "4b8d06bd3d5f45ba"
+            ]
+        ]
+    },
+    {
+        "id": "4b8d06bd3d5f45ba",
+        "type": "OpenAI API",
+        "z": "6a49c6dfe3a24511",
+        "name": "List Organization Projects",
+        "property": "payload",
+        "propertyType": "msg",
+        "service": "",
+        "method": "listOrganizationProjects",
+        "x": 500,
+        "y": 220,
+        "wires": [
+            [
+                "08cc06e7f92249ca"
+            ]
+        ]
+    },
+    {
+        "id": "be0f4ef4055d4e62",
+        "type": "inject",
+        "z": "6a49c6dfe3a24511",
+        "name": "List Organization Audit Logs",
+        "props": [
+            {
+                "p": "payload.limit",
+                "v": "20",
+                "vt": "num"
+            },
+            {
+                "p": "payload.effective_at",
+                "v": "{\"gt\":1710000000}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 220,
+        "y": 300,
+        "wires": [
+            [
+                "f836a42338444d8f"
+            ]
+        ]
+    },
+    {
+        "id": "f836a42338444d8f",
+        "type": "OpenAI API",
+        "z": "6a49c6dfe3a24511",
+        "name": "List Organization Audit Logs",
+        "property": "payload",
+        "propertyType": "msg",
+        "service": "",
+        "method": "listOrganizationAuditLogs",
+        "x": 510,
+        "y": 300,
+        "wires": [
+            [
+                "08cc06e7f92249ca"
+            ]
+        ]
+    },
+    {
+        "id": "d98e27b4821647ea",
+        "type": "inject",
+        "z": "6a49c6dfe3a24511",
+        "name": "List Project Rate Limits",
+        "props": [
+            {
+                "p": "payload.project_id",
+                "v": "proj_replace_me",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 210,
+        "y": 380,
+        "wires": [
+            [
+                "9f910f112c93456f"
+            ]
+        ]
+    },
+    {
+        "id": "9f910f112c93456f",
+        "type": "OpenAI API",
+        "z": "6a49c6dfe3a24511",
+        "name": "List Project Rate Limits",
+        "property": "payload",
+        "propertyType": "msg",
+        "service": "",
+        "method": "listProjectRateLimits",
+        "x": 500,
+        "y": 380,
+        "wires": [
+            [
+                "08cc06e7f92249ca"
+            ]
+        ]
+    },
+    {
+        "id": "307a2c5d1fb541b2",
+        "type": "inject",
+        "z": "6a49c6dfe3a24511",
+        "name": "Modify Project Rate Limit",
+        "props": [
+            {
+                "p": "payload.project_id",
+                "v": "proj_replace_me",
+                "vt": "str"
+            },
+            {
+                "p": "payload.rate_limit_id",
+                "v": "rlimit_replace_me",
+                "vt": "str"
+            },
+            {
+                "p": "payload.max_requests_per_1_minute",
+                "v": "500",
+                "vt": "num"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 210,
+        "y": 460,
+        "wires": [
+            [
+                "72d3f27538464b90"
+            ]
+        ]
+    },
+    {
+        "id": "72d3f27538464b90",
+        "type": "OpenAI API",
+        "z": "6a49c6dfe3a24511",
+        "name": "Modify Project Rate Limit",
+        "property": "payload",
+        "propertyType": "msg",
+        "service": "",
+        "method": "modifyProjectRateLimit",
+        "x": 500,
+        "y": 460,
+        "wires": [
+            [
+                "08cc06e7f92249ca"
+            ]
+        ]
+    },
+    {
+        "id": "08cc06e7f92249ca",
+        "type": "debug",
+        "z": "6a49c6dfe3a24511",
+        "name": "Admin Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 340,
+        "wires": []
+    }
+]
