@@ -110,7 +110,7 @@ Example `msg.payload` for `create model response`:
 
 The node writes its output back to `msg.payload`.
 
-## Important v6.37.0 Update
+## Important Update Since v6.34.0
 
 `Create Conversation Item` now follows the upstream OpenAI Conversations contract.
 
