@@ -6,7 +6,7 @@
 
 This project brings the OpenAI API, and OpenAI-compatible APIs, into Node-RED as workflow-native building blocks.
 
-It is not just a thin wrapper around text generation. The node exposes modern AI capabilities inside a runtime people can inspect, route, test, and operate: request and response workflows, tools, conversations, streaming, realtime interactions, webhooks, and related API families that matter in real systems.
+This node brings modern AI capabilities to a runtime people can inspect, route, test, and operate: request and response workflows, tools, conversations, streaming, realtime interactions, webhooks, and related API families that matter in real systems.
 
 That makes this repository relevant beyond Node-RED alone. It is a practical implementation of how contemporary AI capabilities can live inside an open workflow environment instead of being locked inside a single vendor surface or hidden behind a one-purpose abstraction.
 
