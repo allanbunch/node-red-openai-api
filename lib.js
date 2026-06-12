@@ -433,7 +433,7 @@ var require_version = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.VERSION = void 0;
-    exports2.VERSION = "6.37.0";
+    exports2.VERSION = "6.39.1";
   }
 });
 
@@ -2054,31 +2054,34 @@ var require_workload_identity_auth = __commonJS({
       }
       async refreshToken() {
         const subjectToken = await this.config.provider.getToken();
+        const body = {
+          grant_type: TOKEN_EXCHANGE_GRANT_TYPE,
+          subject_token: subjectToken,
+          subject_token_type: SUBJECT_TOKEN_TYPES[this.config.provider.tokenType],
+          identity_provider_id: this.config.identityProviderId,
+          service_account_id: this.config.serviceAccountId
+        };
+        if (this.config.clientId) {
+          body["client_id"] = this.config.clientId;
+        }
         const response = await this.fetch(this.tokenExchangeUrl, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({
-            grant_type: TOKEN_EXCHANGE_GRANT_TYPE,
-            client_id: this.config.clientId,
-            subject_token: subjectToken,
-            subject_token_type: SUBJECT_TOKEN_TYPES[this.config.provider.tokenType],
-            identity_provider_id: this.config.identityProviderId,
-            service_account_id: this.config.serviceAccountId
-          })
+          body: JSON.stringify(body)
         });
         if (!response.ok) {
           const errorText = await response.text();
-          let body = void 0;
+          let body2 = void 0;
           try {
-            body = JSON.parse(errorText);
+            body2 = JSON.parse(errorText);
           } catch {
           }
           if (response.status === 400 || response.status === 401 || response.status === 403) {
-            throw new error_1.OAuthError(response.status, body, response.headers);
+            throw new error_1.OAuthError(response.status, body2, response.headers);
           }
-          throw error_1.APIError.generate(response.status, body, `Token exchange failed with status ${response.status}`, response.headers);
+          throw error_1.APIError.generate(response.status, body2, `Token exchange failed with status ${response.status}`, response.headers);
         }
         const tokenResponse = await response.json();
         const expiresIn = tokenResponse.expires_in || 3600;
@@ -4363,6 +4366,52 @@ var require_certificates = __commonJS({
   }
 });
 
+// node_modules/openai/resources/admin/organization/data-retention.js
+var require_data_retention = __commonJS({
+  "node_modules/openai/resources/admin/organization/data-retention.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.DataRetention = void 0;
+    var resource_1 = require_resource();
+    var DataRetention = class extends resource_1.APIResource {
+      /**
+       * Retrieves organization data retention controls.
+       *
+       * @example
+       * ```ts
+       * const organizationDataRetention =
+       *   await client.admin.organization.dataRetention.retrieve();
+       * ```
+       */
+      retrieve(options) {
+        return this._client.get("/organization/data_retention", {
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+      /**
+       * Updates organization data retention controls.
+       *
+       * @example
+       * ```ts
+       * const organizationDataRetention =
+       *   await client.admin.organization.dataRetention.update({
+       *     retention_type: 'zero_data_retention',
+       *   });
+       * ```
+       */
+      update(body, options) {
+        return this._client.post("/organization/data_retention", {
+          body,
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+    };
+    exports2.DataRetention = DataRetention;
+  }
+});
+
 // node_modules/openai/resources/admin/organization/invites.js
 var require_invites = __commonJS({
   "node_modules/openai/resources/admin/organization/invites.js"(exports2) {
@@ -4479,6 +4528,22 @@ var require_roles = __commonJS({
         });
       }
       /**
+       * Retrieves an organization role.
+       *
+       * @example
+       * ```ts
+       * const role = await client.admin.organization.roles.retrieve(
+       *   'role_id',
+       * );
+       * ```
+       */
+      retrieve(roleID, options) {
+        return this._client.get((0, path_1.path)`/organization/roles/${roleID}`, {
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+      /**
        * Updates an existing organization role.
        *
        * @example
@@ -4531,6 +4596,103 @@ var require_roles = __commonJS({
       }
     };
     exports2.Roles = Roles;
+  }
+});
+
+// node_modules/openai/resources/admin/organization/spend-alerts.js
+var require_spend_alerts = __commonJS({
+  "node_modules/openai/resources/admin/organization/spend-alerts.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.SpendAlerts = void 0;
+    var resource_1 = require_resource();
+    var pagination_1 = require_pagination();
+    var path_1 = require_path();
+    var SpendAlerts = class extends resource_1.APIResource {
+      /**
+       * Creates an organization spend alert.
+       *
+       * @example
+       * ```ts
+       * const organizationSpendAlert =
+       *   await client.admin.organization.spendAlerts.create({
+       *     currency: 'USD',
+       *     interval: 'month',
+       *     notification_channel: {
+       *       recipients: ['string'],
+       *       type: 'email',
+       *     },
+       *     threshold_amount: 0,
+       *   });
+       * ```
+       */
+      create(body, options) {
+        return this._client.post("/organization/spend_alerts", {
+          body,
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+      /**
+       * Updates an organization spend alert.
+       *
+       * @example
+       * ```ts
+       * const organizationSpendAlert =
+       *   await client.admin.organization.spendAlerts.update(
+       *     'alert_id',
+       *     {
+       *       currency: 'USD',
+       *       interval: 'month',
+       *       notification_channel: {
+       *         recipients: ['string'],
+       *         type: 'email',
+       *       },
+       *       threshold_amount: 0,
+       *     },
+       *   );
+       * ```
+       */
+      update(alertID, body, options) {
+        return this._client.post((0, path_1.path)`/organization/spend_alerts/${alertID}`, {
+          body,
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+      /**
+       * Lists organization spend alerts.
+       *
+       * @example
+       * ```ts
+       * // Automatically fetches more pages as needed.
+       * for await (const organizationSpendAlert of client.admin.organization.spendAlerts.list()) {
+       *   // ...
+       * }
+       * ```
+       */
+      list(query = {}, options) {
+        return this._client.getAPIList("/organization/spend_alerts", pagination_1.ConversationCursorPage, { query, ...options, __security: { adminAPIKeyAuth: true } });
+      }
+      /**
+       * Deletes an organization spend alert.
+       *
+       * @example
+       * ```ts
+       * const organizationSpendAlertDeleted =
+       *   await client.admin.organization.spendAlerts.delete(
+       *     'alert_id',
+       *   );
+       * ```
+       */
+      delete(alertID, options) {
+        return this._client.delete((0, path_1.path)`/organization/spend_alerts/${alertID}`, {
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+    };
+    exports2.SpendAlerts = SpendAlerts;
   }
 });
 
@@ -4651,6 +4813,24 @@ var require_usage = __commonJS({
         });
       }
       /**
+       * Get file search calls usage details for the organization.
+       *
+       * @example
+       * ```ts
+       * const response =
+       *   await client.admin.organization.usage.fileSearchCalls({
+       *     start_time: 0,
+       *   });
+       * ```
+       */
+      fileSearchCalls(query, options) {
+        return this._client.get("/organization/usage/file_search_calls", {
+          query,
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+      /**
        * Get images usage details for the organization.
        *
        * @example
@@ -4704,6 +4884,24 @@ var require_usage = __commonJS({
           __security: { adminAPIKeyAuth: true }
         });
       }
+      /**
+       * Get web search calls usage details for the organization.
+       *
+       * @example
+       * ```ts
+       * const response =
+       *   await client.admin.organization.usage.webSearchCalls({
+       *     start_time: 0,
+       *   });
+       * ```
+       */
+      webSearchCalls(query, options) {
+        return this._client.get("/organization/usage/web_search_calls", {
+          query,
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
     };
     exports2.Usage = Usage;
   }
@@ -4734,6 +4932,25 @@ var require_roles2 = __commonJS({
       create(groupID, body, options) {
         return this._client.post((0, path_1.path)`/organization/groups/${groupID}/roles`, {
           body,
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+      /**
+       * Retrieves an organization role assigned to a group.
+       *
+       * @example
+       * ```ts
+       * const role =
+       *   await client.admin.organization.groups.roles.retrieve(
+       *     'role_id',
+       *     { group_id: 'group_id' },
+       *   );
+       * ```
+       */
+      retrieve(roleID, params, options) {
+        const { group_id } = params;
+        return this._client.get((0, path_1.path)`/organization/groups/${group_id}/roles/${roleID}`, {
           ...options,
           __security: { adminAPIKeyAuth: true }
         });
@@ -4803,6 +5020,25 @@ var require_users = __commonJS({
       create(groupID, body, options) {
         return this._client.post((0, path_1.path)`/organization/groups/${groupID}/users`, {
           body,
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+      /**
+       * Retrieves a user in a group.
+       *
+       * @example
+       * ```ts
+       * const user =
+       *   await client.admin.organization.groups.users.retrieve(
+       *     'user_id',
+       *     { group_id: 'group_id' },
+       *   );
+       * ```
+       */
+      retrieve(userID, params, options) {
+        const { group_id } = params;
+        return this._client.get((0, path_1.path)`/organization/groups/${group_id}/users/${userID}`, {
           ...options,
           __security: { adminAPIKeyAuth: true }
         });
@@ -4880,6 +5116,23 @@ var require_groups = __commonJS({
       create(body, options) {
         return this._client.post("/organization/groups", {
           body,
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+      /**
+       * Retrieves a group.
+       *
+       * @example
+       * ```ts
+       * const group =
+       *   await client.admin.organization.groups.retrieve(
+       *     'group_id',
+       *   );
+       * ```
+       */
+      retrieve(groupID, options) {
+        return this._client.get((0, path_1.path)`/organization/groups/${groupID}`, {
           ...options,
           __security: { adminAPIKeyAuth: true }
         });
@@ -5083,6 +5336,172 @@ var require_certificates2 = __commonJS({
   }
 });
 
+// node_modules/openai/resources/admin/organization/projects/data-retention.js
+var require_data_retention2 = __commonJS({
+  "node_modules/openai/resources/admin/organization/projects/data-retention.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.DataRetention = void 0;
+    var resource_1 = require_resource();
+    var path_1 = require_path();
+    var DataRetention = class extends resource_1.APIResource {
+      /**
+       * Retrieves project data retention controls.
+       *
+       * @example
+       * ```ts
+       * const projectDataRetention =
+       *   await client.admin.organization.projects.dataRetention.retrieve(
+       *     'project_id',
+       *   );
+       * ```
+       */
+      retrieve(projectID, options) {
+        return this._client.get((0, path_1.path)`/organization/projects/${projectID}/data_retention`, {
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+      /**
+       * Updates project data retention controls.
+       *
+       * @example
+       * ```ts
+       * const projectDataRetention =
+       *   await client.admin.organization.projects.dataRetention.update(
+       *     'project_id',
+       *     { retention_type: 'organization_default' },
+       *   );
+       * ```
+       */
+      update(projectID, body, options) {
+        return this._client.post((0, path_1.path)`/organization/projects/${projectID}/data_retention`, {
+          body,
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+    };
+    exports2.DataRetention = DataRetention;
+  }
+});
+
+// node_modules/openai/resources/admin/organization/projects/hosted-tool-permissions.js
+var require_hosted_tool_permissions = __commonJS({
+  "node_modules/openai/resources/admin/organization/projects/hosted-tool-permissions.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.HostedToolPermissions = void 0;
+    var resource_1 = require_resource();
+    var path_1 = require_path();
+    var HostedToolPermissions = class extends resource_1.APIResource {
+      /**
+       * Returns hosted tool permissions for a project.
+       *
+       * @example
+       * ```ts
+       * const projectHostedToolPermissions =
+       *   await client.admin.organization.projects.hostedToolPermissions.retrieve(
+       *     'project_id',
+       *   );
+       * ```
+       */
+      retrieve(projectID, options) {
+        return this._client.get((0, path_1.path)`/organization/projects/${projectID}/hosted_tool_permissions`, {
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+      /**
+       * Updates hosted tool permissions for a project.
+       *
+       * @example
+       * ```ts
+       * const projectHostedToolPermissions =
+       *   await client.admin.organization.projects.hostedToolPermissions.update(
+       *     'project_id',
+       *   );
+       * ```
+       */
+      update(projectID, body, options) {
+        return this._client.post((0, path_1.path)`/organization/projects/${projectID}/hosted_tool_permissions`, {
+          body,
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+    };
+    exports2.HostedToolPermissions = HostedToolPermissions;
+  }
+});
+
+// node_modules/openai/resources/admin/organization/projects/model-permissions.js
+var require_model_permissions = __commonJS({
+  "node_modules/openai/resources/admin/organization/projects/model-permissions.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.ModelPermissions = void 0;
+    var resource_1 = require_resource();
+    var path_1 = require_path();
+    var ModelPermissions = class extends resource_1.APIResource {
+      /**
+       * Returns model permissions for a project.
+       *
+       * @example
+       * ```ts
+       * const projectModelPermissions =
+       *   await client.admin.organization.projects.modelPermissions.retrieve(
+       *     'project_id',
+       *   );
+       * ```
+       */
+      retrieve(projectID, options) {
+        return this._client.get((0, path_1.path)`/organization/projects/${projectID}/model_permissions`, {
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+      /**
+       * Updates model permissions for a project.
+       *
+       * @example
+       * ```ts
+       * const projectModelPermissions =
+       *   await client.admin.organization.projects.modelPermissions.update(
+       *     'project_id',
+       *     { mode: 'allow_list', model_ids: ['string'] },
+       *   );
+       * ```
+       */
+      update(projectID, body, options) {
+        return this._client.post((0, path_1.path)`/organization/projects/${projectID}/model_permissions`, {
+          body,
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+      /**
+       * Deletes model permissions for a project.
+       *
+       * @example
+       * ```ts
+       * const projectModelPermissionsDeleted =
+       *   await client.admin.organization.projects.modelPermissions.delete(
+       *     'project_id',
+       *   );
+       * ```
+       */
+      delete(projectID, options) {
+        return this._client.delete((0, path_1.path)`/organization/projects/${projectID}/model_permissions`, {
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+    };
+    exports2.ModelPermissions = ModelPermissions;
+  }
+});
+
 // node_modules/openai/resources/admin/organization/projects/rate-limits.js
 var require_rate_limits = __commonJS({
   "node_modules/openai/resources/admin/organization/projects/rate-limits.js"(exports2) {
@@ -5159,6 +5578,25 @@ var require_roles3 = __commonJS({
       create(projectID, body, options) {
         return this._client.post((0, path_1.path)`/projects/${projectID}/roles`, {
           body,
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+      /**
+       * Retrieves a project role.
+       *
+       * @example
+       * ```ts
+       * const role =
+       *   await client.admin.organization.projects.roles.retrieve(
+       *     'role_id',
+       *     { project_id: 'project_id' },
+       *   );
+       * ```
+       */
+      retrieve(roleID, params, options) {
+        const { project_id } = params;
+        return this._client.get((0, path_1.path)`/projects/${project_id}/roles/${roleID}`, {
           ...options,
           __security: { adminAPIKeyAuth: true }
         });
@@ -5277,6 +5715,22 @@ var require_service_accounts = __commonJS({
         });
       }
       /**
+       * Updates a service account in the project.
+       *
+       * @example
+       * ```ts
+       * const projectServiceAccount =
+       *   await client.admin.organization.projects.serviceAccounts.update(
+       *     'service_account_id',
+       *     { project_id: 'project_id' },
+       *   );
+       * ```
+       */
+      update(serviceAccountID, params, options) {
+        const { project_id, ...body } = params;
+        return this._client.post((0, path_1.path)`/organization/projects/${project_id}/service_accounts/${serviceAccountID}`, { body, ...options, __security: { adminAPIKeyAuth: true } });
+      }
+      /**
        * Returns a list of service accounts in the project.
        *
        * @example
@@ -5316,6 +5770,112 @@ var require_service_accounts = __commonJS({
   }
 });
 
+// node_modules/openai/resources/admin/organization/projects/spend-alerts.js
+var require_spend_alerts2 = __commonJS({
+  "node_modules/openai/resources/admin/organization/projects/spend-alerts.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.SpendAlerts = void 0;
+    var resource_1 = require_resource();
+    var pagination_1 = require_pagination();
+    var path_1 = require_path();
+    var SpendAlerts = class extends resource_1.APIResource {
+      /**
+       * Creates a project spend alert.
+       *
+       * @example
+       * ```ts
+       * const projectSpendAlert =
+       *   await client.admin.organization.projects.spendAlerts.create(
+       *     'project_id',
+       *     {
+       *       currency: 'USD',
+       *       interval: 'month',
+       *       notification_channel: {
+       *         recipients: ['string'],
+       *         type: 'email',
+       *       },
+       *       threshold_amount: 0,
+       *     },
+       *   );
+       * ```
+       */
+      create(projectID, body, options) {
+        return this._client.post((0, path_1.path)`/organization/projects/${projectID}/spend_alerts`, {
+          body,
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+      /**
+       * Updates a project spend alert.
+       *
+       * @example
+       * ```ts
+       * const projectSpendAlert =
+       *   await client.admin.organization.projects.spendAlerts.update(
+       *     'alert_id',
+       *     {
+       *       project_id: 'project_id',
+       *       currency: 'USD',
+       *       interval: 'month',
+       *       notification_channel: {
+       *         recipients: ['string'],
+       *         type: 'email',
+       *       },
+       *       threshold_amount: 0,
+       *     },
+       *   );
+       * ```
+       */
+      update(alertID, params, options) {
+        const { project_id, ...body } = params;
+        return this._client.post((0, path_1.path)`/organization/projects/${project_id}/spend_alerts/${alertID}`, {
+          body,
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+      /**
+       * Lists project spend alerts.
+       *
+       * @example
+       * ```ts
+       * // Automatically fetches more pages as needed.
+       * for await (const projectSpendAlert of client.admin.organization.projects.spendAlerts.list(
+       *   'project_id',
+       * )) {
+       *   // ...
+       * }
+       * ```
+       */
+      list(projectID, query = {}, options) {
+        return this._client.getAPIList((0, path_1.path)`/organization/projects/${projectID}/spend_alerts`, pagination_1.ConversationCursorPage, { query, ...options, __security: { adminAPIKeyAuth: true } });
+      }
+      /**
+       * Deletes a project spend alert.
+       *
+       * @example
+       * ```ts
+       * const projectSpendAlertDeleted =
+       *   await client.admin.organization.projects.spendAlerts.delete(
+       *     'alert_id',
+       *     { project_id: 'project_id' },
+       *   );
+       * ```
+       */
+      delete(alertID, params, options) {
+        const { project_id } = params;
+        return this._client.delete((0, path_1.path)`/organization/projects/${project_id}/spend_alerts/${alertID}`, {
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+    };
+    exports2.SpendAlerts = SpendAlerts;
+  }
+});
+
 // node_modules/openai/resources/admin/organization/projects/groups/roles.js
 var require_roles4 = __commonJS({
   "node_modules/openai/resources/admin/organization/projects/groups/roles.js"(exports2) {
@@ -5342,6 +5902,25 @@ var require_roles4 = __commonJS({
         const { project_id, ...body } = params;
         return this._client.post((0, path_1.path)`/projects/${project_id}/groups/${groupID}/roles`, {
           body,
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+      /**
+       * Retrieves a project role assigned to a group.
+       *
+       * @example
+       * ```ts
+       * const role =
+       *   await client.admin.organization.projects.groups.roles.retrieve(
+       *     'role_id',
+       *     { project_id: 'project_id', group_id: 'group_id' },
+       *   );
+       * ```
+       */
+      retrieve(roleID, params, options) {
+        const { project_id, group_id } = params;
+        return this._client.get((0, path_1.path)`/projects/${project_id}/groups/${group_id}/roles/${roleID}`, {
           ...options,
           __security: { adminAPIKeyAuth: true }
         });
@@ -5425,6 +6004,26 @@ var require_groups2 = __commonJS({
         });
       }
       /**
+       * Retrieves a project's group.
+       *
+       * @example
+       * ```ts
+       * const projectGroup =
+       *   await client.admin.organization.projects.groups.retrieve(
+       *     'group_id',
+       *     { project_id: 'project_id' },
+       *   );
+       * ```
+       */
+      retrieve(groupID, params, options) {
+        const { project_id, ...query } = params;
+        return this._client.get((0, path_1.path)`/organization/projects/${project_id}/groups/${groupID}`, {
+          query,
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+      /**
        * Lists the groups that have access to a project.
        *
        * @example
@@ -5491,6 +6090,25 @@ var require_roles5 = __commonJS({
         const { project_id, ...body } = params;
         return this._client.post((0, path_1.path)`/projects/${project_id}/users/${userID}/roles`, {
           body,
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+      /**
+       * Retrieves a project role assigned to a user.
+       *
+       * @example
+       * ```ts
+       * const role =
+       *   await client.admin.organization.projects.users.roles.retrieve(
+       *     'role_id',
+       *     { project_id: 'project_id', user_id: 'user_id' },
+       *   );
+       * ```
+       */
+      retrieve(roleID, params, options) {
+        const { project_id, user_id } = params;
+        return this._client.get((0, path_1.path)`/projects/${project_id}/users/${user_id}/roles/${roleID}`, {
           ...options,
           __security: { adminAPIKeyAuth: true }
         });
@@ -5669,12 +6287,20 @@ var require_projects = __commonJS({
     var api_keys_1 = require_api_keys();
     var CertificatesAPI = tslib_1.__importStar(require_certificates2());
     var certificates_1 = require_certificates2();
+    var DataRetentionAPI = tslib_1.__importStar(require_data_retention2());
+    var data_retention_1 = require_data_retention2();
+    var HostedToolPermissionsAPI = tslib_1.__importStar(require_hosted_tool_permissions());
+    var hosted_tool_permissions_1 = require_hosted_tool_permissions();
+    var ModelPermissionsAPI = tslib_1.__importStar(require_model_permissions());
+    var model_permissions_1 = require_model_permissions();
     var RateLimitsAPI = tslib_1.__importStar(require_rate_limits());
     var rate_limits_1 = require_rate_limits();
     var RolesAPI = tslib_1.__importStar(require_roles3());
     var roles_1 = require_roles3();
     var ServiceAccountsAPI = tslib_1.__importStar(require_service_accounts());
     var service_accounts_1 = require_service_accounts();
+    var SpendAlertsAPI = tslib_1.__importStar(require_spend_alerts2());
+    var spend_alerts_1 = require_spend_alerts2();
     var GroupsAPI = tslib_1.__importStar(require_groups2());
     var groups_1 = require_groups2();
     var UsersAPI = tslib_1.__importStar(require_users2());
@@ -5688,8 +6314,12 @@ var require_projects = __commonJS({
         this.serviceAccounts = new ServiceAccountsAPI.ServiceAccounts(this._client);
         this.apiKeys = new APIKeysAPI.APIKeys(this._client);
         this.rateLimits = new RateLimitsAPI.RateLimits(this._client);
+        this.modelPermissions = new ModelPermissionsAPI.ModelPermissions(this._client);
+        this.hostedToolPermissions = new HostedToolPermissionsAPI.HostedToolPermissions(this._client);
         this.groups = new GroupsAPI.Groups(this._client);
         this.roles = new RolesAPI.Roles(this._client);
+        this.dataRetention = new DataRetentionAPI.DataRetention(this._client);
+        this.spendAlerts = new SpendAlertsAPI.SpendAlerts(this._client);
         this.certificates = new CertificatesAPI.Certificates(this._client);
       }
       /**
@@ -5788,8 +6418,12 @@ var require_projects = __commonJS({
     Projects.ServiceAccounts = service_accounts_1.ServiceAccounts;
     Projects.APIKeys = api_keys_1.APIKeys;
     Projects.RateLimits = rate_limits_1.RateLimits;
+    Projects.ModelPermissions = model_permissions_1.ModelPermissions;
+    Projects.HostedToolPermissions = hosted_tool_permissions_1.HostedToolPermissions;
     Projects.Groups = groups_1.Groups;
     Projects.Roles = roles_1.Roles;
+    Projects.DataRetention = data_retention_1.DataRetention;
+    Projects.SpendAlerts = spend_alerts_1.SpendAlerts;
     Projects.Certificates = certificates_1.Certificates;
   }
 });
@@ -5819,6 +6453,25 @@ var require_roles6 = __commonJS({
       create(userID, body, options) {
         return this._client.post((0, path_1.path)`/organization/users/${userID}/roles`, {
           body,
+          ...options,
+          __security: { adminAPIKeyAuth: true }
+        });
+      }
+      /**
+       * Retrieves an organization role assigned to a user.
+       *
+       * @example
+       * ```ts
+       * const role =
+       *   await client.admin.organization.users.roles.retrieve(
+       *     'role_id',
+       *     { user_id: 'user_id' },
+       *   );
+       * ```
+       */
+      retrieve(roleID, params, options) {
+        const { user_id } = params;
+        return this._client.get((0, path_1.path)`/organization/users/${user_id}/roles/${roleID}`, {
           ...options,
           __security: { adminAPIKeyAuth: true }
         });
@@ -5965,10 +6618,14 @@ var require_organization = __commonJS({
     var audit_logs_1 = require_audit_logs();
     var CertificatesAPI = tslib_1.__importStar(require_certificates());
     var certificates_1 = require_certificates();
+    var DataRetentionAPI = tslib_1.__importStar(require_data_retention());
+    var data_retention_1 = require_data_retention();
     var InvitesAPI = tslib_1.__importStar(require_invites());
     var invites_1 = require_invites();
     var RolesAPI = tslib_1.__importStar(require_roles());
     var roles_1 = require_roles();
+    var SpendAlertsAPI = tslib_1.__importStar(require_spend_alerts());
+    var spend_alerts_1 = require_spend_alerts();
     var UsageAPI = tslib_1.__importStar(require_usage());
     var usage_1 = require_usage();
     var GroupsAPI = tslib_1.__importStar(require_groups());
@@ -5987,6 +6644,8 @@ var require_organization = __commonJS({
         this.users = new UsersAPI.Users(this._client);
         this.groups = new GroupsAPI.Groups(this._client);
         this.roles = new RolesAPI.Roles(this._client);
+        this.dataRetention = new DataRetentionAPI.DataRetention(this._client);
+        this.spendAlerts = new SpendAlertsAPI.SpendAlerts(this._client);
         this.certificates = new CertificatesAPI.Certificates(this._client);
         this.projects = new ProjectsAPI.Projects(this._client);
       }
@@ -5999,6 +6658,8 @@ var require_organization = __commonJS({
     Organization.Users = users_1.Users;
     Organization.Groups = groups_1.Groups;
     Organization.Roles = roles_1.Roles;
+    Organization.DataRetention = data_retention_1.DataRetention;
+    Organization.SpendAlerts = spend_alerts_1.SpendAlerts;
     Organization.Certificates = certificates_1.Certificates;
     Organization.Projects = projects_1.Projects;
   }
@@ -10996,7 +11657,10 @@ var require_client = __commonJS({
           if (isTimeout) {
             throw new Errors.APIConnectionTimeoutError();
           }
-          throw new Errors.APIConnectionError({ cause: response });
+          throw new Errors.APIConnectionError({
+            message: getConnectionErrorMessage(response),
+            cause: response
+          });
         }
         const specialHeaders = [...response.headers.entries()].filter(([name]) => name === "x-request-id").map(([name, value]) => ", " + name + ": " + JSON.stringify(value)).join("");
         const responseInfo = `[${requestLogID}${retryLogStr}${specialHeaders}] ${req.method} ${url} ${response.ok ? "succeeded" : "failed"} with status ${response.status} in ${headersTime - startTime}ms`;
@@ -11278,6 +11942,23 @@ var require_client = __commonJS({
     OpenAI.Containers = containers_1.Containers;
     OpenAI.Skills = skills_1.Skills;
     OpenAI.Videos = videos_1.Videos;
+    function getConnectionErrorMessage(error) {
+      if (isUndiciDispatcherVersionMismatchError(error)) {
+        return `Connection error. This may be caused by passing an undici dispatcher, such as ProxyAgent, that is incompatible with the fetch implementation. If you are using undici's ProxyAgent, pass the fetch implementation from the same undici package: import { fetch, ProxyAgent } from 'undici'; new OpenAI({ fetch, fetchOptions: { dispatcher: new ProxyAgent(...) } });`;
+      }
+      return void 0;
+    }
+    function isUndiciDispatcherVersionMismatchError(error) {
+      let current = error;
+      for (let i = 0; i < 8 && current && typeof current === "object"; i++) {
+        const err = current;
+        if (err.code === "UND_ERR_INVALID_ARG" && typeof err.message === "string" && err.message.includes("invalid onRequestStart method")) {
+          return true;
+        }
+        current = err.cause;
+      }
+      return false;
+    }
   }
 });
 
@@ -13032,6 +13713,9 @@ var require_permessage_deflate = __commonJS({
        *     acknowledge disabling of client context takeover
        * @param {Number} [options.concurrencyLimit=10] The number of concurrent
        *     calls to zlib
+       * @param {Boolean} [options.isServer=false] Create the instance in either
+       *     server or client mode
+       * @param {Number} [options.maxPayload=0] The maximum allowed message length
        * @param {(Boolean|Number)} [options.serverMaxWindowBits] Request/confirm the
        *     use of a custom server window size
        * @param {Boolean} [options.serverNoContextTakeover=false] Request/accept
@@ -13042,15 +13726,12 @@ var require_permessage_deflate = __commonJS({
        *     deflate
        * @param {Object} [options.zlibInflateOptions] Options to pass to zlib on
        *     inflate
-       * @param {Boolean} [isServer=false] Create the instance in either server or
-       *     client mode
-       * @param {Number} [maxPayload=0] The maximum allowed message length
        */
-      constructor(options, isServer, maxPayload) {
-        this._maxPayload = maxPayload | 0;
+      constructor(options) {
         this._options = options || {};
         this._threshold = this._options.threshold !== void 0 ? this._options.threshold : 1024;
-        this._isServer = !!isServer;
+        this._maxPayload = this._options.maxPayload | 0;
+        this._isServer = !!this._options.isServer;
         this._deflate = null;
         this._inflate = null;
         this.params = null;
@@ -13624,6 +14305,10 @@ var require_receiver = __commonJS({
        *     extensions
        * @param {Boolean} [options.isServer=false] Specifies whether to operate in
        *     client or server mode
+       * @param {Number} [options.maxBufferedChunks=0] The maximum number of
+       *     buffered data chunks
+       * @param {Number} [options.maxFragments=0] The maximum number of message
+       *     fragments
        * @param {Number} [options.maxPayload=0] The maximum allowed message length
        * @param {Boolean} [options.skipUTF8Validation=false] Specifies whether or
        *     not to skip UTF-8 validation for text and close messages
@@ -13634,6 +14319,8 @@ var require_receiver = __commonJS({
         this._binaryType = options.binaryType || BINARY_TYPES[0];
         this._extensions = options.extensions || {};
         this._isServer = !!options.isServer;
+        this._maxBufferedChunks = options.maxBufferedChunks | 0;
+        this._maxFragments = options.maxFragments | 0;
         this._maxPayload = options.maxPayload | 0;
         this._skipUTF8Validation = !!options.skipUTF8Validation;
         this[kWebSocket] = void 0;
@@ -13663,6 +14350,18 @@ var require_receiver = __commonJS({
        */
       _write(chunk, encoding, cb) {
         if (this._opcode === 8 && this._state == GET_INFO) return cb();
+        if (this._maxBufferedChunks > 0 && this._buffers.length >= this._maxBufferedChunks) {
+          cb(
+            this.createError(
+              RangeError,
+              "Too many buffered chunks",
+              false,
+              1008,
+              "WS_ERR_TOO_MANY_BUFFERED_PARTS"
+            )
+          );
+          return;
+        }
         this._bufferedBytes += chunk.length;
         this._buffers.push(chunk);
         this.startLoop(cb);
@@ -13992,6 +14691,17 @@ var require_receiver = __commonJS({
           return;
         }
         if (data.length) {
+          if (this._maxFragments > 0 && this._fragments.length >= this._maxFragments) {
+            const error = this.createError(
+              RangeError,
+              "Too many message fragments",
+              false,
+              1008,
+              "WS_ERR_TOO_MANY_BUFFERED_PARTS"
+            );
+            cb(error);
+            return;
+          }
           this._messageLength = this._totalPayloadLength;
           this._fragments.push(data);
         }
@@ -14017,6 +14727,17 @@ var require_receiver = __commonJS({
                 false,
                 1009,
                 "WS_ERR_UNSUPPORTED_MESSAGE_LENGTH"
+              );
+              cb(error);
+              return;
+            }
+            if (this._maxFragments > 0 && this._fragments.length >= this._maxFragments) {
+              const error = this.createError(
+                RangeError,
+                "Too many message fragments",
+                false,
+                1008,
+                "WS_ERR_TOO_MANY_BUFFERED_PARTS"
               );
               cb(error);
               return;
@@ -14187,6 +14908,9 @@ var require_sender = __commonJS({
     "use strict";
     var { Duplex } = require("stream");
     var { randomFillSync } = require("crypto");
+    var {
+      types: { isUint8Array }
+    } = require("util");
     var PerMessageDeflate = require_permessage_deflate();
     var { EMPTY_BUFFER, kWebSocket, NOOP } = require_constants();
     var { isBlob, isValidStatusCode } = require_validation();
@@ -14340,8 +15064,10 @@ var require_sender = __commonJS({
           buf.writeUInt16BE(code, 0);
           if (typeof data === "string") {
             buf.write(data, 2);
-          } else {
+          } else if (isUint8Array(data)) {
             buf.set(data, 2);
+          } else {
+            throw new TypeError("Second argument must be a string or a Uint8Array");
           }
         }
         const options = {
@@ -15222,6 +15948,10 @@ var require_websocket = __commonJS({
        *     multiple times in the same tick
        * @param {Function} [options.generateMask] The function used to generate the
        *     masking key
+       * @param {Number} [options.maxBufferedChunks=0] The maximum number of
+       *     buffered data chunks
+       * @param {Number} [options.maxFragments=0] The maximum number of message
+       *     fragments
        * @param {Number} [options.maxPayload=0] The maximum allowed message size
        * @param {Boolean} [options.skipUTF8Validation=false] Specifies whether or
        *     not to skip UTF-8 validation for text and close messages
@@ -15233,6 +15963,8 @@ var require_websocket = __commonJS({
           binaryType: this.binaryType,
           extensions: this._extensions,
           isServer: this._isServer,
+          maxBufferedChunks: options.maxBufferedChunks,
+          maxFragments: options.maxFragments,
           maxPayload: options.maxPayload,
           skipUTF8Validation: options.skipUTF8Validation
         });
@@ -15532,6 +16264,8 @@ var require_websocket = __commonJS({
         autoPong: true,
         closeTimeout: CLOSE_TIMEOUT,
         protocolVersion: protocolVersions[1],
+        maxBufferedChunks: 1024 * 1024,
+        maxFragments: 128 * 1024,
         maxPayload: 100 * 1024 * 1024,
         skipUTF8Validation: false,
         perMessageDeflate: true,
@@ -15560,7 +16294,7 @@ var require_websocket = __commonJS({
       } else {
         try {
           parsedUrl = new URL2(address);
-        } catch (e) {
+        } catch {
           throw new SyntaxError(`Invalid URL: ${address}`);
         }
       }
@@ -15608,11 +16342,11 @@ var require_websocket = __commonJS({
       opts.path = parsedUrl.pathname + parsedUrl.search;
       opts.timeout = opts.handshakeTimeout;
       if (opts.perMessageDeflate) {
-        perMessageDeflate = new PerMessageDeflate(
-          opts.perMessageDeflate !== true ? opts.perMessageDeflate : {},
-          false,
-          opts.maxPayload
-        );
+        perMessageDeflate = new PerMessageDeflate({
+          ...opts.perMessageDeflate,
+          isServer: false,
+          maxPayload: opts.maxPayload
+        });
         opts.headers["Sec-WebSocket-Extensions"] = format({
           [PerMessageDeflate.extensionName]: perMessageDeflate.offer()
         });
@@ -15774,6 +16508,8 @@ var require_websocket = __commonJS({
         websocket.setSocket(socket, head, {
           allowSynchronousEvents: opts.allowSynchronousEvents,
           generateMask: opts.generateMask,
+          maxBufferedChunks: opts.maxBufferedChunks,
+          maxFragments: opts.maxFragments,
           maxPayload: opts.maxPayload,
           skipUTF8Validation: opts.skipUTF8Validation
         });
@@ -16116,6 +16852,10 @@ var require_websocket_server = __commonJS({
        *     called
        * @param {Function} [options.handleProtocols] A hook to handle protocols
        * @param {String} [options.host] The hostname where to bind the server
+       * @param {Number} [options.maxBufferedChunks=1048576] The maximum number of
+       *     buffered data chunks
+       * @param {Number} [options.maxFragments=131072] The maximum number of message
+       *     fragments
        * @param {Number} [options.maxPayload=104857600] The maximum allowed message
        *     size
        * @param {Boolean} [options.noServer=false] Enable no server mode
@@ -16137,6 +16877,8 @@ var require_websocket_server = __commonJS({
         options = {
           allowSynchronousEvents: true,
           autoPong: true,
+          maxBufferedChunks: 1024 * 1024,
+          maxFragments: 128 * 1024,
           maxPayload: 100 * 1024 * 1024,
           skipUTF8Validation: false,
           perMessageDeflate: false,
@@ -16323,11 +17065,11 @@ var require_websocket_server = __commonJS({
         const secWebSocketExtensions = req.headers["sec-websocket-extensions"];
         const extensions = {};
         if (this.options.perMessageDeflate && secWebSocketExtensions !== void 0) {
-          const perMessageDeflate = new PerMessageDeflate(
-            this.options.perMessageDeflate,
-            true,
-            this.options.maxPayload
-          );
+          const perMessageDeflate = new PerMessageDeflate({
+            ...this.options.perMessageDeflate,
+            isServer: true,
+            maxPayload: this.options.maxPayload
+          });
           try {
             const offers = extension.parse(secWebSocketExtensions);
             if (offers[PerMessageDeflate.extensionName]) {
@@ -16416,6 +17158,8 @@ var require_websocket_server = __commonJS({
         socket.removeListener("error", socketOnError);
         ws.setSocket(socket, head, {
           allowSynchronousEvents: this.options.allowSynchronousEvents,
+          maxBufferedChunks: this.options.maxBufferedChunks,
+          maxFragments: this.options.maxFragments,
           maxPayload: this.options.maxPayload,
           skipUTF8Validation: this.options.skipUTF8Validation
         });
@@ -16477,13 +17221,23 @@ var require_websocket_server = __commonJS({
 var require_ws = __commonJS({
   "node_modules/ws/index.js"(exports2, module2) {
     "use strict";
+    var createWebSocketStream = require_stream();
+    var extension = require_extension();
+    var PerMessageDeflate = require_permessage_deflate();
+    var Receiver = require_receiver();
+    var Sender = require_sender();
+    var subprotocol = require_subprotocol();
     var WebSocket = require_websocket();
-    WebSocket.createWebSocketStream = require_stream();
-    WebSocket.Server = require_websocket_server();
-    WebSocket.Receiver = require_receiver();
-    WebSocket.Sender = require_sender();
+    var WebSocketServer = require_websocket_server();
+    WebSocket.createWebSocketStream = createWebSocketStream;
+    WebSocket.extension = extension;
+    WebSocket.PerMessageDeflate = PerMessageDeflate;
+    WebSocket.Receiver = Receiver;
+    WebSocket.Sender = Sender;
+    WebSocket.Server = WebSocketServer;
+    WebSocket.subprotocol = subprotocol;
     WebSocket.WebSocket = WebSocket;
-    WebSocket.WebSocketServer = WebSocket.Server;
+    WebSocket.WebSocketServer = WebSocketServer;
     module2.exports = WebSocket;
   }
 });

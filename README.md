@@ -10,7 +10,11 @@ This node brings modern AI capabilities to a runtime people can inspect, route, 
 
 That makes this repository relevant beyond Node-RED alone. It is a practical implementation of how contemporary AI capabilities can live inside an open workflow environment instead of being locked inside a single vendor surface or hidden behind a one-purpose abstraction.
 
-This package currently targets the `openai` Node SDK `^6.37.0`.
+This package currently targets the `openai` Node SDK `^6.39.1`.
+
+## OpenAI Node SDK v6.39.1 Alignment
+
+This release target carries the package through the official OpenAI Node SDK v6.39.1 release. The release-facing notes call out the main deltas in this target: Responses compact `service_tier`, the v6.39.0 admin API expansion, and v6.39.1 SDK patch uptake for the current SDK client behavior.
 
 ## Why This Exists
 
@@ -155,7 +159,7 @@ This repository currently includes:
 - Admin API support, including Admin API key routing, organization audit logs, organization project controls, project rate-limit operations, and a first-class Admin method family in the editor
 - ChatKit / Agent Builder support, including session creation and cancellation, plus thread and thread-item inspection for published workflows
 - Conversations support, including the upstream `items` array contract for create-item requests and assistant-message `phase` values `commentary` and `final_answer`
-- Responses API support, including current SDK-typed model ids such as `gpt-5.4-mini`, `gpt-5.4-nano`, and dated variants like `gpt-5.4-mini-2026-03-17`, plus `phase`, `input_file.detail`, `prompt_cache_key`, `prompt_cache_retention` values such as `in_memory`, `include` values such as `web_search_call.results`, `top_logprobs`, `tool_search`, deferred MCP loading via `defer_loading`, GA computer-use payloads, parse and stream helpers, cancellation, compaction, input-token counting, and websocket mode
+- Responses API support, including current SDK-typed model ids such as `gpt-5.4-mini`, `gpt-5.4-nano`, and dated variants like `gpt-5.4-mini-2026-03-17`, plus `phase`, `input_file.detail`, `prompt_cache_key`, `prompt_cache_retention` values such as `in_memory`, `include` values such as `web_search_call.results`, `top_logprobs`, `tool_search`, deferred MCP loading via `defer_loading`, GA computer-use payloads, parse and stream helpers, cancellation, compaction, Responses compact `service_tier`, input-token counting, and websocket mode
 - Responses request-shape parity work stays intentionally thin at runtime: create, stream, and compact calls are direct SDK pass-throughs, and the repo proves that contract locally with focused docs, examples, and regression tests instead of adding translation logic
 - Vector Stores support, including direct vector-store search, vector-store file attribute updates, parsed file-content retrieval, and file-attribute filters using `ComparisonFilter` operators such as `in` and `nin`
 - Realtime API support, including client-secret creation, SIP call operations, and current SDK-typed model ids such as `gpt-realtime-1.5` and `gpt-audio-1.5`
