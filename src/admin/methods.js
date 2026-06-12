@@ -68,6 +68,12 @@ async function getOrganizationUsageEmbeddings(parameters) {
     return response;
 }
 
+async function getOrganizationUsageFileSearchCalls(parameters) {
+    const openai = new OpenAI(this.clientParams);
+    const response = await openai.admin.organization.usage.fileSearchCalls(parameters.payload);
+    return response;
+}
+
 async function getOrganizationUsageImages(parameters) {
     const openai = new OpenAI(this.clientParams);
     const response = await openai.admin.organization.usage.images(parameters.payload);
@@ -83,6 +89,50 @@ async function getOrganizationUsageModerations(parameters) {
 async function getOrganizationUsageVectorStores(parameters) {
     const openai = new OpenAI(this.clientParams);
     const response = await openai.admin.organization.usage.vectorStores(parameters.payload);
+    return response;
+}
+
+async function getOrganizationUsageWebSearchCalls(parameters) {
+    const openai = new OpenAI(this.clientParams);
+    const response = await openai.admin.organization.usage.webSearchCalls(parameters.payload);
+    return response;
+}
+
+async function getOrganizationDataRetention(parameters) {
+    const openai = new OpenAI(this.clientParams);
+    const response = await openai.admin.organization.dataRetention.retrieve(parameters.payload);
+    return response;
+}
+
+async function modifyOrganizationDataRetention(parameters) {
+    const openai = new OpenAI(this.clientParams);
+    const response = await openai.admin.organization.dataRetention.update(parameters.payload);
+    return response;
+}
+
+async function createOrganizationSpendAlert(parameters) {
+    const openai = new OpenAI(this.clientParams);
+    const response = await openai.admin.organization.spendAlerts.create(parameters.payload);
+    return response;
+}
+
+async function modifyOrganizationSpendAlert(parameters) {
+    const openai = new OpenAI(this.clientParams);
+    const { alert_id, ...body } = parameters.payload;
+    const response = await openai.admin.organization.spendAlerts.update(alert_id, body);
+    return response;
+}
+
+async function listOrganizationSpendAlerts(parameters) {
+    const openai = new OpenAI(this.clientParams);
+    const list = await openai.admin.organization.spendAlerts.list(parameters.payload);
+    return [...list.data];
+}
+
+async function deleteOrganizationSpendAlert(parameters) {
+    const openai = new OpenAI(this.clientParams);
+    const { alert_id, ...params } = parameters.payload;
+    const response = await openai.admin.organization.spendAlerts.delete(alert_id, params);
     return response;
 }
 
@@ -332,6 +382,83 @@ async function archiveOrganizationProject(parameters) {
     return response;
 }
 
+async function getProjectDataRetention(parameters) {
+    const openai = new OpenAI(this.clientParams);
+    const { project_id, ...params } = parameters.payload;
+    const response = await openai.admin.organization.projects.dataRetention.retrieve(project_id, params);
+    return response;
+}
+
+async function modifyProjectDataRetention(parameters) {
+    const openai = new OpenAI(this.clientParams);
+    const { project_id, ...body } = parameters.payload;
+    const response = await openai.admin.organization.projects.dataRetention.update(project_id, body);
+    return response;
+}
+
+async function createProjectSpendAlert(parameters) {
+    const openai = new OpenAI(this.clientParams);
+    const { project_id, ...body } = parameters.payload;
+    const response = await openai.admin.organization.projects.spendAlerts.create(project_id, body);
+    return response;
+}
+
+async function modifyProjectSpendAlert(parameters) {
+    const openai = new OpenAI(this.clientParams);
+    const { alert_id, ...params } = parameters.payload;
+    const response = await openai.admin.organization.projects.spendAlerts.update(alert_id, params);
+    return response;
+}
+
+async function listProjectSpendAlerts(parameters) {
+    const openai = new OpenAI(this.clientParams);
+    const { project_id, ...params } = parameters.payload;
+    const list = await openai.admin.organization.projects.spendAlerts.list(project_id, params);
+    return [...list.data];
+}
+
+async function deleteProjectSpendAlert(parameters) {
+    const openai = new OpenAI(this.clientParams);
+    const { alert_id, ...params } = parameters.payload;
+    const response = await openai.admin.organization.projects.spendAlerts.delete(alert_id, params);
+    return response;
+}
+
+async function getProjectModelPermissions(parameters) {
+    const openai = new OpenAI(this.clientParams);
+    const { project_id, ...params } = parameters.payload;
+    const response = await openai.admin.organization.projects.modelPermissions.retrieve(project_id, params);
+    return response;
+}
+
+async function modifyProjectModelPermissions(parameters) {
+    const openai = new OpenAI(this.clientParams);
+    const { project_id, ...body } = parameters.payload;
+    const response = await openai.admin.organization.projects.modelPermissions.update(project_id, body);
+    return response;
+}
+
+async function deleteProjectModelPermissions(parameters) {
+    const openai = new OpenAI(this.clientParams);
+    const { project_id, ...params } = parameters.payload;
+    const response = await openai.admin.organization.projects.modelPermissions.delete(project_id, params);
+    return response;
+}
+
+async function getProjectHostedToolPermissions(parameters) {
+    const openai = new OpenAI(this.clientParams);
+    const { project_id, ...params } = parameters.payload;
+    const response = await openai.admin.organization.projects.hostedToolPermissions.retrieve(project_id, params);
+    return response;
+}
+
+async function modifyProjectHostedToolPermissions(parameters) {
+    const openai = new OpenAI(this.clientParams);
+    const { project_id, ...body } = parameters.payload;
+    const response = await openai.admin.organization.projects.hostedToolPermissions.update(project_id, body);
+    return response;
+}
+
 async function getProjectApiKey(parameters) {
     const openai = new OpenAI(this.clientParams);
     const { api_key_id, ...params } = parameters.payload;
@@ -554,9 +681,17 @@ const adminMethods = {
     getOrganizationUsageCompletions,
     getOrganizationCosts,
     getOrganizationUsageEmbeddings,
+    getOrganizationUsageFileSearchCalls,
     getOrganizationUsageImages,
     getOrganizationUsageModerations,
     getOrganizationUsageVectorStores,
+    getOrganizationUsageWebSearchCalls,
+    getOrganizationDataRetention,
+    modifyOrganizationDataRetention,
+    createOrganizationSpendAlert,
+    modifyOrganizationSpendAlert,
+    listOrganizationSpendAlerts,
+    deleteOrganizationSpendAlert,
     createOrganizationInvite,
     getOrganizationInvite,
     listOrganizationInvites,
@@ -594,6 +729,17 @@ const adminMethods = {
     modifyOrganizationProject,
     listOrganizationProjects,
     archiveOrganizationProject,
+    getProjectDataRetention,
+    modifyProjectDataRetention,
+    createProjectSpendAlert,
+    modifyProjectSpendAlert,
+    listProjectSpendAlerts,
+    deleteProjectSpendAlert,
+    getProjectModelPermissions,
+    modifyProjectModelPermissions,
+    deleteProjectModelPermissions,
+    getProjectHostedToolPermissions,
+    modifyProjectHostedToolPermissions,
     getProjectApiKey,
     listProjectApiKeys,
     deleteProjectApiKey,
