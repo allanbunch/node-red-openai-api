@@ -10,7 +10,7 @@ This node brings modern AI capabilities to a runtime people can inspect, route, 
 
 That makes this repository relevant beyond Node-RED alone. It is a practical implementation of how contemporary AI capabilities can live inside an open workflow environment instead of being locked inside a single vendor surface or hidden behind a one-purpose abstraction.
 
-This package currently targets the `openai` Node SDK `^6.39.1`.
+This package currently targets the `openai` Node SDK `6.39.1`.
 
 ## OpenAI Node SDK v6.39.1 Alignment
 

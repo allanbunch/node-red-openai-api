@@ -43,7 +43,7 @@
     "prepare": "npm run build"
   },
   "dependencies": {
-    "openai": "^6.39.1",
+    "openai": "6.39.1",
     "ws": "^8.19.0"
   },
   "author": "Allan Bunch",

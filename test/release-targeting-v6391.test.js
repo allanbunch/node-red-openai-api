@@ -15,11 +15,11 @@ const readme = fs.readFileSync(path.join(__dirname, "..", "README.md"), "utf8");
 
 test("package metadata targets the OpenAI Node SDK v6.39.1 release", () => {
   assert.equal(packageJson.version, "6.39.1");
-  assert.equal(packageJson.dependencies.openai, "^6.39.1");
+  assert.equal(packageJson.dependencies.openai, "6.39.1");
 });
 
 test("README names the v6.39.1 target and release-facing parity deltas", () => {
-  assert.match(readme, /currently targets the `openai` Node SDK `\^6\.39\.1`/);
+  assert.match(readme, /currently targets the `openai` Node SDK `6\.39\.1`/);
   assert.match(readme, /OpenAI Node SDK v6\.39\.1/);
   assert.match(readme, /Responses compact `service_tier`/);
   assert.match(readme, /admin API expansion/i);

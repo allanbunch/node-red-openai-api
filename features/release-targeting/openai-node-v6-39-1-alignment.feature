@@ -6,7 +6,7 @@ Feature: OpenAI Node SDK v6.39.1 release targeting
     Given the repository is preparing the NOA-77 release-targeting work
     When maintainers inspect the package metadata
     Then the package version is 6.39.1
-    And the openai dependency targets ^6.39.1
+    And the openai dependency targets 6.39.1
 
   Scenario: Release-facing documentation names the v6.39.1 parity deltas
     Given a maintainer reads the README before release review

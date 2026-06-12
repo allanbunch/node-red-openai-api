@@ -433,7 +433,7 @@ var require_version = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.VERSION = void 0;
-    exports2.VERSION = "6.42.0";
+    exports2.VERSION = "6.39.1";
   }
 });
 
@@ -12063,111 +12063,6 @@ var require_azure = __commonJS({
   }
 });
 
-// node_modules/openai/bedrock.js
-var require_bedrock = __commonJS({
-  "node_modules/openai/bedrock.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.BedrockOpenAI = void 0;
-    var tslib_1 = require_tslib();
-    var Errors = tslib_1.__importStar(require_error2());
-    var client_1 = require_client();
-    var headers_1 = require_headers();
-    var utils_1 = require_utils2();
-    var ResponsesParser_1 = require_ResponsesParser();
-    var API = tslib_1.__importStar(require_resources());
-    function deriveBedrockBaseURL(awsRegion) {
-      const region = awsRegion?.trim();
-      if (!region) {
-        throw new Errors.OpenAIError("Must provide one of the `baseURL` or `awsRegion` arguments, or set the `AWS_BEDROCK_BASE_URL`, `AWS_REGION`, or `AWS_DEFAULT_REGION` environment variable.");
-      }
-      return `https://bedrock-mantle.${region}.api.aws/openai/v1`;
-    }
-    function normalizeBedrockBaseURL(baseURL) {
-      const url = new URL(baseURL);
-      const responsesMatch = url.pathname.match(/\/responses(?:\/.*)?$/);
-      if (responsesMatch?.index !== void 0) {
-        url.pathname = url.pathname.slice(0, responsesMatch.index) || "/";
-      }
-      return url.toString().replace(/\/$/, "");
-    }
-    function addBedrockOutputText(response) {
-      if (!Object.getOwnPropertyDescriptor(response, "output_text")) {
-        (0, ResponsesParser_1.addOutputText)(response);
-      }
-      return response;
-    }
-    function restoreBedrockStreamOutputText(responses2) {
-      const stream = responses2.stream.bind(responses2);
-      responses2.stream = ((body, options) => {
-        const responseStream = stream(body, options);
-        const finalResponse = responseStream.finalResponse.bind(responseStream);
-        responseStream.finalResponse = async () => addBedrockOutputText(await finalResponse());
-        return responseStream;
-      });
-      return responses2;
-    }
-    var BedrockOpenAI = class extends client_1.OpenAI {
-      /**
-       * API Client for interfacing with Amazon Bedrock's OpenAI-compatible endpoint.
-       *
-       * @param {string | null | undefined} [opts.apiKey=process.env['AWS_BEARER_TOKEN_BEDROCK'] ?? null]
-       * @param {string | null | undefined} [opts.baseURL=process.env['AWS_BEDROCK_BASE_URL'] ?? derived from opts.awsRegion or AWS_REGION/AWS_DEFAULT_REGION]
-       * @param {string | undefined} [opts.awsRegion=process.env['AWS_REGION'] ?? process.env['AWS_DEFAULT_REGION'] ?? undefined]
-       * @param {ApiKeySetter | undefined} opts.bedrockTokenProvider - A function that returns a Bedrock bearer token and is invoked before each request.
-       */
-      constructor({ baseURL = (0, utils_1.readEnv)("AWS_BEDROCK_BASE_URL"), apiKey, awsRegion = (0, utils_1.readEnv)("AWS_REGION") ?? (0, utils_1.readEnv)("AWS_DEFAULT_REGION"), bedrockTokenProvider, adminAPIKey, workloadIdentity, ...opts } = {}) {
-        if (adminAPIKey || workloadIdentity) {
-          throw new Errors.OpenAIError("BedrockOpenAI only supports Bedrock bearer token authentication.");
-        }
-        if (apiKey === void 0 && !bedrockTokenProvider) {
-          apiKey = (0, utils_1.readEnv)("AWS_BEARER_TOKEN_BEDROCK") ?? null;
-        }
-        if (typeof apiKey === "function") {
-          throw new Errors.OpenAIError("Pass refreshable Bedrock credentials via `bedrockTokenProvider`, not `apiKey`.");
-        }
-        if (apiKey && bedrockTokenProvider) {
-          throw new Errors.OpenAIError("The `apiKey` and `bedrockTokenProvider` arguments are mutually exclusive; only one can be passed at a time.");
-        }
-        if (!apiKey && !bedrockTokenProvider) {
-          throw new Errors.OpenAIError("Missing credentials. Please pass an `apiKey` or `bedrockTokenProvider`, or set the `AWS_BEARER_TOKEN_BEDROCK` environment variable.");
-        }
-        const configuredBaseURL = baseURL?.trim() ? baseURL : deriveBedrockBaseURL(awsRegion);
-        super({
-          apiKey: bedrockTokenProvider ?? apiKey,
-          adminAPIKey: null,
-          baseURL: normalizeBedrockBaseURL(configuredBaseURL),
-          ...opts
-        });
-        this.bedrockTokenProvider = bedrockTokenProvider;
-        this.responses = restoreBedrockStreamOutputText(new API.Responses(this));
-      }
-      async prepareOptions(options) {
-        const security = options.__security ?? { bearerAuth: true };
-        if (security.adminAPIKeyAuth && !security.bearerAuth) {
-          await this._callApiKey();
-        }
-        await super.prepareOptions(options);
-      }
-      async authHeaders(opts, schemes) {
-        const security = schemes ?? { bearerAuth: true, adminAPIKeyAuth: true };
-        if ((security.bearerAuth || security.adminAPIKeyAuth) && this.apiKey !== null) {
-          return (0, headers_1.buildHeaders)([{ Authorization: `Bearer ${this.apiKey}` }]);
-        }
-        return super.authHeaders(opts, security);
-      }
-      withOptions(options) {
-        const bedrockTokenProvider = options.apiKey !== void 0 ? void 0 : options.bedrockTokenProvider ?? this.bedrockTokenProvider;
-        return super.withOptions({
-          ...options,
-          ...bedrockTokenProvider ? { apiKey: void 0, bedrockTokenProvider } : {}
-        });
-      }
-    };
-    exports2.BedrockOpenAI = BedrockOpenAI;
-  }
-});
-
 // node_modules/openai/index.js
 var require_openai = __commonJS({
   "node_modules/openai/index.js"(exports2, module2) {
@@ -12176,7 +12071,7 @@ var require_openai = __commonJS({
       return new exports2.default(...args);
     };
     Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.BedrockOpenAI = exports2.AzureOpenAI = exports2.SubjectTokenProviderError = exports2.OAuthError = exports2.InvalidWebhookSignatureError = exports2.UnprocessableEntityError = exports2.PermissionDeniedError = exports2.InternalServerError = exports2.AuthenticationError = exports2.BadRequestError = exports2.RateLimitError = exports2.ConflictError = exports2.NotFoundError = exports2.APIUserAbortError = exports2.APIConnectionTimeoutError = exports2.APIConnectionError = exports2.APIError = exports2.OpenAIError = exports2.PagePromise = exports2.OpenAI = exports2.APIPromise = exports2.toFile = exports2.default = void 0;
+    exports2.AzureOpenAI = exports2.SubjectTokenProviderError = exports2.OAuthError = exports2.InvalidWebhookSignatureError = exports2.UnprocessableEntityError = exports2.PermissionDeniedError = exports2.InternalServerError = exports2.AuthenticationError = exports2.BadRequestError = exports2.RateLimitError = exports2.ConflictError = exports2.NotFoundError = exports2.APIUserAbortError = exports2.APIConnectionTimeoutError = exports2.APIConnectionError = exports2.APIError = exports2.OpenAIError = exports2.PagePromise = exports2.OpenAI = exports2.APIPromise = exports2.toFile = exports2.default = void 0;
     var client_1 = require_client();
     Object.defineProperty(exports2, "default", { enumerable: true, get: function() {
       return client_1.OpenAI;
@@ -12249,10 +12144,6 @@ var require_openai = __commonJS({
     var azure_1 = require_azure();
     Object.defineProperty(exports2, "AzureOpenAI", { enumerable: true, get: function() {
       return azure_1.AzureOpenAI;
-    } });
-    var bedrock_1 = require_bedrock();
-    Object.defineProperty(exports2, "BedrockOpenAI", { enumerable: true, get: function() {
-      return bedrock_1.BedrockOpenAI;
     } });
   }
 });
