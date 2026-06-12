@@ -1,6 +1,6 @@
 "use strict";
 
-// This file keeps the NOA-67 Responses request-shape claims honest.
+// This file keeps the NOA-67 and NOA-78 Responses request-shape claims honest.
 // It proves current SDK fields pass through unchanged on the supported paths and that the local docs/examples use the same contract terms.
 
 const assert = require("node:assert/strict");
@@ -220,7 +220,7 @@ test("responses stream helper forwards the same newer request fields unchanged",
   ]);
 });
 
-test("responses compact forwards prompt_cache_retention and input_file detail unchanged", async () => {
+test("responses compact forwards service_tier, prompt_cache_retention, and input_file detail unchanged", async () => {
   const calls = [];
   const requestPayload = {
     model: "gpt-5.4",
@@ -233,6 +233,7 @@ test("responses compact forwards prompt_cache_retention and input_file detail un
     ],
     prompt_cache_key: "responses-compact-proof-v1",
     prompt_cache_retention: "in_memory",
+    service_tier: "auto",
   };
 
   class FakeOpenAI {
@@ -304,6 +305,12 @@ test("Responses help and README describe the current request shape without trans
 
   assert.match(compactHelp, /prompt_cache_retention/);
   assert.match(compactHelp, /in_memory/);
+  assert.match(compactHelp, /service_tier/);
+  assert.match(compactHelp, /auto/);
+  assert.match(compactHelp, /default/);
+  assert.match(compactHelp, /flex/);
+  assert.match(compactHelp, /priority/);
+  assert.match(compactHelp, /null/);
 
   assert.match(readme, /examples\/responses\/web-search\.json/);
   assert.match(readme, /input_file\.detail/);

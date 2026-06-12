@@ -8,6 +8,45 @@ const fs = require("node:fs");
 const path = require("node:path");
 const test = require("node:test");
 
+const adminNoa81EditorMethods = [
+  ["getOrganizationUsageFileSearchCalls", "retrieve organization usage file search calls", "Retrieve Organization Usage File Search Calls"],
+  ["getOrganizationUsageWebSearchCalls", "retrieve organization usage web search calls", "Retrieve Organization Usage Web Search Calls"],
+  ["getOrganizationDataRetention", "retrieve organization data retention", "Retrieve Organization Data Retention"],
+  ["modifyOrganizationDataRetention", "modify organization data retention", "Modify Organization Data Retention"],
+  ["createOrganizationSpendAlert", "create organization spend alert", "Create Organization Spend Alert"],
+  ["modifyOrganizationSpendAlert", "modify organization spend alert", "Modify Organization Spend Alert"],
+  ["listOrganizationSpendAlerts", "list organization spend alerts", "List Organization Spend Alerts"],
+  ["deleteOrganizationSpendAlert", "delete organization spend alert", "Delete Organization Spend Alert"],
+  ["getProjectDataRetention", "retrieve project data retention", "Retrieve Project Data Retention"],
+  ["modifyProjectDataRetention", "modify project data retention", "Modify Project Data Retention"],
+  ["createProjectSpendAlert", "create project spend alert", "Create Project Spend Alert"],
+  ["modifyProjectSpendAlert", "modify project spend alert", "Modify Project Spend Alert"],
+  ["listProjectSpendAlerts", "list project spend alerts", "List Project Spend Alerts"],
+  ["deleteProjectSpendAlert", "delete project spend alert", "Delete Project Spend Alert"],
+  ["getProjectModelPermissions", "retrieve project model permissions", "Retrieve Project Model Permissions"],
+  ["modifyProjectModelPermissions", "modify project model permissions", "Modify Project Model Permissions"],
+  ["deleteProjectModelPermissions", "delete project model permissions", "Delete Project Model Permissions"],
+  ["getProjectHostedToolPermissions", "retrieve project hosted tool permissions", "Retrieve Project Hosted Tool Permissions"],
+  ["modifyProjectHostedToolPermissions", "modify project hosted tool permissions", "Modify Project Hosted Tool Permissions"],
+  ["getOrganizationUserRole", "retrieve organization user role", "Retrieve Organization User Role"],
+  ["getOrganizationGroup", "retrieve organization group", "Retrieve Organization Group"],
+  ["getOrganizationGroupUser", "retrieve organization group user", "Retrieve Organization Group User"],
+  ["getOrganizationGroupRole", "retrieve organization group role", "Retrieve Organization Group Role"],
+  ["getOrganizationRole", "retrieve organization role", "Retrieve Organization Role"],
+  ["modifyProjectServiceAccount", "modify project service account", "Modify Project Service Account"],
+  ["getProjectUserRole", "retrieve project user role", "Retrieve Project User Role"],
+  ["getProjectGroup", "retrieve project group", "Retrieve Project Group"],
+  ["getProjectGroupRole", "retrieve project group role", "Retrieve Project Group Role"],
+  ["getProjectRole", "retrieve project role", "Retrieve Project Role"],
+];
+
+function helpSection(html, startTitle, endTitle) {
+  const pattern = new RegExp(`${startTitle}[\\s\\S]*?(?=${endTitle})`);
+  const match = html.match(pattern);
+  assert.ok(match, `Expected help section between ${startTitle} and ${endTitle}`);
+  return match[0];
+}
+
 function withMockedOpenAI(FakeOpenAI, callback) {
   const openaiModule = require("openai");
   const originalDescriptor = Object.getOwnPropertyDescriptor(openaiModule, "OpenAI");
@@ -126,6 +165,7 @@ test("responses methods map parse/delete/cancel/compact/input-items/input-tokens
       payload: {
         model: "gpt-5.2",
         input: [{ role: "user", content: [{ type: "text", text: "hi" }] }],
+        service_tier: "auto",
       },
     });
     assert.deepEqual(compactResponse, {
@@ -194,6 +234,7 @@ test("responses methods map parse/delete/cancel/compact/input-items/input-tokens
       payload: {
         model: "gpt-5.2",
         input: [{ role: "user", content: [{ type: "text", text: "hi" }] }],
+        service_tier: "auto",
       },
     },
     {
@@ -2180,12 +2221,761 @@ test("admin methods map representative organization and project resources to Ope
   ]);
 });
 
+test("admin methods map v6.39.0 existing-family retrieve and update wrappers to OpenAI SDK", async () => {
+  const calls = [];
+
+  class FakeOpenAI {
+    constructor(clientParams) {
+      calls.push({ method: "ctor", clientParams });
+      this.admin = {
+        organization: {
+          users: {
+            roles: {
+              retrieve: async (roleID, params) => {
+                calls.push({ method: "admin.organization.users.roles.retrieve", roleID, params });
+                return { id: roleID, user_id: params.user_id, object: "organization.user.role" };
+              },
+            },
+          },
+          groups: {
+            retrieve: async (groupID, options) => {
+              calls.push({ method: "admin.organization.groups.retrieve", groupID, options });
+              return { id: groupID, object: "organization.group", options };
+            },
+            users: {
+              retrieve: async (userID, params) => {
+                calls.push({ method: "admin.organization.groups.users.retrieve", userID, params });
+                return { id: userID, group_id: params.group_id, object: "organization.group.user" };
+              },
+            },
+            roles: {
+              retrieve: async (roleID, params) => {
+                calls.push({ method: "admin.organization.groups.roles.retrieve", roleID, params });
+                return { id: roleID, group_id: params.group_id, object: "organization.group.role" };
+              },
+            },
+          },
+          roles: {
+            retrieve: async (roleID, options) => {
+              calls.push({ method: "admin.organization.roles.retrieve", roleID, options });
+              return { id: roleID, object: "organization.role", options };
+            },
+          },
+          projects: {
+            serviceAccounts: {
+              update: async (serviceAccountID, params) => {
+                calls.push({ method: "admin.organization.projects.serviceAccounts.update", serviceAccountID, params });
+                return { id: serviceAccountID, project_id: params.project_id, name: params.name };
+              },
+            },
+            users: {
+              roles: {
+                retrieve: async (roleID, params) => {
+                  calls.push({ method: "admin.organization.projects.users.roles.retrieve", roleID, params });
+                  return {
+                    id: roleID,
+                    project_id: params.project_id,
+                    user_id: params.user_id,
+                    object: "project.user.role",
+                  };
+                },
+              },
+            },
+            groups: {
+              retrieve: async (groupID, params) => {
+                calls.push({ method: "admin.organization.projects.groups.retrieve", groupID, params });
+                return { id: groupID, project_id: params.project_id, object: "project.group" };
+              },
+              roles: {
+                retrieve: async (roleID, params) => {
+                  calls.push({ method: "admin.organization.projects.groups.roles.retrieve", roleID, params });
+                  return {
+                    id: roleID,
+                    project_id: params.project_id,
+                    group_id: params.group_id,
+                    object: "project.group.role",
+                  };
+                },
+              },
+            },
+            roles: {
+              retrieve: async (roleID, params) => {
+                calls.push({ method: "admin.organization.projects.roles.retrieve", roleID, params });
+                return { id: roleID, project_id: params.project_id, object: "project.role" };
+              },
+            },
+          },
+        },
+      };
+    }
+  }
+
+  await withMockedOpenAI(FakeOpenAI, async () => {
+    const modulePath = require.resolve("../src/admin/methods.js");
+    delete require.cache[modulePath];
+    const adminMethods = require("../src/admin/methods.js");
+
+    const clientContext = {
+      clientParams: {
+        apiKey: null,
+        adminAPIKey: "sk-admin-test",
+        baseURL: "https://api.example.com/v1",
+      },
+    };
+
+    assert.deepEqual(
+      await adminMethods.getOrganizationUserRole.call(clientContext, {
+        payload: { user_id: "user_1", role_id: "role_org_user_1", request_id: "trace_user_role" },
+      }),
+      {
+        id: "role_org_user_1",
+        user_id: "user_1",
+        object: "organization.user.role",
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.getOrganizationGroup.call(clientContext, {
+        payload: { group_id: "group_1", request_id: "trace_org_group" },
+      }),
+      {
+        id: "group_1",
+        object: "organization.group",
+        options: { request_id: "trace_org_group" },
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.getOrganizationGroupUser.call(clientContext, {
+        payload: { group_id: "group_1", user_id: "user_2", request_id: "trace_group_user" },
+      }),
+      {
+        id: "user_2",
+        group_id: "group_1",
+        object: "organization.group.user",
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.getOrganizationGroupRole.call(clientContext, {
+        payload: { group_id: "group_1", role_id: "role_group_1", request_id: "trace_group_role" },
+      }),
+      {
+        id: "role_group_1",
+        group_id: "group_1",
+        object: "organization.group.role",
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.getOrganizationRole.call(clientContext, {
+        payload: { role_id: "role_org_1", request_id: "trace_org_role" },
+      }),
+      {
+        id: "role_org_1",
+        object: "organization.role",
+        options: { request_id: "trace_org_role" },
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.modifyProjectServiceAccount.call(clientContext, {
+        payload: { project_id: "proj_1", service_account_id: "svc_1", name: "billing worker" },
+      }),
+      {
+        id: "svc_1",
+        project_id: "proj_1",
+        name: "billing worker",
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.getProjectUserRole.call(clientContext, {
+        payload: {
+          project_id: "proj_1",
+          user_id: "user_3",
+          role_id: "role_project_user_1",
+          request_id: "trace_project_user_role",
+        },
+      }),
+      {
+        id: "role_project_user_1",
+        project_id: "proj_1",
+        user_id: "user_3",
+        object: "project.user.role",
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.getProjectGroup.call(clientContext, {
+        payload: { project_id: "proj_1", group_id: "group_2", request_id: "trace_project_group" },
+      }),
+      {
+        id: "group_2",
+        project_id: "proj_1",
+        object: "project.group",
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.getProjectGroupRole.call(clientContext, {
+        payload: {
+          project_id: "proj_1",
+          group_id: "group_2",
+          role_id: "role_project_group_1",
+          request_id: "trace_project_group_role",
+        },
+      }),
+      {
+        id: "role_project_group_1",
+        project_id: "proj_1",
+        group_id: "group_2",
+        object: "project.group.role",
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.getProjectRole.call(clientContext, {
+        payload: { project_id: "proj_1", role_id: "role_project_1", request_id: "trace_project_role" },
+      }),
+      {
+        id: "role_project_1",
+        project_id: "proj_1",
+        object: "project.role",
+      }
+    );
+
+    [
+      "getOrganizationUserRole",
+      "getOrganizationGroup",
+      "getOrganizationGroupUser",
+      "getOrganizationGroupRole",
+      "getOrganizationRole",
+      "modifyProjectServiceAccount",
+      "getProjectUserRole",
+      "getProjectGroup",
+      "getProjectGroupRole",
+      "getProjectRole",
+    ].forEach((methodName) => {
+      assert.equal(adminMethods[methodName].authentication, "admin");
+    });
+
+    delete require.cache[modulePath];
+  });
+
+  const adminCalls = calls.filter((entry) => entry.method !== "ctor");
+  assert.deepEqual(adminCalls, [
+    {
+      method: "admin.organization.users.roles.retrieve",
+      roleID: "role_org_user_1",
+      params: { user_id: "user_1", request_id: "trace_user_role" },
+    },
+    {
+      method: "admin.organization.groups.retrieve",
+      groupID: "group_1",
+      options: { request_id: "trace_org_group" },
+    },
+    {
+      method: "admin.organization.groups.users.retrieve",
+      userID: "user_2",
+      params: { group_id: "group_1", request_id: "trace_group_user" },
+    },
+    {
+      method: "admin.organization.groups.roles.retrieve",
+      roleID: "role_group_1",
+      params: { group_id: "group_1", request_id: "trace_group_role" },
+    },
+    {
+      method: "admin.organization.roles.retrieve",
+      roleID: "role_org_1",
+      options: { request_id: "trace_org_role" },
+    },
+    {
+      method: "admin.organization.projects.serviceAccounts.update",
+      serviceAccountID: "svc_1",
+      params: { project_id: "proj_1", name: "billing worker" },
+    },
+    {
+      method: "admin.organization.projects.users.roles.retrieve",
+      roleID: "role_project_user_1",
+      params: {
+        project_id: "proj_1",
+        user_id: "user_3",
+        request_id: "trace_project_user_role",
+      },
+    },
+    {
+      method: "admin.organization.projects.groups.retrieve",
+      groupID: "group_2",
+      params: { project_id: "proj_1", request_id: "trace_project_group" },
+    },
+    {
+      method: "admin.organization.projects.groups.roles.retrieve",
+      roleID: "role_project_group_1",
+      params: {
+        project_id: "proj_1",
+        group_id: "group_2",
+        request_id: "trace_project_group_role",
+      },
+    },
+    {
+      method: "admin.organization.projects.roles.retrieve",
+      roleID: "role_project_1",
+      params: { project_id: "proj_1", request_id: "trace_project_role" },
+    },
+  ]);
+});
+
+test("admin methods map v6.39.0 resource-family wrappers to OpenAI SDK", async () => {
+  const calls = [];
+
+  class FakeOpenAI {
+    constructor(clientParams) {
+      calls.push({ method: "ctor", clientParams });
+      this.admin = {
+        organization: {
+          usage: {
+            fileSearchCalls: async (query) => {
+              calls.push({ method: "admin.organization.usage.fileSearchCalls", query });
+              return { object: "usage.file_search_calls", query };
+            },
+            webSearchCalls: async (query) => {
+              calls.push({ method: "admin.organization.usage.webSearchCalls", query });
+              return { object: "usage.web_search_calls", query };
+            },
+          },
+          dataRetention: {
+            retrieve: async (options) => {
+              calls.push({ method: "admin.organization.dataRetention.retrieve", options });
+              return { object: "organization.data_retention", options };
+            },
+            update: async (body) => {
+              calls.push({ method: "admin.organization.dataRetention.update", body });
+              return { object: "organization.data_retention", ...body };
+            },
+          },
+          spendAlerts: {
+            create: async (body) => {
+              calls.push({ method: "admin.organization.spendAlerts.create", body });
+              return { id: "org_alert_created", ...body };
+            },
+            update: async (alertID, body) => {
+              calls.push({ method: "admin.organization.spendAlerts.update", alertID, body });
+              return { id: alertID, ...body };
+            },
+            list: async (query) => {
+              calls.push({ method: "admin.organization.spendAlerts.list", query });
+              return { data: [{ id: "org_alert_1" }, { id: "org_alert_2" }] };
+            },
+            delete: async (alertID, options) => {
+              calls.push({ method: "admin.organization.spendAlerts.delete", alertID, options });
+              return { id: alertID, deleted: true };
+            },
+          },
+          projects: {
+            dataRetention: {
+              retrieve: async (projectID, options) => {
+                calls.push({ method: "admin.organization.projects.dataRetention.retrieve", projectID, options });
+                return { object: "project.data_retention", project_id: projectID, options };
+              },
+              update: async (projectID, body) => {
+                calls.push({ method: "admin.organization.projects.dataRetention.update", projectID, body });
+                return { object: "project.data_retention", project_id: projectID, ...body };
+              },
+            },
+            spendAlerts: {
+              create: async (projectID, body) => {
+                calls.push({ method: "admin.organization.projects.spendAlerts.create", projectID, body });
+                return { id: "project_alert_created", project_id: projectID, ...body };
+              },
+              update: async (alertID, params) => {
+                calls.push({ method: "admin.organization.projects.spendAlerts.update", alertID, params });
+                return { id: alertID, project_id: params.project_id };
+              },
+              list: async (projectID, query) => {
+                calls.push({ method: "admin.organization.projects.spendAlerts.list", projectID, query });
+                return { data: [{ id: "project_alert_1" }, { id: "project_alert_2" }] };
+              },
+              delete: async (alertID, params) => {
+                calls.push({ method: "admin.organization.projects.spendAlerts.delete", alertID, params });
+                return { id: alertID, deleted: true };
+              },
+            },
+            modelPermissions: {
+              retrieve: async (projectID, options) => {
+                calls.push({ method: "admin.organization.projects.modelPermissions.retrieve", projectID, options });
+                return { object: "project.model_permissions", project_id: projectID, options };
+              },
+              update: async (projectID, body) => {
+                calls.push({ method: "admin.organization.projects.modelPermissions.update", projectID, body });
+                return { object: "project.model_permissions", project_id: projectID, ...body };
+              },
+              delete: async (projectID, options) => {
+                calls.push({ method: "admin.organization.projects.modelPermissions.delete", projectID, options });
+                return { id: projectID, deleted: true };
+              },
+            },
+            hostedToolPermissions: {
+              retrieve: async (projectID, options) => {
+                calls.push({ method: "admin.organization.projects.hostedToolPermissions.retrieve", projectID, options });
+                return { object: "project.hosted_tool_permissions", project_id: projectID, options };
+              },
+              update: async (projectID, body) => {
+                calls.push({ method: "admin.organization.projects.hostedToolPermissions.update", projectID, body });
+                return { object: "project.hosted_tool_permissions", project_id: projectID, ...body };
+              },
+            },
+          },
+        },
+      };
+    }
+  }
+
+  await withMockedOpenAI(FakeOpenAI, async () => {
+    const modulePath = require.resolve("../src/admin/methods.js");
+    delete require.cache[modulePath];
+    const adminMethods = require("../src/admin/methods.js");
+
+    const clientContext = {
+      clientParams: {
+        apiKey: null,
+        adminAPIKey: "sk-admin-test",
+        baseURL: "https://api.example.com/v1",
+      },
+    };
+
+    assert.deepEqual(
+      await adminMethods.getOrganizationUsageFileSearchCalls.call(clientContext, {
+        payload: { start_time: 1710000000, end_time: 1710086400 },
+      }),
+      {
+        object: "usage.file_search_calls",
+        query: { start_time: 1710000000, end_time: 1710086400 },
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.getOrganizationUsageWebSearchCalls.call(clientContext, {
+        payload: { start_time: 1710000000, bucket_width: "1d" },
+      }),
+      {
+        object: "usage.web_search_calls",
+        query: { start_time: 1710000000, bucket_width: "1d" },
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.getOrganizationDataRetention.call(clientContext, {
+        payload: { request_id: "trace_org_retention" },
+      }),
+      {
+        object: "organization.data_retention",
+        options: { request_id: "trace_org_retention" },
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.modifyOrganizationDataRetention.call(clientContext, {
+        payload: { retention_type: "zero_data_retention" },
+      }),
+      {
+        object: "organization.data_retention",
+        retention_type: "zero_data_retention",
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.createOrganizationSpendAlert.call(clientContext, {
+        payload: { currency: "USD", interval: "month", threshold_amount: 1000 },
+      }),
+      {
+        id: "org_alert_created",
+        currency: "USD",
+        interval: "month",
+        threshold_amount: 1000,
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.modifyOrganizationSpendAlert.call(clientContext, {
+        payload: { alert_id: "alert_org_1", threshold_amount: 2000 },
+      }),
+      {
+        id: "alert_org_1",
+        threshold_amount: 2000,
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.listOrganizationSpendAlerts.call(clientContext, {
+        payload: { limit: 20 },
+      }),
+      [{ id: "org_alert_1" }, { id: "org_alert_2" }]
+    );
+    assert.deepEqual(
+      await adminMethods.deleteOrganizationSpendAlert.call(clientContext, {
+        payload: { alert_id: "alert_org_1", request_id: "trace_delete" },
+      }),
+      {
+        id: "alert_org_1",
+        deleted: true,
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.getProjectDataRetention.call(clientContext, {
+        payload: { project_id: "proj_1", request_id: "trace_project_retention" },
+      }),
+      {
+        object: "project.data_retention",
+        project_id: "proj_1",
+        options: { request_id: "trace_project_retention" },
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.modifyProjectDataRetention.call(clientContext, {
+        payload: { project_id: "proj_1", retention_type: "organization_default" },
+      }),
+      {
+        object: "project.data_retention",
+        project_id: "proj_1",
+        retention_type: "organization_default",
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.createProjectSpendAlert.call(clientContext, {
+        payload: { project_id: "proj_1", currency: "USD", threshold_amount: 3000 },
+      }),
+      {
+        id: "project_alert_created",
+        project_id: "proj_1",
+        currency: "USD",
+        threshold_amount: 3000,
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.modifyProjectSpendAlert.call(clientContext, {
+        payload: { project_id: "proj_1", alert_id: "alert_project_1", threshold_amount: 3500 },
+      }),
+      {
+        id: "alert_project_1",
+        project_id: "proj_1",
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.listProjectSpendAlerts.call(clientContext, {
+        payload: { project_id: "proj_1", limit: 10 },
+      }),
+      [{ id: "project_alert_1" }, { id: "project_alert_2" }]
+    );
+    assert.deepEqual(
+      await adminMethods.deleteProjectSpendAlert.call(clientContext, {
+        payload: { project_id: "proj_1", alert_id: "alert_project_1" },
+      }),
+      {
+        id: "alert_project_1",
+        deleted: true,
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.getProjectModelPermissions.call(clientContext, {
+        payload: { project_id: "proj_1", request_id: "trace_model_permissions" },
+      }),
+      {
+        object: "project.model_permissions",
+        project_id: "proj_1",
+        options: { request_id: "trace_model_permissions" },
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.modifyProjectModelPermissions.call(clientContext, {
+        payload: { project_id: "proj_1", mode: "allow_list", model_ids: ["gpt-5.4"] },
+      }),
+      {
+        object: "project.model_permissions",
+        project_id: "proj_1",
+        mode: "allow_list",
+        model_ids: ["gpt-5.4"],
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.deleteProjectModelPermissions.call(clientContext, {
+        payload: { project_id: "proj_1", request_id: "trace_model_delete" },
+      }),
+      {
+        id: "proj_1",
+        deleted: true,
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.getProjectHostedToolPermissions.call(clientContext, {
+        payload: { project_id: "proj_1", request_id: "trace_hosted_tools" },
+      }),
+      {
+        object: "project.hosted_tool_permissions",
+        project_id: "proj_1",
+        options: { request_id: "trace_hosted_tools" },
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.modifyProjectHostedToolPermissions.call(clientContext, {
+        payload: {
+          project_id: "proj_1",
+          web_search: { enabled: true },
+          file_search: { enabled: false },
+        },
+      }),
+      {
+        object: "project.hosted_tool_permissions",
+        project_id: "proj_1",
+        web_search: { enabled: true },
+        file_search: { enabled: false },
+      }
+    );
+
+    [
+      "getOrganizationUsageFileSearchCalls",
+      "getOrganizationUsageWebSearchCalls",
+      "getOrganizationDataRetention",
+      "modifyOrganizationDataRetention",
+      "createOrganizationSpendAlert",
+      "modifyOrganizationSpendAlert",
+      "listOrganizationSpendAlerts",
+      "deleteOrganizationSpendAlert",
+      "getProjectDataRetention",
+      "modifyProjectDataRetention",
+      "createProjectSpendAlert",
+      "modifyProjectSpendAlert",
+      "listProjectSpendAlerts",
+      "deleteProjectSpendAlert",
+      "getProjectModelPermissions",
+      "modifyProjectModelPermissions",
+      "deleteProjectModelPermissions",
+      "getProjectHostedToolPermissions",
+      "modifyProjectHostedToolPermissions",
+    ].forEach((methodName) => {
+      assert.equal(adminMethods[methodName].authentication, "admin");
+    });
+
+    delete require.cache[modulePath];
+  });
+
+  const adminCalls = calls.filter((entry) => entry.method !== "ctor");
+  assert.deepEqual(adminCalls, [
+    {
+      method: "admin.organization.usage.fileSearchCalls",
+      query: { start_time: 1710000000, end_time: 1710086400 },
+    },
+    {
+      method: "admin.organization.usage.webSearchCalls",
+      query: { start_time: 1710000000, bucket_width: "1d" },
+    },
+    {
+      method: "admin.organization.dataRetention.retrieve",
+      options: { request_id: "trace_org_retention" },
+    },
+    {
+      method: "admin.organization.dataRetention.update",
+      body: { retention_type: "zero_data_retention" },
+    },
+    {
+      method: "admin.organization.spendAlerts.create",
+      body: { currency: "USD", interval: "month", threshold_amount: 1000 },
+    },
+    {
+      method: "admin.organization.spendAlerts.update",
+      alertID: "alert_org_1",
+      body: { threshold_amount: 2000 },
+    },
+    {
+      method: "admin.organization.spendAlerts.list",
+      query: { limit: 20 },
+    },
+    {
+      method: "admin.organization.spendAlerts.delete",
+      alertID: "alert_org_1",
+      options: { request_id: "trace_delete" },
+    },
+    {
+      method: "admin.organization.projects.dataRetention.retrieve",
+      projectID: "proj_1",
+      options: { request_id: "trace_project_retention" },
+    },
+    {
+      method: "admin.organization.projects.dataRetention.update",
+      projectID: "proj_1",
+      body: { retention_type: "organization_default" },
+    },
+    {
+      method: "admin.organization.projects.spendAlerts.create",
+      projectID: "proj_1",
+      body: { currency: "USD", threshold_amount: 3000 },
+    },
+    {
+      method: "admin.organization.projects.spendAlerts.update",
+      alertID: "alert_project_1",
+      params: { project_id: "proj_1", threshold_amount: 3500 },
+    },
+    {
+      method: "admin.organization.projects.spendAlerts.list",
+      projectID: "proj_1",
+      query: { limit: 10 },
+    },
+    {
+      method: "admin.organization.projects.spendAlerts.delete",
+      alertID: "alert_project_1",
+      params: { project_id: "proj_1" },
+    },
+    {
+      method: "admin.organization.projects.modelPermissions.retrieve",
+      projectID: "proj_1",
+      options: { request_id: "trace_model_permissions" },
+    },
+    {
+      method: "admin.organization.projects.modelPermissions.update",
+      projectID: "proj_1",
+      body: { mode: "allow_list", model_ids: ["gpt-5.4"] },
+    },
+    {
+      method: "admin.organization.projects.modelPermissions.delete",
+      projectID: "proj_1",
+      options: { request_id: "trace_model_delete" },
+    },
+    {
+      method: "admin.organization.projects.hostedToolPermissions.retrieve",
+      projectID: "proj_1",
+      options: { request_id: "trace_hosted_tools" },
+    },
+    {
+      method: "admin.organization.projects.hostedToolPermissions.update",
+      projectID: "proj_1",
+      body: {
+        web_search: { enabled: true },
+        file_search: { enabled: false },
+      },
+    },
+  ]);
+});
+
 test("OpenaiApi prototype exposes latest methods", () => {
   const OpenaiApi = require("../src/lib.js");
   const client = new OpenaiApi("sk-test", "https://api.openai.com/v1", null);
 
   assert.equal(typeof client.listOrganizationProjects, "function");
   assert.equal(typeof client.modifyProjectRateLimit, "function");
+  assert.equal(typeof client.getOrganizationUserRole, "function");
+  assert.equal(typeof client.getOrganizationGroup, "function");
+  assert.equal(typeof client.getOrganizationGroupUser, "function");
+  assert.equal(typeof client.getOrganizationGroupRole, "function");
+  assert.equal(typeof client.getOrganizationRole, "function");
+  assert.equal(typeof client.getOrganizationUsageFileSearchCalls, "function");
+  assert.equal(typeof client.getOrganizationUsageWebSearchCalls, "function");
+  assert.equal(typeof client.getOrganizationDataRetention, "function");
+  assert.equal(typeof client.modifyOrganizationDataRetention, "function");
+  assert.equal(typeof client.createOrganizationSpendAlert, "function");
+  assert.equal(typeof client.modifyOrganizationSpendAlert, "function");
+  assert.equal(typeof client.listOrganizationSpendAlerts, "function");
+  assert.equal(typeof client.deleteOrganizationSpendAlert, "function");
+  assert.equal(typeof client.getProjectDataRetention, "function");
+  assert.equal(typeof client.modifyProjectDataRetention, "function");
+  assert.equal(typeof client.modifyProjectServiceAccount, "function");
+  assert.equal(typeof client.getProjectUserRole, "function");
+  assert.equal(typeof client.getProjectGroup, "function");
+  assert.equal(typeof client.getProjectGroupRole, "function");
+  assert.equal(typeof client.getProjectRole, "function");
+  assert.equal(typeof client.createProjectSpendAlert, "function");
+  assert.equal(typeof client.modifyProjectSpendAlert, "function");
+  assert.equal(typeof client.listProjectSpendAlerts, "function");
+  assert.equal(typeof client.deleteProjectSpendAlert, "function");
+  assert.equal(typeof client.getProjectModelPermissions, "function");
+  assert.equal(typeof client.modifyProjectModelPermissions, "function");
+  assert.equal(typeof client.deleteProjectModelPermissions, "function");
+  assert.equal(typeof client.getProjectHostedToolPermissions, "function");
+  assert.equal(typeof client.modifyProjectHostedToolPermissions, "function");
   assert.equal(typeof client.cancelModelResponse, "function");
   assert.equal(typeof client.compactModelResponse, "function");
   assert.equal(typeof client.countInputTokens, "function");
@@ -2249,6 +3039,10 @@ test("editor templates and locale expose latest methods", () => {
     path.join(__dirname, "..", "src", "node.html"),
     "utf8"
   );
+  const generatedNodeHtml = fs.readFileSync(
+    path.join(__dirname, "..", "node.html"),
+    "utf8"
+  );
   const adminHelp = fs.readFileSync(
     path.join(__dirname, "..", "src", "admin", "help.html"),
     "utf8"
@@ -2287,6 +3081,14 @@ test("editor templates and locale expose latest methods", () => {
 
   assert.match(adminTemplate, /value="listOrganizationProjects"/);
   assert.match(adminTemplate, /value="modifyProjectRateLimit"/);
+  for (const [method, label, heading] of adminNoa81EditorMethods) {
+    const option = `<option value="${method}" data-i18n="OpenaiApi.parameters.${method}"></option>`;
+    assert.equal(adminTemplate.includes(option), true);
+    assert.equal(generatedNodeHtml.includes(option), true);
+    assert.equal(locale.OpenaiApi.parameters[method], label);
+    assert.match(adminHelp, new RegExp(`⋙ ${heading}`));
+    assert.match(generatedNodeHtml, new RegExp(`⋙ ${heading}`));
+  }
   assert.match(responsesTemplate, /value="cancelModelResponse"/);
   assert.match(responsesTemplate, /value="compactModelResponse"/);
   assert.match(responsesTemplate, /value="countInputTokens"/);
@@ -2327,12 +3129,29 @@ test("editor templates and locale expose latest methods", () => {
   assert.match(adminHelp, /⋙ List Organization Projects/);
   assert.match(adminHelp, /⋙ List Project Rate Limits/);
   assert.match(adminHelp, /Admin API Key/);
+  assert.match(adminHelp, /retention_type/);
+  assert.match(adminHelp, /notification_channel/);
+  assert.match(adminHelp, /model_ids/);
+  assert.match(adminHelp, /web_search/);
+  assert.match(adminHelp, /service_account_id/);
   assert.match(responsesHelp, /⋙ Count Input Tokens/);
   assert.match(responsesHelp, /⋙ Parse Model Response/);
   assert.match(responsesHelp, /⋙ Stream Model Response/);
   assert.match(responsesHelp, /SDK parse helper/);
   assert.match(responsesHelp, /helper's final parsed response object/);
   assert.match(responsesHelp, /Default is <code>desc<\/code>/);
+  const generatedCompactHelp = helpSection(
+    generatedNodeHtml,
+    "<h4 style=\"font-weight: bolder;\"> ⋙ Compact Model Response</h4>",
+    "<h4 style=\"font-weight: bolder;\"> ⋙ List Input Items</h4>"
+  );
+  assert.match(generatedNodeHtml, /value="compactModelResponse"/);
+  assert.match(generatedCompactHelp, /service_tier/);
+  assert.match(generatedCompactHelp, /auto/);
+  assert.match(generatedCompactHelp, /default/);
+  assert.match(generatedCompactHelp, /flex/);
+  assert.match(generatedCompactHelp, /priority/);
+  assert.match(generatedCompactHelp, /<code>null<\/code>/);
   assert.match(chatkitHelp, /⋙ Create ChatKit Session/);
   assert.match(chatkitHelp, /workflow\.id/);
   assert.match(chatkitHelp, /client_secret/);

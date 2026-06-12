@@ -220,6 +220,37 @@
             <dd>Bucket size such as <code>1m</code>, <code>1h</code>, or <code>1d</code>.</dd>
         </dl>
 
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization Usage File Search Calls</h4>
+        <p>Retrieve organization usage for file search calls.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                start_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Inclusive Unix timestamp for the start of the reporting window.</dd>
+            <dt class="optional">
+                end_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Exclusive Unix timestamp for the end of the reporting window.</dd>
+            <dt class="optional">
+                bucket_width
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Bucket size such as <code>1m</code>, <code>1h</code>, or <code>1d</code>.</dd>
+            <dt class="optional">
+                project_ids
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Optional project ids to include.</dd>
+            <dt class="optional">
+                group_by
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Optional dimensions to group by.</dd>
+        </dl>
+
         <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization Usage Images</h4>
         <p>Retrieve organization usage for images.</p>
         <dl class="message-properties">
@@ -281,6 +312,144 @@
                 <span class="property-type">string</span>
             </dt>
             <dd>Bucket size such as <code>1m</code>, <code>1h</code>, or <code>1d</code>.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization Usage Web Search Calls</h4>
+        <p>Retrieve organization usage for web search calls.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                start_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Inclusive Unix timestamp for the start of the reporting window.</dd>
+            <dt class="optional">
+                end_time
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Exclusive Unix timestamp for the end of the reporting window.</dd>
+            <dt class="optional">
+                bucket_width
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Bucket size such as <code>1m</code>, <code>1h</code>, or <code>1d</code>.</dd>
+            <dt class="optional">
+                project_ids
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Optional project ids to include.</dd>
+            <dt class="optional">
+                group_by
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Optional dimensions to group by.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization Data Retention</h4>
+        <p>Retrieve organization data retention controls.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dd>No payload properties are required.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Organization Data Retention</h4>
+        <p>Update organization data retention controls.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                retention_type
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The organization retention mode to apply.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Organization Spend Alert</h4>
+        <p>Create an organization spend alert.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                currency
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The threshold currency, currently <code>USD</code>.</dd>
+            <dt>
+                interval
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The spend evaluation interval, currently <code>month</code>.</dd>
+            <dt>
+                notification_channel
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Email notification settings with <code>type</code> and <code>recipients</code>.</dd>
+            <dt>
+                threshold_amount
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>The alert threshold amount in cents.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Organization Spend Alert</h4>
+        <p>Update an organization spend alert.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                alert_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The spend alert id.</dd>
+            <dt>
+                currency
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The threshold currency, currently <code>USD</code>.</dd>
+            <dt>
+                interval
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The spend evaluation interval, currently <code>month</code>.</dd>
+            <dt>
+                notification_channel
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Email notification settings with <code>type</code> and <code>recipients</code>.</dd>
+            <dt>
+                threshold_amount
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>The alert threshold amount in cents.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Organization Spend Alerts</h4>
+        <p>List organization spend alerts.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt class="optional">
+                before
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for alerts before this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of alerts to return.</dd>
+            <dt class="optional">
+                order
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Sort order for returned alerts.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Organization Spend Alert</h4>
+        <p>Delete an organization spend alert.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                alert_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The spend alert id.</dd>
         </dl>
 
         <h4 style="font-weight: bolder;"> ⋙ Create Organization Invite</h4>
@@ -407,6 +576,22 @@
             <dd>The role to assign.</dd>
         </dl>
 
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization User Role</h4>
+        <p>Retrieve a role assignment for an organization user.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                role_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The role assignment id.</dd>
+            <dt>
+                user_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The user id that owns the assignment.</dd>
+        </dl>
+
         <h4 style="font-weight: bolder;"> ⋙ List Organization User Roles</h4>
         <p>List role assignments for an organization user.</p>
         <dl class="message-properties">
@@ -453,6 +638,17 @@
                 <span class="property-type">string</span>
             </dt>
             <dd>The group name.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization Group</h4>
+        <p>Retrieve an organization group by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                group_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The group id.</dd>
         </dl>
 
         <h4 style="font-weight: bolder;"> ⋙ Modify Organization Group</h4>
@@ -514,6 +710,22 @@
             <dd>The user id to add.</dd>
         </dl>
 
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization Group User</h4>
+        <p>Retrieve a user in an organization group.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                user_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The user id to retrieve.</dd>
+            <dt>
+                group_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The group id to inspect.</dd>
+        </dl>
+
         <h4 style="font-weight: bolder;"> ⋙ List Organization Group Users</h4>
         <p>List users in an organization group.</p>
         <dl class="message-properties">
@@ -567,6 +779,22 @@
             <dd>The role to assign.</dd>
         </dl>
 
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization Group Role</h4>
+        <p>Retrieve a role assignment for an organization group.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                role_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The role assignment id.</dd>
+            <dt>
+                group_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The group id that owns the assignment.</dd>
+        </dl>
+
         <h4 style="font-weight: bolder;"> ⋙ List Organization Group Roles</h4>
         <p>List role assignments for an organization group.</p>
         <dl class="message-properties">
@@ -613,6 +841,17 @@
                 <span class="property-type">string</span>
             </dt>
             <dd>The role name to create.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Organization Role</h4>
+        <p>Retrieve an organization role by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                role_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The role id.</dd>
         </dl>
 
         <h4 style="font-weight: bolder;"> ⋙ Modify Organization Role</h4>
@@ -805,6 +1044,232 @@
             <dd>The project id.</dd>
         </dl>
 
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Project Data Retention</h4>
+        <p>Retrieve data retention controls for a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Project Data Retention</h4>
+        <p>Update data retention controls for a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                retention_type
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project retention mode to apply.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Create Project Spend Alert</h4>
+        <p>Create a spend alert for a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                currency
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The threshold currency, currently <code>USD</code>.</dd>
+            <dt>
+                interval
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The spend evaluation interval, currently <code>month</code>.</dd>
+            <dt>
+                notification_channel
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Email notification settings with <code>type</code> and <code>recipients</code>.</dd>
+            <dt>
+                threshold_amount
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>The alert threshold amount in cents.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Project Spend Alert</h4>
+        <p>Update a spend alert for a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                alert_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The spend alert id.</dd>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                currency
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The threshold currency, currently <code>USD</code>.</dd>
+            <dt>
+                interval
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The spend evaluation interval, currently <code>month</code>.</dd>
+            <dt>
+                notification_channel
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Email notification settings with <code>type</code> and <code>recipients</code>.</dd>
+            <dt>
+                threshold_amount
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>The alert threshold amount in cents.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ List Project Spend Alerts</h4>
+        <p>List spend alerts for a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt class="optional">
+                before
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Pagination cursor for alerts before this id.</dd>
+            <dt class="optional">
+                limit
+                <span class="property-type">integer</span>
+            </dt>
+            <dd>Maximum number of alerts to return.</dd>
+            <dt class="optional">
+                order
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Sort order for returned alerts.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Project Spend Alert</h4>
+        <p>Delete a spend alert for a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                alert_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The spend alert id.</dd>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Project Model Permissions</h4>
+        <p>Retrieve model permissions for a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Project Model Permissions</h4>
+        <p>Update model permissions for a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                mode
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The model permission mode, such as <code>allow_list</code> or <code>deny_list</code>.</dd>
+            <dt>
+                model_ids
+                <span class="property-type">array</span>
+            </dt>
+            <dd>The model ids included in the permission policy.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Delete Project Model Permissions</h4>
+        <p>Delete model permissions for a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Project Hosted Tool Permissions</h4>
+        <p>Retrieve hosted tool permissions for a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Project Hosted Tool Permissions</h4>
+        <p>Update hosted tool permissions for a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt class="optional">
+                code_interpreter
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional hosted tool permission object with an <code>enabled</code> boolean.</dd>
+            <dt class="optional">
+                file_search
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional hosted tool permission object with an <code>enabled</code> boolean.</dd>
+            <dt class="optional">
+                image_generation
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional hosted tool permission object with an <code>enabled</code> boolean.</dd>
+            <dt class="optional">
+                mcp
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional hosted tool permission object with an <code>enabled</code> boolean.</dd>
+            <dt class="optional">
+                web_search
+                <span class="property-type">object</span>
+            </dt>
+            <dd>Optional hosted tool permission object with an <code>enabled</code> boolean.</dd>
+        </dl>
+
         <h4 style="font-weight: bolder;"> ⋙ Retrieve Project API Key</h4>
         <p>Retrieve a project API key by id.</p>
         <dl class="message-properties">
@@ -941,6 +1406,32 @@
                 <span class="property-type">string</span>
             </dt>
             <dd>The service account id.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Modify Project Service Account</h4>
+        <p>Update a project service account by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                service_account_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The service account id.</dd>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt class="optional">
+                name
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Updated service account name.</dd>
+            <dt class="optional">
+                role
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Updated service account role.</dd>
         </dl>
 
         <h4 style="font-weight: bolder;"> ⋙ List Project Service Accounts</h4>
@@ -1086,6 +1577,27 @@
             <dd>The role to assign.</dd>
         </dl>
 
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Project User Role</h4>
+        <p>Retrieve a role assignment for a project user.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                role_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The role assignment id.</dd>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                user_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project user id that owns the assignment.</dd>
+        </dl>
+
         <h4 style="font-weight: bolder;"> ⋙ List Project User Roles</h4>
         <p>List role assignments for a project user.</p>
         <dl class="message-properties">
@@ -1149,6 +1661,27 @@
             <dd>The group id to add.</dd>
         </dl>
 
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Project Group</h4>
+        <p>Retrieve a group that has access to a project.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                group_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The group id.</dd>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt class="optional">
+                group_type
+                <span class="property-type">string</span>
+            </dt>
+            <dd>Optional group type to retrieve.</dd>
+        </dl>
+
         <h4 style="font-weight: bolder;"> ⋙ List Project Groups</h4>
         <p>List groups in a project.</p>
         <dl class="message-properties">
@@ -1205,6 +1738,27 @@
                 <span class="property-type">string</span>
             </dt>
             <dd>The role to assign.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Project Group Role</h4>
+        <p>Retrieve a role assignment for a project group.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                role_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The role assignment id.</dd>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
+            <dt>
+                group_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project group id that owns the assignment.</dd>
         </dl>
 
         <h4 style="font-weight: bolder;"> ⋙ List Project Group Roles</h4>
@@ -1268,6 +1822,22 @@
                 <span class="property-type">string</span>
             </dt>
             <dd>The role to create.</dd>
+        </dl>
+
+        <h4 style="font-weight: bolder;"> ⋙ Retrieve Project Role</h4>
+        <p>Retrieve a project role by id.</p>
+        <dl class="message-properties">
+            <h4>msg.payload Properties</h4>
+            <dt>
+                role_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The role id.</dd>
+            <dt>
+                project_id
+                <span class="property-type">string</span>
+            </dt>
+            <dd>The project id.</dd>
         </dl>
 
         <h4 style="font-weight: bolder;"> ⋙ Modify Project Role</h4>
