@@ -126,6 +126,7 @@ test("responses methods map parse/delete/cancel/compact/input-items/input-tokens
       payload: {
         model: "gpt-5.2",
         input: [{ role: "user", content: [{ type: "text", text: "hi" }] }],
+        service_tier: "auto",
       },
     });
     assert.deepEqual(compactResponse, {
@@ -194,6 +195,7 @@ test("responses methods map parse/delete/cancel/compact/input-items/input-tokens
       payload: {
         model: "gpt-5.2",
         input: [{ role: "user", content: [{ type: "text", text: "hi" }] }],
+        service_tier: "auto",
       },
     },
     {
