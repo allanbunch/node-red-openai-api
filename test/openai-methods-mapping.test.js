@@ -2182,6 +2182,302 @@ test("admin methods map representative organization and project resources to Ope
   ]);
 });
 
+test("admin methods map v6.39.0 existing-family retrieve and update wrappers to OpenAI SDK", async () => {
+  const calls = [];
+
+  class FakeOpenAI {
+    constructor(clientParams) {
+      calls.push({ method: "ctor", clientParams });
+      this.admin = {
+        organization: {
+          users: {
+            roles: {
+              retrieve: async (roleID, params) => {
+                calls.push({ method: "admin.organization.users.roles.retrieve", roleID, params });
+                return { id: roleID, user_id: params.user_id, object: "organization.user.role" };
+              },
+            },
+          },
+          groups: {
+            retrieve: async (groupID, options) => {
+              calls.push({ method: "admin.organization.groups.retrieve", groupID, options });
+              return { id: groupID, object: "organization.group", options };
+            },
+            users: {
+              retrieve: async (userID, params) => {
+                calls.push({ method: "admin.organization.groups.users.retrieve", userID, params });
+                return { id: userID, group_id: params.group_id, object: "organization.group.user" };
+              },
+            },
+            roles: {
+              retrieve: async (roleID, params) => {
+                calls.push({ method: "admin.organization.groups.roles.retrieve", roleID, params });
+                return { id: roleID, group_id: params.group_id, object: "organization.group.role" };
+              },
+            },
+          },
+          roles: {
+            retrieve: async (roleID, options) => {
+              calls.push({ method: "admin.organization.roles.retrieve", roleID, options });
+              return { id: roleID, object: "organization.role", options };
+            },
+          },
+          projects: {
+            serviceAccounts: {
+              update: async (serviceAccountID, params) => {
+                calls.push({ method: "admin.organization.projects.serviceAccounts.update", serviceAccountID, params });
+                return { id: serviceAccountID, project_id: params.project_id, name: params.name };
+              },
+            },
+            users: {
+              roles: {
+                retrieve: async (roleID, params) => {
+                  calls.push({ method: "admin.organization.projects.users.roles.retrieve", roleID, params });
+                  return {
+                    id: roleID,
+                    project_id: params.project_id,
+                    user_id: params.user_id,
+                    object: "project.user.role",
+                  };
+                },
+              },
+            },
+            groups: {
+              retrieve: async (groupID, params) => {
+                calls.push({ method: "admin.organization.projects.groups.retrieve", groupID, params });
+                return { id: groupID, project_id: params.project_id, object: "project.group" };
+              },
+              roles: {
+                retrieve: async (roleID, params) => {
+                  calls.push({ method: "admin.organization.projects.groups.roles.retrieve", roleID, params });
+                  return {
+                    id: roleID,
+                    project_id: params.project_id,
+                    group_id: params.group_id,
+                    object: "project.group.role",
+                  };
+                },
+              },
+            },
+            roles: {
+              retrieve: async (roleID, params) => {
+                calls.push({ method: "admin.organization.projects.roles.retrieve", roleID, params });
+                return { id: roleID, project_id: params.project_id, object: "project.role" };
+              },
+            },
+          },
+        },
+      };
+    }
+  }
+
+  await withMockedOpenAI(FakeOpenAI, async () => {
+    const modulePath = require.resolve("../src/admin/methods.js");
+    delete require.cache[modulePath];
+    const adminMethods = require("../src/admin/methods.js");
+
+    const clientContext = {
+      clientParams: {
+        apiKey: null,
+        adminAPIKey: "sk-admin-test",
+        baseURL: "https://api.example.com/v1",
+      },
+    };
+
+    assert.deepEqual(
+      await adminMethods.getOrganizationUserRole.call(clientContext, {
+        payload: { user_id: "user_1", role_id: "role_org_user_1", request_id: "trace_user_role" },
+      }),
+      {
+        id: "role_org_user_1",
+        user_id: "user_1",
+        object: "organization.user.role",
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.getOrganizationGroup.call(clientContext, {
+        payload: { group_id: "group_1", request_id: "trace_org_group" },
+      }),
+      {
+        id: "group_1",
+        object: "organization.group",
+        options: { request_id: "trace_org_group" },
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.getOrganizationGroupUser.call(clientContext, {
+        payload: { group_id: "group_1", user_id: "user_2", request_id: "trace_group_user" },
+      }),
+      {
+        id: "user_2",
+        group_id: "group_1",
+        object: "organization.group.user",
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.getOrganizationGroupRole.call(clientContext, {
+        payload: { group_id: "group_1", role_id: "role_group_1", request_id: "trace_group_role" },
+      }),
+      {
+        id: "role_group_1",
+        group_id: "group_1",
+        object: "organization.group.role",
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.getOrganizationRole.call(clientContext, {
+        payload: { role_id: "role_org_1", request_id: "trace_org_role" },
+      }),
+      {
+        id: "role_org_1",
+        object: "organization.role",
+        options: { request_id: "trace_org_role" },
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.modifyProjectServiceAccount.call(clientContext, {
+        payload: { project_id: "proj_1", service_account_id: "svc_1", name: "billing worker" },
+      }),
+      {
+        id: "svc_1",
+        project_id: "proj_1",
+        name: "billing worker",
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.getProjectUserRole.call(clientContext, {
+        payload: {
+          project_id: "proj_1",
+          user_id: "user_3",
+          role_id: "role_project_user_1",
+          request_id: "trace_project_user_role",
+        },
+      }),
+      {
+        id: "role_project_user_1",
+        project_id: "proj_1",
+        user_id: "user_3",
+        object: "project.user.role",
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.getProjectGroup.call(clientContext, {
+        payload: { project_id: "proj_1", group_id: "group_2", request_id: "trace_project_group" },
+      }),
+      {
+        id: "group_2",
+        project_id: "proj_1",
+        object: "project.group",
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.getProjectGroupRole.call(clientContext, {
+        payload: {
+          project_id: "proj_1",
+          group_id: "group_2",
+          role_id: "role_project_group_1",
+          request_id: "trace_project_group_role",
+        },
+      }),
+      {
+        id: "role_project_group_1",
+        project_id: "proj_1",
+        group_id: "group_2",
+        object: "project.group.role",
+      }
+    );
+    assert.deepEqual(
+      await adminMethods.getProjectRole.call(clientContext, {
+        payload: { project_id: "proj_1", role_id: "role_project_1", request_id: "trace_project_role" },
+      }),
+      {
+        id: "role_project_1",
+        project_id: "proj_1",
+        object: "project.role",
+      }
+    );
+
+    [
+      "getOrganizationUserRole",
+      "getOrganizationGroup",
+      "getOrganizationGroupUser",
+      "getOrganizationGroupRole",
+      "getOrganizationRole",
+      "modifyProjectServiceAccount",
+      "getProjectUserRole",
+      "getProjectGroup",
+      "getProjectGroupRole",
+      "getProjectRole",
+    ].forEach((methodName) => {
+      assert.equal(adminMethods[methodName].authentication, "admin");
+    });
+
+    delete require.cache[modulePath];
+  });
+
+  const adminCalls = calls.filter((entry) => entry.method !== "ctor");
+  assert.deepEqual(adminCalls, [
+    {
+      method: "admin.organization.users.roles.retrieve",
+      roleID: "role_org_user_1",
+      params: { user_id: "user_1", request_id: "trace_user_role" },
+    },
+    {
+      method: "admin.organization.groups.retrieve",
+      groupID: "group_1",
+      options: { request_id: "trace_org_group" },
+    },
+    {
+      method: "admin.organization.groups.users.retrieve",
+      userID: "user_2",
+      params: { group_id: "group_1", request_id: "trace_group_user" },
+    },
+    {
+      method: "admin.organization.groups.roles.retrieve",
+      roleID: "role_group_1",
+      params: { group_id: "group_1", request_id: "trace_group_role" },
+    },
+    {
+      method: "admin.organization.roles.retrieve",
+      roleID: "role_org_1",
+      options: { request_id: "trace_org_role" },
+    },
+    {
+      method: "admin.organization.projects.serviceAccounts.update",
+      serviceAccountID: "svc_1",
+      params: { project_id: "proj_1", name: "billing worker" },
+    },
+    {
+      method: "admin.organization.projects.users.roles.retrieve",
+      roleID: "role_project_user_1",
+      params: {
+        project_id: "proj_1",
+        user_id: "user_3",
+        request_id: "trace_project_user_role",
+      },
+    },
+    {
+      method: "admin.organization.projects.groups.retrieve",
+      groupID: "group_2",
+      params: { project_id: "proj_1", request_id: "trace_project_group" },
+    },
+    {
+      method: "admin.organization.projects.groups.roles.retrieve",
+      roleID: "role_project_group_1",
+      params: {
+        project_id: "proj_1",
+        group_id: "group_2",
+        request_id: "trace_project_group_role",
+      },
+    },
+    {
+      method: "admin.organization.projects.roles.retrieve",
+      roleID: "role_project_1",
+      params: { project_id: "proj_1", request_id: "trace_project_role" },
+    },
+  ]);
+});
+
 test("admin methods map v6.39.0 resource-family wrappers to OpenAI SDK", async () => {
   const calls = [];
 
@@ -2612,6 +2908,11 @@ test("OpenaiApi prototype exposes latest methods", () => {
 
   assert.equal(typeof client.listOrganizationProjects, "function");
   assert.equal(typeof client.modifyProjectRateLimit, "function");
+  assert.equal(typeof client.getOrganizationUserRole, "function");
+  assert.equal(typeof client.getOrganizationGroup, "function");
+  assert.equal(typeof client.getOrganizationGroupUser, "function");
+  assert.equal(typeof client.getOrganizationGroupRole, "function");
+  assert.equal(typeof client.getOrganizationRole, "function");
   assert.equal(typeof client.getOrganizationUsageFileSearchCalls, "function");
   assert.equal(typeof client.getOrganizationUsageWebSearchCalls, "function");
   assert.equal(typeof client.getOrganizationDataRetention, "function");
@@ -2622,6 +2923,11 @@ test("OpenaiApi prototype exposes latest methods", () => {
   assert.equal(typeof client.deleteOrganizationSpendAlert, "function");
   assert.equal(typeof client.getProjectDataRetention, "function");
   assert.equal(typeof client.modifyProjectDataRetention, "function");
+  assert.equal(typeof client.modifyProjectServiceAccount, "function");
+  assert.equal(typeof client.getProjectUserRole, "function");
+  assert.equal(typeof client.getProjectGroup, "function");
+  assert.equal(typeof client.getProjectGroupRole, "function");
+  assert.equal(typeof client.getProjectRole, "function");
   assert.equal(typeof client.createProjectSpendAlert, "function");
   assert.equal(typeof client.modifyProjectSpendAlert, "function");
   assert.equal(typeof client.listProjectSpendAlerts, "function");

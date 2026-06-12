@@ -12426,6 +12426,12 @@ var require_methods2 = __commonJS({
       const response = await openai.admin.organization.users.roles.create(user_id, body);
       return response;
     }
+    async function getOrganizationUserRole(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { role_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.users.roles.retrieve(role_id, params);
+      return response;
+    }
     async function listOrganizationUserRoles(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { user_id, ...params } = parameters.payload;
@@ -12441,6 +12447,12 @@ var require_methods2 = __commonJS({
     async function createOrganizationGroup(parameters) {
       const openai = new OpenAI(this.clientParams);
       const response = await openai.admin.organization.groups.create(parameters.payload);
+      return response;
+    }
+    async function getOrganizationGroup(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { group_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.groups.retrieve(group_id, params);
       return response;
     }
     async function modifyOrganizationGroup(parameters) {
@@ -12466,6 +12478,12 @@ var require_methods2 = __commonJS({
       const response = await openai.admin.organization.groups.users.create(group_id, body);
       return response;
     }
+    async function getOrganizationGroupUser(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { user_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.groups.users.retrieve(user_id, params);
+      return response;
+    }
     async function listOrganizationGroupUsers(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { group_id, ...params } = parameters.payload;
@@ -12484,6 +12502,12 @@ var require_methods2 = __commonJS({
       const response = await openai.admin.organization.groups.roles.create(group_id, params);
       return response;
     }
+    async function getOrganizationGroupRole(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { role_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.groups.roles.retrieve(role_id, params);
+      return response;
+    }
     async function listOrganizationGroupRoles(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { group_id, ...params } = parameters.payload;
@@ -12499,6 +12523,12 @@ var require_methods2 = __commonJS({
     async function createOrganizationRole(parameters) {
       const openai = new OpenAI(this.clientParams);
       const response = await openai.admin.organization.roles.create(parameters.payload);
+      return response;
+    }
+    async function getOrganizationRole(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { role_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.roles.retrieve(role_id, params);
       return response;
     }
     async function modifyOrganizationRole(parameters) {
@@ -12698,6 +12728,12 @@ var require_methods2 = __commonJS({
       const response = await openai.admin.organization.projects.serviceAccounts.retrieve(service_account_id, params);
       return response;
     }
+    async function modifyProjectServiceAccount(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { service_account_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.serviceAccounts.update(service_account_id, params);
+      return response;
+    }
     async function listProjectServiceAccounts(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { project_id, ...params } = parameters.payload;
@@ -12746,6 +12782,12 @@ var require_methods2 = __commonJS({
       const response = await openai.admin.organization.projects.users.roles.create(user_id, params);
       return response;
     }
+    async function getProjectUserRole(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { role_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.users.roles.retrieve(role_id, params);
+      return response;
+    }
     async function listProjectUserRoles(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { user_id, ...params } = parameters.payload;
@@ -12762,6 +12804,12 @@ var require_methods2 = __commonJS({
       const openai = new OpenAI(this.clientParams);
       const { project_id, ...body } = parameters.payload;
       const response = await openai.admin.organization.projects.groups.create(project_id, body);
+      return response;
+    }
+    async function getProjectGroup(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { group_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.groups.retrieve(group_id, params);
       return response;
     }
     async function listProjectGroups(parameters) {
@@ -12782,6 +12830,12 @@ var require_methods2 = __commonJS({
       const response = await openai.admin.organization.projects.groups.roles.create(group_id, params);
       return response;
     }
+    async function getProjectGroupRole(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { role_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.groups.roles.retrieve(role_id, params);
+      return response;
+    }
     async function listProjectGroupRoles(parameters) {
       const openai = new OpenAI(this.clientParams);
       const { group_id, ...params } = parameters.payload;
@@ -12798,6 +12852,12 @@ var require_methods2 = __commonJS({
       const openai = new OpenAI(this.clientParams);
       const { project_id, ...body } = parameters.payload;
       const response = await openai.admin.organization.projects.roles.create(project_id, body);
+      return response;
+    }
+    async function getProjectRole(parameters) {
+      const openai = new OpenAI(this.clientParams);
+      const { role_id, ...params } = parameters.payload;
+      const response = await openai.admin.organization.projects.roles.retrieve(role_id, params);
       return response;
     }
     async function modifyProjectRole(parameters) {
@@ -12862,19 +12922,24 @@ var require_methods2 = __commonJS({
       listOrganizationUsers,
       deleteOrganizationUser,
       createOrganizationUserRole,
+      getOrganizationUserRole,
       listOrganizationUserRoles,
       deleteOrganizationUserRole,
       createOrganizationGroup,
+      getOrganizationGroup,
       modifyOrganizationGroup,
       listOrganizationGroups,
       deleteOrganizationGroup,
       createOrganizationGroupUser,
+      getOrganizationGroupUser,
       listOrganizationGroupUsers,
       deleteOrganizationGroupUser,
       createOrganizationGroupRole,
+      getOrganizationGroupRole,
       listOrganizationGroupRoles,
       deleteOrganizationGroupRole,
       createOrganizationRole,
+      getOrganizationRole,
       modifyOrganizationRole,
       listOrganizationRoles,
       deleteOrganizationRole,
@@ -12909,6 +12974,7 @@ var require_methods2 = __commonJS({
       deactivateProjectCertificates,
       createProjectServiceAccount,
       getProjectServiceAccount,
+      modifyProjectServiceAccount,
       listProjectServiceAccounts,
       deleteProjectServiceAccount,
       createProjectUser,
@@ -12917,15 +12983,19 @@ var require_methods2 = __commonJS({
       listProjectUsers,
       deleteProjectUser,
       createProjectUserRole,
+      getProjectUserRole,
       listProjectUserRoles,
       deleteProjectUserRole,
       createProjectGroup,
+      getProjectGroup,
       listProjectGroups,
       deleteProjectGroup,
       createProjectGroupRole,
+      getProjectGroupRole,
       listProjectGroupRoles,
       deleteProjectGroupRole,
       createProjectRole,
+      getProjectRole,
       modifyProjectRole,
       listProjectRoles,
       deleteProjectRole,
