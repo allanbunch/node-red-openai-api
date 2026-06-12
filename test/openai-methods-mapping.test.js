@@ -40,6 +40,13 @@ const adminNoa81EditorMethods = [
   ["getProjectRole", "retrieve project role", "Retrieve Project Role"],
 ];
 
+function helpSection(html, startTitle, endTitle) {
+  const pattern = new RegExp(`${startTitle}[\\s\\S]*?(?=${endTitle})`);
+  const match = html.match(pattern);
+  assert.ok(match, `Expected help section between ${startTitle} and ${endTitle}`);
+  return match[0];
+}
+
 function withMockedOpenAI(FakeOpenAI, callback) {
   const openaiModule = require("openai");
   const originalDescriptor = Object.getOwnPropertyDescriptor(openaiModule, "OpenAI");
@@ -3032,6 +3039,10 @@ test("editor templates and locale expose latest methods", () => {
     path.join(__dirname, "..", "src", "node.html"),
     "utf8"
   );
+  const generatedNodeHtml = fs.readFileSync(
+    path.join(__dirname, "..", "node.html"),
+    "utf8"
+  );
   const adminHelp = fs.readFileSync(
     path.join(__dirname, "..", "src", "admin", "help.html"),
     "utf8"
@@ -3073,8 +3084,10 @@ test("editor templates and locale expose latest methods", () => {
   for (const [method, label, heading] of adminNoa81EditorMethods) {
     const option = `<option value="${method}" data-i18n="OpenaiApi.parameters.${method}"></option>`;
     assert.equal(adminTemplate.includes(option), true);
+    assert.equal(generatedNodeHtml.includes(option), true);
     assert.equal(locale.OpenaiApi.parameters[method], label);
     assert.match(adminHelp, new RegExp(`⋙ ${heading}`));
+    assert.match(generatedNodeHtml, new RegExp(`⋙ ${heading}`));
   }
   assert.match(responsesTemplate, /value="cancelModelResponse"/);
   assert.match(responsesTemplate, /value="compactModelResponse"/);
@@ -3127,6 +3140,18 @@ test("editor templates and locale expose latest methods", () => {
   assert.match(responsesHelp, /SDK parse helper/);
   assert.match(responsesHelp, /helper's final parsed response object/);
   assert.match(responsesHelp, /Default is <code>desc<\/code>/);
+  const generatedCompactHelp = helpSection(
+    generatedNodeHtml,
+    "<h4 style=\"font-weight: bolder;\"> ⋙ Compact Model Response</h4>",
+    "<h4 style=\"font-weight: bolder;\"> ⋙ List Input Items</h4>"
+  );
+  assert.match(generatedNodeHtml, /value="compactModelResponse"/);
+  assert.match(generatedCompactHelp, /service_tier/);
+  assert.match(generatedCompactHelp, /auto/);
+  assert.match(generatedCompactHelp, /default/);
+  assert.match(generatedCompactHelp, /flex/);
+  assert.match(generatedCompactHelp, /priority/);
+  assert.match(generatedCompactHelp, /<code>null<\/code>/);
   assert.match(chatkitHelp, /⋙ Create ChatKit Session/);
   assert.match(chatkitHelp, /workflow\.id/);
   assert.match(chatkitHelp, /client_secret/);
