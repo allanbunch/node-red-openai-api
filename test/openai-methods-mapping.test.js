@@ -8,6 +8,38 @@ const fs = require("node:fs");
 const path = require("node:path");
 const test = require("node:test");
 
+const adminNoa81EditorMethods = [
+  ["getOrganizationUsageFileSearchCalls", "retrieve organization usage file search calls", "Retrieve Organization Usage File Search Calls"],
+  ["getOrganizationUsageWebSearchCalls", "retrieve organization usage web search calls", "Retrieve Organization Usage Web Search Calls"],
+  ["getOrganizationDataRetention", "retrieve organization data retention", "Retrieve Organization Data Retention"],
+  ["modifyOrganizationDataRetention", "modify organization data retention", "Modify Organization Data Retention"],
+  ["createOrganizationSpendAlert", "create organization spend alert", "Create Organization Spend Alert"],
+  ["modifyOrganizationSpendAlert", "modify organization spend alert", "Modify Organization Spend Alert"],
+  ["listOrganizationSpendAlerts", "list organization spend alerts", "List Organization Spend Alerts"],
+  ["deleteOrganizationSpendAlert", "delete organization spend alert", "Delete Organization Spend Alert"],
+  ["getProjectDataRetention", "retrieve project data retention", "Retrieve Project Data Retention"],
+  ["modifyProjectDataRetention", "modify project data retention", "Modify Project Data Retention"],
+  ["createProjectSpendAlert", "create project spend alert", "Create Project Spend Alert"],
+  ["modifyProjectSpendAlert", "modify project spend alert", "Modify Project Spend Alert"],
+  ["listProjectSpendAlerts", "list project spend alerts", "List Project Spend Alerts"],
+  ["deleteProjectSpendAlert", "delete project spend alert", "Delete Project Spend Alert"],
+  ["getProjectModelPermissions", "retrieve project model permissions", "Retrieve Project Model Permissions"],
+  ["modifyProjectModelPermissions", "modify project model permissions", "Modify Project Model Permissions"],
+  ["deleteProjectModelPermissions", "delete project model permissions", "Delete Project Model Permissions"],
+  ["getProjectHostedToolPermissions", "retrieve project hosted tool permissions", "Retrieve Project Hosted Tool Permissions"],
+  ["modifyProjectHostedToolPermissions", "modify project hosted tool permissions", "Modify Project Hosted Tool Permissions"],
+  ["getOrganizationUserRole", "retrieve organization user role", "Retrieve Organization User Role"],
+  ["getOrganizationGroup", "retrieve organization group", "Retrieve Organization Group"],
+  ["getOrganizationGroupUser", "retrieve organization group user", "Retrieve Organization Group User"],
+  ["getOrganizationGroupRole", "retrieve organization group role", "Retrieve Organization Group Role"],
+  ["getOrganizationRole", "retrieve organization role", "Retrieve Organization Role"],
+  ["modifyProjectServiceAccount", "modify project service account", "Modify Project Service Account"],
+  ["getProjectUserRole", "retrieve project user role", "Retrieve Project User Role"],
+  ["getProjectGroup", "retrieve project group", "Retrieve Project Group"],
+  ["getProjectGroupRole", "retrieve project group role", "Retrieve Project Group Role"],
+  ["getProjectRole", "retrieve project role", "Retrieve Project Role"],
+];
+
 function withMockedOpenAI(FakeOpenAI, callback) {
   const openaiModule = require("openai");
   const originalDescriptor = Object.getOwnPropertyDescriptor(openaiModule, "OpenAI");
@@ -3038,6 +3070,12 @@ test("editor templates and locale expose latest methods", () => {
 
   assert.match(adminTemplate, /value="listOrganizationProjects"/);
   assert.match(adminTemplate, /value="modifyProjectRateLimit"/);
+  for (const [method, label, heading] of adminNoa81EditorMethods) {
+    const option = `<option value="${method}" data-i18n="OpenaiApi.parameters.${method}"></option>`;
+    assert.equal(adminTemplate.includes(option), true);
+    assert.equal(locale.OpenaiApi.parameters[method], label);
+    assert.match(adminHelp, new RegExp(`⋙ ${heading}`));
+  }
   assert.match(responsesTemplate, /value="cancelModelResponse"/);
   assert.match(responsesTemplate, /value="compactModelResponse"/);
   assert.match(responsesTemplate, /value="countInputTokens"/);
@@ -3078,6 +3116,11 @@ test("editor templates and locale expose latest methods", () => {
   assert.match(adminHelp, /⋙ List Organization Projects/);
   assert.match(adminHelp, /⋙ List Project Rate Limits/);
   assert.match(adminHelp, /Admin API Key/);
+  assert.match(adminHelp, /retention_type/);
+  assert.match(adminHelp, /notification_channel/);
+  assert.match(adminHelp, /model_ids/);
+  assert.match(adminHelp, /web_search/);
+  assert.match(adminHelp, /service_account_id/);
   assert.match(responsesHelp, /⋙ Count Input Tokens/);
   assert.match(responsesHelp, /⋙ Parse Model Response/);
   assert.match(responsesHelp, /⋙ Stream Model Response/);
