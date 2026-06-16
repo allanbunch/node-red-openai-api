@@ -1,6 +1,6 @@
 "use strict";
 
-// This file keeps the NOA-67 and NOA-78 Responses request-shape claims honest.
+// This file keeps the NOA-67, NOA-78, and NOA-124 Responses request-shape claims honest.
 // It proves current SDK fields pass through unchanged on the supported paths and that the local docs/examples use the same contract terms.
 
 const assert = require("node:assert/strict");
@@ -300,6 +300,57 @@ test("responses compact forwards service_tier, prompt_cache_retention, and input
   ]);
 });
 
+test("responses input token count forwards personality unchanged", async () => {
+  const calls = [];
+  const requestPayload = {
+    model: "gpt-5.4-mini",
+    input: "Count these tokens with a friendly style preset.",
+    personality: "friendly",
+  };
+
+  class FakeOpenAI {
+    constructor(clientParams) {
+      calls.push({ method: "ctor", clientParams });
+      this.responses = {
+        inputTokens: {
+          count: async (payload) => {
+            calls.push({ method: "responses.inputTokens.count", payload });
+            return { object: "response.input_tokens", input_tokens: 12 };
+          },
+        },
+      };
+    }
+  }
+
+  await withMockedOpenAI(FakeOpenAI, async () => {
+    const modulePath = require.resolve("../src/responses/methods.js");
+    delete require.cache[modulePath];
+    const responsesMethods = require("../src/responses/methods.js");
+
+    const clientContext = {
+      clientParams: {
+        apiKey: "sk-test",
+        baseURL: "https://api.example.com/v1",
+      },
+    };
+
+    const response = await responsesMethods.countInputTokens.call(clientContext, {
+      payload: requestPayload,
+    });
+
+    assert.deepEqual(response, { object: "response.input_tokens", input_tokens: 12 });
+
+    delete require.cache[modulePath];
+  });
+
+  assert.deepEqual(calls.filter((entry) => entry.method !== "ctor"), [
+    {
+      method: "responses.inputTokens.count",
+      payload: requestPayload,
+    },
+  ]);
+});
+
 test("Responses help describes the current request shape without translation wording", () => {
   const createHelp = getHelpSection(
     "<h4 style=\"font-weight: bolder;\"> ⋙ Create Model Response</h4>",
@@ -312,6 +363,10 @@ test("Responses help describes the current request shape without translation wor
   const compactHelp = getHelpSection(
     "<h4 style=\"font-weight: bolder;\"> ⋙ Compact Model Response</h4>",
     "<h4 style=\"font-weight: bolder;\"> ⋙ List Input Items</h4>"
+  );
+  const inputTokenHelp = getHelpSection(
+    "<h4 style=\"font-weight: bolder;\"> ⋙ Count Input Tokens</h4>",
+    "<h4 style=\"font-weight: bolder;\"> ⋙ Manage Model Response WebSocket</h4>"
   );
 
   assert.match(createHelp, /input_file/);
@@ -339,6 +394,11 @@ test("Responses help describes the current request shape without translation wor
   assert.match(compactHelp, /flex/);
   assert.match(compactHelp, /priority/);
   assert.match(compactHelp, /null/);
+
+  assert.match(inputTokenHelp, /personality/);
+  assert.match(inputTokenHelp, /friendly/);
+  assert.match(inputTokenHelp, /pragmatic/);
+  assert.match(inputTokenHelp, /64 characters/);
 });
 
 test("Responses web-search example keeps the newer request-shape fields discoverable", () => {

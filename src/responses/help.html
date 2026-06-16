@@ -490,6 +490,16 @@
             <dd>Whether tool calls may run in parallel for the modeled request.</dd>
 
             <dt class="optional">
+                personality
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                Model-owned style preset used for token counting. Supported named values include
+                <code>friendly</code> and <code>pragmatic</code>; future SDK string values up to
+                64 characters are also valid.
+            </dd>
+
+            <dt class="optional">
                 reasoning
                 <span class="property-type">object</span>
             </dt>

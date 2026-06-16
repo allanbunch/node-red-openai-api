@@ -195,6 +195,7 @@ test("responses methods map parse/delete/cancel/compact/input-items/input-tokens
       payload: {
         model: "gpt-4.1-mini",
         input: "hello",
+        personality: "friendly",
       },
     });
     assert.deepEqual(inputTokenCount, {
@@ -259,6 +260,7 @@ test("responses methods map parse/delete/cancel/compact/input-items/input-tokens
       payload: {
         model: "gpt-4.1-mini",
         input: "hello",
+        personality: "friendly",
       },
     },
   ]);
