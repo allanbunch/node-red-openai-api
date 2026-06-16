@@ -1,7 +1,7 @@
 "use strict";
 
 // This file keeps the Conversations create-item contract honest.
-// It checks that items arrays and assistant-message phase values pass through cleanly and that the help text matches the upstream published contract.
+// It checks that items arrays, additional tools, and assistant-message phase values pass through cleanly and that the help text matches the upstream published contract.
 
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
@@ -39,6 +39,28 @@ const conversationsHelp = fs.readFileSync(
 const examplePath = path.join(__dirname, "..", "examples", "conversations.json");
 const exampleNodes = JSON.parse(fs.readFileSync(examplePath, "utf8"));
 
+const additionalToolsItem = {
+    type: "additional_tools",
+    role: "developer",
+    id: "item_tools_shipping_lookup",
+    tools: [
+        {
+            type: "function",
+            name: "lookup_shipping_options",
+            description: "Look up available shipping options for an order.",
+            parameters: {
+                type: "object",
+                properties: {
+                    order_id: { type: "string" },
+                },
+                required: ["order_id"],
+                additionalProperties: false,
+            },
+            strict: true,
+        },
+    ],
+};
+
 function getCreateConversationItemHelpSection() {
     const match = conversationsHelp.match(
         /<h4 style="font-weight: bolder;"> ⋙ Create Conversation Item<\/h4>([\s\S]*?)<h4 style="font-weight: bolder;"> ⋙ Retrieve Conversation Item<\/h4>/
@@ -48,11 +70,12 @@ function getCreateConversationItemHelpSection() {
     return match[1];
 }
 
-test("createConversationItem forwards items arrays and assistant-message phase unchanged", async () => {
+test("createConversationItem forwards additional_tools items and assistant-message phase unchanged", async () => {
     const calls = [];
     const requestPayload = {
         conversation_id: "conv_1",
         items: [
+            additionalToolsItem,
             {
                 type: "message",
                 role: "assistant",
@@ -129,6 +152,10 @@ test("Conversations help documents the items contract and assistant-only phase g
 
     assert.match(createConversationItemHelp, /items/);
     assert.match(createConversationItemHelp, /array/);
+    assert.match(createConversationItemHelp, /additional_tools/);
+    assert.match(createConversationItemHelp, /role: "developer"/);
+    assert.match(createConversationItemHelp, /tools/);
+    assert.match(createConversationItemHelp, /optional <code>id<\/code>/);
     assert.doesNotMatch(createConversationItemHelp, /<dt>\s*item\s*<span class="property-type">object<\/span>/);
     assert.match(createConversationItemHelp, /assistant/i);
     assert.match(createConversationItemHelp, /commentary/);
@@ -164,6 +191,9 @@ test("Conversations example flow uses items arrays and preserved assistant-messa
 
     const items = JSON.parse(injectNode.props.find((prop) => prop.p === "payload.items").v);
     assert.equal(Array.isArray(items), true);
+    assert.equal(items.some((item) => item.type === "additional_tools" && item.role === "developer"), true);
+    assert.equal(items.some((item) => item.type === "additional_tools" && item.id === "item_tools_shipping_lookup"), true);
+    assert.equal(items.some((item) => item.type === "additional_tools" && item.tools[0].name === "lookup_shipping_options"), true);
     assert.equal(items.some((item) => item.role === "assistant" && item.phase === "commentary"), true);
     assert.equal(items.some((item) => item.role === "assistant" && item.phase === "final_answer"), true);
 
@@ -173,6 +203,7 @@ test("Conversations example flow uses items arrays and preserved assistant-messa
         .join("\n");
 
     assert.match(guidanceText, /`items` array/);
+    assert.match(guidanceText, /`additional_tools` item/);
     assert.match(guidanceText, /preserved assistant-message `phase` values/);
     assert.match(guidanceText, /replace `conv_123` with a real conversation id/i);
 });

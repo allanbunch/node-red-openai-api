@@ -3976,6 +3976,9 @@
                 Preserve assistant-message <code>phase</code> on follow-up requests;
                 dropping it can degrade performance. <code>phase</code> is not required for
                 user messages.
+                The array may also include <code>additional_tools</code> items. For create-item
+                input, send <code>role: "developer"</code>, a <code>tools</code> array, and
+                optional <code>id</code>.
             </dd>
         </dl>
 

@@ -958,6 +958,27 @@ test("conversation methods map to OpenAI SDK conversations endpoints", async () 
         conversation_id: "conv_1",
         items: [
           {
+            type: "additional_tools",
+            role: "developer",
+            id: "item_tools_shipping_lookup",
+            tools: [
+              {
+                type: "function",
+                name: "lookup_shipping_options",
+                description: "Look up available shipping options for an order.",
+                parameters: {
+                  type: "object",
+                  properties: {
+                    order_id: { type: "string" },
+                  },
+                  required: ["order_id"],
+                  additionalProperties: false,
+                },
+                strict: true,
+              },
+            ],
+          },
+          {
             type: "message",
             role: "assistant",
             phase: "commentary",
@@ -1003,6 +1024,27 @@ test("conversation methods map to OpenAI SDK conversations endpoints", async () 
       conversationId: "conv_1",
       body: {
         items: [
+          {
+            type: "additional_tools",
+            role: "developer",
+            id: "item_tools_shipping_lookup",
+            tools: [
+              {
+                type: "function",
+                name: "lookup_shipping_options",
+                description: "Look up available shipping options for an order.",
+                parameters: {
+                  type: "object",
+                  properties: {
+                    order_id: { type: "string" },
+                  },
+                  required: ["order_id"],
+                  additionalProperties: false,
+                },
+                strict: true,
+              },
+            ],
+          },
           {
             type: "message",
             role: "assistant",
