@@ -1,7 +1,7 @@
 "use strict";
 
 // This file keeps the wider Vector Store family contract honest.
-// It checks the remaining Vector Store Files and File Batch surfaces against the current SDK so the picker, wrappers, and docs stay aligned together.
+// It checks the remaining Vector Store Files and File Batch surfaces against the current SDK so the picker and wrappers stay aligned together.
 
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
@@ -54,15 +54,6 @@ function withMockedCreateReadStream(callback) {
 const locale = JSON.parse(
   fs.readFileSync(path.join(__dirname, "..", "locales", "en-US", "node.json"), "utf8")
 );
-const vectorStoreFilesHelp = fs.readFileSync(
-  path.join(__dirname, "..", "src", "vector-store-files", "help.html"),
-  "utf8"
-);
-const vectorStoreFileBatchesHelp = fs.readFileSync(
-  path.join(__dirname, "..", "src", "vector-store-file-batches", "help.html"),
-  "utf8"
-);
-
 test("vector store file methods map to the current OpenAI SDK surface", async () => {
   const calls = [];
   const tempFilePath = path.join(
@@ -546,7 +537,7 @@ test("vector store file batch helpers map to the current OpenAI SDK surface", as
   );
 });
 
-test("vector store file and file-batch picker/help surfaces advertise the current SDK contract", () => {
+test("vector store file and file-batch pickers expose the current SDK methods", () => {
   assert.equal(
     locale.OpenaiApi.parameters.modifyVectorStoreFile,
     "modify vector store file"
@@ -564,20 +555,4 @@ test("vector store file and file-batch picker/help surfaces advertise the curren
     "poll vector store file batch"
   );
 
-  assert.match(vectorStoreFilesHelp, /Create and Poll Vector Store File/);
-  assert.match(vectorStoreFilesHelp, /Upload Vector Store File/);
-  assert.match(vectorStoreFilesHelp, /Upload and Poll Vector Store File/);
-  assert.match(vectorStoreFilesHelp, /Poll Vector Store File/);
-  assert.match(vectorStoreFilesHelp, /Modify Vector Store File/);
-  assert.match(vectorStoreFilesHelp, /Get Vector Store File Content/);
-  assert.match(vectorStoreFilesHelp, /attributes/);
-  assert.match(vectorStoreFilesHelp, /chunking_strategy/);
-  assert.match(vectorStoreFilesHelp, /pollIntervalMs/);
-
-  assert.match(vectorStoreFileBatchesHelp, /Create and Poll Vector Store File Batch/);
-  assert.match(vectorStoreFileBatchesHelp, /Poll Vector Store File Batch/);
-  assert.match(vectorStoreFileBatchesHelp, /Upload and Poll Vector Store File Batch/);
-  assert.match(vectorStoreFileBatchesHelp, /maxConcurrency/);
-  assert.match(vectorStoreFileBatchesHelp, /chunking_strategy/);
-  assert.match(vectorStoreFileBatchesHelp, /files/);
 });

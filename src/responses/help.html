@@ -19,6 +19,10 @@
                 For file inputs, use <code>input_file</code> items and set
                 <code>detail</code> to <code>low</code> or <code>high</code> when
                 you need to control file rendering quality.
+                To make extra tools available at a specific point in an array input,
+                send an <code>additional_tools</code> item with
+                <code>role: "developer"</code> and a <code>tools</code> array. The
+                item may also include an <code>id</code>.
             </dd>
 
             <dt>
@@ -58,6 +62,9 @@
                 for example <code>web_search_call.results</code>,
                 <code>web_search_call.action.sources</code>, or
                 <code>message.output_text.logprobs</code>.
+                Web-search search actions use <code>queries</code> for current
+                multi-query payloads. The older <code>query</code> field is
+                deprecated and optional when present in returned action data.
             </dd>
 
             <dt class="optional">
@@ -106,7 +113,15 @@
                 prompt_cache_retention
                 <span class="property-type">string</span>
             </dt>
-            <dd>Prompt cache retention policy, such as <code>in_memory</code> or <code>24h</code>.</dd>
+            <dd>
+                Prompt cache retention policy. Set <code>24h</code> for extended prompt caching.
+                For <code>gpt-5.5</code>, <code>gpt-5.5-pro</code>, and future models, only
+                <code>24h</code> is supported. For older models that support both <code>in_memory</code>
+                and <code>24h</code>, the default depends on the organization's data retention policy:
+                organizations without ZDR enabled default to <code>24h</code>, and organizations with
+                ZDR enabled default to <code>in_memory</code> when <code>prompt_cache_retention</code>
+                is not specified.
+            </dd>
 
             <dt class="optional">
                 reasoning
@@ -310,7 +325,11 @@
                 input
                 <span class="property-type">string | array</span>
             </dt>
-            <dd>Input used for a new streamed response when <code>response_id</code> is not provided.</dd>
+            <dd>
+                Input used for a new streamed response when <code>response_id</code> is not provided.
+                Array inputs may include <code>additional_tools</code> items with
+                <code>role: "developer"</code>, <code>tools</code>, and optional <code>id</code>.
+            </dd>
             <dt class="optional">
                 model
                 <span class="property-type">string</span>
@@ -367,7 +386,10 @@
                 input
                 <span class="property-type">string | array</span>
             </dt>
-            <dd>Optional input items used for compaction.</dd>
+            <dd>
+                Optional input items used for compaction. Array inputs are passed to the SDK unchanged,
+                including <code>additional_tools</code> items.
+            </dd>
 
             <dt class="optional">
                 instructions
@@ -385,7 +407,15 @@
                 prompt_cache_retention
                 <span class="property-type">string</span>
             </dt>
-            <dd>Prompt cache retention policy for compaction requests, such as <code>in_memory</code> or <code>24h</code>.</dd>
+            <dd>
+                Prompt cache retention policy for compaction requests. Set <code>24h</code> for extended
+                prompt caching. For <code>gpt-5.5</code>, <code>gpt-5.5-pro</code>, and future models,
+                only <code>24h</code> is supported. For older models that support both
+                <code>in_memory</code> and <code>24h</code>, the default depends on the organization's
+                data retention policy: organizations without ZDR enabled default to <code>24h</code>,
+                and organizations with ZDR enabled default to <code>in_memory</code> when
+                <code>prompt_cache_retention</code> is not specified.
+            </dd>
 
             <dt class="optional">
                 service_tier
@@ -479,6 +509,16 @@
             <dd>Whether tool calls may run in parallel for the modeled request.</dd>
 
             <dt class="optional">
+                personality
+                <span class="property-type">string</span>
+            </dt>
+            <dd>
+                Model-owned style preset used for token counting. Supported named values include
+                <code>friendly</code> and <code>pragmatic</code>; future SDK string values up to
+                64 characters are also valid.
+            </dd>
+
+            <dt class="optional">
                 reasoning
                 <span class="property-type">object</span>
             </dt>
@@ -551,7 +591,9 @@
             </dt>
             <dd>
                 Required when <code>action</code> is <code>send</code>. Provide a Responses client event,
-                currently <code>{ "type": "response.create", ... }</code>.
+                currently <code>{ "type": "response.create", ... }</code>. For response-create events,
+                use the same <code>prompt_cache_retention</code> guidance as
+                <code>Create Model Response</code>.
             </dd>
 
             <dt class="optional">

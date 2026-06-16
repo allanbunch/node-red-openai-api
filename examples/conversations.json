@@ -12,7 +12,7 @@
         "type": "comment",
         "z": "4c1d97d31fb7457a",
         "name": "Configure the red-marked node, then send the inject node.",
-        "info": "This example shows the Conversations create-item contract using an `items` array and preserved assistant-message `phase` values.\n\nBefore running:\n- import the flow, then configure the red-marked `OpenAI API` node with your own `Service Host`\n- replace `conv_123` with a real conversation id\n\nWhat this flow sends:\n- a `conversation_id` for an existing conversation\n- an `items` array instead of a singular `item` object\n- assistant messages labeled `phase: commentary` and `phase: final_answer`\n- preserved assistant-message `phase` values on follow-up context items\n\nExpected result:\n- the returned conversation items appear in the debug sidebar as the normal `createConversationItem` output",
+        "info": "This example shows the Conversations create-item contract using an `items` array and preserved assistant-message `phase` values.\n\nBefore running:\n- import the flow, then configure the red-marked `OpenAI API` node with your own `Service Host`\n- replace `conv_123` with a real conversation id\n\nWhat this flow sends:\n- a `conversation_id` for an existing conversation\n- an `items` array instead of a singular `item` object\n- an `additional_tools` item with `role: \"developer\"`, `tools`, and `id`\n- assistant messages labeled `phase: commentary` and `phase: final_answer`\n- preserved assistant-message `phase` values on follow-up context items\n\nExpected result:\n- the returned conversation items appear in the debug sidebar as the normal `createConversationItem` output",
         "x": 470,
         "y": 180,
         "wires": []
@@ -30,7 +30,7 @@
             },
             {
                 "p": "payload.items",
-                "v": "[{\"type\":\"message\",\"role\":\"assistant\",\"phase\":\"commentary\",\"content\":[{\"type\":\"output_text\",\"text\":\"I will compare the available delivery options before I answer.\"}]},{\"type\":\"message\",\"role\":\"assistant\",\"phase\":\"final_answer\",\"content\":[{\"type\":\"output_text\",\"text\":\"Express shipping arrives tomorrow for an additional fee.\"}]},{\"type\":\"message\",\"role\":\"user\",\"content\":[{\"type\":\"input_text\",\"text\":\"Thanks. Please add the express option to the order.\"}]}]",
+                "v": "[{\"type\":\"additional_tools\",\"role\":\"developer\",\"id\":\"item_tools_shipping_lookup\",\"tools\":[{\"type\":\"function\",\"name\":\"lookup_shipping_options\",\"description\":\"Look up available shipping options for an order.\",\"parameters\":{\"type\":\"object\",\"properties\":{\"order_id\":{\"type\":\"string\"}},\"required\":[\"order_id\"],\"additionalProperties\":false},\"strict\":true}]},{\"type\":\"message\",\"role\":\"assistant\",\"phase\":\"commentary\",\"content\":[{\"type\":\"output_text\",\"text\":\"I will compare the available delivery options before I answer.\"}]},{\"type\":\"message\",\"role\":\"assistant\",\"phase\":\"final_answer\",\"content\":[{\"type\":\"output_text\",\"text\":\"Express shipping arrives tomorrow for an additional fee.\"}]},{\"type\":\"message\",\"role\":\"user\",\"content\":[{\"type\":\"input_text\",\"text\":\"Thanks. Please add the express option to the order.\"}]}]",
                 "vt": "json"
             }
         ],

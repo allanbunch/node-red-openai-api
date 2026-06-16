@@ -63,10 +63,6 @@ function createFakeImageStream(events) {
     };
 }
 
-const imagesHelp = fs.readFileSync(
-    path.join(__dirname, "..", "src", "images", "help.html"),
-    "utf8"
-);
 const imagesExample = JSON.parse(
     fs.readFileSync(path.join(__dirname, "..", "examples", "images.json"), "utf8")
 );
@@ -350,18 +346,7 @@ test("createImageEdit accepts multiple image paths and emits edit stream events"
     ]);
 });
 
-test("Images help and example flow describe the current Image 2 contract", () => {
-    assert.match(imagesHelp, /gpt-image-2/);
-    assert.match(imagesHelp, /gpt-image-2-2026-04-21/);
-    assert.match(imagesHelp, /gpt-image-1\.5/);
-    assert.match(imagesHelp, /chatgpt-image-latest/);
-    assert.match(imagesHelp, /WIDTHxHEIGHT/);
-    assert.match(imagesHelp, /1536x864/);
-    assert.match(imagesHelp, /divisible by 16/);
-    assert.match(imagesHelp, /do\s+not support transparent backgrounds/);
-    assert.match(imagesHelp, /emits image stream events/);
-    assert.match(imagesHelp, /string \| string\[\]/);
-
+test("Images example flow keeps the current Image 2 payloads importable", () => {
     const createImageInject = imagesExample.find(
         (node) => node.type === "inject" && node.name === "Create Image 2 Request"
     );

@@ -113,6 +113,20 @@
             </dd>
 
             <dt class="optional">
+                prompt_cache_retention
+                <span class="property-type">string | null</span>
+            </dt>
+            <dd>
+                Prompt cache retention policy. Set <code>24h</code> for extended prompt caching.
+                For <code>gpt-5.5</code>, <code>gpt-5.5-pro</code>, and future models, only
+                <code>24h</code> is supported. For older models that support both <code>in_memory</code>
+                and <code>24h</code>, the default depends on the organization's data retention policy:
+                organizations without ZDR enabled default to <code>24h</code>, and organizations with
+                ZDR enabled default to <code>in_memory</code> when <code>prompt_cache_retention</code>
+                is not specified.
+            </dd>
+
+            <dt class="optional">
                 audio
                 <span class="property-type">object or null</span>
             </dt>

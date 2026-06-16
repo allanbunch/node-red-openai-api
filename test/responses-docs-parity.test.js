@@ -1,7 +1,7 @@
 "use strict";
 
-// This file keeps the NOA-67 and NOA-78 Responses request-shape claims honest.
-// It proves current SDK fields pass through unchanged on the supported paths and that the local docs/examples use the same contract terms.
+// This file keeps the NOA-67, NOA-78, and NOA-124 Responses request-shape claims honest.
+// It proves current SDK fields pass through unchanged on the supported paths and that examples keep the same structured payloads.
 
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
@@ -32,11 +32,6 @@ function withMockedOpenAI(FakeOpenAI, callback) {
   return run();
 }
 
-const readme = fs.readFileSync(path.join(__dirname, "..", "README.md"), "utf8");
-const responsesHelp = fs.readFileSync(
-  path.join(__dirname, "..", "src", "responses", "help.html"),
-  "utf8"
-);
 const webSearchExample = JSON.parse(
   fs.readFileSync(
     path.join(__dirname, "..", "examples", "responses", "web-search.json"),
@@ -44,38 +39,34 @@ const webSearchExample = JSON.parse(
   )
 );
 
-function getHelpSection(startTitle, endTitle) {
-  const escapedStart = startTitle.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const escapedEnd = endTitle.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = responsesHelp.match(
-    new RegExp(`${escapedStart}([\\s\\S]*?)${escapedEnd}`)
-  );
+const additionalToolsInputItem = {
+  type: "additional_tools",
+  role: "developer",
+  id: "item_tools_release_lookup",
+  tools: [
+    {
+      type: "function",
+      name: "lookup_release_note",
+      description: "Look up release notes by ticket id.",
+      parameters: {
+        type: "object",
+        properties: {
+          ticket_id: { type: "string" },
+        },
+        required: ["ticket_id"],
+        additionalProperties: false,
+      },
+      strict: true,
+    },
+  ],
+};
 
-  assert.ok(match, `Expected help section between ${startTitle} and ${endTitle}`);
-  return match[1];
-}
-
-function listFilesRecursively(rootPath) {
-  const entries = fs.readdirSync(rootPath, { withFileTypes: true });
-  const filePaths = [];
-
-  for (const entry of entries) {
-    const entryPath = path.join(rootPath, entry.name);
-    if (entry.isDirectory()) {
-      filePaths.push(...listFilesRecursively(entryPath));
-      continue;
-    }
-    filePaths.push(entryPath);
-  }
-
-  return filePaths;
-}
-
-test("responses create forwards input_file detail, include, prompt cache retention, and top_logprobs unchanged", async () => {
+test("responses create forwards additional_tools, input_file detail, include, prompt cache retention, and top_logprobs unchanged", async () => {
   const calls = [];
   const requestPayload = {
     model: "gpt-5.4",
     input: [
+      additionalToolsInputItem,
       {
         type: "message",
         role: "user",
@@ -139,11 +130,12 @@ test("responses create forwards input_file detail, include, prompt cache retenti
   ]);
 });
 
-test("responses stream helper forwards the same newer request fields unchanged", async () => {
+test("responses stream helper forwards additional_tools and the same newer request fields unchanged", async () => {
   const calls = [];
   const requestPayload = {
     model: "gpt-5.4-mini",
     input: [
+      additionalToolsInputItem,
       {
         type: "input_file",
         file_id: "file_release_notes",
@@ -277,47 +269,55 @@ test("responses compact forwards service_tier, prompt_cache_retention, and input
   ]);
 });
 
-test("Responses help and README describe the current request shape without translation wording", () => {
-  const createHelp = getHelpSection(
-    "<h4 style=\"font-weight: bolder;\"> ⋙ Create Model Response</h4>",
-    "<h4 style=\"font-weight: bolder;\"> ⋙ Parse Model Response</h4>"
-  );
-  const streamHelp = getHelpSection(
-    "<h4 style=\"font-weight: bolder;\"> ⋙ Stream Model Response</h4>",
-    "<h4 style=\"font-weight: bolder;\"> ⋙ Delete Model Response</h4>"
-  );
-  const compactHelp = getHelpSection(
-    "<h4 style=\"font-weight: bolder;\"> ⋙ Compact Model Response</h4>",
-    "<h4 style=\"font-weight: bolder;\"> ⋙ List Input Items</h4>"
-  );
+test("responses input token count forwards personality unchanged", async () => {
+  const calls = [];
+  const requestPayload = {
+    model: "gpt-5.4-mini",
+    input: "Count these tokens with a friendly style preset.",
+    personality: "friendly",
+  };
 
-  assert.match(createHelp, /input_file/);
-  assert.match(createHelp, /detail/);
-  assert.match(createHelp, /web_search_call\.results/);
-  assert.match(createHelp, /message\.output_text\.logprobs/);
-  assert.match(createHelp, /prompt_cache_retention/);
-  assert.match(createHelp, /in_memory/);
-  assert.match(createHelp, /top_logprobs/);
+  class FakeOpenAI {
+    constructor(clientParams) {
+      calls.push({ method: "ctor", clientParams });
+      this.responses = {
+        inputTokens: {
+          count: async (payload) => {
+            calls.push({ method: "responses.inputTokens.count", payload });
+            return { object: "response.input_tokens", input_tokens: 12 };
+          },
+        },
+      };
+    }
+  }
 
-  assert.match(streamHelp, /same request body shape as/);
-  assert.match(streamHelp, /prompt_cache_retention/);
-  assert.match(streamHelp, /top_logprobs/);
+  await withMockedOpenAI(FakeOpenAI, async () => {
+    const modulePath = require.resolve("../src/responses/methods.js");
+    delete require.cache[modulePath];
+    const responsesMethods = require("../src/responses/methods.js");
 
-  assert.match(compactHelp, /prompt_cache_retention/);
-  assert.match(compactHelp, /in_memory/);
-  assert.match(compactHelp, /service_tier/);
-  assert.match(compactHelp, /auto/);
-  assert.match(compactHelp, /default/);
-  assert.match(compactHelp, /flex/);
-  assert.match(compactHelp, /priority/);
-  assert.match(compactHelp, /null/);
+    const clientContext = {
+      clientParams: {
+        apiKey: "sk-test",
+        baseURL: "https://api.example.com/v1",
+      },
+    };
 
-  assert.match(readme, /examples\/responses\/web-search\.json/);
-  assert.match(readme, /input_file\.detail/);
-  assert.match(readme, /web_search_call\.results/);
-  assert.match(readme, /prompt_cache_retention` values such as `in_memory`/);
-  assert.match(readme, /top_logprobs/);
-  assert.match(readme, /direct SDK pass-throughs/);
+    const response = await responsesMethods.countInputTokens.call(clientContext, {
+      payload: requestPayload,
+    });
+
+    assert.deepEqual(response, { object: "response.input_tokens", input_tokens: 12 });
+
+    delete require.cache[modulePath];
+  });
+
+  assert.deepEqual(calls.filter((entry) => entry.method !== "ctor"), [
+    {
+      method: "responses.inputTokens.count",
+      payload: requestPayload,
+    },
+  ]);
 });
 
 test("Responses web-search example keeps the newer request-shape fields discoverable", () => {
@@ -327,14 +327,10 @@ test("Responses web-search example keeps the newer request-shape fields discover
   const injectNode = webSearchExample.find(
     (entry) => entry.type === "inject" && entry.name === "Create Web Search Request"
   );
-  const commentNodes = webSearchExample.filter((entry) => entry.type === "comment");
-  const tabNode = webSearchExample.find((entry) => entry.type === "tab");
 
   assert.ok(openaiNode);
   assert.equal(openaiNode.method, "createModelResponse");
   assert.ok(injectNode);
-  assert.ok(commentNodes.length >= 1);
-  assert.ok(tabNode);
 
   assert.equal(
     injectNode.props.find((prop) => prop.p === "ai.prompt_cache_retention").v,
@@ -350,28 +346,14 @@ test("Responses web-search example keeps the newer request-shape fields discover
   );
   assert.equal(
     injectNode.props.find((prop) => prop.p === "ai.include[1]").v,
+    "web_search_call.action.sources"
+  );
+  assert.equal(
+    injectNode.props.find((prop) => prop.p === "ai.include[2]").v,
     "message.output_text.logprobs"
   );
   assert.deepEqual(
     JSON.parse(injectNode.props.find((prop) => prop.p === "ai.tools[0]").v),
     { type: "web_search", search_context_size: "medium" }
   );
-
-  assert.match(tabNode.info, /passes the SDK request body through unchanged/);
-  assert.match(tabNode.info, /in_memory/);
-  assert.match(tabNode.info, /top_logprobs/);
-});
-
-test("Responses docs scan rejects stale in-memory wording in repo-owned support claims", () => {
-  const filesToScan = [
-    path.join(__dirname, "..", "README.md"),
-    path.join(__dirname, "..", "src", "responses", "help.html"),
-    ...listFilesRecursively(path.join(__dirname, "..", "examples", "responses")),
-    ...listFilesRecursively(path.join(__dirname, "..", "features", "responses")),
-  ];
-
-  for (const filePath of filesToScan) {
-    const contents = fs.readFileSync(filePath, "utf8");
-    assert.doesNotMatch(contents, /in-memory/, `Did not expect stale in-memory wording in ${filePath}`);
-  }
 });

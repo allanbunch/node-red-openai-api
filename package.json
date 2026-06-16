@@ -1,6 +1,6 @@
 {
   "name": "@inductiv/node-red-openai-api",
-  "version": "6.39.1",
+  "version": "6.40.0",
   "funding": {
     "type": "github",
     "url": "https://github.com/sponsors/allanbunch"
@@ -36,14 +36,14 @@
     "test:methods": "node --test test/openai-methods-mapping.test.js",
     "test:images": "node --test test/images-v637-parity.test.js",
     "test:responses": "node --test test/responses-docs-parity.test.js test/openai-responses-websocket.test.js",
-    "test:docs": "node --test test/chat-docs-parity.test.js test/audio-docs-parity.test.js test/batch-docs-parity.test.js test/conversations-docs-parity.test.js test/release-targeting-v6391.test.js",
+    "test:docs": "node --test test/chat-docs-parity.test.js test/audio-docs-parity.test.js test/batch-docs-parity.test.js test/conversations-docs-parity.test.js",
     "test:examples": "node --test test/chatkit-docs-examples.test.js test/videos-docs-examples.test.js test/admin-docs-examples.test.js test/examples-service-host-neutrality.test.js",
     "test:parity": "node --test test/comparison-filter-parity.test.js test/vector-store-family-parity.test.js test/model-slug-parity.test.js test/defer-loading-parity.test.js",
     "test": "npm run test:service-host && npm run test:methods && npm run test:images && npm run test:responses && npm run test:docs && npm run test:examples && npm run test:parity",
     "prepare": "npm run build"
   },
   "dependencies": {
-    "openai": "6.39.1",
+    "openai": "6.40.0",
     "ws": "^8.19.0"
   },
   "author": "Allan Bunch",
@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "@cucumber/cucumber": "^12.8.0",
-    "esbuild": "^0.27.0",
+    "esbuild": "^0.28.1",
     "gulp": "^5.0.1",
     "gulp-file-include": "^2.3.0"
   }

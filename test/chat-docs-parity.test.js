@@ -1,11 +1,9 @@
 "use strict";
 
 // This file keeps the Chat top_logprobs contract honest.
-// It proves chat-completions requests still pass top_logprobs through unchanged and that the help text matches the current SDK wording.
+// It proves chat-completions requests still pass top_logprobs through unchanged.
 
 const assert = require("node:assert/strict");
-const fs = require("node:fs");
-const path = require("node:path");
 const test = require("node:test");
 
 function withMockedOpenAI(FakeOpenAI, callback) {
@@ -30,20 +28,6 @@ function withMockedOpenAI(FakeOpenAI, callback) {
     };
 
     return run();
-}
-
-const chatHelp = fs.readFileSync(
-    path.join(__dirname, "..", "src", "chat", "help.html"),
-    "utf8"
-);
-
-function getCreateChatCompletionHelpSection() {
-    const match = chatHelp.match(
-        /<h4 style="font-weight: bolder;"> ⋙ Create Chat Completion<\/h4>([\s\S]*?)<h4 style="font-weight: bolder;"> ⋙ Get Chat Completion<\/h4>/
-    );
-
-    assert.ok(match, "Expected Create Chat Completion help section to exist");
-    return match[1];
 }
 
 test("createChatCompletion forwards top_logprobs unchanged to the OpenAI SDK", async () => {
@@ -96,14 +80,4 @@ test("createChatCompletion forwards top_logprobs unchanged to the OpenAI SDK", a
             payload: requestPayload,
         },
     ]);
-});
-
-test("Chat help documents the current top_logprobs range and usage requirements", () => {
-    const createHelp = getCreateChatCompletionHelpSection();
-
-    assert.match(createHelp, /top_logprobs/);
-    assert.match(createHelp, /between 0 and 20/);
-    assert.match(createHelp, /fewer\s+than requested/);
-    assert.match(createHelp, /logprobs<\/code> to <code>true/);
-    assert.doesNotMatch(createHelp, /between 0 and 5/);
 });

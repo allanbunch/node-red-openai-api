@@ -4,7 +4,7 @@
         "type": "tab",
         "label": "Web Search Example",
         "disabled": false,
-        "info": "Responses web-search example.\n\nThis flow keeps the newer request-shape fields visible in one small payload:\n- `tools[0] = { type: \"web_search\" }`\n- `include` asks for web-search results and output logprobs\n- `prompt_cache_retention` stays on the upstream `in_memory` spelling\n- `top_logprobs` is forwarded unchanged\n\nThe node does not translate these fields. It passes the SDK request body through unchanged.",
+        "info": "Responses web-search example.\n\nThis flow keeps the newer request-shape fields visible in one small payload:\n- `tools[0] = { type: \"web_search\" }`\n- `include` asks for web-search results, action sources, and output logprobs\n- returned web-search search actions use `queries`; deprecated `query` is optional when present\n- `prompt_cache_retention` stays on the upstream `in_memory` spelling\n- `top_logprobs` is forwarded unchanged\n\nThe node does not translate these fields. It passes the SDK request body through unchanged.",
         "env": []
     },
     {
@@ -12,7 +12,7 @@
         "type": "comment",
         "z": "0c7a942f5d5847eb",
         "name": "Configure the red-marked node, then send the inject node to inspect the current Responses web-search contract.",
-        "info": "Before running:\n- import the flow, then configure the red-marked `OpenAI API` node with your own `Service Host`\n- keep or replace `gpt-5.4` as needed\n\nWhat this flow sends:\n- a built-in `web_search` tool\n- `include[0] = \"web_search_call.results\"`\n- `include[1] = \"message.output_text.logprobs\"`\n- `prompt_cache_retention = \"in_memory\"`\n- `top_logprobs = 3`\n\nExpected result:\n- the debug sidebar shows the standard Responses output, with the request fields preserved as sent",
+        "info": "Before running:\n- import the flow, then configure the red-marked `OpenAI API` node with your own `Service Host`\n- keep or replace `gpt-5.4` as needed\n\nWhat this flow sends:\n- a built-in `web_search` tool\n- `include[0] = \"web_search_call.results\"`\n- `include[1] = \"web_search_call.action.sources\"`\n- `include[2] = \"message.output_text.logprobs\"`\n- `prompt_cache_retention = \"in_memory\"`\n- `top_logprobs = 3`\n\nExpected result:\n- the debug sidebar shows the standard Responses output, with the request fields preserved as sent",
         "x": 500,
         "y": 180,
         "wires": []
@@ -45,6 +45,11 @@
             },
             {
                 "p": "ai.include[1]",
+                "v": "web_search_call.action.sources",
+                "vt": "str"
+            },
+            {
+                "p": "ai.include[2]",
                 "v": "message.output_text.logprobs",
                 "vt": "str"
             },

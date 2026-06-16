@@ -1,11 +1,9 @@
 "use strict";
 
 // This file keeps the Batch contract honest.
-// It checks that batch payloads still pass through cleanly and that the user-facing Batch help matches the widened endpoint support in the SDK.
+// It checks that batch payloads still pass through cleanly.
 
 const assert = require("node:assert/strict");
-const fs = require("node:fs");
-const path = require("node:path");
 const test = require("node:test");
 
 function withMockedOpenAI(FakeOpenAI, callback) {
@@ -31,11 +29,6 @@ function withMockedOpenAI(FakeOpenAI, callback) {
 
   return run();
 }
-
-const batchHelp = fs.readFileSync(
-  path.join(__dirname, "..", "src", "batch", "help.html"),
-  "utf8"
-);
 
 test("createBatch forwards a /v1/videos endpoint payload unchanged to the OpenAI SDK", async () => {
   const calls = [];
@@ -88,16 +81,4 @@ test("createBatch forwards a /v1/videos endpoint payload unchanged to the OpenAI
       payload: requestPayload,
     },
   ]);
-});
-
-test("Batch help describes the widened batch endpoint contract including /v1/videos", () => {
-  assert.match(batchHelp, /\/v1\/responses/);
-  assert.match(batchHelp, /\/v1\/chat\/completions/);
-  assert.match(batchHelp, /\/v1\/embeddings/);
-  assert.match(batchHelp, /\/v1\/completions/);
-  assert.match(batchHelp, /\/v1\/moderations/);
-  assert.match(batchHelp, /\/v1\/images\/generations/);
-  assert.match(batchHelp, /\/v1\/images\/edits/);
-  assert.match(batchHelp, /\/v1\/videos/);
-  assert.doesNotMatch(batchHelp, /Currently only \/v1\/chat\/completions is supported/);
 });

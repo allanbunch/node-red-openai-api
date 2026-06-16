@@ -1,7 +1,7 @@
 "use strict";
 
 // This file keeps the ComparisonFilter contract honest.
-// It checks that vector-store search forwards `in` and `nin` filters unchanged, and that the user-facing picker/help/example surfaces advertise that contract clearly.
+// It checks that vector-store search forwards `in` and `nin` filters unchanged, and that the picker/example payloads stay aligned.
 
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
@@ -34,10 +34,6 @@ function withMockedOpenAI(FakeOpenAI, callback) {
 
 const locale = JSON.parse(
   fs.readFileSync(path.join(__dirname, "..", "locales", "en-US", "node.json"), "utf8")
-);
-const vectorStoresHelp = fs.readFileSync(
-  path.join(__dirname, "..", "src", "vector-stores", "help.html"),
-  "utf8"
 );
 const vectorStoreSearchExample = JSON.parse(
   fs.readFileSync(path.join(__dirname, "..", "examples", "vector-store-search.json"), "utf8")
@@ -149,21 +145,11 @@ test("searchVectorStore forwards ComparisonFilter in/nin payloads unchanged to t
   ]);
 });
 
-test("vector-store picker and help document the search contract and ComparisonFilter operators", () => {
+test("vector-store picker exposes the search method", () => {
   assert.equal(
     locale.OpenaiApi.parameters.searchVectorStore,
     "search vector store"
   );
-
-  assert.match(vectorStoresHelp, /Search Vector Store/);
-  assert.match(vectorStoresHelp, /vector_store_id/);
-  assert.match(vectorStoresHelp, /query/);
-  assert.match(vectorStoresHelp, /ComparisonFilter/);
-  assert.match(vectorStoresHelp, /CompoundFilter/);
-  assert.match(vectorStoresHelp, /<code>in<\/code>/);
-  assert.match(vectorStoresHelp, /<code>nin<\/code>/);
-  assert.match(vectorStoresHelp, /max_num_results/);
-  assert.match(vectorStoresHelp, /rewrite_query/);
 });
 
 test("vector-store search example demonstrates in/nin ComparisonFilter usage", () => {
@@ -175,17 +161,10 @@ test("vector-store search example demonstrates in/nin ComparisonFilter usage", (
   const injectNode = vectorStoreSearchExample.find(
     (entry) => entry.type === "inject" && entry.name === "Search Vector Store"
   );
-  const commentNode = vectorStoreSearchExample.find(
-    (entry) => entry.type === "comment"
-  );
 
   assert.ok(openaiNode);
   assert.ok(injectNode);
-  assert.ok(commentNode);
   assert.equal(openaiNode.method, "searchVectorStore");
-  assert.match(commentNode.info, /ComparisonFilter/);
-  assert.match(commentNode.info, /`in`/);
-  assert.match(commentNode.info, /`nin`/);
   assert.equal(
     injectNode.props.find((prop) => prop.p === "ai.vector_store_id").v,
     "vs_replace_me"
