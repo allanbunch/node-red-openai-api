@@ -40,6 +40,15 @@ const adminNoa81EditorMethods = [
   ["getProjectRole", "retrieve project role", "Retrieve Project Role"],
 ];
 
+const workloadIdentityAuditEventTypes = [
+  "workload_identity_provider.created",
+  "workload_identity_provider.updated",
+  "workload_identity_provider.deleted",
+  "workload_identity_provider_mapping.created",
+  "workload_identity_provider_mapping.updated",
+  "workload_identity_provider_mapping.deleted",
+];
+
 function helpSection(html, startTitle, endTitle) {
   const pattern = new RegExp(`${startTitle}[\\s\\S]*?(?=${endTitle})`);
   const match = html.match(pattern);
@@ -2061,7 +2070,33 @@ test("admin methods map representative organization and project resources to Ope
           auditLogs: {
             list: async (query) => {
               calls.push({ method: "admin.organization.auditLogs.list", query });
-              return { data: [{ id: "log_1" }, { id: "log_2" }] };
+              return {
+                data: [
+                  {
+                    id: "log_1",
+                    type: "workload_identity_provider.created",
+                    "workload_identity_provider.created": {
+                      id: "wip_123",
+                      data: {
+                        name: "AWS production federation",
+                        issuer_url: "https://oidc.eks.example.com/id/cluster",
+                      },
+                    },
+                  },
+                  {
+                    id: "log_2",
+                    type: "workload_identity_provider_mapping.updated",
+                    "workload_identity_provider_mapping.updated": {
+                      id: "wipm_123",
+                      identity_provider_id: "wip_123",
+                      changes_requested: {
+                        service_account_id: "svc_456",
+                        project_id: "proj_1",
+                      },
+                    },
+                  },
+                ],
+              };
             },
           },
           adminAPIKeys: {
@@ -2118,9 +2153,34 @@ test("admin methods map representative organization and project resources to Ope
       payload: {
         effective_at: { gt: 1710000000 },
         project_ids: ["proj_1"],
+        event_types: workloadIdentityAuditEventTypes,
       },
     });
-    assert.deepEqual(auditLogs, [{ id: "log_1" }, { id: "log_2" }]);
+    assert.deepEqual(auditLogs, [
+      {
+        id: "log_1",
+        type: "workload_identity_provider.created",
+        "workload_identity_provider.created": {
+          id: "wip_123",
+          data: {
+            name: "AWS production federation",
+            issuer_url: "https://oidc.eks.example.com/id/cluster",
+          },
+        },
+      },
+      {
+        id: "log_2",
+        type: "workload_identity_provider_mapping.updated",
+        "workload_identity_provider_mapping.updated": {
+          id: "wipm_123",
+          identity_provider_id: "wip_123",
+          changes_requested: {
+            service_account_id: "svc_456",
+            project_id: "proj_1",
+          },
+        },
+      },
+    ]);
 
     const adminApiKey = await adminMethods.getOrganizationAdminApiKey.call(clientContext, {
       payload: {
@@ -2182,6 +2242,7 @@ test("admin methods map representative organization and project resources to Ope
       query: {
         effective_at: { gt: 1710000000 },
         project_ids: ["proj_1"],
+        event_types: workloadIdentityAuditEventTypes,
       },
     },
     {
@@ -3134,6 +3195,13 @@ test("editor templates and locale expose latest methods", () => {
   assert.match(adminHelp, /model_ids/);
   assert.match(adminHelp, /web_search/);
   assert.match(adminHelp, /service_account_id/);
+  assert.match(adminHelp, /full SDK event detail objects/);
+  assert.match(generatedNodeHtml, /full SDK event detail objects/);
+  for (const eventType of workloadIdentityAuditEventTypes) {
+    const eventTypePattern = new RegExp(eventType.replace(/\./g, "\\."));
+    assert.match(adminHelp, eventTypePattern);
+    assert.match(generatedNodeHtml, eventTypePattern);
+  }
   assert.match(responsesHelp, /⋙ Count Input Tokens/);
   assert.match(responsesHelp, /⋙ Parse Model Response/);
   assert.match(responsesHelp, /⋙ Stream Model Response/);

@@ -24,11 +24,25 @@
             </dt>
             <dd>Optional actor ids to filter by.</dd>
             <dt class="optional">
+                event_types
+                <span class="property-type">array</span>
+            </dt>
+            <dd>Optional audit event names to include, such as
+                <code>workload_identity_provider.created</code>,
+                <code>workload_identity_provider.updated</code>,
+                <code>workload_identity_provider.deleted</code>,
+                <code>workload_identity_provider_mapping.created</code>,
+                <code>workload_identity_provider_mapping.updated</code>, and
+                <code>workload_identity_provider_mapping.deleted</code>.
+            </dd>
+            <dt class="optional">
                 limit
                 <span class="property-type">integer</span>
             </dt>
             <dd>Maximum number of audit log entries to return.</dd>
         </dl>
+        <p>Audit log entries are returned with their full SDK event detail objects, including workload identity
+            provider and provider-mapping details.</p>
 
         <h4 style="font-weight: bolder;"> ⋙ Create Organization Admin API Key</h4>
         <p>Create an organization Admin API key.</p>

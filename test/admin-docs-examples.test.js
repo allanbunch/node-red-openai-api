@@ -1,15 +1,34 @@
 "use strict";
 
 // This file covers the Admin user-facing surface.
-// It checks that the importable example flow stays aligned with the Admin capability already wired into the node.
+// It checks that the Admin help and importable example flow stay aligned with the Admin capability already wired into the node.
 
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 const test = require("node:test");
 
+const workloadIdentityAuditEventTypes = [
+    "workload_identity_provider.created",
+    "workload_identity_provider.updated",
+    "workload_identity_provider.deleted",
+    "workload_identity_provider_mapping.created",
+    "workload_identity_provider_mapping.updated",
+    "workload_identity_provider_mapping.deleted",
+];
+
+const adminHelp = fs.readFileSync(path.join(__dirname, "..", "src", "admin", "help.html"), "utf8");
 const examplePath = path.join(__dirname, "..", "examples", "admin.json");
 const exampleNodes = JSON.parse(fs.readFileSync(examplePath, "utf8"));
+
+test("Admin help documents workload identity audit-log event filters", () => {
+    assert.match(adminHelp, /event_types/);
+    assert.match(adminHelp, /full SDK event detail objects/);
+
+    for (const eventType of workloadIdentityAuditEventTypes) {
+        assert.match(adminHelp, new RegExp(eventType.replace(/\./g, "\\.")));
+    }
+});
 
 test("Admin example flow covers the documented organization and project controls", () => {
     const methods = exampleNodes
