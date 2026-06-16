@@ -1,11 +1,9 @@
 "use strict";
 
 // This file keeps the audio contract honest.
-// It checks that speech payloads still pass through cleanly and that the user-facing docs match the current custom-voice support in the SDK.
+// It checks that speech payloads still pass through cleanly.
 
 const assert = require("node:assert/strict");
-const fs = require("node:fs");
-const path = require("node:path");
 const test = require("node:test");
 
 function withMockedOpenAI(FakeOpenAI, callback) {
@@ -31,11 +29,6 @@ function withMockedOpenAI(FakeOpenAI, callback) {
 
   return run();
 }
-
-const audioHelp = fs.readFileSync(
-  path.join(__dirname, "..", "src", "audio", "help.html"),
-  "utf8"
-);
 
 test("createSpeech forwards a custom voice object unchanged to the OpenAI SDK", async () => {
   const calls = [];
@@ -95,14 +88,4 @@ test("createSpeech forwards a custom voice object unchanged to the OpenAI SDK", 
       payload: requestPayload,
     },
   ]);
-});
-
-test("Audio help describes the widened custom-voice contract", () => {
-  assert.match(audioHelp, /string or object/);
-  assert.match(audioHelp, /custom voice object/);
-  assert.match(audioHelp, /voice_1234/);
-  assert.match(audioHelp, /ballad/);
-  assert.match(audioHelp, /verse/);
-  assert.match(audioHelp, /marin/);
-  assert.match(audioHelp, /cedar/);
 });

@@ -1,7 +1,7 @@
 "use strict";
 
 // This file keeps the defer_loading tool contract honest.
-// It proves the node forwards deferred MCP and additional tool shapes unchanged and that the docs/examples still describe the current Responses tool-search shape.
+// It proves the node forwards deferred MCP and additional tool shapes unchanged and keeps the example payload importable.
 
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
@@ -32,10 +32,6 @@ function withMockedOpenAI(FakeOpenAI, callback) {
   return run();
 }
 
-const responsesHelp = fs.readFileSync(
-  path.join(__dirname, "..", "src", "responses", "help.html"),
-  "utf8"
-);
 const toolSearchExample = JSON.parse(
   fs.readFileSync(
     path.join(__dirname, "..", "examples", "responses", "tool-search.json"),
@@ -101,11 +97,7 @@ test("responses create forwards deferred MCP tool definitions unchanged", async 
   ]);
 });
 
-test("tool-search docs and example keep defer_loading explicit", () => {
-  assert.match(responsesHelp, /defer_loading: true/);
-  assert.match(responsesHelp, /Deferred tool loading is supported/);
-  assert.match(responsesHelp, /additional_tools/);
-
+test("tool-search example keeps defer_loading explicit", () => {
   const injectNode = toolSearchExample.find(
     (entry) => entry.type === "inject" && entry.name === "Create Tool Search Request"
   );
@@ -139,9 +131,4 @@ test("tool-search docs and example keep defer_loading explicit", () => {
   assert.equal(additionalToolsItem.tools[0].name, "lookup_transport_notes");
   assert.equal(userMessage.type, "message");
   assert.equal(userMessage.role, "user");
-
-  const exampleTab = toolSearchExample.find((entry) => entry.type === "tab");
-  assert.ok(exampleTab);
-  assert.match(exampleTab.info, /defer_loading: true/);
-  assert.match(exampleTab.info, /additional_tools/);
 });

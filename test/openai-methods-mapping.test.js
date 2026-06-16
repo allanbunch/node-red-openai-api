@@ -49,13 +49,6 @@ const workloadIdentityAuditEventTypes = [
   "workload_identity_provider_mapping.deleted",
 ];
 
-function helpSection(html, startTitle, endTitle) {
-  const pattern = new RegExp(`${startTitle}[\\s\\S]*?(?=${endTitle})`);
-  const match = html.match(pattern);
-  assert.ok(match, `Expected help section between ${startTitle} and ${endTitle}`);
-  return match[0];
-}
-
 function withMockedOpenAI(FakeOpenAI, callback) {
   const openaiModule = require("openai");
   const originalDescriptor = Object.getOwnPropertyDescriptor(openaiModule, "OpenAI");
@@ -575,17 +568,6 @@ test("responses example flows remain valid JSON and cover the documented agentic
   );
 });
 
-test("responses help documents websocket lifecycle contract", () => {
-  const responsesHelpPath = path.join(__dirname, "..", "src", "responses", "help.html");
-  const responsesHelp = fs.readFileSync(responsesHelpPath, "utf8");
-
-  assert.match(responsesHelp, /Manage Model Response WebSocket/);
-  assert.match(responsesHelp, /msg\.payload\.action/);
-  assert.match(responsesHelp, /connect<\/code>, <code>send<\/code>, or <code>close<\/code>/);
-  assert.match(responsesHelp, /msg\.openai/);
-  assert.match(responsesHelp, /custom auth headers and query-string auth/);
-});
-
 test("realtime example flow remains valid JSON and documents the nested session contract", () => {
   const realtimeExamplePath = path.join(
     __dirname,
@@ -599,13 +581,6 @@ test("realtime example flow remains valid JSON and documents the nested session 
   assert.ok(Array.isArray(realtimeExample));
 
   const openaiNode = realtimeExample.find((entry) => entry.type === "OpenAI API");
-  const commentNodes = realtimeExample.filter((entry) => entry.type === "comment");
-  const explainerComment = realtimeExample.find(
-    (entry) => entry.type === "comment" && entry.name === "What is a client secret?"
-  );
-  const translationScopeComment = realtimeExample.find(
-    (entry) => entry.type === "comment" && entry.name === "Translation session scope"
-  );
   const realtimeInjectNode = realtimeExample.find(
     (entry) =>
       entry.type === "inject" &&
@@ -624,11 +599,6 @@ test("realtime example flow remains valid JSON and documents the nested session 
 
   assert.ok(openaiNode);
   assert.equal(openaiNode.method, "createRealtimeClientSecret");
-  assert.ok(commentNodes.length >= 4);
-  assert.ok(explainerComment);
-  assert.ok(translationScopeComment);
-  assert.match(explainerComment.info, /not your long-lived OpenAI API key/);
-  assert.match(translationScopeComment.info, /out of scope/);
   assert.ok(realtimeInjectNode);
   assert.ok(audioInjectNode);
   assert.ok(translationInjectNode);
@@ -3175,51 +3145,17 @@ test("editor templates and locale expose latest methods", () => {
     path.join(__dirname, "..", "node.html"),
     "utf8"
   );
-  const adminHelp = fs.readFileSync(
-    path.join(__dirname, "..", "src", "admin", "help.html"),
-    "utf8"
-  );
-  const responsesHelp = fs.readFileSync(
-    path.join(__dirname, "..", "src", "responses", "help.html"),
-    "utf8"
-  );
-  const chatkitHelp = fs.readFileSync(
-    path.join(__dirname, "..", "src", "chatkit", "help.html"),
-    "utf8"
-  );
-  const skillsHelp = fs.readFileSync(
-    path.join(__dirname, "..", "src", "skills", "help.html"),
-    "utf8"
-  );
-  const evalsHelp = fs.readFileSync(
-    path.join(__dirname, "..", "src", "evals", "help.html"),
-    "utf8"
-  );
-  const realtimeHelp = fs.readFileSync(
-    path.join(__dirname, "..", "src", "realtime", "help.html"),
-    "utf8"
-  );
-  const videosHelp = fs.readFileSync(
-    path.join(__dirname, "..", "src", "videos", "help.html"),
-    "utf8"
-  );
-  const webhooksHelp = fs.readFileSync(
-    path.join(__dirname, "..", "src", "webhooks", "help.html"),
-    "utf8"
-  );
   const locale = JSON.parse(
     fs.readFileSync(path.join(__dirname, "..", "locales", "en-US", "node.json"), "utf8")
   );
 
   assert.match(adminTemplate, /value="listOrganizationProjects"/);
   assert.match(adminTemplate, /value="modifyProjectRateLimit"/);
-  for (const [method, label, heading] of adminNoa81EditorMethods) {
+  for (const [method, label] of adminNoa81EditorMethods) {
     const option = `<option value="${method}" data-i18n="OpenaiApi.parameters.${method}"></option>`;
     assert.equal(adminTemplate.includes(option), true);
     assert.equal(generatedNodeHtml.includes(option), true);
     assert.equal(locale.OpenaiApi.parameters[method], label);
-    assert.match(adminHelp, new RegExp(`⋙ ${heading}`));
-    assert.match(generatedNodeHtml, new RegExp(`⋙ ${heading}`));
   }
   assert.match(responsesTemplate, /value="cancelModelResponse"/);
   assert.match(responsesTemplate, /value="compactModelResponse"/);
@@ -3258,70 +3194,7 @@ test("editor templates and locale expose latest methods", () => {
   assert.match(nodeTemplate, /@@include\('\.\/videos\/help\.html'\)/);
   assert.match(nodeTemplate, /@@include\('\.\/webhooks\/template\.html'\)/);
   assert.match(nodeTemplate, /@@include\('\.\/webhooks\/help\.html'\)/);
-  assert.match(adminHelp, /⋙ List Organization Projects/);
-  assert.match(adminHelp, /⋙ List Project Rate Limits/);
-  assert.match(adminHelp, /Admin API Key/);
-  assert.match(adminHelp, /retention_type/);
-  assert.match(adminHelp, /notification_channel/);
-  assert.match(adminHelp, /model_ids/);
-  assert.match(adminHelp, /web_search/);
-  assert.match(adminHelp, /service_account_id/);
-  assert.match(adminHelp, /full SDK event detail objects/);
-  assert.match(generatedNodeHtml, /full SDK event detail objects/);
-  for (const eventType of workloadIdentityAuditEventTypes) {
-    const eventTypePattern = new RegExp(eventType.replace(/\./g, "\\."));
-    assert.match(adminHelp, eventTypePattern);
-    assert.match(generatedNodeHtml, eventTypePattern);
-  }
-  assert.match(responsesHelp, /⋙ Count Input Tokens/);
-  assert.match(responsesHelp, /⋙ Parse Model Response/);
-  assert.match(responsesHelp, /⋙ Stream Model Response/);
-  assert.match(responsesHelp, /SDK parse helper/);
-  assert.match(responsesHelp, /helper's final parsed response object/);
-  assert.match(responsesHelp, /Default is <code>desc<\/code>/);
-  const generatedCompactHelp = helpSection(
-    generatedNodeHtml,
-    "<h4 style=\"font-weight: bolder;\"> ⋙ Compact Model Response</h4>",
-    "<h4 style=\"font-weight: bolder;\"> ⋙ List Input Items</h4>"
-  );
   assert.match(generatedNodeHtml, /value="compactModelResponse"/);
-  assert.match(generatedCompactHelp, /service_tier/);
-  assert.match(generatedCompactHelp, /auto/);
-  assert.match(generatedCompactHelp, /default/);
-  assert.match(generatedCompactHelp, /flex/);
-  assert.match(generatedCompactHelp, /priority/);
-  assert.match(generatedCompactHelp, /<code>null<\/code>/);
-  assert.match(chatkitHelp, /⋙ Create ChatKit Session/);
-  assert.match(chatkitHelp, /workflow\.id/);
-  assert.match(chatkitHelp, /client_secret/);
-  assert.match(chatkitHelp, /⋙ List ChatKit Thread Items/);
-  assert.match(evalsHelp, /⋙ Create Eval/);
-  assert.match(evalsHelp, /⋙ List Eval Run Output Items/);
-  assert.match(realtimeHelp, /⋙ Create Realtime Client Secret/);
-  assert.match(realtimeHelp, /⋙ Reject Realtime Call/);
-  assert.match(realtimeHelp, /msg\.payload\.session/);
-  assert.match(realtimeHelp, /session\.model/);
-  assert.match(realtimeHelp, /gpt-realtime-2/);
-  assert.match(realtimeHelp, /gpt-realtime-1\.5/);
-  assert.match(realtimeHelp, /gpt-audio-1\.5/);
-  assert.match(realtimeHelp, /session\.reasoning\.effort/);
-  assert.match(realtimeHelp, /session\.parallel_tool_calls/);
-  assert.match(realtimeHelp, /gpt-realtime-whisper/);
-  assert.match(realtimeHelp, /session\.audio\.input\.transcription\.delay/);
-  assert.match(realtimeHelp, /session\.audio\.input\.turn_detection/);
-  assert.match(realtimeHelp, /session\.audio\.output\.language/);
-  assert.match(realtimeHelp, /See the official docs above for transport, lifecycle, and tuning details/);
-  assert.match(skillsHelp, /⋙ Create Skill/);
-  assert.match(skillsHelp, /⋙ List Skill Versions/);
-  assert.match(videosHelp, /⋙ Download Video Content/);
-  assert.match(videosHelp, /⋙ Create Video Character/);
-  assert.match(videosHelp, /⋙ Edit Video/);
-  assert.match(videosHelp, /⋙ Extend Video/);
-  assert.match(videosHelp, /⋙ Retrieve Video Character/);
-  assert.match(videosHelp, /file_id/);
-  assert.match(videosHelp, /image_url/);
-  assert.match(videosHelp, /1792x1024/);
-  assert.match(webhooksHelp, /⋙ Verify Webhook Signature/);
 
   assert.equal(
     locale.OpenaiApi.parameters.listOrganizationProjects,

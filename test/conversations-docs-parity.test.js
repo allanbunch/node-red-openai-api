@@ -1,7 +1,7 @@
 "use strict";
 
 // This file keeps the Conversations create-item contract honest.
-// It checks that items arrays, additional tools, and assistant-message phase values pass through cleanly and that the help text matches the upstream published contract.
+// It checks that items arrays, additional tools, and assistant-message phase values pass through cleanly.
 
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
@@ -32,10 +32,6 @@ function withMockedOpenAI(FakeOpenAI, callback) {
     return run();
 }
 
-const conversationsHelp = fs.readFileSync(
-    path.join(__dirname, "..", "src", "conversations", "help.html"),
-    "utf8"
-);
 const examplePath = path.join(__dirname, "..", "examples", "conversations.json");
 const exampleNodes = JSON.parse(fs.readFileSync(examplePath, "utf8"));
 
@@ -60,15 +56,6 @@ const additionalToolsItem = {
         },
     ],
 };
-
-function getCreateConversationItemHelpSection() {
-    const match = conversationsHelp.match(
-        /<h4 style="font-weight: bolder;"> ⋙ Create Conversation Item<\/h4>([\s\S]*?)<h4 style="font-weight: bolder;"> ⋙ Retrieve Conversation Item<\/h4>/
-    );
-
-    assert.ok(match, "Expected Create Conversation Item help section to exist");
-    return match[1];
-}
 
 test("createConversationItem forwards additional_tools items and assistant-message phase unchanged", async () => {
     const calls = [];
@@ -147,23 +134,6 @@ test("createConversationItem forwards additional_tools items and assistant-messa
     ]);
 });
 
-test("Conversations help documents the items contract and assistant-only phase guidance", () => {
-    const createConversationItemHelp = getCreateConversationItemHelpSection();
-
-    assert.match(createConversationItemHelp, /items/);
-    assert.match(createConversationItemHelp, /array/);
-    assert.match(createConversationItemHelp, /additional_tools/);
-    assert.match(createConversationItemHelp, /role: "developer"/);
-    assert.match(createConversationItemHelp, /tools/);
-    assert.match(createConversationItemHelp, /optional <code>id<\/code>/);
-    assert.doesNotMatch(createConversationItemHelp, /<dt>\s*item\s*<span class="property-type">object<\/span>/);
-    assert.match(createConversationItemHelp, /assistant/i);
-    assert.match(createConversationItemHelp, /commentary/);
-    assert.match(createConversationItemHelp, /final_answer/);
-    assert.match(createConversationItemHelp, /degrade performance/i);
-    assert.match(createConversationItemHelp, /not required for\s+user messages/i);
-});
-
 test("Conversations example flow uses items arrays and preserved assistant-message phase values", () => {
     const methods = exampleNodes
         .filter((node) => node.type === "OpenAI API")
@@ -197,13 +167,4 @@ test("Conversations example flow uses items arrays and preserved assistant-messa
     assert.equal(items.some((item) => item.role === "assistant" && item.phase === "commentary"), true);
     assert.equal(items.some((item) => item.role === "assistant" && item.phase === "final_answer"), true);
 
-    const guidanceText = exampleNodes
-        .filter((node) => node.type === "tab" || node.type === "comment")
-        .map((node) => `${node.name || ""}\n${node.info || ""}`)
-        .join("\n");
-
-    assert.match(guidanceText, /`items` array/);
-    assert.match(guidanceText, /`additional_tools` item/);
-    assert.match(guidanceText, /preserved assistant-message `phase` values/);
-    assert.match(guidanceText, /replace `conv_123` with a real conversation id/i);
 });

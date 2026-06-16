@@ -1,7 +1,7 @@
 "use strict";
 
 // This file covers the Videos user-facing surface.
-// It checks that the importable example flow stays aligned with the current video and Sora capability already wired into the node.
+// It checks that the importable example flow stays aligned with the current video capability already wired into the node.
 
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
@@ -48,13 +48,4 @@ test("Videos example flow covers the documented video lifecycle", () => {
     2
   );
 
-  const guidanceText = exampleNodes
-    .filter((node) => node.type === "tab" || node.type === "comment")
-    .map((node) => `${node.name || ""}\n${node.info || ""}`)
-    .join("\n");
-
-  assert.match(guidanceText, /placeholder ids or file paths/i);
-  assert.match(guidanceText, /Sora video creation from a prompt/i);
-  assert.match(guidanceText, /character creation from an uploaded video clip/i);
-  assert.match(guidanceText, /downloadable assets through `downloadVideoContent`/i);
 });

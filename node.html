@@ -3277,6 +3277,20 @@
             </dd>
 
             <dt class="optional">
+                prompt_cache_retention
+                <span class="property-type">string | null</span>
+            </dt>
+            <dd>
+                Prompt cache retention policy. Set <code>24h</code> for extended prompt caching.
+                For <code>gpt-5.5</code>, <code>gpt-5.5-pro</code>, and future models, only
+                <code>24h</code> is supported. For older models that support both <code>in_memory</code>
+                and <code>24h</code>, the default depends on the organization's data retention policy:
+                organizations without ZDR enabled default to <code>24h</code>, and organizations with
+                ZDR enabled default to <code>in_memory</code> when <code>prompt_cache_retention</code>
+                is not specified.
+            </dd>
+
+            <dt class="optional">
                 audio
                 <span class="property-type">object or null</span>
             </dt>
@@ -3522,6 +3536,7 @@
                     <!-- END Delete Chat Completion -->
     </details>
 </section>
+
   <section>
     <details>
         <summary style="font-weight: bold;">🤖 ChatKit</summary>
@@ -5423,7 +5438,15 @@
                 prompt_cache_retention
                 <span class="property-type">string</span>
             </dt>
-            <dd>Prompt cache retention policy, such as <code>in_memory</code> or <code>24h</code>.</dd>
+            <dd>
+                Prompt cache retention policy. Set <code>24h</code> for extended prompt caching.
+                For <code>gpt-5.5</code>, <code>gpt-5.5-pro</code>, and future models, only
+                <code>24h</code> is supported. For older models that support both <code>in_memory</code>
+                and <code>24h</code>, the default depends on the organization's data retention policy:
+                organizations without ZDR enabled default to <code>24h</code>, and organizations with
+                ZDR enabled default to <code>in_memory</code> when <code>prompt_cache_retention</code>
+                is not specified.
+            </dd>
 
             <dt class="optional">
                 reasoning
@@ -5709,7 +5732,15 @@
                 prompt_cache_retention
                 <span class="property-type">string</span>
             </dt>
-            <dd>Prompt cache retention policy for compaction requests, such as <code>in_memory</code> or <code>24h</code>.</dd>
+            <dd>
+                Prompt cache retention policy for compaction requests. Set <code>24h</code> for extended
+                prompt caching. For <code>gpt-5.5</code>, <code>gpt-5.5-pro</code>, and future models,
+                only <code>24h</code> is supported. For older models that support both
+                <code>in_memory</code> and <code>24h</code>, the default depends on the organization's
+                data retention policy: organizations without ZDR enabled default to <code>24h</code>,
+                and organizations with ZDR enabled default to <code>in_memory</code> when
+                <code>prompt_cache_retention</code> is not specified.
+            </dd>
 
             <dt class="optional">
                 service_tier
@@ -5885,7 +5916,9 @@
             </dt>
             <dd>
                 Required when <code>action</code> is <code>send</code>. Provide a Responses client event,
-                currently <code>{ "type": "response.create", ... }</code>.
+                currently <code>{ "type": "response.create", ... }</code>. For response-create events,
+                use the same <code>prompt_cache_retention</code> guidance as
+                <code>Create Model Response</code>.
             </dd>
 
             <dt class="optional">

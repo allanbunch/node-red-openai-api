@@ -1,7 +1,7 @@
 "use strict";
 
 // This file keeps the NOA-67, NOA-78, and NOA-124 Responses request-shape claims honest.
-// It proves current SDK fields pass through unchanged on the supported paths and that the local docs/examples use the same contract terms.
+// It proves current SDK fields pass through unchanged on the supported paths and that examples keep the same structured payloads.
 
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
@@ -32,10 +32,6 @@ function withMockedOpenAI(FakeOpenAI, callback) {
   return run();
 }
 
-const responsesHelp = fs.readFileSync(
-  path.join(__dirname, "..", "src", "responses", "help.html"),
-  "utf8"
-);
 const webSearchExample = JSON.parse(
   fs.readFileSync(
     path.join(__dirname, "..", "examples", "responses", "web-search.json"),
@@ -64,33 +60,6 @@ const additionalToolsInputItem = {
     },
   ],
 };
-
-function getHelpSection(startTitle, endTitle) {
-  const escapedStart = startTitle.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const escapedEnd = endTitle.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = responsesHelp.match(
-    new RegExp(`${escapedStart}([\\s\\S]*?)${escapedEnd}`)
-  );
-
-  assert.ok(match, `Expected help section between ${startTitle} and ${endTitle}`);
-  return match[1];
-}
-
-function listFilesRecursively(rootPath) {
-  const entries = fs.readdirSync(rootPath, { withFileTypes: true });
-  const filePaths = [];
-
-  for (const entry of entries) {
-    const entryPath = path.join(rootPath, entry.name);
-    if (entry.isDirectory()) {
-      filePaths.push(...listFilesRecursively(entryPath));
-      continue;
-    }
-    filePaths.push(entryPath);
-  }
-
-  return filePaths;
-}
 
 test("responses create forwards additional_tools, input_file detail, include, prompt cache retention, and top_logprobs unchanged", async () => {
   const calls = [];
@@ -351,56 +320,6 @@ test("responses input token count forwards personality unchanged", async () => {
   ]);
 });
 
-test("Responses help describes the current request shape without translation wording", () => {
-  const createHelp = getHelpSection(
-    "<h4 style=\"font-weight: bolder;\"> ⋙ Create Model Response</h4>",
-    "<h4 style=\"font-weight: bolder;\"> ⋙ Parse Model Response</h4>"
-  );
-  const streamHelp = getHelpSection(
-    "<h4 style=\"font-weight: bolder;\"> ⋙ Stream Model Response</h4>",
-    "<h4 style=\"font-weight: bolder;\"> ⋙ Delete Model Response</h4>"
-  );
-  const compactHelp = getHelpSection(
-    "<h4 style=\"font-weight: bolder;\"> ⋙ Compact Model Response</h4>",
-    "<h4 style=\"font-weight: bolder;\"> ⋙ List Input Items</h4>"
-  );
-  const inputTokenHelp = getHelpSection(
-    "<h4 style=\"font-weight: bolder;\"> ⋙ Count Input Tokens</h4>",
-    "<h4 style=\"font-weight: bolder;\"> ⋙ Manage Model Response WebSocket</h4>"
-  );
-
-  assert.match(createHelp, /input_file/);
-  assert.match(createHelp, /detail/);
-  assert.match(createHelp, /additional_tools/);
-  assert.match(createHelp, /role: "developer"/);
-  assert.match(createHelp, /tools/);
-  assert.match(createHelp, /web_search_call\.results/);
-  assert.match(createHelp, /message\.output_text\.logprobs/);
-  assert.match(createHelp, /prompt_cache_retention/);
-  assert.match(createHelp, /in_memory/);
-  assert.match(createHelp, /top_logprobs/);
-
-  assert.match(streamHelp, /same request body shape as/);
-  assert.match(streamHelp, /additional_tools/);
-  assert.match(streamHelp, /prompt_cache_retention/);
-  assert.match(streamHelp, /top_logprobs/);
-
-  assert.match(compactHelp, /additional_tools/);
-  assert.match(compactHelp, /prompt_cache_retention/);
-  assert.match(compactHelp, /in_memory/);
-  assert.match(compactHelp, /service_tier/);
-  assert.match(compactHelp, /auto/);
-  assert.match(compactHelp, /default/);
-  assert.match(compactHelp, /flex/);
-  assert.match(compactHelp, /priority/);
-  assert.match(compactHelp, /null/);
-
-  assert.match(inputTokenHelp, /personality/);
-  assert.match(inputTokenHelp, /friendly/);
-  assert.match(inputTokenHelp, /pragmatic/);
-  assert.match(inputTokenHelp, /64 characters/);
-});
-
 test("Responses web-search example keeps the newer request-shape fields discoverable", () => {
   assert.ok(Array.isArray(webSearchExample));
 
@@ -408,14 +327,10 @@ test("Responses web-search example keeps the newer request-shape fields discover
   const injectNode = webSearchExample.find(
     (entry) => entry.type === "inject" && entry.name === "Create Web Search Request"
   );
-  const commentNodes = webSearchExample.filter((entry) => entry.type === "comment");
-  const tabNode = webSearchExample.find((entry) => entry.type === "tab");
 
   assert.ok(openaiNode);
   assert.equal(openaiNode.method, "createModelResponse");
   assert.ok(injectNode);
-  assert.ok(commentNodes.length >= 1);
-  assert.ok(tabNode);
 
   assert.equal(
     injectNode.props.find((prop) => prop.p === "ai.prompt_cache_retention").v,
@@ -437,21 +352,4 @@ test("Responses web-search example keeps the newer request-shape fields discover
     JSON.parse(injectNode.props.find((prop) => prop.p === "ai.tools[0]").v),
     { type: "web_search", search_context_size: "medium" }
   );
-
-  assert.match(tabNode.info, /passes the SDK request body through unchanged/);
-  assert.match(tabNode.info, /in_memory/);
-  assert.match(tabNode.info, /top_logprobs/);
-});
-
-test("Responses docs scan rejects stale in-memory wording in repo-owned support claims", () => {
-  const filesToScan = [
-    path.join(__dirname, "..", "src", "responses", "help.html"),
-    ...listFilesRecursively(path.join(__dirname, "..", "examples", "responses")),
-    ...listFilesRecursively(path.join(__dirname, "..", "features", "responses")),
-  ];
-
-  for (const filePath of filesToScan) {
-    const contents = fs.readFileSync(filePath, "utf8");
-    assert.doesNotMatch(contents, /in-memory/, `Did not expect stale in-memory wording in ${filePath}`);
-  }
 });

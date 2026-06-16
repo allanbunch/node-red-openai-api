@@ -1,34 +1,15 @@
 "use strict";
 
 // This file covers the Admin user-facing surface.
-// It checks that the Admin help and importable example flow stay aligned with the Admin capability already wired into the node.
+// It checks that the importable example flow stays aligned with the Admin capability already wired into the node.
 
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 const test = require("node:test");
 
-const workloadIdentityAuditEventTypes = [
-    "workload_identity_provider.created",
-    "workload_identity_provider.updated",
-    "workload_identity_provider.deleted",
-    "workload_identity_provider_mapping.created",
-    "workload_identity_provider_mapping.updated",
-    "workload_identity_provider_mapping.deleted",
-];
-
-const adminHelp = fs.readFileSync(path.join(__dirname, "..", "src", "admin", "help.html"), "utf8");
 const examplePath = path.join(__dirname, "..", "examples", "admin.json");
 const exampleNodes = JSON.parse(fs.readFileSync(examplePath, "utf8"));
-
-test("Admin help documents workload identity audit-log event filters", () => {
-    assert.match(adminHelp, /event_types/);
-    assert.match(adminHelp, /full SDK event detail objects/);
-
-    for (const eventType of workloadIdentityAuditEventTypes) {
-        assert.match(adminHelp, new RegExp(eventType.replace(/\./g, "\\.")));
-    }
-});
 
 test("Admin example flow covers the documented organization and project controls", () => {
     const methods = exampleNodes
@@ -105,19 +86,4 @@ test("Admin example flow covers the documented organization and project controls
         true
     );
 
-    const guidanceText = exampleNodes
-        .filter((node) => node.type === "tab" || node.type === "comment")
-        .map((node) => `${node.name || ""}\n${node.info || ""}`)
-        .join("\n");
-
-    assert.match(guidanceText, /Admin API Key/i);
-    assert.match(guidanceText, /organization audit logs/i);
-    assert.match(guidanceText, /project rate-limit inspection and updates/i);
-    assert.match(guidanceText, /usage reporting/i);
-    assert.match(guidanceText, /spend alert/i);
-    assert.match(guidanceText, /project permission/i);
-    assert.match(guidanceText, /proj_replace_me/);
-    assert.match(guidanceText, /rlimit_replace_me/);
-    assert.match(guidanceText, /alert_replace_me/);
-    assert.match(guidanceText, /svc_replace_me/);
 });

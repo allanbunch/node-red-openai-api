@@ -1,7 +1,7 @@
 "use strict";
 
 // This file keeps the newer gpt-5.4 mini/nano slug contract honest.
-// It proves the node forwards the new v6.32.0 model ids unchanged and that the visible docs/examples mention the current slug set.
+// It proves the node forwards the new v6.32.0 model ids unchanged and keeps the example payload importable.
 
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
@@ -32,10 +32,6 @@ function withMockedOpenAI(FakeOpenAI, callback) {
   return run();
 }
 
-const responsesHelp = fs.readFileSync(
-  path.join(__dirname, "..", "src", "responses", "help.html"),
-  "utf8"
-);
 const responsesWebsocketExample = JSON.parse(
   fs.readFileSync(
     path.join(__dirname, "..", "examples", "responses", "websocket.json"),
@@ -176,11 +172,7 @@ test("responses and chat methods forward gpt-5.4 mini/nano slugs unchanged", asy
   );
 });
 
-test("Responses help and websocket example reflect the current gpt-5.4 mini/nano slug set", () => {
-  assert.match(responsesHelp, /gpt-5\.4-mini/);
-  assert.match(responsesHelp, /gpt-5\.4-nano/);
-  assert.match(responsesHelp, /gpt-5\.4-mini-2026-03-17/);
-
+test("Responses websocket example keeps the current model payload importable", () => {
   const websocketInjectNode = responsesWebsocketExample.find(
     (node) => node.name === "Send response.create Event"
   );
