@@ -5390,6 +5390,9 @@
                 for example <code>web_search_call.results</code>,
                 <code>web_search_call.action.sources</code>, or
                 <code>message.output_text.logprobs</code>.
+                Web-search search actions use <code>queries</code> for current
+                multi-query payloads. The older <code>query</code> field is
+                deprecated and optional when present in returned action data.
             </dd>
 
             <dt class="optional">

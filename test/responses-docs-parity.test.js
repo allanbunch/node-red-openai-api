@@ -346,6 +346,10 @@ test("Responses web-search example keeps the newer request-shape fields discover
   );
   assert.equal(
     injectNode.props.find((prop) => prop.p === "ai.include[1]").v,
+    "web_search_call.action.sources"
+  );
+  assert.equal(
+    injectNode.props.find((prop) => prop.p === "ai.include[2]").v,
     "message.output_text.logprobs"
   );
   assert.deepEqual(
