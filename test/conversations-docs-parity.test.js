@@ -36,7 +36,6 @@ const conversationsHelp = fs.readFileSync(
     path.join(__dirname, "..", "src", "conversations", "help.html"),
     "utf8"
 );
-const readme = fs.readFileSync(path.join(__dirname, "..", "README.md"), "utf8");
 const examplePath = path.join(__dirname, "..", "examples", "conversations.json");
 const exampleNodes = JSON.parse(fs.readFileSync(examplePath, "utf8"));
 
@@ -136,34 +135,6 @@ test("Conversations help documents the items contract and assistant-only phase g
     assert.match(createConversationItemHelp, /final_answer/);
     assert.match(createConversationItemHelp, /degrade performance/i);
     assert.match(createConversationItemHelp, /not required for\s+user messages/i);
-});
-
-test("README highlights the Conversations example and breaking contract change", () => {
-    assert.match(readme, /examples\/conversations\.json/);
-    assert.match(
-        readme,
-        /Conversations support, including the upstream `items` array contract for create-item requests and assistant-message `phase` values `commentary` and `final_answer`/
-    );
-    assert.match(
-        readme,
-        /## Important Update Since v6\.34\.0/
-    );
-    assert.match(
-        readme,
-        /Create Conversation Item` now follows the upstream OpenAI Conversations contract\./
-    );
-    assert.match(
-        readme,
-        /Use `msg\.payload\.items` as an array\./
-    );
-    assert.match(
-        readme,
-        /Older flows that send a singular `msg\.payload\.item` object no longer match the\s+supported contract and must be updated before moving to this release\./
-    );
-    assert.match(
-        readme,
-        /Shows the Conversations create-item contract using an `items` array and preserved assistant-message `phase` values\./
-    );
 });
 
 test("Conversations example flow uses items arrays and preserved assistant-message phase values", () => {

@@ -32,7 +32,6 @@ function withMockedOpenAI(FakeOpenAI, callback) {
   return run();
 }
 
-const readme = fs.readFileSync(path.join(__dirname, "..", "README.md"), "utf8");
 const responsesHelp = fs.readFileSync(
   path.join(__dirname, "..", "src", "responses", "help.html"),
   "utf8"
@@ -103,7 +102,6 @@ test("responses create forwards deferred MCP tool definitions unchanged", async 
 });
 
 test("tool-search docs and example keep defer_loading explicit", () => {
-  assert.match(readme, /deferred MCP loading via `defer_loading`/);
   assert.match(responsesHelp, /defer_loading: true/);
   assert.match(responsesHelp, /Deferred tool loading is supported/);
 

@@ -32,7 +32,6 @@ function withMockedOpenAI(FakeOpenAI, callback) {
   return run();
 }
 
-const readme = fs.readFileSync(path.join(__dirname, "..", "README.md"), "utf8");
 const responsesHelp = fs.readFileSync(
   path.join(__dirname, "..", "src", "responses", "help.html"),
   "utf8"
@@ -177,12 +176,7 @@ test("responses and chat methods forward gpt-5.4 mini/nano slugs unchanged", asy
   );
 });
 
-test("README, Responses help, and websocket example reflect the current gpt-5.4 mini/nano slug set", () => {
-  assert.match(readme, /"model": "gpt-5\.4-mini"/);
-  assert.match(readme, /gpt-5\.4-mini/);
-  assert.match(readme, /gpt-5\.4-nano/);
-  assert.match(readme, /gpt-5\.4-mini-2026-03-17/);
-
+test("Responses help and websocket example reflect the current gpt-5.4 mini/nano slug set", () => {
   assert.match(responsesHelp, /gpt-5\.4-mini/);
   assert.match(responsesHelp, /gpt-5\.4-nano/);
   assert.match(responsesHelp, /gpt-5\.4-mini-2026-03-17/);

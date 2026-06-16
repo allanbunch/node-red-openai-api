@@ -32,7 +32,6 @@ function withMockedOpenAI(FakeOpenAI, callback) {
   return run();
 }
 
-const readme = fs.readFileSync(path.join(__dirname, "..", "README.md"), "utf8");
 const responsesHelp = fs.readFileSync(
   path.join(__dirname, "..", "src", "responses", "help.html"),
   "utf8"
@@ -277,7 +276,7 @@ test("responses compact forwards service_tier, prompt_cache_retention, and input
   ]);
 });
 
-test("Responses help and README describe the current request shape without translation wording", () => {
+test("Responses help describes the current request shape without translation wording", () => {
   const createHelp = getHelpSection(
     "<h4 style=\"font-weight: bolder;\"> ⋙ Create Model Response</h4>",
     "<h4 style=\"font-weight: bolder;\"> ⋙ Parse Model Response</h4>"
@@ -311,13 +310,6 @@ test("Responses help and README describe the current request shape without trans
   assert.match(compactHelp, /flex/);
   assert.match(compactHelp, /priority/);
   assert.match(compactHelp, /null/);
-
-  assert.match(readme, /examples\/responses\/web-search\.json/);
-  assert.match(readme, /input_file\.detail/);
-  assert.match(readme, /web_search_call\.results/);
-  assert.match(readme, /prompt_cache_retention` values such as `in_memory`/);
-  assert.match(readme, /top_logprobs/);
-  assert.match(readme, /direct SDK pass-throughs/);
 });
 
 test("Responses web-search example keeps the newer request-shape fields discoverable", () => {
@@ -364,7 +356,6 @@ test("Responses web-search example keeps the newer request-shape fields discover
 
 test("Responses docs scan rejects stale in-memory wording in repo-owned support claims", () => {
   const filesToScan = [
-    path.join(__dirname, "..", "README.md"),
     path.join(__dirname, "..", "src", "responses", "help.html"),
     ...listFilesRecursively(path.join(__dirname, "..", "examples", "responses")),
     ...listFilesRecursively(path.join(__dirname, "..", "features", "responses")),

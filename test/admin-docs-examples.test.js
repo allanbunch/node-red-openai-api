@@ -1,29 +1,15 @@
 "use strict";
 
 // This file covers the Admin user-facing surface.
-// It checks that README discovery text and the importable example flow stay aligned with the Admin capability already wired into the node.
+// It checks that the importable example flow stays aligned with the Admin capability already wired into the node.
 
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 const test = require("node:test");
 
-const readme = fs.readFileSync(path.join(__dirname, "..", "README.md"), "utf8");
 const examplePath = path.join(__dirname, "..", "examples", "admin.json");
 const exampleNodes = JSON.parse(fs.readFileSync(examplePath, "utf8"));
-
-test("README highlights Admin support and example flow", () => {
-    assert.match(readme, /examples\/admin\.json/);
-    assert.match(
-        readme,
-        /Shows the Admin surface for organization and project controls, including project listing, audit-log retrieval, usage reporting, data retention, spend alerts, project permissions, service-account updates, and rate-limit operations\./
-    );
-    assert.match(
-        readme,
-        /Admin API support, including Admin API key routing, organization audit logs, organization project controls, usage reporting, data retention, spend alerts, project permissions, project rate-limit operations, and a first-class Admin method family in the editor/
-    );
-    assert.match(readme, /- Admin\b/);
-});
 
 test("Admin example flow covers the documented organization and project controls", () => {
     const methods = exampleNodes

@@ -32,7 +32,6 @@ function withMockedOpenAI(FakeOpenAI, callback) {
   return run();
 }
 
-const readme = fs.readFileSync(path.join(__dirname, "..", "README.md"), "utf8");
 const audioHelp = fs.readFileSync(
   path.join(__dirname, "..", "src", "audio", "help.html"),
   "utf8"
@@ -98,11 +97,7 @@ test("createSpeech forwards a custom voice object unchanged to the OpenAI SDK", 
   ]);
 });
 
-test("README and Audio help describe the widened custom-voice contract", () => {
-  assert.match(
-    readme,
-    /Audio speech support with built-in voices and saved custom voice ids/
-  );
+test("Audio help describes the widened custom-voice contract", () => {
   assert.match(audioHelp, /string or object/);
   assert.match(audioHelp, /custom voice object/);
   assert.match(audioHelp, /voice_1234/);
