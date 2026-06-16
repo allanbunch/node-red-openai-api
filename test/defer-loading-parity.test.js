@@ -1,7 +1,7 @@
 "use strict";
 
 // This file keeps the defer_loading tool contract honest.
-// It proves the node forwards deferred MCP tool definitions unchanged and that the docs/examples still describe the current Responses tool-search shape.
+// It proves the node forwards deferred MCP and additional tool shapes unchanged and that the docs/examples still describe the current Responses tool-search shape.
 
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
@@ -104,6 +104,7 @@ test("responses create forwards deferred MCP tool definitions unchanged", async 
 test("tool-search docs and example keep defer_loading explicit", () => {
   assert.match(responsesHelp, /defer_loading: true/);
   assert.match(responsesHelp, /Deferred tool loading is supported/);
+  assert.match(responsesHelp, /additional_tools/);
 
   const injectNode = toolSearchExample.find(
     (entry) => entry.type === "inject" && entry.name === "Create Tool Search Request"
@@ -116,6 +117,12 @@ test("tool-search docs and example keep defer_loading explicit", () => {
   const deferredMcpTool = JSON.parse(
     injectNode.props.find((prop) => prop.p === "ai.tools[1]").v
   );
+  const additionalToolsItem = JSON.parse(
+    injectNode.props.find((prop) => prop.p === "ai.input[0]").v
+  );
+  const userMessage = JSON.parse(
+    injectNode.props.find((prop) => prop.p === "ai.input[1]").v
+  );
 
   assert.deepEqual(toolSearchTool, { type: "tool_search" });
   assert.deepEqual(deferredMcpTool, {
@@ -125,8 +132,16 @@ test("tool-search docs and example keep defer_loading explicit", () => {
     require_approval: "never",
     defer_loading: true,
   });
+  assert.equal(additionalToolsItem.type, "additional_tools");
+  assert.equal(additionalToolsItem.role, "developer");
+  assert.equal(additionalToolsItem.id, "item_tools_transport_lookup");
+  assert.equal(additionalToolsItem.tools[0].type, "function");
+  assert.equal(additionalToolsItem.tools[0].name, "lookup_transport_notes");
+  assert.equal(userMessage.type, "message");
+  assert.equal(userMessage.role, "user");
 
   const exampleTab = toolSearchExample.find((entry) => entry.type === "tab");
   assert.ok(exampleTab);
   assert.match(exampleTab.info, /defer_loading: true/);
+  assert.match(exampleTab.info, /additional_tools/);
 });

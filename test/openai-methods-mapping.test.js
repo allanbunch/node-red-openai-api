@@ -284,6 +284,27 @@ test("responses create forwards phase, prompt_cache_key, tool_search, defer_load
     prompt_cache_key: "responses-agentic-demo-v1",
     input: [
       {
+        type: "additional_tools",
+        role: "developer",
+        id: "item_tools_release_lookup",
+        tools: [
+          {
+            type: "function",
+            name: "lookup_release_ticket",
+            description: "Look up a release ticket by id.",
+            parameters: {
+              type: "object",
+              properties: {
+                ticket_id: { type: "string" },
+              },
+              required: ["ticket_id"],
+              additionalProperties: false,
+            },
+            strict: true,
+          },
+        ],
+      },
+      {
         type: "message",
         role: "assistant",
         phase: "commentary",
@@ -480,6 +501,9 @@ test("responses example flows remain valid JSON and cover the documented agentic
   const deferredMcpTool = JSON.parse(
     toolSearchInjectNode.props.find((prop) => prop.p === "ai.tools[1]").v
   );
+  const additionalToolsItem = JSON.parse(
+    toolSearchInjectNode.props.find((prop) => prop.p === "ai.input[0]").v
+  );
   const computerTool = JSON.parse(
     computerCreateInjectNode.props.find((prop) => prop.p === "ai.tools[0]").v
   );
@@ -494,6 +518,9 @@ test("responses example flows remain valid JSON and cover the documented agentic
   assert.equal(phaseMessage.phase, "commentary");
   assert.equal(toolSearchTool.type, "tool_search");
   assert.equal(deferredMcpTool.defer_loading, true);
+  assert.equal(additionalToolsItem.type, "additional_tools");
+  assert.equal(additionalToolsItem.role, "developer");
+  assert.equal(additionalToolsItem.tools[0].name, "lookup_transport_notes");
   assert.equal(computerTool.type, "computer");
   assert.equal(computerCallOutput.type, "computer_call_output");
   assert.equal(computerCallOutput.output.type, "computer_screenshot");

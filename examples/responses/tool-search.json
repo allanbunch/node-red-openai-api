@@ -4,7 +4,7 @@
         "type": "tab",
         "label": "Tool Search Example",
         "disabled": false,
-        "info": "Minimal Responses Tool Search example.\n\nThis flow keeps the request contract small on purpose:\n- `tool_search` is enabled\n- the remote MCP tool is marked with `defer_loading: true`\n- the model can decide whether to load and use that deferred tool\n\nTool Search is most useful when many deferred tools are available. This example uses one deferred MCP tool so the payload shape is easy to inspect in Node-RED.",
+        "info": "Minimal Responses Tool Search example.\n\nThis flow keeps the request contract small on purpose:\n- `tool_search` is enabled\n- the remote MCP tool is marked with `defer_loading: true`\n- `input[0]` is an `additional_tools` item with `role: \"developer\"`, `tools`, and `id`\n- the model can decide whether to load and use the available tools\n\nTool Search is most useful when many deferred tools are available. This example uses one deferred MCP tool plus one item-scoped additional tool so the payload shape is easy to inspect in Node-RED.",
         "env": []
     },
     {
@@ -34,9 +34,14 @@
                 "vt": "json"
             },
             {
-                "p": "ai.input",
-                "v": "Use the available documentation tools to summarize the transport protocols supported by the MCP specification.",
-                "vt": "str"
+                "p": "ai.input[0]",
+                "v": "{\"type\":\"additional_tools\",\"role\":\"developer\",\"id\":\"item_tools_transport_lookup\",\"tools\":[{\"type\":\"function\",\"name\":\"lookup_transport_notes\",\"description\":\"Look up internal notes for an MCP transport protocol.\",\"parameters\":{\"type\":\"object\",\"properties\":{\"transport\":{\"type\":\"string\"}},\"required\":[\"transport\"],\"additionalProperties\":false},\"strict\":true}]}",
+                "vt": "json"
+            },
+            {
+                "p": "ai.input[1]",
+                "v": "{\"type\":\"message\",\"role\":\"user\",\"content\":[{\"type\":\"input_text\",\"text\":\"Use the available documentation tools to summarize the transport protocols supported by the MCP specification.\"}]}",
+                "vt": "json"
             }
         ],
         "repeat": "",
@@ -57,7 +62,7 @@
         "type": "comment",
         "z": "af5f0e330a6a497e",
         "name": "Configure the red-marked node, then send the inject node to test Tool Search.",
-        "info": "This example demonstrates the minimal Responses Tool Search contract.\n\nBefore running:\n- import the flow, then configure the red-marked `OpenAI API` node with your own `Service Host`\n- confirm the remote MCP server in `ai.tools[1]` is still reachable for your environment\n- keep or replace `gpt-5.4` as needed\n\nWhat this flow sends:\n- `tools[0] = { type: \"tool_search\" }`\n- a deferred MCP tool with `defer_loading: true`\n- a user prompt that should encourage the model to inspect and load the deferred tool only if useful\n\nExpected result:\n- the debug sidebar shows the Responses output, including any tool-search-driven behavior chosen by the model",
+        "info": "This example demonstrates the minimal Responses Tool Search contract.\n\nBefore running:\n- import the flow, then configure the red-marked `OpenAI API` node with your own `Service Host`\n- confirm the remote MCP server in `ai.tools[1]` is still reachable for your environment\n- keep or replace `gpt-5.4` as needed\n\nWhat this flow sends:\n- `tools[0] = { type: \"tool_search\" }`\n- a deferred MCP tool with `defer_loading: true`\n- `input[0]` as an `additional_tools` item with `role: \"developer\"`, `tools`, and `id`\n- a user message that should encourage the model to inspect and load the available tools only if useful\n\nExpected result:\n- the debug sidebar shows the Responses output, including any tool-search-driven behavior chosen by the model",
         "x": 470,
         "y": 180,
         "wires": []

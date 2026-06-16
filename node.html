@@ -5329,6 +5329,10 @@
                 For file inputs, use <code>input_file</code> items and set
                 <code>detail</code> to <code>low</code> or <code>high</code> when
                 you need to control file rendering quality.
+                To make extra tools available at a specific point in an array input,
+                send an <code>additional_tools</code> item with
+                <code>role: "developer"</code> and a <code>tools</code> array. The
+                item may also include an <code>id</code>.
             </dd>
 
             <dt>
@@ -5620,7 +5624,11 @@
                 input
                 <span class="property-type">string | array</span>
             </dt>
-            <dd>Input used for a new streamed response when <code>response_id</code> is not provided.</dd>
+            <dd>
+                Input used for a new streamed response when <code>response_id</code> is not provided.
+                Array inputs may include <code>additional_tools</code> items with
+                <code>role: "developer"</code>, <code>tools</code>, and optional <code>id</code>.
+            </dd>
             <dt class="optional">
                 model
                 <span class="property-type">string</span>
@@ -5677,7 +5685,10 @@
                 input
                 <span class="property-type">string | array</span>
             </dt>
-            <dd>Optional input items used for compaction.</dd>
+            <dd>
+                Optional input items used for compaction. Array inputs are passed to the SDK unchanged,
+                including <code>additional_tools</code> items.
+            </dd>
 
             <dt class="optional">
                 instructions

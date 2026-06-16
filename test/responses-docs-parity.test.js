@@ -43,6 +43,28 @@ const webSearchExample = JSON.parse(
   )
 );
 
+const additionalToolsInputItem = {
+  type: "additional_tools",
+  role: "developer",
+  id: "item_tools_release_lookup",
+  tools: [
+    {
+      type: "function",
+      name: "lookup_release_note",
+      description: "Look up release notes by ticket id.",
+      parameters: {
+        type: "object",
+        properties: {
+          ticket_id: { type: "string" },
+        },
+        required: ["ticket_id"],
+        additionalProperties: false,
+      },
+      strict: true,
+    },
+  ],
+};
+
 function getHelpSection(startTitle, endTitle) {
   const escapedStart = startTitle.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const escapedEnd = endTitle.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -70,11 +92,12 @@ function listFilesRecursively(rootPath) {
   return filePaths;
 }
 
-test("responses create forwards input_file detail, include, prompt cache retention, and top_logprobs unchanged", async () => {
+test("responses create forwards additional_tools, input_file detail, include, prompt cache retention, and top_logprobs unchanged", async () => {
   const calls = [];
   const requestPayload = {
     model: "gpt-5.4",
     input: [
+      additionalToolsInputItem,
       {
         type: "message",
         role: "user",
@@ -138,11 +161,12 @@ test("responses create forwards input_file detail, include, prompt cache retenti
   ]);
 });
 
-test("responses stream helper forwards the same newer request fields unchanged", async () => {
+test("responses stream helper forwards additional_tools and the same newer request fields unchanged", async () => {
   const calls = [];
   const requestPayload = {
     model: "gpt-5.4-mini",
     input: [
+      additionalToolsInputItem,
       {
         type: "input_file",
         file_id: "file_release_notes",
@@ -292,6 +316,9 @@ test("Responses help describes the current request shape without translation wor
 
   assert.match(createHelp, /input_file/);
   assert.match(createHelp, /detail/);
+  assert.match(createHelp, /additional_tools/);
+  assert.match(createHelp, /role: "developer"/);
+  assert.match(createHelp, /tools/);
   assert.match(createHelp, /web_search_call\.results/);
   assert.match(createHelp, /message\.output_text\.logprobs/);
   assert.match(createHelp, /prompt_cache_retention/);
@@ -299,9 +326,11 @@ test("Responses help describes the current request shape without translation wor
   assert.match(createHelp, /top_logprobs/);
 
   assert.match(streamHelp, /same request body shape as/);
+  assert.match(streamHelp, /additional_tools/);
   assert.match(streamHelp, /prompt_cache_retention/);
   assert.match(streamHelp, /top_logprobs/);
 
+  assert.match(compactHelp, /additional_tools/);
   assert.match(compactHelp, /prompt_cache_retention/);
   assert.match(compactHelp, /in_memory/);
   assert.match(compactHelp, /service_tier/);
